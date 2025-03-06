@@ -11,29 +11,7 @@
     color: #333;
     padding-bottom: 60px; /* Evita solapamiento con el footer */
   }
-  
-  /* Encabezado y navegación */
-  header {
-    background: #35424a;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  header nav ul {
-    list-style: none;
-  }
-  
-  header nav ul li {
-    display: inline;
-    margin: 0 15px;
-  }
-  
-  header nav ul li a {
-    color: #fff;
-    text-decoration: none;
-  }
-  
+
   /* Contenido principal */
   main {
     margin: 20px;
