@@ -1,54 +1,154 @@
-#logo {
-    text-align: left;
-    margin:0;
-    padding:0;
+#Logo {
+  margin-bottom: 0.5%;
+  margin-left: 2%;
+  margin-top: 1%; /* Eliminar márgenes */
+}
+
+#BidCo {
+  margin-bottom: 0.5%;
+  margin-top: 1%;
+  margin-left: -45%;
+  color: #0d0063;
+}
+
+#desplegable {
+  margin-bottom: 0.5%;
+  margin-left: 1%;
+  margin-top: 1%; /* Eliminar márgenes */
 }
 
 nav {
-    display: flex;
-    align-items: center;
-    background-color: #f8f8f8;
-    padding: 10px;
-  }
-  
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 4px;
+}
+
 nav a {
-    margin-right: 15px;
-    text-decoration: none;
-    color: #333;
-  }
-  
-  .dropdown {
-    position: relative;
-    cursor: pointer;
-  }
-  
-  .dropbtn {
-    font-weight: bold;
-  }
-  
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: #fff;
-    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-    min-width: 160px;
-    z-index: 1;
-  }
-  
-  .dropdown-content a {
-    display: block;
-    padding: 12px 16px;
-    color: #333;
-    text-decoration: none;
-  }
-  
-  .dropdown-content a:hover {
-    background-color: #f1f1f1;
-  }
-  
-  .show {
-    display: block;
-  }
-  
+  margin-right: 15px;
+  text-decoration: none;
+  color: #333;
+}
+
+.dropdown {
+  position: relative;
+  cursor: pointer;
+}
+
+.dropbtn {
+  font-weight: bold;
+  padding: 10px 20px;
+  background-color: #ffffff; /* Color de fondo del botón */
+  color: rgb(0, 0, 0);
+}
+
+.dropdown-content {
+  font-weight: bold;
+  display: none;
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+  z-index: 1;
+  overflow: hidden;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 12px 16px;
+  color: #333;
+  text-decoration: none;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.show {
+  display: block;
+}
+
+/* Ajustes globales para imágenes */
+img {
+  max-width: 10%;
+  height: auto;
+}
+
+#search-bar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+  padding: 10px;
+  border: 1px solid #dfe1e5;
+  border-radius: 24px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 6px;
+  background-color: #fff;
+}
+
+#search-bar input {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  padding: 0 10px;
+}
+
+#search-bar button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0 10px;
+}
+
+#search-bar svg {
+  fill: #4285f4;
+}
+
+#search-bar input::placeholder {
+  color: #dfe1e5;
+}
+
+.google-login-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  margin: 10px;
+  color: #fff;
+  background-color: #4285f4;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  text-decoration: none;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+}
+
+.google-login-btn:hover {
+  background-color: #357ae8;
+}
+
+.google-login-btn:active {
+  background-color: #3367d6;
+}
+
+.google-login-btn:focus {
+  outline: none;
+  box-shadow: 0 0 3pt 2pt #c6dafc;
+}
+
+header {
+  background-color: #ffffff; /* Color azul claro */
+  display: flex;
+  align-items: center; /* Centra verticalmente */
+  justify-content: flex-start; /* Alinea todos los elementos a la izquierda */
+  /* Eliminar gap para asegurar que los elementos estén juntos */
+}
