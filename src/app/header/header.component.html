@@ -1,12 +1,15 @@
 
 <header>
     <div id="Logo">
+        <img src="Logo BidCo Recortado.jpg">
+    </div>
+    <div id="BidCo">
         <h1>BidCo</h1>
     </div>
     <div id="desplegable">
         <nav>
         <div class="dropdown" (click)="toggleDropdown()" (mouseleave)="closeDropdown()">
-            <span class="dropbtn">Secciones</span>
+            <span class="dropbtn">Sección ☰</span>
             <div class="dropdown-content" [class.show]="dropdownOpen">
                 <a routerLink="/product">Subastas</a>
                 <a routerLink="/product">Subastas a Ciegas</a>
@@ -14,14 +17,14 @@
             </div>
         </div>
         </nav> 
-          
     </div>
-    <!--
-    <nav>
-        <ul>
-            <li><a routerLink="/home">Inicio</a></li>
-            <li><a routerLink="/register">Registro</a></li>
-            <li><a routerLink="/login">Iniciar Sesión</a></li>
-        </ul>
-    </nav>-->
+    <div id="search-bar">
+        <input type="text" placeholder="Buscar en BidCo...">
+        <button type="submit">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M796 936 536 676q-29 25-64.5 37.5T400 726q-100 0-170-70t-70-170q0-100 70-170t170-70q100 0 170 70t70 170q0 35-12.5 70.5T637 611l260 260-101 65ZM400 666q67 0 113.5-46.5T560 506q0-67-46.5-113.5T400 346q-67 0-113.5 46.5T240 506q0 67 46.5 113.5T400 666Z"/></svg>
+        </button>
+    </div>
+    <div id="login-btn">
+        <a routerLink="/login" class="google-login-btn">Iniciar Sesión</a>
+    </div>
 </header>
