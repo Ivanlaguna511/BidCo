@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ProyectoSSW": {
+    "Proyecto_SSW": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -59,10 +59,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "ProyectoSSW:build:production"
+              "buildTarget": "Proyecto_SSW:build:production"
             },
             "development": {
-              "buildTarget": "ProyectoSSW:build:development"
+              "buildTarget": "Proyecto_SSW:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -92,5 +92,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

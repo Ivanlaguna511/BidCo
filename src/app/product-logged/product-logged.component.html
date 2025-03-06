@@ -1,0 +1,47 @@
+<!-- product-logged.component.html -->
+<header>
+    <h1>Plataforma de Subastas</h1>
+    <nav>
+      <ul>
+        <li><a routerLink="/home-logged">Inicio</a></li>
+        <li><a routerLink="/my-bids">Mis Pujas</a></li>
+        <li><a routerLink="/profile">Perfil</a></li>
+        <li><a routerLink="/logout">Cerrar Sesión</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <article class="producto-detalle">
+      <h2>Reloj de Pulsera Vintage</h2>
+      <img src="reloj.jpg" alt="Reloj de Pulsera Vintage">
+      <p><strong>Descripción:</strong> Reloj con diseño clásico y excelente estado.</p>
+      <p><strong>Precio inicial:</strong> 100€</p>
+      <p><strong>Precio actual:</strong> 150€</p>
+      <p><strong>Fecha de finalización:</strong> 30/03/2025</p>
+      <form class="formulario">
+        <label for="puja">Ingresa tu puja:</label>
+        <input type="number" id="puja" name="puja" min="150" required>
+        <button type="submit">Pujar</button>
+      </form>
+    </article>
+    <section class="comentarios">
+      <h3>Comentarios de Expertos</h3>
+      <article class="comentario">
+        <p><strong>Experto:</strong> Juan Pérez</p>
+        <p><strong>Valoración:</strong> 160€</p>
+        <p><strong>Comentario:</strong> Producto con excelentes características.</p>
+      </article>
+      <form class="formulario">
+        <h4>Dejar un comentario (Solo para expertos)</h4>
+        <label for="comentario">Comentario:</label>
+        <textarea id="comentario" name="comentario" rows="4" required></textarea>
+        <label for="valoracion">Valoración (€):</label>
+        <input type="number" id="valoracion" name="valoracion" min="0" required>
+        <button type="submit">Enviar Comentario</button>
+      </form>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2025 Plataforma de Subastas</p>
+  </footer>
+  

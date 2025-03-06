@@ -1,0 +1,27 @@
+
+<header>
+    <div id="Logo">
+        <h1>BidCo</h1>
+    </div>
+    <div id="desplegable">
+        <nav>
+        <div class="dropdown" (click)="toggleDropdown()" (mouseleave)="closeDropdown()">
+            <span class="dropbtn">Secciones</span>
+            <div class="dropdown-content" [class.show]="dropdownOpen">
+                <a routerLink="/product">Subastas</a>
+                <a routerLink="/product">Subastas a Ciegas</a>
+                <a routerLink="/product">Sorteos</a>
+            </div>
+        </div>
+        </nav> 
+          
+    </div>
+    <!--
+    <nav>
+        <ul>
+            <li><a routerLink="/home">Inicio</a></li>
+            <li><a routerLink="/register">Registro</a></li>
+            <li><a routerLink="/login">Iniciar Sesión</a></li>
+        </ul>
+    </nav>-->
+</header>
