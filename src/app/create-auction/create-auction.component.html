@@ -1,0 +1,43 @@
+<!-- create-auction.component.html -->
+<header>
+    <h1>Plataforma de Subastas</h1>
+    <nav>
+      <ul>
+        <li><a routerLink="/home-logged">Inicio</a></li>
+        <li><a routerLink="/my-bids">Mis Pujas</a></li>
+        <li><a routerLink="/profile">Perfil</a></li>
+        <li><a routerLink="/logout">Cerrar Sesión</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <h2>Crear Subasta</h2>
+    <form class="formulario">
+      <label for="titulo">Título de la Subasta:</label>
+      <input type="text" id="titulo" name="titulo" required>
+      
+      <label for="descripcion">Descripción:</label>
+      <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
+      
+      <label for="precio_inicial">Precio Inicial (€):</label>
+      <input type="number" id="precio_inicial" name="precio_inicial" min="0" required>
+      
+      <label for="modalidad">Modalidad de Subasta:</label>
+      <select id="modalidad" name="modalidad">
+        <option value="normal">Normal</option>
+        <option value="ciega">A Ciegas</option>
+      </select>
+      
+      <label for="fecha_fin">Fecha de Finalización:</label>
+      <input type="date" id="fecha_fin" name="fecha_fin" required>
+      
+      <label for="imagen">Imagen del Producto:</label>
+      <input type="file" id="imagen" name="imagen" accept="image/*">
+      
+      <button type="submit">Crear Subasta</button>
+    </form>
+  </main>
+  <footer>
+    <p>&copy; 2025 Plataforma de Subastas</p>
+  </footer>
+  

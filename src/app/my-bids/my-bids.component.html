@@ -1,0 +1,47 @@
+<!-- my-bids.component.html -->
+<header>
+    <h1>Plataforma de Subastas</h1>
+    <nav>
+      <ul>
+        <li><a routerLink="/home-logged">Inicio</a></li>
+        <li><a routerLink="/my-bids">Mis Pujas</a></li>
+        <li><a routerLink="/profile">Perfil</a></li>
+        <li><a routerLink="/logout">Cerrar Sesión</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <h2>Mis Pujas y Subastas</h2>
+    <section class="mis-pujas">
+      <h3>Pujas en las que Participas</h3>
+      <article class="item">
+        <h4>Reloj de Pulsera Vintage</h4>
+        <p>Tu puja: 150€</p>
+        <a routerLink="/product-logged">Ver Detalle</a>
+      </article>
+      <article class="item">
+        <h4>Cámara Digital</h4>
+        <p>Tu puja: 200€</p>
+        <a routerLink="/product-logged">Ver Detalle</a>
+      </article>
+    </section>
+    <section class="mis-subastas">
+      <h3>Tus Subastas</h3>
+      <article class="item">
+        <h4>Reloj de Pulsera Vintage</h4>
+        <p>Precio Inicial: 100€</p>
+        <p>Estado: Activa</p>
+        <a routerLink="/product-logged">Ver Detalle</a>
+      </article>
+      <article class="item">
+        <h4>Cámara Digital</h4>
+        <p>Precio Inicial: 150€</p>
+        <p>Estado: Finalizada</p>
+        <a routerLink="/product-logged">Ver Detalle</a>
+      </article>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2025 Plataforma de Subastas</p>
+  </footer>
+  
