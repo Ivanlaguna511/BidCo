@@ -1,1 +1,138 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global styles for the app */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    color: #333;
+    padding-bottom: 60px; /* Evita solapamiento con el footer */
+  }
+  
+  /* Encabezado y navegación */
+  header {
+    background: #35424a;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  header nav ul {
+    list-style: none;
+  }
+  
+  header nav ul li {
+    display: inline;
+    margin: 0 15px;
+  }
+  
+  header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  /* Contenido principal */
+  main {
+    margin: 20px;
+  }
+  
+  /* Formularios */
+  .formulario {
+    background: #fff;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+  }
+  
+  .formulario label {
+    display: block;
+    margin: 10px 0 5px;
+  }
+  
+  .formulario input,
+  .formulario textarea,
+  .formulario select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .formulario button {
+    background: #35424a;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* Secciones, artículos y elementos */
+  .secciones {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  
+  .seccion, 
+  .producto-detalle, 
+  .comentarios, 
+  .item,
+  .comentarios-expertos {
+    background: #fff;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 5px;
+  }
+  
+  .seccion img, 
+  .producto-detalle img {
+    max-width: 100%;
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  /* Aviso para usuarios no registrados */
+  .aviso {
+    margin-top: 15px;
+    font-style: italic;
+    color: #a00;
+  }
+  
+  /* Footer */
+  footer {
+    background: #35424a;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+
+/* Ajustes globales para imágenes */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Ajustes específicos para imágenes en secciones y detalles de productos */
+.seccion img,
+.producto-detalle img {
+  max-width: 300px;  /* Ajusta este valor según lo que necesites */
+  height: auto;
+  display: block;
+  margin: 0 auto 10px; /* Centra la imagen y añade margen inferior */
+}
+
+/* Ajustes responsivos para pantallas pequeñas */
+@media (max-width: 600px) {
+  .seccion img,
+  .producto-detalle img {
+    max-width: 100%;  /* Que la imagen ocupe el ancho completo en móviles */
+  }
+}
+
+  
+  

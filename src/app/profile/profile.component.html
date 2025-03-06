@@ -1,0 +1,42 @@
+<!-- profile.component.html -->
+<header>
+    <h1>Plataforma de Subastas</h1>
+    <nav>
+      <ul>
+        <li><a routerLink="/home-logged">Inicio</a></li>
+        <li><a routerLink="/my-bids">Mis Pujas</a></li>
+        <li><a routerLink="/profile">Perfil</a></li>
+        <li><a routerLink="/logout">Cerrar Sesión</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <h2>Perfil del Usuario</h2>
+    <section class="perfil-info">
+      <h3>Datos Personales</h3>
+      <p><strong>Nombre:</strong> Juan Pérez</p>
+      <p><strong>Email:</strong> juan&#64;example.com</p> <!--Los símbolos raros son para el @-->
+      <p><strong>Ciudad:</strong> Valladolid</p>
+      <a routerLink="/edit-profile">Editar Perfil</a>
+    </section>
+    <section class="perfil-config">
+      <h3>Configuración</h3>
+      <form class="formulario">
+        <label for="privacidad">Privacidad:</label>
+        <select id="privacidad" name="privacidad">
+          <option value="publico">Público</option>
+          <option value="privado">Privado</option>
+        </select>
+        <button type="submit">Guardar Cambios</button>
+      </form>
+    </section>
+    <section class="perfil-estadisticas">
+      <h3>Estadísticas de Participación</h3>
+      <p>Subastas en las que has participado: 5</p>
+      <p>Subastas creadas: 2</p>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2025 Plataforma de Subastas</p>
+  </footer>
+  
