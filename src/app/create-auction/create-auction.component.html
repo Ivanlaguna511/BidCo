@@ -1,43 +1,59 @@
 <!-- create-auction.component.html -->
-<header>
-    <h1>Plataforma de Subastas</h1>
-    <nav>
-      <ul>
-        <li><a routerLink="/home-logged">Inicio</a></li>
-        <li><a routerLink="/my-bids">Mis Pujas</a></li>
-        <li><a routerLink="/profile">Perfil</a></li>
-        <li><a routerLink="/logout">Cerrar Sesión</a></li>
-      </ul>
-    </nav>
-  </header>
-  <main>
-    <h2>Crear Subasta</h2>
-    <form class="formulario">
-      <label for="titulo">Título de la Subasta:</label>
-      <input type="text" id="titulo" name="titulo" required>
-      
-      <label for="descripcion">Descripción:</label>
-      <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
-      
-      <label for="precio_inicial">Precio Inicial (€):</label>
-      <input type="number" id="precio_inicial" name="precio_inicial" min="0" required>
-      
-      <label for="modalidad">Modalidad de Subasta:</label>
-      <select id="modalidad" name="modalidad">
-        <option value="normal">Normal</option>
-        <option value="ciega">A Ciegas</option>
-      </select>
-      
-      <label for="fecha_fin">Fecha de Finalización:</label>
-      <input type="date" id="fecha_fin" name="fecha_fin" required>
-      
-      <label for="imagen">Imagen del Producto:</label>
+<app-header></app-header>
+<main>
+  <h2>Crear Subasta</h2>
+  <form class="auction-form">
+    <!-- Sección para subir imagen -->
+    <div class="image-upload">
+      <label for="imagen" class="image-label">Subir Imagen</label>
       <input type="file" id="imagen" name="imagen" accept="image/*">
+    </div>
+    
+    <!-- Sección derecha con campos de formulario -->
+    <div class="right-section">
+      <!-- Nombre y precio base en la misma fila -->
+      <div class="product-info">
+        <div class="form-group">
+          <label for="titulo">Nombre del producto:</label>
+          <input type="text" id="titulo" name="titulo" required>
+        </div>
+        <div class="form-group">
+          <label for="precio_inicial">Precio Base (€):</label>
+          <input type="number" id="precio_inicial" name="precio_inicial" min="0" required>
+        </div>
+      </div>
+
+      <!-- Descripción -->
+      <div class="description-section">
+        <label for="descripcion">Descripción:</label>
+        <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
+      </div>
+
+      <!-- Tipo de subasta (normal o ciega) -->
+      <div class="auction-type">
+        <span>Tipo de Subasta</span>
+        <div class="auction-type-options">
+          <div>
+            <input type="radio" id="subasta_normal" name="modalidad" value="normal" checked>
+            <label for="subasta_normal">Subasta Normal</label>
+          </div>
+          <div>
+            <input type="radio" id="subasta_ciegas" name="modalidad" value="ciega">
+            <label for="subasta_ciegas">Subasta a Ciegas</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Duración -->
+      <div class="duration-section">
+        <label for="fecha_fin">Duración:</label>
+        <input type="date" id="fecha_fin" name="fecha_fin" required>
+      </div>
       
-      <button type="submit">Crear Subasta</button>
-    </form>
-  </main>
-  <footer>
-    <p>&copy; 2025 Plataforma de Subastas</p>
-  </footer>
-  
+      <!-- Botón para crear la subasta -->
+      <button type="submit" class="create-button">Crear la puja</button>
+    </div>
+  </form>
+</main>
+
+<app-footer/>

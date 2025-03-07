@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-filter',
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './filter.component.html',
-  styleUrl: './filter.component.css'
+  styleUrls: ['./filter.component.css']
 })
 export class FilterComponent {
     minPrice: number | null = null;
@@ -36,10 +36,10 @@ export class FilterComponent {
 
     applyFilter() {
         this.filterChanged.emit({
-        minPrice: this.minPrice,
-        maxPrice: this.maxPrice,
-        categories: this.selectedCategories,
-        dateOrder: this.dateOrder
-    });
-  }
+          minPrice: this.minPrice,
+          maxPrice: this.maxPrice,
+          categories: this.selectedCategories,
+          dateOrder: this.dateOrder
+        });
+    }
 }

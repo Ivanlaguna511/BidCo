@@ -1,28 +1,61 @@
-
 <header>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  
+    <!-- LOGO -->
     <div id="Logo">
-        <img src="Logo BidCo Recortado.jpg">
+      <img src="Logo BidCo Recortado.jpg" />
     </div>
+  
+    <!-- TEXTO BidCo -->
     <div id="BidCo">
-        <h1>BidCo</h1>
+      <h1>BidCo</h1>
     </div>
+  
+    <!-- DESPLEGABLE DE SECCIONES -->
     <div id="desplegable">
-        <div class="dropdown" (click)="toggleDropdown($event)">
-            <span class="dropbtn"><h1>Secciones ☰</h1></span>
-            <div class="dropdown-content" [class.show]="isDropdownOpen">
-                <a routerLink="/product">Subastas</a>
-                <a routerLink="/product">Subastas a Ciegas</a>
-                <a routerLink="/product">Sorteos</a>
-            </div>
-        </div> 
+      <div class="dropdown" (click)="toggleDropdown($event)">
+        <span class="dropbtn">
+          <h1>Secciones☰</h1>
+        </span>
+        <div class="dropdown-content" [class.show]="isDropdownOpen">
+          <a routerLink="/product">Subastas</a>
+          <a routerLink="/product">Subastas a Ciegas</a>
+          <a routerLink="/product">Sorteos</a>
+        </div>
+      </div>
     </div>
+  
+    <!-- BARRA DE BÚSQUEDA -->
     <div id="search-bar">
-        <input type="text" placeholder="Buscar en BidCo...">
-        <button type="submit">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M796 936 536 676q-29 25-64.5 37.5T400 726q-100 0-170-70t-70-170q0-100 70-170t170-70q100 0 170 70t70 170q0 35-12.5 70.5T637 611l260 260-101 65ZM400 666q67 0 113.5-46.5T560 506q0-67-46.5-113.5T400 346q-67 0-113.5 46.5T240 506q0 67 46.5 113.5T400 666Z"/></svg>
-        </button>
+      <input type="text" placeholder="Buscar en BidCo..." />
+      <button type="submit">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24">
+          <path d="M796 936 536 676q-29 25-64.5 37.5T400 726q-100 0-170-70t-70-170q0-100 70-170t170-70q100 0 170 70t70 170q0 35-12.5 70.5T637 611l260 260-101 65ZM400 666q67 0 113.5-46.5T560 506q0-67-46.5-113.5T400 346q-67 0-113.5 46.5T240 506q0 67 46.5 113.5T400 666Z"/>
+        </svg>
+      </button>
     </div>
-    <div id="login-btn">
-        <a routerLink="/login" class="google-login-btn">Iniciar Sesión</a>
+  
+    <!-- SI NO ESTÁ LOGUEADO: Botón de Iniciar Sesión -->
+    <div id="login-btn" *ngIf="!isLoggedIn">
+      <a routerLink="/login" class="google-login-btn">Iniciar Sesión</a>
     </div>
-</header>
+  
+    <!-- SI ESTÁ LOGUEADO: Menú de usuario con foto -->
+    <div *ngIf="isLoggedIn" id="user-menu">
+      <div class="user-dropdown" (click)="toggleUserMenu($event)">
+        <span class="userbtn">
+          <img
+          class="profile-pic"
+          src="default-avatar.png"
+          alt="Foto de perfil"
+          />
+        </span>
+        <div class="user-dropdown-content" [class.show]="isUserMenuOpen">
+          <a routerLink="/my-bids">Mis Pujas</a>
+          <a routerLink="/my-auctions">Mis subastas</a>
+          <a routerLink="/profile">Mi perfil</a>
+          <a (click)="logout()">Cerrar Sesión</a>
+        </div>
+    </div>
+    </div>
+  </header>

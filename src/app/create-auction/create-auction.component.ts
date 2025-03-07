@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { HeaderComponent } from '../header/header.component';
+import { FooterComponent } from "../footer/footer.component";
 
 @Component({
   selector: 'app-create-auction',
   standalone: true,
-  imports: [RouterLink],
+  imports: [
+    HeaderComponent,
+    FooterComponent],
   templateUrl: './create-auction.component.html',
   styleUrls: ['./create-auction.component.css']
 })
