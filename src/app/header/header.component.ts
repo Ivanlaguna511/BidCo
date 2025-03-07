@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, ElementRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 
@@ -10,13 +10,19 @@ import { RouterLink } from '@angular/router';
 })
 
 export class HeaderComponent {
-    dropdownOpen = false;
+    isDropdownOpen = false;
 
-    toggleDropdown() {
-        this.dropdownOpen = !this.dropdownOpen;
+    constructor(private elRef: ElementRef) {}
+
+    toggleDropdown(event: MouseEvent) {
+        event.stopPropagation(); // Evita que el clic dentro del menú cierre el menú
+        this.isDropdownOpen = !this.isDropdownOpen; // Alterna entre mostrar y ocultar
     }
 
-    closeDropdown() {
-        this.dropdownOpen = false;
+    @HostListener('document:click', ['$event'])
+    onClickOutside(event: MouseEvent) {
+        if (this.isDropdownOpen && !this.elRef.nativeElement.contains(event.target)) {
+        this.isDropdownOpen = false; // Cierra el menú si el clic es fuera del contenedor
     }
+  }
 }

@@ -7,16 +7,14 @@
         <h1>BidCo</h1>
     </div>
     <div id="desplegable">
-        <nav>
-        <div class="dropdown" (click)="toggleDropdown()" (mouseleave)="closeDropdown()">
-            <span class="dropbtn">Sección ☰</span>
-            <div class="dropdown-content" [class.show]="dropdownOpen">
+        <div class="dropdown" (click)="toggleDropdown($event)">
+            <span class="dropbtn"><h1>Secciones ☰</h1></span>
+            <div class="dropdown-content" [class.show]="isDropdownOpen">
                 <a routerLink="/product">Subastas</a>
                 <a routerLink="/product">Subastas a Ciegas</a>
                 <a routerLink="/product">Sorteos</a>
             </div>
-        </div>
-        </nav> 
+        </div> 
     </div>
     <div id="search-bar">
         <input type="text" placeholder="Buscar en BidCo...">

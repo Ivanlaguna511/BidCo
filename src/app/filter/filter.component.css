@@ -1,0 +1,45 @@
+.filter-container {
+    position: fixed; /* Mantiene el filtro fijo en la pantalla */
+    left: 0; /* Alineado al lado izquierdo */
+    width: 250px; /* Ancho del filtro */
+    height: 100vh; /* Ocupa toda la altura de la pantalla */
+    background-color: #f8f9fa; /* Color de fondo */
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    overflow-y: auto; /* Permite hacer scroll si hay muchos filtros */
+    display: flex;
+    flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
+    gap: 15px; /* Espaciado entre elementos */
+  }
+  
+  /* Estilos para los inputs y selects */
+  .filter-container input,
+  .filter-container select {
+    width: 100%; /* Ocupar todo el ancho del contenedor */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Estilos para los checkboxes */
+  .filter-container div {
+    display: flex;
+    align-items: center;
+  }
+  
+  .filter-container input[type="checkbox"] {
+    margin-right: 10px;
+  }
+  
+  /* Estilos para etiquetas */
+  .filter-container label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  /* Mejorar visibilidad de los checkboxes */
+  .filter-container div input[type="checkbox"] + label {
+    font-weight: normal;
+    cursor: pointer;
+  }
+  

@@ -1,154 +1,164 @@
+header {
+    background-color: #ffffff;
+    display: flex;
+    align-items: center; /* Centra verticalmente */
+    justify-content: flex-start; /* Alinea los elementos a la izquierda */
+    gap: 20px; /* Espacio entre los elementos */
+    padding: 10px 20px;
+    
+}
+
+/* Ajustes de Logo */
 #Logo {
-  margin-bottom: 0.5%;
-  margin-left: 2%;
-  margin-top: 1%; /* Eliminar márgenes */
+    margin: 0;
+    margin-left: 2%;
+    padding-top: 0.5%;
+    width: auto; /* Permite que la imagen mantenga su tamaño original */
+    height: 60px; /* Ajusta la altura del logo */
+    max-height: 80px; /* Evita que sea demasiado grande */
 }
 
+/* Ajustes de BidCo */
 #BidCo {
-  margin-bottom: 0.5%;
-  margin-top: 1%;
-  margin-left: -45%;
-  color: #0d0063;
+    color: #0d0063;
+    font: oblique bold 120% cursive;
+    margin: 0;
+    margin-left: -30%;
 }
 
+/* Contenedor desplegable */
 #desplegable {
-  margin-bottom: 0.5%;
-  margin-left: 1%;
-  margin-top: 1%; /* Eliminar márgenes */
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 4px;
+    margin: 0;
+    margin-left: 5%;
 }
 
-nav {
-  display: flex;
-  align-items: center;
-  background-color: #ffffff;
-  padding: 10px;
-  border-radius: 4px;
+/* Estilo de los enlaces dentro del desplegable */
+#desplegable a {
+    margin-right: 15px;
+    text-decoration: none;
+    color: #333;
 }
 
-nav a {
-  margin-right: 15px;
-  text-decoration: none;
-  color: #333;
-}
-
+/* Estilos del dropdown */
 .dropdown {
-  position: relative;
-  cursor: pointer;
+    position: relative;
+    cursor: pointer;
 }
 
 .dropbtn {
-  font-weight: bold;
-  padding: 10px 20px;
-  background-color: #ffffff; /* Color de fondo del botón */
-  color: rgb(0, 0, 0);
+    font-weight: bold;
+    font-size: 80%;
+    padding: 10px 20px;
+    color: rgb(0, 0, 0);
+    border: none;
 }
 
 .dropdown-content {
-  font-weight: bold;
-  display: none;
-  position: absolute;
-  top: 110%;
-  left: 0;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-  z-index: 1;
-  overflow: hidden;
+    font-weight: bold;
+    display: none;
+    position: absolute;
+    top: 110%;
+    left: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    overflow: hidden;
 }
 
 .dropdown-content a {
-  display: block;
-  padding: 12px 16px;
-  color: #333;
-  text-decoration: none;
+    display: block;
+    padding: 12px 16px;
+    color: #333;
+    text-decoration: none;
 }
 
 .dropdown-content a:hover {
-  background-color: #f1f1f1;
+    background-color: #f1f1f1;
 }
 
 .show {
-  display: block;
+    display: block;
 }
 
 /* Ajustes globales para imágenes */
 img {
-  max-width: 10%;
-  height: auto;
+    max-width: 10%;
+    height: auto;
 }
 
+/* Barra de búsqueda */
 #search-bar {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  max-width: 600px;
-  margin: auto;
-  padding: 10px;
-  border: 1px solid #dfe1e5;
-  border-radius: 24px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 6px;
-  background-color: #fff;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+    padding: 10px;
+    border: 1px solid #dfe1e5;
+    border-radius: 24px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 6px;
+    background-color: #fff;
+    margin-left: 5%;
 }
 
 #search-bar input {
-  flex-grow: 1;
-  border: none;
-  outline: none;
-  font-size: 16px;
-  padding: 0 10px;
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    padding: 0 10px;
 }
 
 #search-bar button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  outline: none;
-  padding: 0 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 0 10px;
 }
 
 #search-bar svg {
-  fill: #0d0063;
+    fill: #0d0063;
 }
 
 #search-bar input::placeholder {
-  color: #dfe1e5;
+    color: #dfe1e5;
 }
 
+/* Botón de inicio de sesión con Google */
 .google-login-btn {
-  display: inline-flex;
-  align-items: center;
-  padding: 10px 20px;
-  margin: 10px;
-  color: #fff;
-  background-color: #0d0063;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  text-decoration: none;
-  font-family: Arial, sans-serif;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  transition: background-color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    margin: 10px;
+    color: #fff;
+    background-color: #0d0063;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease;
 }
 
 .google-login-btn:hover {
-  background-color: #0d0063;
+    background-color: #0d0063;
 }
 
 .google-login-btn:active {
-  background-color: #0d0063;
+    background-color: #0d0063;
 }
 
 .google-login-btn:focus {
-  outline: none;
-  box-shadow: 0 0 3pt 2pt #c6dafc;
-}
-
-header {
-  background-color: #ffffff; /* Color azul claro */
-  display: flex;
-  align-items: center; /* Centra verticalmente */
-  justify-content: flex-start; /* Alinea todos los elementos a la izquierda */
-  /* Eliminar gap para asegurar que los elementos estén juntos */
+    outline: none;
+    box-shadow: 0 0 3pt 2pt #c6dafc;
 }

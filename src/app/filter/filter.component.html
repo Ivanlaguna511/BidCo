@@ -1,0 +1,22 @@
+<div class="filter-container">
+    <!-- Filtro por Precio -->
+    <h2>Filtros</h2>
+    <label>Precio:</label>
+    <input type="number" placeholder="Mínimo" [(ngModel)]="minPrice" (input)="applyFilter()" />
+    <input type="number" placeholder="Máximo" [(ngModel)]="maxPrice" (input)="applyFilter()" />
+  
+    <!-- Filtro por Categoría (Checklist) -->
+    <label>Categoría:</label>
+    <div *ngFor="let category of categories">
+        <input type="checkbox" [value]="category" (change)="updateCategoryFilter($event)" [checked]="selectedCategories.includes(category)"/>
+        {{ category }}
+    </div>
+  
+    <!-- Filtro por Fecha Restante -->
+    <label>Ordenar por Fecha Restante:</label>
+    <select [(ngModel)]="dateOrder" (change)="applyFilter()">
+        <option value="">Sin ordenar</option>
+        <option value="asc">Ascendente</option>
+        <option value="desc">Descendente</option>
+    </select>
+</div>
