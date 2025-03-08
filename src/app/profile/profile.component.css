@@ -1,0 +1,126 @@
+/* Contenedor general que alinea la barra lateral y el contenido principal */
+.container {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+  gap: 20px;
+}
+
+/* Estilos para la barra lateral */
+.sidebar {
+  width: 250px;
+  min-width: 200px;
+  background-color: #f7f7f7;
+  padding: 20px;
+  border-right: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.sidebar h2 {
+  margin-top: 0;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.sidebar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar li {
+  margin-bottom: 0.5rem;
+}
+
+.sidebar a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.sidebar a:hover {
+  text-decoration: underline;
+}
+
+/* Contenido principal */
+.profile-content {
+  flex: 1;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.profile-content h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.profile-content h3 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+/* Formularios y grupos de formulario */
+form {
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.form-group label {
+  width: 150px;
+  font-weight: 600;
+}
+
+.form-group input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.form-group button {
+  padding: 8px 12px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.form-group button:hover {
+  background-color: #0056b3;
+}
+
+/* Botón de Guardar Cambios */
+.btn-save {
+  margin-top: 1rem;
+  padding: 10px 15px;
+  background-color: #28a745;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.btn-save:hover {
+  background-color: #218838;
+}
+
+/* Ajustes para la sección de estadísticas */
+.perfil-estadisticas p {
+  margin: 0.5rem 0;
+}
