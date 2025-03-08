@@ -1,0 +1,23 @@
+#producto {
+    display: flex;
+    flex-direction: column; /* Organiza en columna primero */
+    
+}
+
+/* Estilo del nombre */
+#producto h1 {
+    font-size: 140%;
+    margin-bottom: 1%;
+}
+
+/* Imagen del producto */
+#producto img {
+    height: auto;
+    border-radius: 8px;
+}
+
+#detalles {
+    font-size: 100%;
+    margin-left: 5%;
+    max-width: 90%;
+}

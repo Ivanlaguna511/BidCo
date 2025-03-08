@@ -1,14 +1,15 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './views/home/home.component';
 import { HomeLoggedComponent } from './home-logged/home-logged.component';
-import { RegisterComponent } from './register/register.component';
-import { LoginComponent } from './login/login.component';
-import { ProductComponent } from './product/product.component';
+import { RegisterComponent } from './views/register/register.component';
+import { LoginComponent } from './views/login/login.component';
+import { ProductComponent } from './views/product/product.component';
 import { ProductLoggedComponent } from './product-logged/product-logged.component';
-import { CreateAuctionComponent } from './create-auction/create-auction.component';
-import { MyBidsComponent } from './my-bids/my-bids.component';
-import { ProfileComponent } from './profile/profile.component';
-import { ExpertCommentsComponent } from './expert-comments/expert-comments.component';
+import { CreateAuctionComponent } from './views/create-auction/create-auction.component';
+import { MyBidsComponent } from './views/my-bids/my-bids.component';
+import { ProfileComponent } from './views/profile/profile.component';
+import { ExpertCommentsComponent } from './components/expert-comments/expert-comments.component';
+import { BlindAuctionComponent } from './views/blind-auction/blind-auction.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -22,5 +23,6 @@ export const routes: Routes = [
   { path: 'my-bids', component: MyBidsComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'expert-comments', component: ExpertCommentsComponent },
+  { path: 'blind-auctions', component: BlindAuctionComponent },
   { path: '**', redirectTo: '/home' }
 ];
