@@ -3,23 +3,29 @@
 <div class="container">
   <!-- Barra lateral -->
   <aside class="sidebar">
-    <h2>Tu perfil</h2>
+    <h2>Mi perfil</h2>
     <nav>
       <ul>
         <li>
-          <a routerLink="/profile/profile-datos">Mis Datos</a>
+          <a routerLink="mis-datos" routerLinkActive="active">
+            Mis Datos
+          </a>
         </li>
         <li>
-          <a routerLink="/profile/profile-privacidad">Privacidad</a>
+          <a routerLink="privacidad" routerLinkActive="active">
+            Privacidad
+          </a>
         </li>
         <li>
-          <a routerLink="/profile/profile-estadisticas">Mis Estadísticas</a>
+          <a routerLink="estadisticas" routerLinkActive="active">
+            Mis estadísticas
+          </a>
         </li>
       </ul>
     </nav>
   </aside>
 
-  <!-- Contenido dinámico según la ruta -->
+  <!-- Aquí se inyectan las rutas hijas -->
   <main class="profile-content">
     <router-outlet></router-outlet>
   </main>

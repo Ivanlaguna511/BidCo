@@ -10,6 +10,9 @@ import { MyBidsComponent } from './views/my-bids/my-bids.component';
 import { ProfileComponent } from './views/profile/profile.component';
 import { ExpertCommentsComponent } from './components/expert-comments/expert-comments.component';
 import { BlindAuctionComponent } from './views/blind-auction/blind-auction.component';
+import { ProfileDatosComponent } from './views/profile/profile-datos/profile-datos.component';
+import { ProfilePrivacidadComponent } from './views/profile/profile-privacidad/profile-privacidad.component';
+import { ProfileEstadisticasComponent } from './views/profile/profile-estadisticas/profile-estadisticas.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -21,7 +24,23 @@ export const routes: Routes = [
   { path: 'product-logged', component: ProductLoggedComponent },
   { path: 'create-auction', component: CreateAuctionComponent },
   { path: 'my-bids', component: MyBidsComponent },
-  { path: 'profile', component: ProfileComponent },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    children: [
+      // Cuando entras a /profile, redirige a /profile/mis-datos
+      { path: '', redirectTo: 'mis-datos', pathMatch: 'full' },
+
+      // /profile/mis-datos -> carga ProfileDatosComponent
+      { path: 'mis-datos', component: ProfileDatosComponent },
+
+      // /profile/privacidad -> carga ProfilePrivacidadComponent
+      { path: 'privacidad', component: ProfilePrivacidadComponent },
+
+      // /profile/estadisticas -> carga ProfileEstadisticasComponent
+      { path: 'estadisticas', component: ProfileEstadisticasComponent }
+    ]
+  },
   { path: 'expert-comments', component: ExpertCommentsComponent },
   { path: 'blind-auctions', component: BlindAuctionComponent },
   { path: '**', redirectTo: '/home' }
