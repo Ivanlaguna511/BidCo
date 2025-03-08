@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { HeaderComponent } from '../header/header.component';
-import { ProductDetailsComponent } from '../product-details/product-details.component';
+import { HeaderComponent } from '../../components/header/header.component';
+import { ProductDetailsComponent } from '../../components/product-details/product-details.component';
 
 @Component({
   selector: 'app-product',

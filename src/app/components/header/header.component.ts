@@ -1,7 +1,7 @@
 import { Component, HostListener, ElementRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common'; 
-import { AuthService } from '../auth.service'; // Ajusta la ruta a tu servicio
+import { AuthService } from '../../auth.service'; // Ajusta la ruta a tu servicio
 
 @Component({
   selector: 'app-header',

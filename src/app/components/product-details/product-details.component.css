@@ -1,9 +1,6 @@
 #producto {
     display: flex;
     flex-direction: column; /* Organiza en columna primero */
-    margin-top: 3%;
-    margin-left: 15%;
-    
 }
 
 /* Estilo del nombre */
@@ -14,7 +11,8 @@
 
 /* Imagen del producto */
 #producto img {
-    width: 400px; /* Tamaño fijo para la imagen */
+    max-width: 400px;
+    min-width: 400px; /* Tamaño fijo para la imagen */
     height: auto;
     border-radius: 8px;
     margin-right: 15px; /* Espaciado a la derecha de la imagen */
@@ -29,7 +27,6 @@
 #detalles {
     font-size: 120%;
     margin-left: 5%;
-    max-width: 25%;
 }
 
 #detalles div{

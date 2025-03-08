@@ -1,0 +1,61 @@
+#cuerpo {
+    display: flex;
+    flex-direction: row;
+    margin-left: 15%;
+    margin-top: 2%;
+}
+
+app-product-details {
+    max-width: 60%;
+}
+
+#puja-form {
+    margin-top: 30%;
+    margin-left: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding: 10%;
+    background-color: #ffffff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    width: 120%;
+}
+
+#puja-form h2{
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+#puja-form input {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 5%;
+}
+
+#puja-form input::placeholder {
+    color: #888; /* Color del placeholder */
+}
+
+#puja-form button {
+    align-self: center;
+    background-color: #0d0063;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#puja-form button:hover {
+    background-color: #09004b;
+}
+
+#expertos {
+    display: flex;
+    flex-direction: column;
+    margin-left: 15%;
+    margin-top: 10%;
+}
