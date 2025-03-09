@@ -6,7 +6,7 @@ import { ProductItemComponent } from '../../components/product-item/product-item
 import { FooterComponent } from "../../components/footer/footer.component";
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-auction',
   standalone: true,
   imports: [
     RouterLink,
@@ -15,8 +15,9 @@ import { FooterComponent } from "../../components/footer/footer.component";
     ProductItemComponent,
     FooterComponent
 ],
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  templateUrl: './auction.component.html',
+  styleUrl: './auction.component.css'
 })
-export class HomeComponent {}
 
+export class AuctionComponent {
+}

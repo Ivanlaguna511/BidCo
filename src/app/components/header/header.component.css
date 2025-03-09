@@ -1,26 +1,71 @@
+/* Contenedor del logo y el nombre */
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Espacio entre el logo y el nombre */
+}
+
+.header-brand .logo-link img {
+  max-height: 80px; /* Ajusta este valor según el tamaño deseado */
+  height: auto;
+  width: auto;
+  max-width: none; /* Evita que se aplique la regla global de max-width */
+  object-fit: contain;
+}
+
+
+/* Estilo para el enlace del logo */
+.logo-link {
+  display: inline-block;
+  text-decoration: none;
+}
+
+/* Ajusta la imagen del logo para que su área sea la real */
+.logo-link img {
+  height: 60px; /* Ajusta la altura según lo necesites */
+  width: auto;
+  display: block;
+}
+
+/* Estilo para el enlace del nombre */
+.name-link {
+  display: inline-block;
+  text-decoration: none;
+  color: #0d0063;
+  font-family: 'Montserrat', sans-serif;
+}
+
+
+/* Enlace que envuelve el logo y el nombre */
+.header-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none; /* Quita el subrayado del enlace */
+  color: inherit; /* Mantiene el color del texto original */
+}
+
+/* Resto de estilos del header */
 header {
-    background-color: #ffffff;
-    display: flex;
-    align-items: center; /* Centra verticalmente */
-    justify-content: flex-start; /* Alinea los elementos a la izquierda */
-    gap: 20px; /* Espacio entre los elementos */
-    padding: 10px 20px;
-    
+  background-color: #ffffff;
+  display: flex;
+  align-items: center; /* Centra verticalmente */
+  justify-content: flex-start; /* Alinea los elementos a la izquierda */
+  gap: 20px; /* Espacio entre los elementos */
+  padding: 10px 20px;
 }
 
 /* Ajustes de Logo */
 #Logo {
-    margin-left: 2%;
-    padding-top: 0.5%;
-    height: auto; /* Ajusta la altura del logo */
-    width: 40%; /* Permite que la imagen mantenga su tamaño original */
+  margin-left: 2%;
+  padding-top: 0.5%;
+  height: auto; /* Ajusta la altura del logo */
+  width: 40%; /* Permite que la imagen mantenga su tamaño original */
 }
 
 /* Ajustes de BidCo */
 #BidCo {
-    color: #0d0063;
-    font-family: 'Montserrat', sans-serif;
-    margin-left: -35%;
+  color: #0d0063;
+  font-family: 'Montserrat', sans-serif;
 }
 
 /* Contenedor desplegable */
@@ -228,4 +273,3 @@ img {
   object-fit: cover; /* Evita distorsión */
   margin: auto; /* Empuja a la derecha */
 }
-

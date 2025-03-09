@@ -1,6 +1,4 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './views/home/home.component';
-import { HomeLoggedComponent } from './home-logged/home-logged.component';
 import { RegisterComponent } from './views/register/register.component';
 import { LoginComponent } from './views/login/login.component';
 import { ProductComponent } from './views/product/product.component';
@@ -13,11 +11,11 @@ import { BlindAuctionComponent } from './views/blind-auction/blind-auction.compo
 import { ProfileDatosComponent } from './views/profile/profile-datos/profile-datos.component';
 import { ProfilePrivacidadComponent } from './views/profile/profile-privacidad/profile-privacidad.component';
 import { ProfileEstadisticasComponent } from './views/profile/profile-estadisticas/profile-estadisticas.component';
+import { AuctionComponent } from './views/auction/auction.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
-  { path: 'home-logged', component: HomeLoggedComponent },
+  { path: '', redirectTo: '/auction', pathMatch: 'full' },
+  { path: 'auction', component: AuctionComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'product', component: ProductComponent },

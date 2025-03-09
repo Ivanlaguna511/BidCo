@@ -9,8 +9,10 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./filter.component.css']
 })
 export class FilterComponent {
-    minPrice: number | null = null;
-    maxPrice: number | null = null;
+    minPossible: number = 0;
+    maxPossible: number = 1000;
+    minPrice: number = 100;  // Valor inicial, ajustable según necesidad
+    maxPrice: number = 900;  // Valor inicial, ajustable según necesidad
 
     categories: string[] = ['Electrónica', 'Ropa', 'Hogar', 'Juguetes'];
     selectedCategories: string[] = [];

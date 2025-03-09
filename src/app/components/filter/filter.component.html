@@ -1,22 +1,91 @@
 <div class="filter-container">
-    <!-- Filtro por Precio -->
-    <h2>Filtros</h2>
-    <label>Precio:</label>
-    <input type="number" placeholder="Mínimo" [(ngModel)]="minPrice" (input)="applyFilter()" />
-    <input type="number" placeholder="Máximo" [(ngModel)]="maxPrice" (input)="applyFilter()" />
-  
-    <!-- Filtro por Categoría (Checklist) -->
-    <label>Categoría:</label>
-    <div *ngFor="let category of categories">
-        <input type="checkbox" [value]="category" (change)="updateCategoryFilter($event)" [checked]="selectedCategories.includes(category)"/>
-        {{ category }}
-    </div>
-  
+  <h2>Filtros</h2>
+  <form>
+    <!-- Filtro de Precio -->
+    <fieldset>
+      <legend>Precio</legend>
+      <!-- Inputs numéricos -->
+      <div class="price-filter">
+        <input
+          type="number"
+          placeholder="Mínimo"
+          name="minPriceInput"
+          [(ngModel)]="minPrice"
+          (input)="applyFilter()"
+        />
+        <input
+          type="number"
+          placeholder="Máximo"
+          name="maxPriceInput"
+          [(ngModel)]="maxPrice"
+          (input)="applyFilter()"
+        />
+      </div>
+
+      <!-- Slider de rango dual -->
+      <div class="range-slider">
+        <div class="slider">
+          <div class="track"></div>
+          <!-- Barra que representa el rango seleccionado -->
+          <div
+            class="range"
+            [ngStyle]="{
+              left: ((minPrice - minPossible) / (maxPossible - minPossible)) * 100 + '%',
+              width: ((maxPrice - minPrice) / (maxPossible - minPossible)) * 100 + '%'
+            }"
+          ></div>
+          <!-- Thumb para el precio mínimo -->
+          <input
+            type="range"
+            name="minRange"
+            class="thumb thumb--left"
+            [min]="minPossible"
+            [max]="maxPossible"
+            [(ngModel)]="minPrice"
+            (input)="applyFilter()"
+          />
+          <!-- Thumb para el precio máximo -->
+          <input
+            type="range"
+            name="maxRange"
+            class="thumb thumb--right"
+            [min]="minPossible"
+            [max]="maxPossible"
+            [(ngModel)]="maxPrice"
+            (input)="applyFilter()"
+          />
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- Filtro de Categoría -->
+    <fieldset>
+      <legend>Categoría</legend>
+      <div class="category-filter">
+        <div *ngFor="let category of categories" class="checkbox-group">
+          <input
+            type="checkbox"
+            id="{{ category }}"
+            name="category_{{ category }}"
+            [value]="category"
+            (change)="updateCategoryFilter($event)"
+            [checked]="selectedCategories.includes(category)"
+          />
+          <label for="{{ category }}">{{ category }}</label>
+        </div>
+      </div>
+    </fieldset>
+
     <!-- Filtro por Fecha Restante -->
-    <label>Ordenar por Fecha Restante:</label>
-    <select [(ngModel)]="dateOrder" (change)="applyFilter()">
-        <option value="">Sin ordenar</option>
-        <option value="asc">Ascendente</option>
-        <option value="desc">Descendente</option>
-    </select>
+    <fieldset>
+      <legend>Fecha Restante</legend>
+      <div class="date-filter">
+        <select name="dateOrder" [(ngModel)]="dateOrder" (change)="applyFilter()">
+          <option value="">Sin ordenar</option>
+          <option value="asc">Ascendente</option>
+          <option value="desc">Descendente</option>
+        </select>
+      </div>
+    </fieldset>
+  </form>
 </div>
