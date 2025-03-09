@@ -1,5 +1,6 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { Chart, registerables} from 'chart.js';
+import { ESTADISTICAS } from '../../../datos_estaticos/user_estadisticas';
 
 Chart.register(...registerables);
 
@@ -12,12 +13,12 @@ Chart.register(...registerables);
 })
 export class ProfileEstadisticasComponent implements AfterViewInit{
 // Datos de ejemplo (estos serán sustituidos por los datos reales de la base de datos)
-participatedBids = 33;
-wonBids = 33;
-createdBids = 14;
-participatedDraws = 20;
-wonDraws = 3;
-createdDraws = 0;
+participatedBids = ESTADISTICAS.participatedBids;
+wonBids = ESTADISTICAS.wonBids;
+createdBids = ESTADISTICAS.createdBids;
+participatedDraws = ESTADISTICAS.participatedDraws;
+wonDraws = ESTADISTICAS.wonDraws;
+createdDraws = ESTADISTICAS.createdDraws;
 
   ngAfterViewInit(): void {
     const ctx = (document.getElementById('barChart') as HTMLCanvasElement).getContext('2d');
