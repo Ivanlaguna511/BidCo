@@ -11,14 +11,14 @@
           placeholder="Mínimo"
           name="minPriceInput"
           [(ngModel)]="minPrice"
-          (input)="applyFilter()"
+          (input)="applyFilter('min')"
         />
         <input
           type="number"
           placeholder="Máximo"
           name="maxPriceInput"
           [(ngModel)]="maxPrice"
-          (input)="applyFilter()"
+          (input)="applyFilter('max')"
         />
       </div>
 
@@ -42,7 +42,7 @@
             [min]="minPossible"
             [max]="maxPossible"
             [(ngModel)]="minPrice"
-            (input)="applyFilter()"
+            (input)="applyFilter('min')"
           />
           <!-- Thumb para el precio máximo -->
           <input
@@ -52,7 +52,7 @@
             [min]="minPossible"
             [max]="maxPossible"
             [(ngModel)]="maxPrice"
-            (input)="applyFilter()"
+            (input)="applyFilter('max')"
           />
         </div>
       </div>

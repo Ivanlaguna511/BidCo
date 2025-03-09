@@ -16,12 +16,11 @@ export class FilterComponent {
 
     categories: string[] = ['Electrónica', 'Ropa', 'Hogar', 'Juguetes'];
     selectedCategories: string[] = [];
-
     dateOrder: string = '';
 
     @Output() filterChanged = new EventEmitter<{ 
-        minPrice: number | null, 
-        maxPrice: number | null, 
+        minPrice: number, 
+        maxPrice: number, 
         categories: string[], 
         dateOrder: string 
     }>();
@@ -36,12 +35,23 @@ export class FilterComponent {
         this.applyFilter();
     }
 
-    applyFilter() {
-        this.filterChanged.emit({
+    /**
+     * Método de validación: Se pasa 'min' o 'max' según cuál valor fue modificado.
+     * Si el usuario cambia el mínimo y este supera el máximo, se ajusta el máximo.
+     * Si cambia el máximo y este es menor que el mínimo, se ajusta el mínimo.
+     */
+    applyFilter(changedField?: 'min' | 'max') {
+      if (changedField === 'min' && this.minPrice > this.maxPrice) {
+         this.maxPrice = this.minPrice;
+      } else if (changedField === 'max' && this.maxPrice < this.minPrice) {
+         this.minPrice = this.maxPrice;
+      }
+      
+      this.filterChanged.emit({
           minPrice: this.minPrice,
           maxPrice: this.maxPrice,
           categories: this.selectedCategories,
           dateOrder: this.dateOrder
-        });
+      });
     }
 }

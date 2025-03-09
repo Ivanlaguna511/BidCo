@@ -1,0 +1,118 @@
+/* Reseteo básico y tipografía */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    background-color: #f5f5f5;
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  /* Contenedor principal centrado */
+  .register-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+  }
+  
+  /* Título grande (BidCo) */
+  .brand-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Caja del formulario */
+  .register-box {
+    background-color: #fff;
+    width: 350px;
+    padding: 30px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  /* Encabezado del formulario ("Registrarse") */
+  .register-box h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 700;
+    color: #0d0063;
+  }
+  
+  /* Formulario principal */
+  #registrationForm {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Estilos generales de los labels e inputs */
+  #registrationForm label {
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #555;
+  }
+  
+  #registrationForm input {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease;
+  }
+  
+  /* Resaltar campos inválidos */
+  #registrationForm input.invalid {
+    border-color: #d93025; /* Color de error tipo Google */
+  }
+  
+  /* Mensajes de error */
+  .error-message {
+    display: none; /* Por defecto, ocultos */
+    color: #d93025; /* Rojo de error */
+    font-size: 0.85rem;
+    margin-top: -10px; /* Ajusta la posición para que quede cerca del input */
+    margin-bottom: 10px;
+  }
+  
+  /* Botón de envío */
+  .btn-submit {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    background-color: #0d0063;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-submit:hover {
+    background-color: #150078;
+  }
+  
+  /* Texto y enlace para usuarios que ya tienen cuenta */
+  .login-redirect {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 0.9rem;
+  }
+  
+  .login-redirect a {
+    color: #0d0063;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  
+  .login-redirect a:hover {
+    text-decoration: underline;
+  }
+  
