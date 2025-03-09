@@ -1,8 +1,8 @@
 <div id="producto">
-    <div><img src="https://anpre.es/wp-content/uploads/2021/05/Relojes-de-bolsillo-2.jpg" alt="Reloj de bolsillo"></div>
+    <div><img [src]="product.img" alt="{{ product.name }}"></div>
     <div id="detalles">
-        <div><h1>Reloj de bolsillo</h1></div>
-        <div>Precio Actual: 70€</div>
-        <div>Termina en: 2 dias 5 horas</div>
+        <div><h1>{{ product.name }}</h1></div>
+        <div>{{ isBlindAuction ? 'Precio Base: ' + product.base_price + '€' : isRaffle ? 'Puntos Para Participar: ' + product.actual_price : 'Precio Actual: ' + product.actual_price + '€' }}</div>
+        <div>Termina en: {{ product.end_date }}</div>
     </div>
 </div>

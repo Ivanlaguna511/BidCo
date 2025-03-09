@@ -4,15 +4,21 @@
     <app-product-details></app-product-details>
     <div >
         <form id="puja-form">
-            <h3>Precio Actual:</h3>
-            <h2>70€</h2>
-            
-            <input type="number" id="cantidad" name="cantidad" placeholder="Introduce tu puja" min="71" required>
+            <div *ngIf="product">
+                <h3>{{ isBlindAuction ? 'Subasta a Ciegas' : isRaffle ? 'Tus Puntos:' : 'Precio Actual:' }}</h3>
+                <h2>{{ isBlindAuction ? null : isRaffle ? user.points : product.actual_price + '€' }}</h2>
+                <input 
+                    type="number" 
+                    id="cantidad" 
+                    name="cantidad" 
+                    placeholder="{{ isRaffle ? 'Introduce número de puntos' : 'Introduce tu puja' }}" 
+                    min="{{ product.actual_price }}" required>
+            </div>
             
             <button type="submit">Pujar</button>
         </form>
     </div>
 </div>
-<div id="expertos">
+<div id="expertos" *ngIf="!isRaffle">
     <h1>Valoraciones de expertos</h1>
 </div>

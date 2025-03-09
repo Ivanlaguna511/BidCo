@@ -9,24 +9,11 @@
             <a id="crear-subasta" routerLink="/create-auction">Crear Subasta</a>
         </div>
         <div id="items">
-            <a routerLink="/product">
-                <app-product-item></app-product-item>
-            </a>
-            <a routerLink="/product">
-                <app-product-item></app-product-item>
-            </a>
-            <a routerLink="/product">
-                <app-product-item></app-product-item>
-            </a>
-            <a routerLink="/product">
-                <app-product-item></app-product-item>
-            </a>
-            <a routerLink="/product">
-                <app-product-item></app-product-item>
-            </a>
-             <a routerLink="/product">
-                <app-product-item></app-product-item>
-            </a>
+            <div id="item" *ngFor="let product of products">
+                <a [routerLink]="['/product', product.id]">
+                    <app-product-item [product]="product"></app-product-item>
+                </a>
+            </div>
         </div>
     </div>
 </div>

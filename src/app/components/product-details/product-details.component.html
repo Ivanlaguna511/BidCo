@@ -1,13 +1,11 @@
-<div id="producto">
-    <div><h1>Reloj de bolsillo</h1></div>
+<div id="producto" *ngIf="product">
+    <div><h1>{{ product.name }}</h1></div>
     <div id="img_detalles">
-        <div><img src="https://anpre.es/wp-content/uploads/2021/05/Relojes-de-bolsillo-2.jpg" alt="Reloj de bolsillo"></div>
+        <div><img [src]="product.img" alt="{{ product.name }}"></div>
         <div id="detalles">
-            <div>Precio Base: 50€</div>
-            <div><p>"Elegante y atemporal, este reloj de bolsillo combina artesanía clásica con precisión moderna. 
-                Su diseño vintage, con una fina cadena y detalles grabados, lo convierte en un accesorio 
-                sofisticado para cualquier ocasión." ⏱✨</p></div>
-            <div>Creado por: Luis</div>
+            <div>{{ isRaffle ? 'Puntos para participar: ' + product.actual_price + ' puntos' : 'Precio Base: ' + product.base_price + '€' }}</div>
+            <div>{{ product.description }}</div>
+            <div>Creado por: {{ product.creator_user }}</div>
         </div>
     </div>
 </div>
