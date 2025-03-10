@@ -1,5 +1,5 @@
 import { Component, HostListener, ElementRef } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { CommonModule } from '@angular/common'; 
 import { AuthService } from '../../auth.service'; // Ajusta la ruta a tu servicio
 
@@ -21,7 +21,8 @@ export class HeaderComponent {
   constructor(
     private elRef: ElementRef,
     private el2Ref: ElementRef,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -52,9 +53,9 @@ export class HeaderComponent {
       this.isUserMenuOpen = false;
     }
   }
-
+  
   logout() {
     this.authService.logout();
-    // Opcional: redirigir a la página de inicio o login
+    this.router.navigateByUrl('/auction');
   }
 }

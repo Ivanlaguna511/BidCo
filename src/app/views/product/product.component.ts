@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -13,7 +12,6 @@ import { ESTADISTICAS } from '../../datos_estaticos/user_estadisticas';
   selector: 'app-product',
   standalone: true,
   imports: [
-    RouterLink,
     CommonModule,
     HeaderComponent,
     ProductDetailsComponent],

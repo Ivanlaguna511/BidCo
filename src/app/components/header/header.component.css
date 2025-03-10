@@ -80,7 +80,6 @@ header {
 
 /* Estilo de los enlaces dentro del desplegable */
 #desplegable a {
-    margin-right: 15px;
     color: #333;
 }
 

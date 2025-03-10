@@ -1,16 +1,18 @@
 <app-header></app-header>
 
 <main class="register-container">
-  <!-- Título principal (BidCo) -->
   <h1 class="brand-title">BidCo</h1>
 
-  <!-- Caja principal del formulario -->
   <div class="register-box">
     <h2>Registrarse</h2>
 
-    <!-- Formulario único con todos los campos -->
-    <form id="registrationForm" novalidate>
-      <!-- Nombre de usuario -->
+    <!-- Mensaje general de error -->
+    <div *ngIf="formError" class="error-summary">{{ formError }}</div>
+
+    <!-- Se usa (ngSubmit) y se referencia el formulario con #regForm -->
+    <form id="registrationForm" (ngSubmit)="register(regForm)" #regForm="ngForm" novalidate>
+      
+      <!-- Nombre de Usuario -->
       <label for="username">Nombre de Usuario</label>
       <input 
         type="text" 
@@ -18,21 +20,33 @@
         name="username" 
         required 
         minlength="3"
+        [(ngModel)]="username"
       />
-      <small class="error-message" id="username-error">
-        El nombre de usuario es obligatorio (mín. 3 caracteres).
+      <small class="error-message" *ngIf="regForm.controls['username']?.invalid && (regForm.controls['username']?.touched || regForm.submitted)">
+        <ng-container *ngIf="regForm.controls['username']?.errors?.['required']">
+          El nombre de usuario es obligatorio.
+        </ng-container>
+        <ng-container *ngIf="regForm.controls['username']?.errors?.['minlength']">
+          El nombre de usuario debe tener al menos 3 caracteres.
+        </ng-container>
       </small>
 
-      <!-- Correo electrónico -->
+      <!-- Correo Electrónico -->
       <label for="email">Correo Electrónico</label>
       <input 
         type="email" 
         id="email" 
         name="email" 
         required 
+        [(ngModel)]="email"
       />
-      <small class="error-message" id="email-error">
-        Ingresa un correo electrónico válido.
+      <small class="error-message" *ngIf="regForm.controls['email']?.invalid && (regForm.controls['email']?.touched || regForm.submitted)">
+        <ng-container *ngIf="regForm.controls['email']?.errors?.['required']">
+          El correo electrónico es obligatorio.
+        </ng-container>
+        <ng-container *ngIf="regForm.controls['email']?.errors?.['email']">
+          Ingresa un correo electrónico válido.
+        </ng-container>
       </small>
 
       <!-- Contraseña -->
@@ -43,33 +57,41 @@
         name="password" 
         required 
         minlength="6"
+        [(ngModel)]="password"
       />
-      <small class="error-message" id="password-error">
-        La contraseña es obligatoria (mín. 6 caracteres).
+      <small class="error-message" *ngIf="regForm.controls['password']?.invalid && (regForm.controls['password']?.touched || regForm.submitted)">
+        <ng-container *ngIf="regForm.controls['password']?.errors?.['required']">
+          La contraseña es obligatoria.
+        </ng-container>
+        <ng-container *ngIf="regForm.controls['password']?.errors?.['minlength']">
+          La contraseña debe tener al menos 6 caracteres.
+        </ng-container>
       </small>
 
-      <!-- Repetir contraseña -->
+      <!-- Repetir Contraseña -->
       <label for="repeat-password">Repetir Contraseña</label>
       <input 
         type="password" 
         id="repeat-password" 
-        name="repeat-password" 
+        name="repeatPassword" 
         required 
         minlength="6"
+        [(ngModel)]="repeatPassword"
       />
-      <small class="error-message" id="repeat-password-error">
+      <small class="error-message" *ngIf="(regForm.controls['repeatPassword']?.touched || regForm.submitted) && (password !== repeatPassword)">
         Las contraseñas no coinciden.
       </small>
 
-      <!-- Ciudad de residencia -->
+      <!-- Ciudad de Residencia -->
       <label for="city">Ciudad de Residencia</label>
       <input 
         type="text" 
         id="city" 
         name="city" 
         required
+        [(ngModel)]="city"
       />
-      <small class="error-message" id="city-error">
+      <small class="error-message" *ngIf="regForm.controls['city']?.invalid && (regForm.controls['city']?.touched || regForm.submitted)">
         La ciudad de residencia es obligatoria.
       </small>
 
@@ -78,13 +100,19 @@
       <input 
         type="text" 
         id="postal-code" 
-        name="postal-code" 
+        name="postalCode" 
         required 
         pattern="^[0-9]{5}$" 
         placeholder="5 dígitos"
+        [(ngModel)]="postalCode"
       />
-      <small class="error-message" id="postal-code-error">
-        El código postal debe tener 5 dígitos.
+      <small class="error-message" *ngIf="regForm.controls['postalCode']?.invalid && (regForm.controls['postalCode']?.touched || regForm.submitted)">
+        <ng-container *ngIf="regForm.controls['postalCode']?.errors?.['required']">
+          El código postal es obligatorio.
+        </ng-container>
+        <ng-container *ngIf="regForm.controls['postalCode']?.errors?.['pattern']">
+          El código postal debe tener 5 dígitos.
+        </ng-container>
       </small>
 
       <!-- Dirección 1 -->
@@ -94,8 +122,9 @@
         id="address1" 
         name="address1" 
         required
+        [(ngModel)]="address1"
       />
-      <small class="error-message" id="address1-error">
+      <small class="error-message" *ngIf="regForm.controls['address1']?.invalid && (regForm.controls['address1']?.touched || regForm.submitted)">
         La dirección es obligatoria.
       </small>
 
@@ -105,10 +134,10 @@
         type="text" 
         id="address2" 
         name="address2"
+        [(ngModel)]="address2"
       />
-      <!-- Sin mensaje de error al ser opcional -->
 
-      <!-- Botón para enviar el formulario completo -->
+      <!-- Botón para enviar el formulario -->
       <button class="btn-submit" type="submit">Confirmar Registro</button>
 
       <!-- Enlace para usuarios con cuenta -->

@@ -1,35 +1,37 @@
-<!-- login.component.html -->
- <app-header></app-header>
+<app-header></app-header>
 <main class="login-container">
-  <!-- Título principal (opcional) -->
   <h1>BidCo</h1>
-
-  <!-- Contenedor con estilo de "tarjeta" o "card" -->
   <div class="login-box">
     <h2>Iniciar Sesión</h2>
-    <form class="login-form">
-      <!-- Correo o Nombre de usuario -->
+    <!-- Se usa (ngSubmit) para interceptar el envío del formulario, ya sea con Enter o al hacer click en el botón -->
+    <form class="login-form" (ngSubmit)="login()" #loginForm="ngForm">
       <label for="email">Correo o Nombre de usuario</label>
-      <input type="text" id="email" name="email" required />
+      <input
+        type="text"
+        id="email"
+        name="email"
+        required
+        [(ngModel)]="email" />
 
-      <!-- Contraseña -->
       <label for="password">Contraseña</label>
-      <input type="password" id="password" name="password" required />
+      <input
+        type="password"
+        id="password"
+        name="password"
+        required
+        [(ngModel)]="password" />
 
-      <!-- Opciones adicionales: Recordarme y enlace de "olvidé mi contraseña" -->
       <div class="options">
         <div class="remember-me">
           <input type="checkbox" id="remember" name="remember"/>
           <label for="remember">Recordarme</label>
-        </div>        
+        </div>
         <a routerLink="/forgot-password">¿Has olvidado la contraseña?</a>
       </div>
 
-      <!-- Botón para iniciar sesión, habrá que comprobar que el usuario inicia sesion con una cuenta existente -->
       <button type="submit">Iniciar Sesión</button>
     </form>
 
-    <!-- Registro -->
     <p class="register">
       Si no tienes una cuenta
       <a routerLink="/register">Regístrate</a>
