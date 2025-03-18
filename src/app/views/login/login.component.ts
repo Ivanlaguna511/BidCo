@@ -21,10 +21,16 @@ export class LoginComponent {
 
   login() {
     // Validación simple de credenciales
-    if (this.email === 'usuario@bidco.com' && this.password === '123456') {
-      this.auth.login();
+    if (this.email === 'usuarioX@bidco.com' && this.password === '123456') {
+      this.auth.login('user');
       // Usa navigateByUrl o navigate, según prefieras
       this.router.navigateByUrl('/auction');
+    
+    } else if (this.email === 'experto@bidco.com' && this.password === '123456') {
+        this.auth.login('expert');
+        // Usa navigateByUrl o navigate, según prefieras
+        this.router.navigateByUrl('/auction');
+
     } else {
       alert('Credenciales incorrectas');
     }
