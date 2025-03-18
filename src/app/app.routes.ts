@@ -7,6 +7,7 @@ import { ProductComponent } from './views/product/product.component';
 import { ProductLoggedComponent } from './product-logged/product-logged.component';
 import { CreateAuctionComponent } from './views/create-auction/create-auction.component';
 import { MyBidsComponent } from './views/my-bids/my-bids.component';
+import { MyAuctionsComponent } from './views/my-auctions/my-auctions.component';
 import { ProfileComponent } from './views/profile/profile.component';
 import { ExpertCommentsComponent } from './components/expert-comments/expert-comments.component';
 import { BlindAuctionComponent } from './views/blind-auction/blind-auction.component';
@@ -27,6 +28,7 @@ export const routes: Routes = [
   { path: 'product-logged', component: ProductLoggedComponent },
   { path: 'create-auction', component: CreateAuctionComponent },
   { path: 'my-bids', component: MyBidsComponent },
+  { path: 'my-auctions', component: MyAuctionsComponent},
   {
     path: 'profile',
     component: ProfileComponent,

@@ -5,20 +5,26 @@
     <div >
         <form id="puja-form">
             <div *ngIf="product">
-                <h3>{{ isBlindAuction ? 'Subasta a Ciegas' : isRaffle ? 'Tus Puntos:' : 'Precio Actual:' }}</h3>
-                <h2>{{ isBlindAuction ? null : isRaffle ? user.points : product.actual_price + '€' }}</h2>
-                <input 
+                <h3>{{ isLoggedIn ? isBlindAuction ? 'Subasta a Ciegas' : isRaffle ? 'Tus Puntos:' : 'Precio Actual:' : 'Inicia Sesión Para Participar'}}</h3>
+                <h2>{{ isLoggedIn ? isBlindAuction ? null : isRaffle ? user.points : product.actual_price + '€' : ''}}</h2>
+                <input *ngIf="isLoggedIn"
                     type="number" 
                     id="cantidad" 
                     name="cantidad" 
                     placeholder="{{ isRaffle ? 'Introduce número de puntos' : 'Introduce tu puja' }}" 
                     min="{{ product.actual_price }}" required>
             </div>
-            
-            <button type="submit">Pujar</button>
+
+            <div id="puja-submit" *ngIf="isLoggedIn">
+                <button type="submit">Pujar</button>
+            </div>
+            <div id="login-btn" *ngIf="!isLoggedIn">
+                <a routerLink="/login" class="google-login-btn">Iniciar Sesión</a>
+            </div>
         </form>
     </div>
 </div>
 <div id="expertos" *ngIf="!isRaffle">
     <h1>Valoraciones de expertos</h1>
 </div>
+<app-footer/>

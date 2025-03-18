@@ -5,6 +5,7 @@ export const ESTADISTICAS = {
         participatedDraws: 20,
         wonDraws: 3,
         createdDraws: 0,
-        points: 2500
+        points: 2500,
+        bidsIds: [2,4]
     };
   

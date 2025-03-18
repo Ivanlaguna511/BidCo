@@ -9,7 +9,7 @@ export const PRODUCTS = [
                     Su diseño vintage, con una fina cadena y detalles grabados, lo convierte en un accesorio 
                     sofisticado para cualquier ocasión." ⏱✨`,
         end_date: "2 dias 5 horas",
-        creator_user: "Luis",
+        creator_user: "UsuarioX",
         type: "normal",
 
     },
@@ -37,7 +37,7 @@ export const PRODUCTS = [
                     Equipada con tecnología avanzada, ofrece imágenes nítidas, colores vibrantes y un enfoque rápido 
                     para no perder ningún detalle. Su diseño ergonómico y ligero la hace perfecta para llevar a cualquier aventura. 📸✨"`,
         end_date: "1 dias 13 horas",
-        creator_user: "Pedro",
+        creator_user: "UsuarioX",
         type: "blind",
         
     },
