@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 import { HeaderComponent } from '../../components/header/header.component';
 import { ProductDetailsComponent } from '../../components/product-details/product-details.component';
 import { FooterComponent } from "../../components/footer/footer.component";
 
 import { PRODUCTS } from '../../datos_estaticos/products';
-import { ESTADISTICAS } from '../../datos_estaticos/user_estadisticas';
+import { DATA_USER } from '../../datos_estaticos/user_estadisticas';
 import { AuthService } from '../../auth.service';
 
 @Component({
@@ -17,6 +18,7 @@ import { AuthService } from '../../auth.service';
   imports: [
     CommonModule,
     RouterLink,
+    FormsModule,
     HeaderComponent,
     ProductDetailsComponent,
     FooterComponent
@@ -28,8 +30,12 @@ export class ProductComponent {
     product: any;
     isBlindAuction: boolean = false;
     isRaffle: boolean = false;
-    user = ESTADISTICAS
+    user = DATA_USER;
     isLoggedIn = false;
+    isExpert = false;
+    showExpertForm = false;
+    reviewText = '';
+    estimatedPrice = 0;
     
     constructor(private route: ActivatedRoute, private authService: AuthService,) {}
 
@@ -48,6 +54,25 @@ export class ProductComponent {
         this.authService.isLoggedIn$.subscribe((estado) => {
             this.isLoggedIn = estado;
         });
-        
+
+        this.authService.userRole$.subscribe((estado) => {
+            this.isExpert = estado === 'expert';
+        });   
     }
+
+    openExpertForm() {
+        this.showExpertForm = true;
+        console.log(this.showExpertForm);
+    }
+
+    closeExpertForm() {
+        this.showExpertForm = false;
+        this.reviewText = '';
+        this.estimatedPrice = 0;
+    }
+
+    submitReview() {
+        console.log("Valoración enviada:", this.reviewText, "Puntuación:", this.estimatedPrice);
+        this.closeExpertForm();
+      }
 }

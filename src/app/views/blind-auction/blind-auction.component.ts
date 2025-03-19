@@ -8,6 +8,7 @@ import { ProductItemComponent } from '../../components/product-item/product-item
 import { FooterComponent } from "../../components/footer/footer.component";
 
 import { PRODUCTS } from '../../datos_estaticos/products';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-blind-auction',
@@ -24,8 +25,20 @@ import { PRODUCTS } from '../../datos_estaticos/products';
 })
 export class BlindAuctionComponent {
     products = PRODUCTS;
+    isLoggedIn = false;
+    isExpert = false;
+
+    constructor(private authService: AuthService) {}
 
     ngOnInit() {
         this.products = PRODUCTS.filter(product => product.type === "blind");
+
+        this.authService.isLoggedIn$.subscribe((estado) => {
+            this.isLoggedIn = estado;
+        });
+
+        this.authService.userRole$.subscribe((estado) => {
+            this.isExpert = estado === 'expert';
+        });  
     }
 }

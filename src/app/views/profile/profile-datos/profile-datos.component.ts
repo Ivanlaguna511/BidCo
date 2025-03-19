@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import { DATA_USER } from '../../../datos_estaticos/user_estadisticas';
+
 @Component({
   selector: 'app-profile-datos',
   standalone: true,
@@ -8,5 +10,5 @@ import { Component } from '@angular/core';
   styleUrl: './profile-datos.component.css'
 })
 export class ProfileDatosComponent {
-
+    user = DATA_USER;
 }

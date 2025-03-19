@@ -3,11 +3,11 @@
 <div id="cuerpo">
     <app-product-details></app-product-details>
     <div >
-        <form id="puja-form">
+        <form id="puja-form" *ngIf="!(isRaffle && isExpert)">
             <div *ngIf="product">
                 <h3>{{ isLoggedIn ? isBlindAuction ? 'Subasta a Ciegas' : isRaffle ? 'Tus Puntos:' : 'Precio Actual:' : 'Inicia Sesión Para Participar'}}</h3>
                 <h2>{{ isLoggedIn ? isBlindAuction ? null : isRaffle ? user.points : product.actual_price + '€' : ''}}</h2>
-                <input *ngIf="isLoggedIn"
+                <input *ngIf="isLoggedIn && !isExpert"
                     type="number" 
                     id="cantidad" 
                     name="cantidad" 
@@ -15,16 +15,34 @@
                     min="{{ product.actual_price }}" required>
             </div>
 
-            <div id="puja-submit" *ngIf="isLoggedIn">
+            <div id="puja-submit" *ngIf="isLoggedIn && !isExpert">
                 <button type="submit">Pujar</button>
             </div>
             <div id="login-btn" *ngIf="!isLoggedIn">
-                <a routerLink="/login" class="google-login-btn">Iniciar Sesión</a>
+                <a routerLink="/login">Iniciar Sesión</a>
             </div>
         </form>
     </div>
 </div>
 <div id="expertos" *ngIf="!isRaffle">
     <h1>Valoraciones de expertos</h1>
+    <button *ngIf="isExpert" (click)="openExpertForm()">Añadir Valoración</button>
+    <div id="expertForm" *ngIf="showExpertForm">
+        <form (submit)="submitReview()">
+            <h2>Añadir Valoración</h2>
+            <label for="review">Tu valoración:</label>
+            <textarea id="review" [(ngModel)]="reviewText" name="reviewText" required></textarea>
+            
+            <label for="estimatedPrice">Valor Estimado Del Producto:</label>
+            <input type="number" id="estimatedPrice" [(ngModel)]="estimatedPrice" name="estimatedPrice" min="1" max="5" required>
+            
+            <div>
+                <button (click)="closeExpertForm()">Cerrar</button>
+                <button type="submit">Enviar</button>
+            </div>
+          </form>
+    </div>
+    <hr>
+    <div>Aqui iran los comentarios</div>
 </div>
 <app-footer/>

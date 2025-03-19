@@ -8,7 +8,7 @@ import { ProductItemComponent } from '../../components/product-item/product-item
 import { FooterComponent } from "../../components/footer/footer.component";
 
 import { PRODUCTS } from '../../datos_estaticos/products';
-import { ESTADISTICAS } from '../../datos_estaticos/user_estadisticas';
+import { DATA_USER } from '../../datos_estaticos/user_estadisticas';
 
 @Component({
   selector: 'app-my-bids',
@@ -26,7 +26,7 @@ import { ESTADISTICAS } from '../../datos_estaticos/user_estadisticas';
 })
 export class MyBidsComponent {
     products = PRODUCTS;
-    pujas = ESTADISTICAS.bidsIds
+    pujas = DATA_USER.bidsIds
 
     ngOnInit() {
         this.products = PRODUCTS.filter(product => this.pujas.includes(product.id));

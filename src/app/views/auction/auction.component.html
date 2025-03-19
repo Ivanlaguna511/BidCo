@@ -6,7 +6,7 @@
     <div id="subastas">
         <div id="top-items">
             <h1>Subastas Actuales</h1>
-            <a id="crear-subasta" routerLink="/create-auction">Crear Subasta</a>
+            <a *ngIf="isLoggedIn && !isExpert" id="crear-subasta" routerLink="/create-auction">Crear Subasta</a>
         </div>
         <div id="items">
             <div id="item" *ngFor="let product of products">

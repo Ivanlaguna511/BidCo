@@ -25,12 +25,6 @@ export class LoginComponent {
       this.auth.login('user');
       // Usa navigateByUrl o navigate, según prefieras
       this.router.navigateByUrl('/auction');
-    
-    } else if (this.email === 'experto@bidco.com' && this.password === '123456') {
-        this.auth.login('expert');
-        // Usa navigateByUrl o navigate, según prefieras
-        this.router.navigateByUrl('/auction');
-
     } else {
       alert('Credenciales incorrectas');
     }

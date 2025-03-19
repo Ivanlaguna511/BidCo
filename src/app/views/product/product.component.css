@@ -69,7 +69,7 @@ app-product-details {
     align-self: center;
 }
 
-.google-login-btn {
+#login-btn a {
     display: inline-flex;
     align-items: center;
     padding: 10px 20px;
@@ -86,15 +86,80 @@ app-product-details {
     white-space: nowrap; /* Evita que el texto se divida en varias líneas */
   }
   
-.google-login-btn:hover {
+#login-btn a:hover {
     background-color: #0d0063;
 }
 
-.google-login-btn:active {
+#login-btn a:active {
     background-color: #0d0063;
 }
 
-.google-login-btn:focus {
+#login-btn a:focus {
     outline: none;
     box-shadow: 0 0 3pt 2pt #c6dafc;
+}
+
+#expertos button{
+    background-color: #0d0063;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: large;
+    margin-top: 0.5%;
+    margin-bottom: 1%;
+    max-width: 15%;
+}
+
+#expertos button:hover {
+    background-color: #09004b;
+}
+
+#expertos hr {
+    max-width: 30%;
+    margin-bottom: 1%;
+}
+
+#expertForm {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#expertForm form {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    padding: 1.5%;
+    border-radius: 8px;
+    width: 30%;
+    height: 40%;
+}
+
+#expertForm form h2 {
+    text-align: center;
+    margin-bottom: 2%;
+}
+
+#expertForm form label {
+    font-size: large;
+}
+
+#expertForm form textarea {
+    height: 200%;
+    margin-bottom: 2%;
+}
+
+#expertForm form div {
+    margin-top: 3%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

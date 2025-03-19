@@ -16,7 +16,9 @@ import { AuthService } from '../../auth.service'; // Ajusta la ruta a tu servici
 export class HeaderComponent {
   isDropdownOpen = false;
   isUserMenuOpen = false;
+  isExamplesDropdownOpen = false;
   isLoggedIn = false; // Control local del estado de login
+  isExpert = false;
 
   constructor(
     private elRef: ElementRef,
@@ -30,6 +32,10 @@ export class HeaderComponent {
     this.authService.isLoggedIn$.subscribe((estado) => {
       this.isLoggedIn = estado;
     });
+
+    this.authService.userRole$.subscribe((estado) => {
+        this.isExpert = estado === 'expert';
+    });   
 
     // Opción 2 (en vez de la suscripción):
     // this.isLoggedIn = this.authService.isLoggedIn();
@@ -45,17 +51,31 @@ export class HeaderComponent {
     this.isUserMenuOpen = !this.isUserMenuOpen;
   }
 
+  toggleDropdownExamples(event: MouseEvent) {
+    event.stopPropagation();
+    this.isExamplesDropdownOpen = !this.isExamplesDropdownOpen;
+  }
+
   @HostListener('document:click', ['$event'])
   onClickOutside(event: MouseEvent) {
     // Cierra ambos menús si se hace clic fuera
     if (!this.elRef.nativeElement.contains(event.target)) {
       this.isDropdownOpen = false;
       this.isUserMenuOpen = false;
+      this.isExamplesDropdownOpen = false;
     }
   }
   
   logout() {
     this.authService.logout();
     this.router.navigateByUrl('/auction');
+  }
+
+  loginUser() {
+    this.authService.login('user');
+  }
+
+  loginExpert() {
+    this.authService.login('expert');
   }
 }

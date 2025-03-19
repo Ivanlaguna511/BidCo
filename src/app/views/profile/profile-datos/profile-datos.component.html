@@ -19,28 +19,28 @@
     <!-- Ciudad de Residencia -->
     <div class="form-group">
       <label for="city">Ciudad de Residencia</label>
-      <input type="text" id="city" value="Ciudad" />
+      <input type="text" id="city" value="{{ user.city }}" />
       <button type="button">Cambiar</button>
     </div>
 
     <!-- Código Postal -->
     <div class="form-group">
       <label for="postal-code">Código Postal</label>
-      <input type="text" id="postal-code" value="Código Postal" />
+      <input type="text" id="postal-code" value="{{ user.postal }}" />
       <button type="button">Cambiar</button>
     </div>
 
     <!-- Dirección 1 -->
     <div class="form-group">
       <label for="address1">Dirección 1</label>
-      <input type="text" id="address1" value="Dirección 1" />
+      <input type="text" id="address1" value="{{ user.dir1 }}" />
       <button type="button">Cambiar</button>
     </div>
 
     <!-- Dirección 2 -->
     <div class="form-group">
       <label for="address2">Dirección 2</label>
-      <input type="text" id="address2" value="Dirección 2" />
+      <input type="text" id="address2" value="{{ user.dir2 }}" />
       <button type="button">Cambiar</button>
     </div>
   </form>
