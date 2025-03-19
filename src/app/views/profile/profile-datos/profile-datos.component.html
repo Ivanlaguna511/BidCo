@@ -5,40 +5,40 @@
     <!-- Nombre de usuario -->
     <div class="form-group">
       <label for="username">Nombre de usuario</label>
-      <input type="text" id="username" value="usuarioX" />
+      <input type="text" id="username" value="{{ isExpert ? expert.name : user.name}}" />
       <button type="button">Cambiar</button>
     </div>
 
     <!-- Correo -->
     <div class="form-group">
       <label for="email">Correo</label>
-      <input type="email" id="email" value="usuario1@email.com" />
+      <input type="email" id="email" value="{{ isExpert ? expert.email : user.email}}" />
       <button type="button">Cambiar</button>
     </div>
 
     <!-- Ciudad de Residencia -->
-    <div class="form-group">
+    <div class="form-group" *ngIf="!isExpert">
       <label for="city">Ciudad de Residencia</label>
       <input type="text" id="city" value="{{ user.city }}" />
       <button type="button">Cambiar</button>
     </div>
 
     <!-- Código Postal -->
-    <div class="form-group">
+    <div class="form-group" *ngIf="!isExpert">
       <label for="postal-code">Código Postal</label>
       <input type="text" id="postal-code" value="{{ user.postal }}" />
       <button type="button">Cambiar</button>
     </div>
 
     <!-- Dirección 1 -->
-    <div class="form-group">
+    <div class="form-group" *ngIf="!isExpert">
       <label for="address1">Dirección 1</label>
       <input type="text" id="address1" value="{{ user.dir1 }}" />
       <button type="button">Cambiar</button>
     </div>
 
     <!-- Dirección 2 -->
-    <div class="form-group">
+    <div class="form-group" *ngIf="!isExpert">
       <label for="address2">Dirección 2</label>
       <input type="text" id="address2" value="{{ user.dir2 }}" />
       <button type="button">Cambiar</button>

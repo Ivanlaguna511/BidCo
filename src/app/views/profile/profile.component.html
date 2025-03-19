@@ -16,7 +16,7 @@
             Privacidad
           </a>
         </li>
-        <li>
+        <li *ngIf="!isExpert">
           <a routerLink="estadisticas" routerLinkActive="active">
             Mis estadísticas
           </a>
