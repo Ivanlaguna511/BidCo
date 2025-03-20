@@ -68,7 +68,7 @@ export class HeaderComponent {
   
   logout() {
     this.authService.logout();
-    this.router.navigateByUrl('/auction');
+    //this.router.navigateByUrl('/auction');
   }
 
   loginUser() {

@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 export class AuthService {
   // Por simplicidad, usaremos un BehaviorSubject para el estado de login
   // Cambiar entre false y true para pruebas del header
-  private loggedIn = new BehaviorSubject<boolean>(true);
+  private loggedIn = new BehaviorSubject<boolean>(false);
   private userRole = new BehaviorSubject<string | null>(null);
 
   // Observable al que se puede suscribir para saber si está logueado y que rol tiene el usuario

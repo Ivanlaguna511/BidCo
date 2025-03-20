@@ -46,7 +46,7 @@ export const PRODUCTS = [
         name: "Flexo",
         img: "https://arteluz.es/741-large_default/flexo-cadiz.jpg",
         base_price: 50,
-        actual_price: 50,
+        actual_price: 55,
         description: `Un flexo moderno y funcional, ideal para iluminar tu espacio de trabajo o estudio. 
                     Su diseño ajustable permite dirigir la luz con precisión, mientras que su estructura resistente y 
                     elegante se adapta a cualquier entorno. Perfecto para leer, escribir o trabajar con comodidad. 💡✨`,

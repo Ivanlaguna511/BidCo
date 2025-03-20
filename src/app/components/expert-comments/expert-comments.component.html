@@ -1,36 +1,7 @@
 <!-- expert-comments.component.html -->
-<header>
-    <h1>Área de Expertos - Plataforma de Subastas</h1>
-    <nav>
-      <ul>
-        <li><a routerLink="/home-logged">Inicio</a></li>
-        <li><a routerLink="/profile">Perfil</a></li>
-        <li><a routerLink="/logout">Cerrar Sesión</a></li>
-      </ul>
-    </nav>
-  </header>
-  <main>
-    <h2>Comentarios y Tasaciones de Expertos</h2>
-    <section class="comentarios-expertos">
-      <article class="comentario">
-        <p><strong>Experto:</strong> Ana López</p>
-        <p><strong>Producto:</strong> Reloj de Pulsera Vintage</p>
-        <p><strong>Valoración:</strong> 160€</p>
-        <p><strong>Comentario:</strong> Producto con excelentes características y muy bien conservado.</p>
-      </article>
-      <form class="formulario">
-        <h3>Agregar Comentario</h3>
-        <label for="producto">Producto:</label>
-        <input type="text" id="producto" name="producto" value="Nombre del Producto" required>
-        <label for="valoracion">Valoración (€):</label>
-        <input type="number" id="valoracion" name="valoracion" min="0" required>
-        <label for="comentario">Comentario:</label>
-        <textarea id="comentario" name="comentario" rows="4" required></textarea>
-        <button type="submit">Enviar Comentario</button>
-      </form>
-    </section>
-  </main>
-  <footer>
-    <p>&copy; 2025 Plataforma de Subastas</p>
-  </footer>
-  
+<div>
+    <p><strong>{{ comment.expert_name }}</strong></p>
+    <p>{{ comment.comment }}</p>
+    <p><em>Valor estimado: {{ comment.estimated_price }}€</em></p>
+    <button (click)="onEdit()" *ngIf="isExpert && expert.name === comment.expert_name">Editar</button>
+</div>

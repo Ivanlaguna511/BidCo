@@ -9,7 +9,6 @@ import { CreateAuctionComponent } from './views/create-auction/create-auction.co
 import { MyBidsComponent } from './views/my-bids/my-bids.component';
 import { MyAuctionsComponent } from './views/my-auctions/my-auctions.component';
 import { ProfileComponent } from './views/profile/profile.component';
-import { ExpertCommentsComponent } from './components/expert-comments/expert-comments.component';
 import { BlindAuctionComponent } from './views/blind-auction/blind-auction.component';
 import { ProfileDatosComponent } from './views/profile/profile-datos/profile-datos.component';
 import { ProfilePrivacidadComponent } from './views/profile/profile-privacidad/profile-privacidad.component';
@@ -46,6 +45,5 @@ export const routes: Routes = [
       { path: 'estadisticas', component: ProfileEstadisticasComponent }
     ]
   },
-  { path: 'expert-comments', component: ExpertCommentsComponent },
   { path: '**', redirectTo: '/home' }
 ];

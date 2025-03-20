@@ -11,12 +11,13 @@
                     type="number" 
                     id="cantidad" 
                     name="cantidad" 
-                    placeholder="{{ isRaffle ? 'Introduce número de puntos' : 'Introduce tu puja' }}" 
-                    min="{{ product.actual_price }}" required>
+                    placeholder="{{ isRaffle ? 'Introduce número de puntos' : 'Introduce tu puja' }}"
+                    [(ngModel)]="cantidadPuja"
+                    [min]="product.actual_price" required>
             </div>
 
             <div id="puja-submit" *ngIf="isLoggedIn && !isExpert">
-                <button type="submit">Pujar</button>
+                <button (click)="onSubmit()" type="submit">Pujar</button>
             </div>
             <div id="login-btn" *ngIf="!isLoggedIn">
                 <a routerLink="/login">Iniciar Sesión</a>
@@ -43,6 +44,10 @@
           </form>
     </div>
     <hr>
-    <div>Aqui iran los comentarios</div>
+    <div id="expert-comments">
+        <div id="comment" *ngFor="let comment of comments">
+            <app-expert-comments (editClicked)="editExpertForm($event)" [comment]="comment" [expert]="expert"></app-expert-comments>
+        </div>
+    </div>
 </div>
 <app-footer/>

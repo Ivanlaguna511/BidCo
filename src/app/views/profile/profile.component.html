@@ -11,7 +11,7 @@
             Mis Datos
           </a>
         </li>
-        <li>
+        <li *ngIf="!isExpert">
           <a routerLink="privacidad" routerLinkActive="active">
             Privacidad
           </a>
