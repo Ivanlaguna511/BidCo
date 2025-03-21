@@ -2,9 +2,7 @@ import { Routes } from '@angular/router';
 
 import { RegisterComponent } from './views/register/register.component';
 import { LoginComponent } from './views/login/login.component';
-
 import { ProductComponent } from './views/product/product.component';
-import { ProductLoggedComponent } from './product-logged/product-logged.component';
 import { CreateAuctionComponent } from './views/create-auction/create-auction.component';
 import { MyBidsComponent } from './views/my-bids/my-bids.component';
 import { MyAuctionsComponent } from './views/my-auctions/my-auctions.component';
@@ -24,7 +22,6 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'product/:id', component: ProductComponent },
-  { path: 'product-logged', component: ProductLoggedComponent },
   { path: 'create-auction', component: CreateAuctionComponent },
   { path: 'my-bids', component: MyBidsComponent },
   { path: 'my-auctions', component: MyAuctionsComponent},
