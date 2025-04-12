@@ -1,76 +1,299 @@
-# Proyecto BidCoDB - API de Usuarios
+FICHERO PARA SQL (ejecutarlo en mysql workbench antes de iniciar el proyecto spring boot)
 
-Este es un proyecto de ejemplo para gestionar usuarios mediante una API REST con **Spring Boot** y una base de datos **MySQL**.
 
-## 🚀 Requisitos
+drop table IF exists puja_sorteo;
+DROP TABLE IF EXISTS puja;
+DROP TABLE IF EXISTS comentario;
+DROP TABLE IF EXISTS sorteo;
+DROP TABLE IF EXISTS subasta;
+DROP TABLE IF EXISTS trabajador;
+DROP TABLE IF EXISTS usuario;
 
-Antes de comenzar, asegúrate de tener instalados los siguientes programas:
+CREATE TABLE usuario (
+    usuario_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    primer_apellido VARCHAR(255) NOT NULL,
+    segundo_apellido VARCHAR(255) NOT NULL,
+    nombre_usuario VARCHAR(255) NOT NULL UNIQUE,
+    correo_electronico VARCHAR(255) NOT NULL UNIQUE,
+    contraseña VARCHAR(255) NOT NULL,
+    saldo DECIMAL(10,2) NOT NULL,
+    puntos INT NOT NULL,
+    pais VARCHAR(255) NOT NULL,
+    ciudad VARCHAR(255) NOT NULL,
+    codigo_postal VARCHAR(255) NOT NULL,
+    calle VARCHAR(255) NOT NULL,
+    numero_piso INT DEFAULT 0,
+    letra_piso CHAR(1) DEFAULT ' '
+);
 
-- **MySQL Workbench 8** o superior: Para gestionar tu base de datos MySQL.
-- **Java 17** o superior: Asegúrate de tener el JDK instalado y configurado correctamente.
+CREATE TABLE trabajador (
+    trabajador_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nombre_usuario VARCHAR(255) NOT NULL UNIQUE,
+    correo_electronico VARCHAR(255) NOT NULL UNIQUE,
+    contraseña VARCHAR(255) NOT NULL,
+    rol_trabajador BOOLEAN NOT NULL
+);
 
-## 🛠️ Pasos de configuración
+CREATE TABLE subasta (
+    subasta_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    fecha_inicial DATE NOT NULL,
+    fecha_final DATE NOT NULL,
+    precio_inicial DECIMAL(10,2) DEFAULT 0.00,
+    subasta_normal BOOLEAN NOT NULL,
+    nombre_articulo VARCHAR(255) NOT NULL,
+    descripcion TEXT NOT NULL,
+    precio_final DECIMAL(10,2) DEFAULT 0.00,
+    creador_id BIGINT NOT NULL,
+    FOREIGN KEY (creador_id) REFERENCES usuario(usuario_id)
+);
 
-### 1. Crear una base de datos en MySQL Workbench
+CREATE TABLE puja (
+    puja_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    fecha DATE NOT NULL,
+    importe DECIMAL(10,2) NOT NULL,
+    ganadora BOOLEAN DEFAULT FALSE,
+    usuario_id BIGINT NOT NULL,
+    subasta_id BIGINT NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuario(usuario_id),
+    FOREIGN KEY (subasta_id) REFERENCES subasta(subasta_id)
+);
 
-1. Abre **MySQL Workbench**.
-2. Conéctate a tu servidor MySQL.
-3. Crea una nueva base de datos con el nombre **`BidCoDB`** 
-4. Ejecuta el siguiente script
-  CREATE TABLE usuario (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    primer_apellido VARCHAR(100) NOT NULL,
-    segundo_apellido VARCHAR(100),
-    nombre_usuario VARCHAR(50) UNIQUE NOT NULL
-   );
+CREATE TABLE comentario (
+    comentario_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    comentario TEXT NOT NULL,
+    trabajador_id BIGINT NOT NULL,
+    subasta_id BIGINT NOT NULL,
+    FOREIGN KEY (trabajador_id) REFERENCES trabajador(trabajador_id),
+    FOREIGN KEY (subasta_id) REFERENCES subasta(subasta_id)
+);
 
-# Guía para usar Postman con la API de Usuarios
+CREATE TABLE sorteo (
+    sorteo_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nombre_articulo VARCHAR(255) NOT NULL,
+    descripcion VARCHAR(255) NOT NULL,
+    fecha_inicio DATE NOT NULL,
+    fecha_fin DATE NOT NULL,
+    puntos_necesarios INT NOT NULL,
+    puntos_finales INT default 0,  -- Este campo ha sido añadido según tu solicitud
+    trabajador_id BIGINT NOT NULL,  -- Asumiendo que 'creador' es un trabajador, y 'creador_id' es la clave foránea
+    FOREIGN KEY (trabajador_id) REFERENCES trabajador(trabajador_id)  -- Asumiendo que existe una tabla 'trabajador' con la columna 'trabajador_id'
+);
 
-Esta sección te proporcionará ejemplos de cómo utilizar **Postman** para interactuar con la API de **Usuarios** de tu aplicación **Spring Boot**. Aquí aprenderás a insertar nuevos usuarios y obtener usuarios de la base de datos.
 
-## 🚀 **1. Insertar Usuarios (POST /usuarios)**
 
-### Paso 1: Abrir Postman
+CREATE TABLE puja_sorteo (
+    puja_id  BIGINT AUTO_INCREMENT PRIMARY KEY,
+    fecha DATE NOT NULL,
+    puntos DECIMAL(10, 2) NOT NULL,
+    usuario_id BIGINT NOT NULL,
+    sorteo_id BIGINT NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuario(usuario_id),  -- Asumiendo que existe una tabla 'usuario' con una columna 'usuario_id'
+    FOREIGN KEY (sorteo_id) REFERENCES sorteo(sorteo_id)  -- Asumiendo que existe una tabla 'sorteo' con una columna 'sorteo_id'
+);
 
-1. Abre **Postman** y crea una nueva solicitud.
-2. Configura el método como `POST` y la URL como `http://localhost:8080/usuarios`.
+-- Insertar usuarios
+INSERT INTO usuario (nombre, primer_apellido, segundo_apellido, nombre_usuario, correo_electronico, contraseña, saldo, puntos, pais, ciudad, codigo_postal, calle, numero_piso, letra_piso) 
+VALUES 
+('Juan', 'Pérez', 'Gómez', 'juanperez', 'juan@example.com', 'password123', 100.00, 50, 'España', 'Madrid', '28001', 'Calle Falsa', 1, 'A'),
+('Ana', 'García', 'López', 'anagarcia', 'ana@example.com', 'password123', 200.00, 80, 'España', 'Madrid', '28002', 'Calle Real', 2, 'B');
 
-### Paso 2: Configurar el cuerpo de la solicitud
 
-En la pestaña **Body** de Postman, selecciona **raw** y **JSON**. Luego ingresa el siguiente JSON para crear un nuevo usuario:
+-- Insertar trabajadores
+INSERT INTO trabajador (nombre_usuario, correo_electronico, contraseña, rol_trabajador)
+VALUES 
+('admin', 'admin@bidco.com', 'adminpassword', TRUE),
+('moderador', 'moderador@bidco.com', 'modpassword', FALSE);
 
-#### Ejemplo de datos JSON:
+
+-- Insertar subastas
+INSERT INTO subasta (fecha_inicial, fecha_final, precio_inicial, subasta_normal, nombre_articulo, descripcion, creador_id) 
+VALUES 
+('2023-05-01', '2024-10-10', 50.00, TRUE, 'Laptop de 15"', 'Laptop de segunda mano en buen estado', 1),  -- Creador es 'Juan Pérez'
+('2025-06-01', '2025-06-10', 150.00, TRUE, 'Cámara fotográfica', 'Cámara DSLR en excelente estado', 2);  -- Creador es 'Ana García'
+
+
+-- Insertar pujas
+INSERT INTO puja (fecha, importe, ganadora, usuario_id, subasta_id) 
+VALUES 
+('2025-06-02', 60.00, FALSE, 1, 1),  -- Puja de 'Juan Pérez' en la subasta 1 (Laptop)
+('2025-05-03', 70.00, FALSE, 2, 1),  -- Puja de 'Ana García' en la subasta 1 (Laptop)
+('2025-06-02', 160.00, TRUE, 1, 2);  -- Puja de 'Juan Pérez' en la subasta 2 (Cámara)
+
+-- Insertar un sorteo
+INSERT INTO sorteo (nombre_articulo, descripcion, fecha_inicio, fecha_fin, puntos_necesarios, trabajador_id)
+VALUES
+('Televisor 4K', 'Un televisor de alta definición 4K de 50 pulgadas', '2025-05-01', '2024-05-15', 500,  1),  -- Ejemplo con un trabajador con id 1
+('Cámara Fotográfica', 'Cámara fotográfica digital de última generación', '2025-06-01', '2025-06-15', 300,  1),  -- Ejemplo con un trabajador con id 2
+('Smartphone', 'Smartphone de última tecnología con pantalla AMOLED', '2025-07-01', '2025-07-15', 200,  1);  -- Ejemplo con un trabajador con id 3
+
+
+
+
+INSERT INTO puja_sorteo (fecha, puntos, usuario_id, sorteo_id)
+VALUES
+('2024-04-10', 100, 1, 1),  -- Ejemplo de una puja en el sorteo con ID 1, realizada por el usuario con ID 1, por 100 puntos
+('2024-04-11', 150, 2, 1),  -- Ejemplo de una puja en el sorteo con ID 1, realizada por el usuario con ID 2, por 150 puntos
+('2025-04-12', 200, 1, 2),  -- Ejemplo de una puja en el sorteo con ID 2, realizada por el usuario con ID 3, por 200 puntos
+('2025-04-13', 250, 1, 2),  -- Ejemplo de una puja en el sorteo con ID 2, realizada por el usuario con ID 1, por 250 puntos
+('2025-04-14', 300, 2, 2);  -- Ejemplo de una puja en el sorteo con ID 3, realizada por el usuario con ID 2, por 300 puntos
+
+
+
+INSERT INTO comentario (comentario, trabajador_id, subasta_id) 
+VALUES ('Este es un comentario sobre la subasta 2', 1, 2);
+
+
+INSERT INTO comentario (comentario, trabajador_id, subasta_id) 
+VALUES ('Excelente subasta, muy recomendable', 2, 1);
+
+INSERT INTO comentario (comentario, trabajador_id, subasta_id) 
+VALUES ('La subasta fue muy interesante', 1, 2);
+
+
+INSERT INTO comentario (comentario, trabajador_id, subasta_id) 
+VALUES ('Este comentario tiene detalles importantes sobre la subasta 4', 1, 1);
+
+
+
+
+
+ENDPOINTS
+
+USUARIOS
+
+Get 
+http://localhost:8080/api/usuarios/buscar?nombreUsuario=juanperez
+
+Post
+http://localhost:8080/api/usuarios
 {
-  "nombre": "Carlos",
-  "primerApellido": "Gómez",
-  "segundoApellido": "Pérez",
-  "nombreUsuario": "carlosgp"
+  "nombre": "Julio",
+  "primerApellido": "Antolini",
+  "segundoApellido": "Gómez",
+  "nombreUsuario": "julioelantonella",
+  "correoElectronico": "juanillo.perezoso@example.com",
+  "contraseña": "password123das",
+  "saldo": 105.00,
+  "puntos": 500,
+  "pais": "España",
+  "ciudad": "Madrid",
+  "codigoPostal": "28001",
+  "calle": "Calle Mayor",
+  "numeroPiso": 1,
+  "letraPiso": "A"
 }
 
 
-# Guía para usar Postman - Obtener Usuarios
+-----------------------------------
 
-Esta sección proporciona ejemplos de cómo usar **Postman** para obtener todos los usuarios o un usuario específico de la base de datos a través de la API de **Usuarios** de tu aplicación **Spring Boot**.
 
-## 🚀 **1. Obtener Todos los Usuarios (GET /usuarios)**
+TRABAJADOR
 
-### Paso 1: Crear una nueva solicitud en Postman
+GET
+http://localhost:8080/api/trabajadores/2
 
-1. Abre **Postman**.
-2. Crea una nueva solicitud.
-3. Configura el método HTTP como `GET`.
-4. En la barra de URL, ingresa la siguiente URL:http://localhost:8080/usuarios
+POST
 
-# Guía para usar Postman - Obtener un Usuario por ID
+{
+  "nombreUsuario": "jdoe",
+  "correoElectronico": "jdoe@example.com",
+  "contraseña": "123456",
+  "rolTrabajador": true
+}
 
-Esta sección proporciona los pasos para obtener un usuario específico de la base de datos a través de la API de **Usuarios** en tu aplicación **Spring Boot** usando **Postman**.
+---------------------------------------
 
-## 🚀 **1. Obtener un Usuario por ID (GET /usuarios/{id})**
 
-### Paso 1: Crear una nueva solicitud en Postman
+SUBASTAS
 
-1. Abre **Postman**.
-2. Crea una nueva solicitud.
-3. Configura el método HTTP como `GET`.
-4. En la barra de URL, ingresa la siguiente URL, reemplazando `{id}` con el ID del usuario que deseas obtener. Por ejemplo, para obtener el usuario con ID **1**, la URL sería: http://localhost:8080/usuarios/1
+GET
+http://localhost:8080/api/subastas/1
+
+POST
+http://localhost:8080/api/subastas
+{
+  "fechaInicial": "2025-04-15",
+  "fechaFinal": "2025-04-22",
+  "precioInicial": 100.00,
+  "subastaNormal": true,
+  "nombreArticulo": "Laptop de alta gama",
+  "descripcion": "Laptop con características avanzadas para profesionales.",
+  "creadorId": 1
+}
+
+
+PUT(devuelve la puja ganadora)
+http://localhost:8080/api/subastas/ganador/1
+
+
+-------------------------------------------
+
+PUJAS
+
+GET
+http://localhost:8080/api/pujas/2
+
+POST
+http://localhost:8080/api/pujas
+{
+    "pujadorId": 2,
+    "fecha": "2025-04-12",
+    "importe": 150.00,
+    "subastaId": 1
+}
+
+------------------------------
+SORTEOS
+
+GET
+http://localhost:8080/api/sorteos/3
+
+POST
+http://localhost:8080/api/sorteos
+
+{
+    "creadorId" : 1,
+    "nombreArticulo": "Cámara Profesional",
+    "descripcion": "Cámara de fotos profesional, última tecnología.",
+    "fechaInicio": "2025-05-01",
+    "fechaFin": "2025-05-15",
+    "puntosNecesarios": 100
+}
+
+PUT(devuelva la pujaSorteo ganadora)
+
+http://localhost:8080/api/sorteos/ganador/1
+
+
+--------------------------------------
+
+COMENTARIOS
+GET
+http://localhost:8080/api/comentarios/1
+
+POST
+http://localhost:8080/api/comentarios
+
+{
+  "comentario": "Este es un comentario dasdad",
+  "trabajadorId": 1,
+  "subastaID": 2
+}
+
+----------------------------------
+
+PUJASSORTEO
+
+GET
+http://localhost:8080/api/pujas-sorteo/1
+
+POST
+http://localhost:8080/api/pujas-sorteo
+
+{
+  "puntos": 100.00,
+  "fecha": "2025-04-10",
+  "sorteoId": 1,
+  "pujadorId": 1
+}
