@@ -51,7 +51,6 @@ public class Usuario {
     @OneToMany(mappedBy = "creador",fetch = FetchType.LAZY)
     private List<Subasta> subastas;
 
-
     public Usuario(Long usuarioID, String nombre, String primerApellido, String segundoApellido, String nombreUsuario,
                    String correoElectronico, String contraseña, BigDecimal saldo, int puntos, String pais,
                    String ciudad, String codigoPostal, String calle, int numeroPiso, char letraPiso) {

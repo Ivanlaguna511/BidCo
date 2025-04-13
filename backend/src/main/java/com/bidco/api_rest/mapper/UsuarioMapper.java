@@ -5,23 +5,13 @@ import com.bidco.api_rest.dto.usuario.UsuarioCreateDTO;
 import com.bidco.api_rest.dto.usuario.UsuarioResponseDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-
 @Mapper(componentModel = "spring")
 public interface UsuarioMapper {
-
 
     @Mapping(target = "usuarioID", source = "usuarioID")
     @Mapping(target = "nombreUsuario", source = "nombreUsuario")
     @Mapping(target = "correoElectronico", source = "correoElectronico")
     UsuarioResponseDTO usuarioToUsuarioResponseDTO(Usuario usuario);
-
-
-    @Mapping(target = "usuarioID", ignore = true)
-    @Mapping(target = "sorteosGanados", ignore = true)
-    @Mapping(target = "sorteosParticipados", ignore = true)
-    @Mapping(target = "pujas", ignore = true)
-    Usuario usuarioCreateDTOToUsuario(UsuarioCreateDTO usuarioCreateDTO);
-
 
     @Mapping(target = "nombre", source = "nombre")
     @Mapping(target = "primerApellido", source = "primerApellido")
@@ -37,5 +27,5 @@ public interface UsuarioMapper {
     @Mapping(target = "calle", source = "calle")
     @Mapping(target = "numeroPiso", source = "numeroPiso")
     @Mapping(target = "letraPiso", source = "letraPiso")
-    UsuarioCreateDTO usuarioToUsuarioCreateDTO(Usuario usuario);
+    Usuario usuarioCreateDTOToUsuario(UsuarioCreateDTO usuario);
 }

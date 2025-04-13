@@ -47,20 +47,6 @@
         </button>
     </div>
 
-    <!-- DESPLEGABLE PARA ELEGIR UNO DE LOS 3 ESCENARIOS -->
-    <div id="desplegable">
-        <div class="dropdown" (click)="toggleDropdownExamples($event)">
-        <span class="dropbtn">
-            <h1>Escenarios ☰</h1>
-        </span>
-        <div class="dropdown-content" [class.show]="isExamplesDropdownOpen">
-            <div (click)="logout()">Usuario sin Sesión Iniciada</div>
-            <div (click)="loginUser()">Usuario con Sesión Iniciada</div>
-            <div (click)="loginExpert()">Vista de experto</div>
-        </div>
-        </div>
-    </div>
-
     <!-- SI NO ESTÁ LOGUEADO: Botón de Iniciar Sesión -->
     <div id="login-btn" *ngIf="!isLoggedIn">
         <a routerLink="/login" class="google-login-btn">Iniciar Sesión</a>
