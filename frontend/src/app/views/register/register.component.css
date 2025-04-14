@@ -71,17 +71,14 @@ body {
 }
 
 /* Mensajes de error */
+/* Se eliminó display: none para permitir que se muestren cuando Angular los inyecte */
 .error-message {
-  display: none; /* Por defecto, ocultos */
   color: #d93025;
   font-size: 0.85rem;
-  margin-top: -10px;
+  margin-top: 5px;
   margin-bottom: 10px;
-}
-
-/* Mostrar mensajes de error en inputs inválidos */
-input.ng-invalid.ng-touched, input.ng-invalid.ng-dirty {
-  border-color: #d93025;
+  /* Opción de transición: */
+  opacity: 1;
 }
 
 /* Mensaje general de error centrado */
