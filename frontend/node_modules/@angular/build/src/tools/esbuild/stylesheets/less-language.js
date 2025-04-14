@@ -42,8 +42,6 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LessStylesheetLanguage = void 0;
 const promises_1 = require("node:fs/promises");
-const node_path_1 = require("node:path");
-const node_url_1 = require("node:url");
 /**
  * The lazy-loaded instance of the less stylesheet preprocessor.
  * It is only imported and initialized if a less stylesheet is used.
@@ -117,7 +115,7 @@ async function compileString(data, filename, options, resolver, unsafeInlineJava
         },
     };
     try {
-        const { imports, map, css } = await less.render(data, {
+        const { imports, css } = await less.render(data, {
             filename,
             paths: options.includePaths,
             plugins: [resolverPlugin],
@@ -125,15 +123,13 @@ async function compileString(data, filename, options, resolver, unsafeInlineJava
             javascriptEnabled: unsafeInlineJavaScript,
             sourceMap: options.sourcemap
                 ? {
-                    sourceMapFileInline: false,
+                    sourceMapFileInline: true,
                     outputSourceFiles: true,
                 }
                 : undefined,
         });
         return {
-            // There can be cases where `less` will return an undefined `map` even
-            // though the types do not specify this as a possibility.
-            contents: map ? `${css}\n${sourceMapToUrlComment(map)}` : css,
+            contents: css,
             loader: 'css',
             watchFiles: [filename, ...imports],
         };
@@ -185,14 +181,4 @@ function convertExceptionLocation(exception) {
         // Middle element represents the line containing the exception
         lineText: exception.extract && exception.extract[Math.trunc(exception.extract.length / 2)],
     };
-}
-function sourceMapToUrlComment(sourceMap) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const map = JSON.parse(sourceMap);
-    // Using file URLs instead of paths ensures that esbuild correctly resolves the source map.
-    // https://github.com/evanw/esbuild/issues/4070
-    // https://github.com/evanw/esbuild/issues/4075
-    map.sources = map.sources.map((source) => source && (0, node_path_1.isAbsolute)(source) ? (0, node_url_1.pathToFileURL)(source).href : source);
-    const urlSourceMap = Buffer.from(JSON.stringify(map), 'utf-8').toString('base64');
-    return `/*# sourceMappingURL=data:application/json;charset=utf-8;base64,${urlSourceMap} */`;
 }
