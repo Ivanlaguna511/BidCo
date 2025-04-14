@@ -1,6 +1,7 @@
 package com.bidco.api_rest.service.impl;
 
 
+import com.bidco.api_rest.dto.usuario.LoginDTO;
 import com.bidco.api_rest.dto.usuario.UsuarioCreateDTO;
 import com.bidco.api_rest.dto.usuario.UsuarioResponseDTO;
 import com.bidco.api_rest.mapper.UsuarioMapper;
@@ -81,6 +82,25 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario.setNumeroPiso(usuarioCreateDTO.getNumeroPiso());
         usuario.setLetraPiso(usuarioCreateDTO.getLetraPiso());
         return usuario;
+    }
+
+    @Override
+    public UsuarioResponseDTO login(LoginDTO loginDTO) {
+        // Buscar por nombre de usuario
+        Optional<Usuario> usuarioOpt = usuarioRepository.findByNombreUsuario(loginDTO.getIdentificador());
+        // Si no existe, buscar por correo electrónico
+        if (!usuarioOpt.isPresent()){
+            usuarioOpt = usuarioRepository.findByCorreoElectronico(loginDTO.getIdentificador());
+        }
+        if (!usuarioOpt.isPresent()){
+            throw new EntityNotFoundException("Credenciales incorrectas");
+        }
+        Usuario usuario = usuarioOpt.get();
+        // Verificar la contraseña (en un entorno real utilizar cifrado y comparar de forma segura)
+        if (!usuario.getContraseña().equals(loginDTO.getContraseña())){
+            throw new IllegalArgumentException("Credenciales incorrectas");
+        }
+        return usuarioMapper.usuarioToUsuarioResponseDTO(usuario);
     }
 
 }
