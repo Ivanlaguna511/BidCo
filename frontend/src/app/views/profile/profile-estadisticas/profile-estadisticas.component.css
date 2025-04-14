@@ -1,0 +1,52 @@
+h2 {
+  margin-bottom: 3%;
+  text-align: center;
+  color: #333;
+}
+
+/* Contenedor general para alinear la lista y el gráfico */
+.stats-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Estilos para la lista de estadísticas */
+.stats-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 600px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.stats-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px;
+  border-bottom: 1px solid #eee;
+  font-size: 1rem;
+}
+
+.stats-list li:last-child {
+  border-bottom: none;
+}
+
+.stat-label {
+  font-weight: 500;
+  color: #555;
+}
+
+.stat-value {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Contenedor para el gráfico */
+.chart-container {
+  width: 100%;
+  max-width: 600px;
+}

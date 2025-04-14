@@ -1,0 +1,11 @@
+<div id="producto" *ngIf="product">
+    <div><h1>{{ product.name }}</h1></div>
+    <div id="img_detalles">
+        <div><img [src]="product.img" alt="{{ product.name }}"></div>
+        <div id="detalles">
+            <div>{{ isRaffle ? 'Puntos para participar: ' + product.actual_price + ' puntos' : 'Precio Base: ' + product.base_price + '€' }}</div>
+            <div>{{ product.description }}</div>
+            <div>Creado por: {{ product.creator_user }}</div>
+        </div>
+    </div>
+</div>

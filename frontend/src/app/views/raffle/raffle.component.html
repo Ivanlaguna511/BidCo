@@ -1,0 +1,20 @@
+<app-header/>
+<div>
+    <div>
+        <app-filter></app-filter>
+    </div>
+    <div id="sorteos">
+        <div id="top-items">
+            <h1>Sorteos Actuales</h1>
+            <h2 *ngIf="isLoggedIn && !isExpert && user">Puntos actuales: {{ user.points }}</h2>
+        </div>
+        <div id="items">
+            <div id="item" *ngFor="let product of products">
+                <a [routerLink]="['/product', product.id]">
+                    <app-product-item [product]="product"></app-product-item>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer/>

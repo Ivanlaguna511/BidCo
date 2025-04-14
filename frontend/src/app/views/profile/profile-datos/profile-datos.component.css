@@ -1,0 +1,67 @@
+/* Estructura de formularios */
+.form-container {
+  position: relative;
+  padding-bottom: 60px; /* Espacio para el botón */
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.form-group label {
+  width: 150px;
+  font-weight: 600;
+}
+
+.form-group input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.form-group button {
+  padding: 8px 12px;
+  border: none;
+  background-color: #0d0063;
+  color: #fff;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.form-group button:hover {
+  background-color: #0b0052;
+}
+
+/* Botón de Guardar Cambios */
+.btn-save {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 15px;
+  background-color: #28a745;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.btn-save:hover {
+  background-color: #218838;
+}
+
+h2 {
+  margin-bottom: 3%;
+}
+
+h3 {
+  margin-top: 7.5%;
+  margin-bottom: 3%;
+}

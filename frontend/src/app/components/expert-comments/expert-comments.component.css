@@ -1,0 +1,25 @@
+div {
+    border-left: 4px solid #007bff;
+    padding: 8px;
+    margin: 10px 0;
+    background: #f8f9fa;
+    border-radius: 4px;
+    max-width: 90%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+div button{
+    background-color: #0d0063;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: large;
+    margin-top: 0.5%;
+    max-width: 15%;
+}
+
+div button:hover {
+    background-color: #09004b;
+}

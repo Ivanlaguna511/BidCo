@@ -1,0 +1,283 @@
+/* Contenedor del logo y el nombre */
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Espacio entre el logo y el nombre */
+}
+
+.header-brand .logo-link img {
+  max-height: 80px; /* Ajusta este valor según el tamaño deseado */
+  height: auto;
+  width: auto;
+  max-width: none; /* Evita que se aplique la regla global de max-width */
+  object-fit: contain;
+}
+
+
+/* Estilo para el enlace del logo */
+.logo-link {
+  display: inline-block;
+  text-decoration: none;
+}
+
+/* Ajusta la imagen del logo para que su área sea la real */
+.logo-link img {
+  height: 60px; /* Ajusta la altura según lo necesites */
+  width: auto;
+  display: block;
+}
+
+/* Estilo para el enlace del nombre */
+.name-link {
+  display: inline-block;
+  text-decoration: none;
+  color: #0d0063;
+  font-family: 'Montserrat', sans-serif;
+}
+
+
+/* Enlace que envuelve el logo y el nombre */
+.header-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none; /* Quita el subrayado del enlace */
+  color: inherit; /* Mantiene el color del texto original */
+}
+
+/* Resto de estilos del header */
+header {
+  background-color: #ffffff;
+  display: flex;
+  align-items: center; /* Centra verticalmente */
+  justify-content: flex-start; /* Alinea los elementos a la izquierda */
+  gap: 20px; /* Espacio entre los elementos */
+  padding: 10px 20px;
+}
+
+/* Ajustes de Logo */
+#Logo {
+  margin-left: 2%;
+  padding-top: 0.5%;
+  height: auto; /* Ajusta la altura del logo */
+  width: 40%; /* Permite que la imagen mantenga su tamaño original */
+}
+
+/* Ajustes de BidCo */
+#BidCo {
+  color: #0d0063;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Contenedor desplegable */
+#desplegable {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 4px;
+    margin: auto;
+}
+
+/* Estilo de los enlaces dentro del desplegable */
+#desplegable a {
+    color: #333;
+}
+
+/* Estilos del dropdown */
+.dropdown {
+    position: relative;
+    cursor: pointer;
+}
+
+.dropbtn {
+    font-weight: bold;
+    font-size: 50%;
+    padding: 10px 20px;
+    color: rgb(0, 0, 0);
+    border: none;
+}
+
+.dropdown-content {
+    font-weight: bold;
+    display: none;
+    position: absolute;
+    top: 110%;
+    left: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    overflow: hidden;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 12px 16px;
+    color: #333;
+    text-decoration: none;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown-content div {
+    display: block;
+    padding: 12px 16px;
+    color: #333;
+    text-decoration: none;
+}
+
+.dropdown-content div:hover {
+    background-color: #f1f1f1;
+}
+
+.show {
+    display: block;
+}
+
+/* Ajustes globales para imágenes */
+img {
+    max-height: 15%;
+}
+
+/* Barra de búsqueda */
+#search-bar {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    margin-right: 5%;
+    padding: 10px;
+    border: 1px solid #dfe1e5;
+    border-radius: 24px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 6px;
+    background-color: #fff;
+    margin: auto;
+}
+
+#search-bar input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    padding: 0 10px;
+}
+
+#search-bar button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 0 10px;
+}
+
+#search-bar svg {
+    fill: #0d0063;
+}
+
+#search-bar input::placeholder {
+    color: #dfe1e5;
+}
+/* Botón de inicio de sesión con Google */
+.google-login-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  margin: 10px;
+  color: #fff;
+  background-color: #0d0063;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  text-decoration: none;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+}
+
+.google-login-btn:hover {
+  background-color: #0d0063;
+}
+
+.google-login-btn:active {
+  background-color: #0d0063;
+}
+
+.google-login-btn:focus {
+  outline: none;
+  box-shadow: 0 0 3pt 2pt #c6dafc;
+}
+
+/* Contenedor desplegable */
+#user-menu {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 4px;
+  margin: auto;
+}
+
+/* Estilo de los enlaces dentro del desplegable */
+#user-menu a {
+  color: #333;
+}
+
+/* Estilos del dropdown */
+.user-dropdown {
+  position: relative;
+  cursor: pointer;
+}
+
+.userbtn {
+  font-weight: bold;
+  font-size: 50%;
+  padding: 10px 20px;
+  color: rgb(0, 0, 0);
+  border: none;
+}
+
+.user-dropdown-content {
+  font-weight: bold;
+  display: none;
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  overflow: hidden;
+}
+
+.user-dropdown-content a {
+  display: block;
+  padding: 12px 16px;
+  color: #333;
+  text-decoration: none;
+}
+
+.user-dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.show {
+  display: block;
+}
+
+.profile-pic {
+  width: 50px; /* Tamaño base */
+  height: 50px;
+  min-width: 40px; /* Límites para móvil */
+  min-height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  object-fit: cover; /* Evita distorsión */
+  margin: auto; /* Empuja a la derecha */
+}

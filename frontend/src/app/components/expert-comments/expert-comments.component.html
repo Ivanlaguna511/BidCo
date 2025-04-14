@@ -1,0 +1,7 @@
+<!-- expert-comments.component.html -->
+<div>
+    <p><strong>{{ comment.expert_name }}</strong></p>
+    <p>{{ comment.comment }}</p>
+    <p><em>Valor estimado: {{ comment.estimated_price }}€</em></p>
+    <button (click)="onEdit()" *ngIf="isExpert && expert.name === comment.expert_name">Editar</button>
+</div>

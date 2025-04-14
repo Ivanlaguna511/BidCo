@@ -1,0 +1,20 @@
+<app-header/>
+<div>
+    <div>
+        <app-filter></app-filter>
+    </div>
+    <div id="subastas">
+        <div id="top-items">
+            <h1>Subastas a Ciegas Actuales</h1>
+            <a *ngIf="isLoggedIn && !isExpert" id="crear-subasta" routerLink="/create-auction">Crear Subasta</a>
+        </div>
+        <div id="items">
+            <div id="item" *ngFor="let product of products">
+                <a [routerLink]="['/product', product.id]">
+                    <app-product-item [product]="product"></app-product-item>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer/>

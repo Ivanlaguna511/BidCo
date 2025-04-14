@@ -1,0 +1,144 @@
+package com.bidco.api_rest.model;
+
+import jakarta.persistence.*;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "subasta")
+public class Subasta {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "subasta_id")
+    private Long subastaID;
+
+    @Column(name = "fecha_inicial",nullable = false)
+    private LocalDate fechaInicial;
+
+    @Column(name = "fecha_final",nullable = false)
+    private LocalDate fechaFinal;
+
+    @Column(name = "precio_inicial")
+    private BigDecimal precioInicial;
+
+    @Column(name = "subasta_normal")
+    private boolean subastaNormal;
+
+    @Column(name = "nombre_articulo",nullable = false)
+    private String nombreArticulo;
+
+    @Column(nullable = false)
+    private String descripcion;
+
+    @Column(name = "precio_final")
+    private BigDecimal precioFinal;
+
+    @ManyToOne
+    @JoinColumn(name = "creador_id")
+    private Usuario creador;
+
+    @OneToMany(mappedBy = "subasta", fetch = FetchType.LAZY)
+    private List<Puja> pujas;
+
+    @OneToMany(mappedBy = "subasta", fetch = FetchType.LAZY)
+    private List<Comentario> comentarios;
+    
+
+    public Subasta(Long subastaID, LocalDate fechaInicial, LocalDate fechaFinal, BigDecimal precioInicial, boolean subastaNormal, String nombreArticulo, String descripcion,Usuario creador) {
+        this.subastaID = subastaID;
+        this.fechaInicial = fechaInicial;
+        this.fechaFinal = fechaFinal;
+        this.precioInicial = precioInicial;
+        this.subastaNormal = subastaNormal;
+        this.nombreArticulo = nombreArticulo;
+        this.descripcion = descripcion;
+        this.precioFinal = new BigDecimal("0.0");
+        this.creador = creador;
+        this.pujas = new ArrayList<>();
+        this.comentarios = new ArrayList<>();
+    }
+
+    public Subasta() {
+
+    }
+
+    public Long getSubastaID() {
+        return subastaID;
+    }
+
+    public List<Comentario> getComentarios() {
+        return comentarios;
+    }
+
+    public LocalDate getFechaFinal() {
+        return fechaFinal;
+    }
+
+    public LocalDate getFechaInicial() {
+        return fechaInicial;
+    }
+
+    public BigDecimal getPrecioInicial() {
+        return precioInicial;
+    }
+
+    public boolean isSubastaNormal() {
+        return subastaNormal;
+    }
+
+    public String getNombreArticulo() {
+        return nombreArticulo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public BigDecimal getPrecioFinal() {
+        return precioFinal;
+    }
+
+    public List<Puja> getPujas() {
+        return pujas;
+    }
+
+    public void setSubastaID(Long subastaID) {
+        this.subastaID = subastaID;
+    }
+
+    public void setFechaInicial(LocalDate fechaInicial) {
+        this.fechaInicial = fechaInicial;
+    }
+
+    public void setFechaFinal(LocalDate fechaFinal) {
+        this.fechaFinal = fechaFinal;
+    }
+
+    public void setPrecioInicial(BigDecimal precioInicial) {
+        this.precioInicial = precioInicial;
+    }
+
+    public void setSubastaNormal(boolean subastaNormal) {
+        this.subastaNormal = subastaNormal;
+    }
+
+    public void setNombreArticulo(String nombreArticulo) {
+        this.nombreArticulo = nombreArticulo;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setPrecioFinal(BigDecimal precioFinal) {
+        this.precioFinal = precioFinal;
+    }
+
+    public void setCreador(Usuario creador) {
+        this.creador = creador;
+    }
+}

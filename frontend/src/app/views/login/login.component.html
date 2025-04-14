@@ -1,0 +1,41 @@
+<app-header></app-header>
+<main class="login-container">
+  <h1>BidCo</h1>
+  <div class="login-box">
+    <h2>Iniciar Sesión</h2>
+    <!-- Se usa (ngSubmit) para interceptar el envío del formulario, ya sea con Enter o al hacer click en el botón -->
+    <form class="login-form" (ngSubmit)="login()" #loginForm="ngForm">
+      <label for="email">Correo o Nombre de usuario</label>
+      <input
+        type="text"
+        id="email"
+        name="email"
+        required
+        [(ngModel)]="email" />
+
+      <label for="password">Contraseña</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        required
+        [(ngModel)]="password" />
+
+      <div class="options">
+        <div class="remember-me">
+          <input type="checkbox" id="remember" name="remember"/>
+          <label for="remember">Recordarme</label>
+        </div>
+        <a routerLink="/forgot-password">¿Has olvidado la contraseña?</a>
+      </div>
+
+      <button type="submit">Iniciar Sesión</button>
+    </form>
+
+    <p class="register">
+      Si no tienes una cuenta
+      <a routerLink="/register">Regístrate</a>
+    </p>
+  </div>
+</main>
+<app-footer></app-footer>

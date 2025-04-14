@@ -1,0 +1,39 @@
+#subastas {
+    margin-left: 20%;
+    padding-top: 2%;
+}
+
+#top-items {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#crear-subasta {
+    margin-right: 5%;
+    text-decoration: none;
+    padding: 10px 15px;
+    background-color: #0d0063;
+    color: white;
+    border-radius: 5px;
+}
+
+#items {
+    margin-top: 3%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    flex-shrink: 0;
+    
+}
+
+#item {
+    max-width: 15%;
+    margin-right: 5%;
+    margin-bottom: 2%;
+}
+
+#item a {
+    text-decoration: none;
+    color: inherit;
+}

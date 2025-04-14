@@ -1,0 +1,49 @@
+# Java / Spring Boot
+target/
+*.log
+*.class
+*.jar
+*.war
+*.iml
+/.idea/
+/.mvn/
+.mvn/wrapper/maven-wrapper.jar
+!src/main/**/application*.yml
+!src/main/**/application*.properties
+
+# Gradle
+.gradle/
+build/
+out/
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.ipr
+*.iml
+
+# Frontend (Angular)
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/cache/
+frontend/.angular/
+
+# Env files (si los usás)
+*.env
+.env.*
+
+# Git files (si hiciste lío con submódulos)
+**/.git/
+**/.gitmodules
+**/.gitignore~
+
+# Optional: ignore test reports, coverage, etc.
+coverage/
+test-output/

@@ -1,0 +1,75 @@
+<!-- create-auction.component.html -->
+<app-header></app-header>
+<main>
+    <h2>Crear Subasta</h2>
+    <form class="auction-form" (ngSubmit)="onSubmit()">
+        <!-- Sección para subir imagen -->
+        <div class="image-upload">
+        <label for="imagen" class="image-label">Subir Imagen</label>
+        <input type="file" id="imagen" name="imagen" accept="image/*">
+        </div>
+        
+        <!-- Sección derecha con campos de formulario -->
+        <div class="right-section">
+        <!-- Nombre y precio base en la misma fila -->
+        <div class="product-info">
+            <div class="form-group">
+            <label for="titulo">Nombre del producto:</label>
+            <input type="text" id="titulo" [(ngModel)]="subasta.nombreArticulo" name="nombreArticulo" placeholder="Nombre del producto" required>
+            </div>
+            <div class="form-group">
+            <label for="precio_inicial">Precio Base (€):</label>
+            <input type="number" id="precio_inicial" [(ngModel)]="subasta.precioInicial" name="precioInicial" min="0" required>
+            </div>
+        </div>
+
+        <!-- Descripción -->
+        <div class="description-section">
+            <label for="descripcion">Descripción:</label>
+            <textarea id="descripcion"  [(ngModel)]="subasta.descripcion" name="descripcion" rows="4" placeholder="Descripción" required></textarea>
+        </div>
+
+        <!-- Tipo de subasta y Categoría (en fila) -->
+        <div class="type-and-category">
+            <div class="auction-type">
+                <span>Tipo de Subasta</span>
+                <div class="auction-type-options">
+                    <div>
+                        <input type="radio" id="subasta_normal" [(ngModel)]="subasta.subastaNormal" name="modalidad" [value]="true" checked>
+                        <label for="subasta_normal">Subasta Normal</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="subasta_ciegas" [(ngModel)]="subasta.subastaNormal" name="modalidad" [value]="false">
+                        <label for="subasta_ciegas">Subasta a Ciegas</label>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Categoría -->
+            <div class="category-section">
+                <label for="categoria">Categoría:</label>
+                <select id="categoria" name="categoria" required>
+                    <option value="" disabled selected>Selecciona una categoría</option>
+                    <option value="tecnologia">Tecnología</option>
+                    <option value="hogar">Hogar</option>
+                    <option value="moda">Moda</option>
+                    <option value="deportes">Deportes</option>
+                    <option value="juguetes">Juguetes</option>
+                    <option value="otros">Otros</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Duración -->
+        <div class="duration-section">
+            <label for="fecha_fin">Duración:</label>
+            <input type="date" id="fecha_fin" [(ngModel)]="subasta.fechaFinal" name="fechaFinal" required>
+        </div>
+        
+        <!-- Botón para crear la subasta -->
+        <button type="submit" class="create-button">Crear la puja</button>
+        </div>
+  </form>
+</main>
+
+<app-footer/>
