@@ -1,4 +1,4 @@
-<app-header></app-header>
+<app-header></app-header> 
 
 <main class="register-container">
   <h1 class="brand-title">BidCo</h1>
@@ -6,7 +6,7 @@
   <div class="register-box">
     <h2>Registrarse</h2>
 
-    <!-- Mensaje general de error -->
+    <!-- Mensaje general de error centrado -->
     <div *ngIf="formError" class="error-summary">{{ formError }}</div>
 
     <!-- Se usa (ngSubmit) y se referencia el formulario con #regForm -->
@@ -115,27 +115,41 @@
         </ng-container>
       </small>
 
-      <!-- Dirección 1 -->
-      <label for="address1">Dirección 1</label>
+      <!-- Calle (obligatoria) -->
+      <label for="calle">Calle</label>
       <input 
         type="text" 
-        id="address1" 
-        name="address1" 
-        required
-        [(ngModel)]="address1"
+        id="calle" 
+        name="calle" 
+        required 
+        [(ngModel)]="calle"
       />
-      <small class="error-message" *ngIf="regForm.controls['address1']?.invalid && (regForm.controls['address1']?.touched || regForm.submitted)">
-        La dirección es obligatoria.
+      <small class="error-message" *ngIf="regForm.controls['calle']?.invalid && (regForm.controls['calle']?.touched || regForm.submitted)">
+        La calle es obligatoria.
       </small>
 
-      <!-- Dirección 2 (opcional) -->
-      <label for="address2">Dirección 2 (opcional)</label>
+      <!-- Número de Piso (obligatorio) -->
+      <label for="numeroPiso">Número de Piso</label>
       <input 
         type="text" 
-        id="address2" 
-        name="address2"
-        [(ngModel)]="address2"
+        id="numeroPiso" 
+        name="numeroPiso" 
+        required 
+        [(ngModel)]="numeroPiso"
       />
+      <small class="error-message" *ngIf="regForm.controls['numeroPiso']?.invalid && (regForm.controls['numeroPiso']?.touched || regForm.submitted)">
+        El número de piso es obligatorio.
+      </small>
+
+      <!-- Letra de Piso (opcional) -->
+      <label for="letraPiso">Letra de Piso (opcional)</label>
+      <input 
+        type="text" 
+        id="letraPiso" 
+        name="letraPiso"
+        [(ngModel)]="letraPiso"
+      />
+
 
       <!-- Botón para enviar el formulario -->
       <button class="btn-submit" type="submit">Confirmar Registro</button>

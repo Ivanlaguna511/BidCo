@@ -9,18 +9,6 @@ import java.math.BigDecimal;
 
 public class UsuarioCreateDTO {
 
-    @NotNull(message = "El nombre no puede ser nulo")
-    @Size(min = 1, max = 100, message = "El nombre debe tener entre 1 y 100 caracteres")
-    private String nombre;
-
-    @NotNull(message = "El primer apellido no puede ser nulo")
-    @Size(min = 1, max = 100, message = "El primer apellido debe tener entre 1 y 100 caracteres")
-    private String primerApellido;
-
-    @NotNull(message = "El segundo apellido no puede ser nulo")
-    @Size(min = 1, max = 100, message = "El segundo apellido debe tener entre 1 y 100 caracteres")
-    private String segundoApellido;
-
     @NotNull(message = "El nombre de usuario no puede ser nulo")
     @Size(min = 1, max = 100, message = "El nombre de usuario debe tener entre 1 y 100 caracteres")
     private String nombreUsuario;
@@ -51,35 +39,12 @@ public class UsuarioCreateDTO {
     @NotNull(message = "La calle no puede ser nula")
     private String calle;
 
+    @NotNull(message = "El número de piso no puede ser nulo")
     private int numeroPiso;
-    private char letraPiso;
+    
+    private String letraPiso;
 
     // Getters y setters
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getPrimerApellido() {
-        return primerApellido;
-    }
-
-    public void setPrimerApellido(String primerApellido) {
-        this.primerApellido = primerApellido;
-    }
-
-    public String getSegundoApellido() {
-        return segundoApellido;
-    }
-
-    public void setSegundoApellido(String segundoApellido) {
-        this.segundoApellido = segundoApellido;
-    }
-
     public String getNombreUsuario() {
         return nombreUsuario;
     }
@@ -160,11 +125,11 @@ public class UsuarioCreateDTO {
         this.numeroPiso = numeroPiso;
     }
 
-    public char getLetraPiso() {
+    public String getLetraPiso() {
         return letraPiso;
     }
 
-    public void setLetraPiso(char letraPiso) {
+    public void setLetraPiso(String letraPiso) {
         this.letraPiso = letraPiso;
     }
 }

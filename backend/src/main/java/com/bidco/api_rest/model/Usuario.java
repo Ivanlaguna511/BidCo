@@ -14,12 +14,6 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "usuario_id")
     private Long usuarioID;
-    @Column(nullable = false)
-    private String nombre;
-    @Column(nullable = false,name = "primer_apellido")
-    private String primerApellido;
-    @Column(nullable = false,name = "segundo_apellido")
-    private String segundoApellido;
     @Column(unique = true, nullable = false,name = "nombre_usuario")
     private String nombreUsuario;
     @Column(unique = true,nullable = false,name = "correo_electronico")
@@ -38,8 +32,10 @@ public class Usuario {
     private String codigoPostal;
     @Column(nullable = false)
     private String calle;
+    @Column(nullable = false)
     private int numeroPiso;
-    private char letraPiso;
+    
+    private String letraPiso;
 
 
     @OneToMany(mappedBy = "pujador",fetch = FetchType.LAZY)
@@ -51,13 +47,10 @@ public class Usuario {
     @OneToMany(mappedBy = "creador",fetch = FetchType.LAZY)
     private List<Subasta> subastas;
 
-    public Usuario(Long usuarioID, String nombre, String primerApellido, String segundoApellido, String nombreUsuario,
+    public Usuario(Long usuarioID, String nombreUsuario,
                    String correoElectronico, String contraseña, BigDecimal saldo, int puntos, String pais,
-                   String ciudad, String codigoPostal, String calle, int numeroPiso, char letraPiso) {
+                   String ciudad, String codigoPostal, String calle, int numeroPiso, String letraPiso) {
         this.usuarioID = usuarioID;
-        this.nombre = nombre;
-        this.primerApellido = primerApellido;
-        this.segundoApellido = segundoApellido;
         this.nombreUsuario = nombreUsuario;
         this.correoElectronico = correoElectronico;
         this.contraseña = contraseña;
@@ -80,18 +73,6 @@ public class Usuario {
 
     public Long getUsuarioID() {
         return usuarioID;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public String getPrimerApellido() {
-        return primerApellido;
-    }
-
-    public String getSegundoApellido() {
-        return segundoApellido;
     }
 
     public String getNombreUsuario() {
@@ -134,11 +115,9 @@ public class Usuario {
         return numeroPiso;
     }
 
-    public char getLetraPiso() {
+    public String getLetraPiso() {
         return letraPiso;
     }
-
-
 
     public List<Puja> getPujas() {
         return pujas;
@@ -146,18 +125,6 @@ public class Usuario {
 
     public void setUsuarioID(Long usuarioID) {
         this.usuarioID = usuarioID;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public void setPrimerApellido(String primerApellido) {
-        this.primerApellido = primerApellido;
-    }
-
-    public void setSegundoApellido(String segundoApellido) {
-        this.segundoApellido = segundoApellido;
     }
 
     public void setNombreUsuario(String nombreUsuario) {
@@ -200,7 +167,7 @@ public class Usuario {
         this.numeroPiso = numeroPiso;
     }
 
-    public void setLetraPiso(char letraPiso) {
+    public void setLetraPiso(String letraPiso) {
         this.letraPiso = letraPiso;
     }
 

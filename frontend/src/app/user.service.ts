@@ -2,20 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-// Puedes definir una interfaz para la respuesta
+// Interfaz para la respuesta del usuario
 export interface UsuarioResponse {
   usuarioID: number;
   nombreUsuario: string;
   correoElectronico: string;
 }
 
-// También puedes crear una interfaz para los datos que envías (si no usas directamente el DTO)
+// Interfaz para los datos que se envían al back-end
 export interface UsuarioCreate {
-  // Asegúrate de que los nombres de propiedad coincidan con los que espera el back-end,
-  // por ejemplo, primerApellido, segundoApellido, etc.
-  nombre: string;
-  primerApellido: string;
-  segundoApellido: string;
   nombreUsuario: string;
   correoElectronico: string;
   contraseña: string;
@@ -25,7 +20,7 @@ export interface UsuarioCreate {
   ciudad: string;
   codigoPostal: string;
   calle: string;
-  numeroPiso?: number;
+  numeroPiso: number;
   letraPiso?: string;
 }
 
@@ -33,7 +28,7 @@ export interface UsuarioCreate {
   providedIn: 'root'
 })
 export class UserService {
-  // Define la URL base de tu API. Si usas variables de entorno, ponla en environment.ts.
+  // URL base de la API
   private apiUrl: string = 'http://localhost:8080/api/usuarios';
 
   constructor(private http: HttpClient) {}

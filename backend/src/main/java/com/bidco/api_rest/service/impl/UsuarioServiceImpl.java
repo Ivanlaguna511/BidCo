@@ -70,9 +70,6 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     private Usuario actualizarParametrosUsuario(Usuario usuario,UsuarioCreateDTO usuarioCreateDTO) {
-        usuario.setNombre(usuarioCreateDTO.getNombre());
-        usuario.setPrimerApellido(usuarioCreateDTO.getPrimerApellido());
-        usuario.setSegundoApellido(usuarioCreateDTO.getSegundoApellido());
         usuario.setCorreoElectronico(usuarioCreateDTO.getCorreoElectronico());
         usuario.setContraseña(usuarioCreateDTO.getContraseña());
         usuario.setSaldo(usuarioCreateDTO.getSaldo());

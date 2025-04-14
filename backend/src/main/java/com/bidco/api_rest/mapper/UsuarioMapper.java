@@ -13,9 +13,6 @@ public interface UsuarioMapper {
     @Mapping(target = "correoElectronico", source = "correoElectronico")
     UsuarioResponseDTO usuarioToUsuarioResponseDTO(Usuario usuario);
 
-    @Mapping(target = "nombre", source = "nombre")
-    @Mapping(target = "primerApellido", source = "primerApellido")
-    @Mapping(target = "segundoApellido", source = "segundoApellido")
     @Mapping(target = "nombreUsuario", source = "nombreUsuario")
     @Mapping(target = "correoElectronico", source = "correoElectronico")
     @Mapping(target = "contraseña", source = "contraseña")

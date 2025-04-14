@@ -15,46 +15,40 @@ import { AuthService } from '../../auth.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  // Propiedades para el formulario
+  // Propiedades del formulario
   username: string = '';
   email: string = '';
   password: string = '';
   repeatPassword: string = '';
   city: string = '';
   postalCode: string = '';
-  address1: string = '';
-  address2: string = '';
 
-  // Propiedades adicionales necesarias por el back-end
-  firstName: string = '';       // nombre
-  primerApellido: string = '';  
-  segundoApellido: string = '';
-  pais: string = 'España';       // Valor por defecto o a partir de otro campo
+  // Nuevos campos de dirección:
+  calle: string = '';
+  numeroPiso: string = '';  // Se almacena como string y luego se convierte a number
+  letraPiso: string = '';     // Opcional
+
+  // Propiedades adicionales requeridas por el back-end
+  pais: string = 'España';      // Valor por defecto
   saldo: number = 0;
   puntos: number = 0;
-  numeroPiso: number = 0;
-  letraPiso: string = '';
 
   formError: string = '';
 
-  constructor(private router: Router, private userService: UserService,  private authService: AuthService) {}
+  constructor(private router: Router, private userService: UserService, private authService: AuthService) {}
 
   register(form: NgForm) {
     console.log("Formulario enviado", form);
 
-    // Validación del formulario y comparación de contraseñas
+    // Validación: campos inválidos o contraseñas que no coinciden
     if (form.invalid || this.password !== this.repeatPassword) {
       this.formError = 'Por favor, revisa los campos con errores.';
       Object.values(form.controls).forEach(control => control.markAsTouched());
       return;
     }
 
-    // Crear el objeto que se enviará al back-end. 
-    // Aquí puedes ajustar los nombres de los campos según lo que espera tu DTO.
+    // Crear el objeto a enviar al back-end con los nombres de propiedad que coinciden con la BD
     const nuevoUsuario: UsuarioCreate = {
-      nombre: this.firstName || this.username,  // Ajusta según convenga
-      primerApellido: this.primerApellido,
-      segundoApellido: this.segundoApellido,
       nombreUsuario: this.username,
       correoElectronico: this.email,
       contraseña: this.password,
@@ -63,22 +57,25 @@ export class RegisterComponent {
       pais: this.pais,
       ciudad: this.city,
       codigoPostal: this.postalCode,
-      calle: this.address1,
-      numeroPiso: this.numeroPiso,
+      calle: this.calle,
+      numeroPiso: +this.numeroPiso, // Conversión a number
       letraPiso: this.letraPiso
     };
 
-    // Realizar la llamada al servicio para registrar el usuario
+    // Llamada al servicio para registrar al usuario
     this.userService.registerUser(nuevoUsuario).subscribe({
       next: (respuesta: UsuarioResponse) => {
         console.log("Registro exitoso:", respuesta);
         this.authService.login('user'); 
-        // Redirigir a la página de subastas u otra página
         this.router.navigate(['/auction']);
       },
       error: (error) => {
         console.error("Error al registrar usuario:", error);
-        this.formError = 'Ha ocurrido un error durante el registro. Inténtalo nuevamente.';
+        if (error.error && error.error.message) {
+          this.formError = `Error: ${error.error.message}`;
+        } else {
+          this.formError = `Ha ocurrido un error durante el registro: ${error.statusText || 'Error desconocido'}. Inténtalo nuevamente.`;
+        }
       }
     });
   }
