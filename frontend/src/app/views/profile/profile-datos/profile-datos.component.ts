@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
 
 import { DATA_USER, DATA_EXPERT } from '../../../datos_estaticos/user_estadisticas';
-import { AuthService } from '../../../auth.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-profile-datos',

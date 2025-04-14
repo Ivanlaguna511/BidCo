@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { HeaderComponent } from "../../components/header/header.component";
 import { FooterComponent } from "../../components/footer/footer.component";
-import { AuthService } from "../../auth.service";
+import { AuthService } from "../../services/auth.service";
 import { FormsModule } from '@angular/forms';
 
 @Component({

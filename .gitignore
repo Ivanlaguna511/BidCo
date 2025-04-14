@@ -1,42 +1,49 @@
-# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+# Java / Spring Boot
+target/
+*.log
+*.class
+*.jar
+*.war
+*.iml
+/.idea/
+/.mvn/
+.mvn/wrapper/maven-wrapper.jar
+!src/main/**/application*.yml
+!src/main/**/application*.properties
 
-# Compiled output
-/dist
-/tmp
-/out-tsc
-/bazel-out
+# Gradle
+.gradle/
+build/
+out/
 
-# Node
-/node_modules
-npm-debug.log
-yarn-error.log
+# VS Code
+.vscode/
 
-# IDEs and editors
-.idea/
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
-
-# Visual Studio Code
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-.history/*
-
-# Miscellaneous
-/.angular/cache
-.sass-cache/
-/connect.lock
-/coverage
-/libpeerconnection.log
-testem.log
-/typings
-
-# System files
+# OS files
 .DS_Store
 Thumbs.db
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.ipr
+*.iml
+
+# Frontend (Angular)
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/cache/
+frontend/.angular/
+
+# Env files (si los usás)
+*.env
+.env.*
+
+# Git files (si hiciste lío con submódulos)
+**/.git/
+**/.gitmodules
+**/.gitignore~
+
+# Optional: ignore test reports, coverage, etc.
+coverage/
+test-output/

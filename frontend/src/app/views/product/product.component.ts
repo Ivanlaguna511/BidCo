@@ -12,7 +12,7 @@ import { FooterComponent } from "../../components/footer/footer.component";
 import { PRODUCTS } from '../../datos_estaticos/products';
 import { DATA_EXPERT, DATA_USER } from '../../datos_estaticos/user_estadisticas';
 import { COMMENTS } from '../../datos_estaticos/expert_comments';
-import { AuthService } from '../../auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-product',

@@ -136,4 +136,28 @@
   .create-button:hover {
     background-color: #0d0063;
   }
-   
+
+  /* Contenedor para tipo de subasta y categoría en fila */
+.type-and-category {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    align-items: flex-end;
+  }
+  
+  /* Categoría */
+  .category-section {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  
+  .category-section label {
+    margin-bottom: 5px;
+  }
+  
+  .category-section select {
+    padding: 8px;
+    font-size: 14px;
+  }
+  

@@ -8,7 +8,7 @@ import { ProductItemComponent } from '../../components/product-item/product-item
 import { FooterComponent } from "../../components/footer/footer.component";
 
 import { PRODUCTS } from '../../datos_estaticos/products';
-import { AuthService } from '../../auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-blind-auction',

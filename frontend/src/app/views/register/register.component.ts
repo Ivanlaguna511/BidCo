@@ -4,8 +4,8 @@ import { NgForm, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { HeaderComponent } from '../../components/header/header.component';
-import { UserService, UsuarioCreate, UsuarioResponse } from '../../user.service'; 
-import { AuthService } from '../../auth.service'; 
+import { UserService, UsuarioCreate, UsuarioResponse } from '../../services/user.service'; 
+import { AuthService } from '../../services/auth.service'; 
 
 @Component({
   selector: 'app-register',
