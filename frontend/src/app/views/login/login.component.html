@@ -1,9 +1,13 @@
+<!-- login.component.html -->
 <app-header></app-header>
 <main class="login-container">
   <h1>BidCo</h1>
   <div class="login-box">
     <h2>Iniciar Sesión</h2>
-    <!-- Se usa (ngSubmit) para interceptar el envío del formulario, ya sea con Enter o al hacer click en el botón -->
+
+    <!-- Mensaje de error (se muestra solo cuando loginError tiene algún valor) -->
+    <div *ngIf="loginError" class="error-summary">{{ loginError }}</div>
+
     <form class="login-form" (ngSubmit)="login()" #loginForm="ngForm">
       <label for="email">Correo o Nombre de usuario</label>
       <input
@@ -23,7 +27,11 @@
 
       <div class="options">
         <div class="remember-me">
-          <input type="checkbox" id="remember" name="remember"/>
+          <input 
+            type="checkbox" 
+            id="remember" 
+            name="remember" 
+            [(ngModel)]="remember"/>
           <label for="remember">Recordarme</label>
         </div>
         <a routerLink="/forgot-password">¿Has olvidado la contraseña?</a>
