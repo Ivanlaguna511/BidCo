@@ -8,6 +8,9 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/usuarios")
 public class UsuarioController {
@@ -43,9 +46,12 @@ public class UsuarioController {
         return usuarioService.buscarUsuarioPorNombreUsuario(nombreUsuario);
     }
 
-    // UsuarioController.java (fragmento)
+    // Endpoint de login que devuelve un token JWT
     @PostMapping("/login")
-    public UsuarioResponseDTO login(@Valid @RequestBody LoginDTO loginDTO) {
-        return usuarioService.login(loginDTO);
+    public Map<String, String> login(@Valid @RequestBody LoginDTO loginDTO) {
+        String token = usuarioService.login(loginDTO);
+        Map<String, String> response = new HashMap<>();
+        response.put("token", token);
+        return response;
     }
 }
