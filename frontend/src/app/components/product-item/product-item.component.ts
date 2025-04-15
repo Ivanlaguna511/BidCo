@@ -23,7 +23,7 @@ export class ProductItemComponent {
             }
         }
 
-        this.setupCountdown(this.product.fechaFinal);
+        //this.setupCountdown(this.product.fechaFinal);
     }
 
     setupCountdown(endDateString: string) {
