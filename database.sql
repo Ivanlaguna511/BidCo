@@ -9,9 +9,6 @@ DROP TABLE IF EXISTS usuario;
 
 CREATE TABLE usuario (
     usuario_id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(255) NOT NULL,
-    primer_apellido VARCHAR(255) NOT NULL,
-    segundo_apellido VARCHAR(255) NOT NULL,
     nombre_usuario VARCHAR(255) NOT NULL UNIQUE,
     correo_electronico VARCHAR(255) NOT NULL UNIQUE,
     contraseña VARCHAR(255) NOT NULL,
@@ -69,7 +66,7 @@ CREATE TABLE comentario (
 CREATE TABLE sorteo (
     sorteo_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     nombre_articulo VARCHAR(255) NOT NULL,
-    descripcion VARCHAR(255) NOT NULL,
+    descripcion TEXT NOT NULL,
     fecha_inicio DATE NOT NULL,
     fecha_fin DATE NOT NULL,
     puntos_necesarios INT NOT NULL,
@@ -105,24 +102,38 @@ VALUES
 
 
 -- Insertar subastas
-INSERT INTO subasta (fecha_inicial, fecha_final, precio_inicial, subasta_normal, nombre_articulo, descripcion, creador_id) 
+INSERT INTO subasta (fecha_inicial, fecha_final, precio_inicial, precio_final, subasta_normal, nombre_articulo, descripcion, creador_id) 
 VALUES 
-('2023-05-01', '2024-10-10', 50.00, TRUE, 'Laptop de 15"', 'Laptop de segunda mano en buen estado', 1),  -- Creador es 'Juan Pérez'
-('2025-06-01', '2025-06-10', 150.00, TRUE, 'Cámara fotográfica', 'Cámara DSLR en excelente estado', 2);  -- Creador es 'Ana García'
+('2023-05-01', '2025-10-10', 50.00, 70.00, TRUE, 'Reloj de bolsillo', 'Elegante y atemporal, este reloj de bolsillo combina artesanía clásica con precisión moderna. 
+                    Su diseño vintage, con una fina cadena y detalles grabados, lo convierte en un accesorio 
+                    sofisticado para cualquier ocasión.', 1),  -- Creador es 'Juan Pérez'
+('2025-04-01', '2025-06-10', 20.00, 30.00, TRUE, 'Sudadera', 'Disfruta del equilibrio perfecto entre comodidad y estilo con esta sudadera de diseño moderno. 
+                    Confeccionada con materiales suaves y transpirables, ofrece un ajuste cómodo y versátil para cualquier ocasión. 
+                    Ideal para los días fríos, su interior afelpado te mantendrá abrigado sin perder el estilo.', 2),  -- Creador es 'Ana García'
+('2023-05-01', '2025-09-05', 70.00, 100.00, FALSE, 'Camara de fotos', 'Captura cada momento con precisión y claridad con esta cámara de fotos de alta resolución. 
+                    Equipada con tecnología avanzada, ofrece imágenes nítidas, colores vibrantes y un enfoque rápido 
+                    para no perder ningún detalle. Su diseño ergonómico y ligero la hace perfecta para llevar a cualquier aventura.', 1),  -- Creador es 'Juan Pérez'
+('2025-04-01', '2025-08-12', 50.00, 55.00, FALSE, 'Flexo', 'Un flexo moderno y funcional, ideal para iluminar tu espacio de trabajo o estudio. 
+                    Su diseño ajustable permite dirigir la luz con precisión, mientras que su estructura resistente y 
+                    elegante se adapta a cualquier entorno. Perfecto para leer, escribir o trabajar con comodidad.', 2);  -- Creador es 'Ana García'
 
 
 -- Insertar pujas
 INSERT INTO puja (fecha, importe, ganadora, usuario_id, subasta_id) 
 VALUES 
-('2025-06-02', 60.00, FALSE, 1, 1),  -- Puja de 'Juan Pérez' en la subasta 1 (Laptop)
-('2025-05-03', 70.00, FALSE, 2, 1),  -- Puja de 'Ana García' en la subasta 1 (Laptop)
-('2025-06-02', 160.00, TRUE, 1, 2);  -- Puja de 'Juan Pérez' en la subasta 2 (Cámara)
+('2025-05-02', 70.00, FALSE, 1, 1),  -- Puja de 'Juan Pérez' en la subasta 1 (Reloj)
+('2025-05-03', 30.00, FALSE, 2, 2),  -- Puja de 'Ana García' en la subasta 2 (Sudadera)
+('2025-05-04', 100.00, FALSE, 1, 3),  -- Puja de 'Juan Pérez' en la subasta 3 (Camara)
+('2025-05-03', 55.00, FALSE, 2, 4);  -- Puja de 'Ana García' en la subasta 4 (Flexo)
 
 -- Insertar un sorteo
 INSERT INTO sorteo (nombre_articulo, descripcion, fecha_inicio, fecha_fin, puntos_necesarios, trabajador_id)
 VALUES
+('LEGO McLaren F1', 'Revive la emoción de la Fórmula 1 con este increíble set de LEGO. Diseñado con gran detalle, este modelo 
+                    captura la esencia de un monoplaza de carreras, con neumáticos realistas, alerones aerodinámicos y un diseño fiel a 
+                    la competición. Perfecto para fans del automovilismo y constructores apasionados, este set ofrece una experiencia de ensamblaje 
+                    envolvente y un resultado espectacular para exhibir. ¡Siente la velocidad y la adrenalina en cada pieza!', '2025-04-01', '2025-06-15', 3500,  1),  -- Ejemplo con un trabajador con id 2
 ('Televisor 4K', 'Un televisor de alta definición 4K de 50 pulgadas', '2025-05-01', '2024-05-15', 500,  1),  -- Ejemplo con un trabajador con id 1
-('Cámara Fotográfica', 'Cámara fotográfica digital de última generación', '2025-06-01', '2025-06-15', 300,  1),  -- Ejemplo con un trabajador con id 2
 ('Smartphone', 'Smartphone de última tecnología con pantalla AMOLED', '2025-07-01', '2025-07-15', 200,  1);  -- Ejemplo con un trabajador con id 3
 
 
@@ -130,11 +141,11 @@ VALUES
 
 INSERT INTO puja_sorteo (fecha, puntos, usuario_id, sorteo_id)
 VALUES
-('2024-04-10', 100, 1, 1),  -- Ejemplo de una puja en el sorteo con ID 1, realizada por el usuario con ID 1, por 100 puntos
-('2024-04-11', 150, 2, 1),  -- Ejemplo de una puja en el sorteo con ID 1, realizada por el usuario con ID 2, por 150 puntos
-('2025-04-12', 200, 1, 2),  -- Ejemplo de una puja en el sorteo con ID 2, realizada por el usuario con ID 3, por 200 puntos
-('2025-04-13', 250, 1, 2),  -- Ejemplo de una puja en el sorteo con ID 2, realizada por el usuario con ID 1, por 250 puntos
-('2025-04-14', 300, 2, 2);  -- Ejemplo de una puja en el sorteo con ID 3, realizada por el usuario con ID 2, por 300 puntos
+('2024-04-10', 4100, 1, 1),  -- Ejemplo de una puja en el sorteo con ID 1, realizada por el usuario con ID 1, por 100 puntos
+('2024-04-11', 3500, 2, 1),  -- Ejemplo de una puja en el sorteo con ID 1, realizada por el usuario con ID 2, por 150 puntos
+('2025-04-12', 500, 2, 2),  -- Ejemplo de una puja en el sorteo con ID 2, realizada por el usuario con ID 2, por 200 puntos
+('2025-04-13', 550, 1, 2),  -- Ejemplo de una puja en el sorteo con ID 2, realizada por el usuario con ID 1, por 250 puntos
+('2025-04-14', 300, 2, 3);  -- Ejemplo de una puja en el sorteo con ID 3, realizada por el usuario con ID 2, por 300 puntos
 
 
 
@@ -146,7 +157,7 @@ INSERT INTO comentario (comentario, trabajador_id, subasta_id)
 VALUES ('Excelente subasta, muy recomendable', 2, 1);
 
 INSERT INTO comentario (comentario, trabajador_id, subasta_id) 
-VALUES ('La subasta fue muy interesante', 1, 2);
+VALUES ('La subasta fue muy interesante', 2, 2);
 
 
 INSERT INTO comentario (comentario, trabajador_id, subasta_id) 

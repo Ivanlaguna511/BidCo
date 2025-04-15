@@ -7,7 +7,7 @@ import { FilterComponent } from '../../components/filter/filter.component';
 import { ProductItemComponent } from '../../components/product-item/product-item.component';
 import { FooterComponent } from "../../components/footer/footer.component";
 
-import { PRODUCTS } from '../../datos_estaticos/products';
+import { SubastaService, SubastaResponseDTO } from '../../services/auction.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -26,14 +26,17 @@ import { AuthService } from '../../services/auth.service';
 })
 
 export class AuctionComponent {
-    products = PRODUCTS;
+    products: SubastaResponseDTO[] = [];
     isLoggedIn = false;
     isExpert = false;
 
-    constructor(private authService: AuthService) {}
+    constructor(private authService: AuthService, private subastaService: SubastaService) {}
 
     ngOnInit() {
-        this.products = PRODUCTS.filter(product => product.type === "normal");
+        this.subastaService.getSubastasPorTipo(true).subscribe({
+            next: data => this.products = data,
+            error: err => console.error('Error al obtener las subastas normales: ', err)
+        });
         
         this.authService.isLoggedIn$.subscribe((estado) => {
             this.isLoggedIn = estado;

@@ -10,7 +10,7 @@
         </div>
         <div id="items">
             <div id="item" *ngFor="let product of products">
-                <a [routerLink]="['/product', product.id]">
+                <a [routerLink]="['/product', product.subastaID]">
                     <app-product-item [product]="product"></app-product-item>
                 </a>
             </div>

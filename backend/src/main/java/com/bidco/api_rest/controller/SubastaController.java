@@ -9,6 +9,8 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/subastas")
 public class SubastaController {
@@ -35,6 +37,11 @@ public class SubastaController {
     @PutMapping("/ganador/{id}")
     public PujaResponseDTO findGanadorSubasta(@PathVariable Long id) {
         return subastaService.asignarGanadorYActualizarPrecioFinal(id);
+    }
+
+    @GetMapping("/filtrar")
+    public List<SubastaResponseDTO> filtrarPorTipo(@RequestParam boolean normal) {
+        return subastaService.buscarPorTipo(normal);
     }
 
 }

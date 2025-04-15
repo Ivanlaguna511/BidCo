@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
+import java.util.List;
 
 
 @Service
@@ -47,6 +48,7 @@ public class SubastaServiceImpl implements SubastaService {
             throw new IllegalArgumentException("La subasta no puede ser nula");
         }
         Subasta subasta = subastaMapper.subastaCreateDTOToSubasta(subastaCreateDTO);
+        subasta.setPrecioFinal(subasta.getPrecioInicial());
         subastaRepository.save(subasta);
         return subastaMapper.subastaToSubastaResponseDTO(subasta);
     }
@@ -88,7 +90,12 @@ public class SubastaServiceImpl implements SubastaService {
         return pujaMapper.pujaToPujaResponseDTO(puja.get());
     }
 
-
-
+    @Override
+    public List<SubastaResponseDTO> buscarPorTipo(boolean normal) {
+        List<Subasta> subastas = subastaRepository.findBySubastaNormal(normal);
+        return subastas.stream()
+                .map(subastaMapper::subastaToSubastaResponseDTO)
+                .toList();
+    }
 
 }
