@@ -1,13 +1,13 @@
 import { Component, HostListener, ElementRef } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
-import { CommonModule } from '@angular/common'; 
+import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service'; // Ajusta la ruta a tu servicio
 
 @Component({
   selector: 'app-header',
-  standalone: true, // <- Si tu componente es standalone
+  standalone: true,
   imports: [
-    CommonModule, // <--- Esto habilita *ngIf, *ngFor, etc.
+    CommonModule,
     RouterLink
   ],
   templateUrl: './header.component.html',
@@ -22,23 +22,20 @@ export class HeaderComponent {
 
   constructor(
     private elRef: ElementRef,
-    private el2Ref: ElementRef,
     private authService: AuthService,
     private router: Router
   ) {}
 
   ngOnInit() {
-    // Opción 1: Suscribirte al observable
-    this.authService.isLoggedIn$.subscribe((estado) => {
+    // Suscríbete para actualizar el estado del login
+    this.authService.isLoggedIn$.subscribe((estado: boolean) => {
       this.isLoggedIn = estado;
     });
 
-    this.authService.userRole$.subscribe((estado) => {
-        this.isExpert = estado === 'expert';
-    });   
-
-    // Opción 2 (en vez de la suscripción):
-    // this.isLoggedIn = this.authService.isLoggedIn();
+    // Suscríbete al userRole (asegúrate de tiparlo explícitamente)
+    this.authService.userRole$.subscribe((estado: string) => {
+      this.isExpert = estado === 'expert';
+    });
   }
 
   toggleDropdown(event: MouseEvent) {
@@ -72,10 +69,10 @@ export class HeaderComponent {
   }
 
   loginUser() {
-    this.authService.login('user');
+    this.authService.setUserRole('user');
   }
 
   loginExpert() {
-    this.authService.login('expert');
+    this.authService.setUserRole('expert');
   }
 }

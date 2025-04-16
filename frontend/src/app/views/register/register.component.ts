@@ -28,7 +28,7 @@ export class RegisterComponent {
   numeroPiso: string = '';  // Se almacena como string y luego se convierte a number
   letraPiso: string = '';     // Opcional
 
-  // Propiedades adicionales requeridas por el back-end
+  // Propiedades adicionales requeridas por el backend
   pais: string = 'España';      // Valor por defecto
   saldo: number = 0;
   puntos: number = 0;
@@ -66,7 +66,8 @@ export class RegisterComponent {
     this.userService.registerUser(nuevoUsuario).subscribe({
       next: (respuesta: UsuarioResponse) => {
         console.log("Registro exitoso:", respuesta);
-        this.authService.login('user'); 
+        // En lugar de authService.login, usamos setUserRole para actualizar el rol
+        this.authService.setUserRole('user');
         this.router.navigate(['/auction']);
       },
       error: (error) => {

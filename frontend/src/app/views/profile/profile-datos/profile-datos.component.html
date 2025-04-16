@@ -1,6 +1,6 @@
 <h2>Mis Datos</h2>
 
-<!-- Mensajes -->
+<!-- Mensajes de actualización o error -->
 <div *ngIf="updateMessage" class="update-message">{{ updateMessage }}</div>
 <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 
@@ -20,7 +20,7 @@
       <button type="button">Cambiar</button>
     </div>
 
-    <!-- Ciudad de Residencia -->
+    <!-- Ciudad -->
     <div class="form-group">
       <label for="ciudad">Ciudad de Residencia</label>
       <input type="text" id="ciudad" [(ngModel)]="user.ciudad" name="ciudad" required />

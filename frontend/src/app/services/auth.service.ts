@@ -7,13 +7,15 @@ export interface UsuarioResponse {
   usuarioID: number;
   nombreUsuario: string;
   correoElectronico: string;
+  contraseña?: string;
   ciudad: string;
   codigoPostal: string;
   calle: string;
   numeroPiso: number;
   letraPiso?: string;
   pais: string;
-  // Otros campos adicionales
+  saldo?: number;
+  puntos?: number;
 }
 
 @Injectable({
@@ -22,48 +24,64 @@ export interface UsuarioResponse {
 export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(false);
   private currentUser = new BehaviorSubject<UsuarioResponse | null>(null);
+  private userRole = new BehaviorSubject<string>('user'); 
 
-  isLoggedIn$ = this.loggedIn.asObservable();
-  currentUser$ = this.currentUser.asObservable();
+  // Exponemos como observables
+  public isLoggedIn$ = this.loggedIn.asObservable();
+  public currentUser$ = this.currentUser.asObservable();
+  public userRole$ = this.userRole.asObservable();
 
   private apiUrl: string = 'http://localhost:8080/api/usuarios';
 
   constructor(private http: HttpClient) {}
 
-  // Método de login que recibe las credenciales y retorna un objeto con el token
+  // Método para hacer login; se espera que el backend retorne { token: string }
   loginUser(loginData: { identificador: string, contraseña: string }): Observable<{ token: string }> {
     return this.http.post<{ token: string }>(`${this.apiUrl}/login`, loginData);
   }
 
-  // Decodifica el JWT para extraer el ID del usuario y luego carga el perfil completo
-  setUserFromToken(token: string) {
+  // Decodifica el token y carga el perfil completo del usuario
+  setUserFromToken(token: string): void {
     try {
-      // Se decodifica el token y se espera que el claim "sub" contenga el ID del usuario
       const decoded: any = jwtDecode(token);
-      const userID = +decoded.sub; // Convertir a número (asegúrate de que el token incluya el id en "sub")
-
-      // Llamamos al endpoint para obtener los datos completos del usuario
+      const userID = +decoded.sub;
+      console.log('Token decodificado, userID:', userID); // Debug
       this.loadUserProfile(userID).subscribe({
         next: (user: UsuarioResponse) => {
-          this.currentUser.next(user);
+          console.log('Perfil cargado:', user); // Debug
+          this.setUser(user);
+          localStorage.setItem('authToken', token);
           localStorage.setItem('authUser', JSON.stringify(user));
           this.loggedIn.next(true);
         },
         error: (error) => {
-          console.error("Error al cargar el perfil del usuario:", error);
+          console.error("Error al cargar el perfil:", error);
         }
       });
-    } catch (err) {
-      console.error("Error decodificando el token:", err);
+    } catch (e) {
+      console.error("Error decodificando el token:", e);
     }
   }
+  
 
-  // Carga el perfil completo desde el backend
+  // Llama al endpoint GET para obtener todos los datos del usuario
   loadUserProfile(userID: number): Observable<UsuarioResponse> {
     return this.http.get<UsuarioResponse>(`${this.apiUrl}/${userID}`);
   }
 
-  logout() {
+  // Actualiza el estado del usuario (además de guardar en localStorage)
+  setUser(user: UsuarioResponse): void {
+    console.log("Actualizando currentUser en AuthService:", user);
+    this.currentUser.next(user);
+    localStorage.setItem('authUser', JSON.stringify(user));
+  }
+
+  // Para actualizar el rol (por ejemplo, "user" o "expert")
+  setUserRole(role: string): void {
+    this.userRole.next(role);
+  }
+
+  logout(): void {
     this.loggedIn.next(false);
     this.currentUser.next(null);
     localStorage.removeItem('authToken');

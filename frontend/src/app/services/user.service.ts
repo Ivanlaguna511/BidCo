@@ -1,4 +1,3 @@
-// user.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -7,13 +6,15 @@ export interface UsuarioResponse {
   usuarioID: number;
   nombreUsuario: string;
   correoElectronico: string;
+  contraseña?: string;
   ciudad: string;
   codigoPostal: string;
   calle: string;
   numeroPiso: number;
   letraPiso?: string;
   pais: string;
-  // Otros campos...
+  saldo?: number;
+  puntos?: number;
 }
 
 export interface UsuarioCreate {
@@ -38,17 +39,17 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  // Registro ya existente
-  registerUser(usuario: UsuarioCreate): Observable<UsuarioResponse> {
-    return this.http.post<UsuarioResponse>(this.apiUrl, usuario);
-  }
-
-  // Actualizar datos del usuario
+  // Actualiza el usuario (PUT)
   updateUser(usuario: UsuarioCreate): Observable<UsuarioResponse> {
     return this.http.put<UsuarioResponse>(this.apiUrl, usuario);
   }
 
-  // (Opcional) Obtener datos del usuario por ID
+  // Registro (POST)
+  registerUser(usuario: UsuarioCreate): Observable<UsuarioResponse> {
+    return this.http.post<UsuarioResponse>(this.apiUrl, usuario);
+  }
+
+  // Obtiene los datos del usuario por ID (GET)
   getUserById(id: number): Observable<UsuarioResponse> {
     return this.http.get<UsuarioResponse>(`${this.apiUrl}/${id}`);
   }

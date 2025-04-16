@@ -12,7 +12,21 @@ import { UserService, UsuarioCreate } from '../../../services/user.service';
   styleUrls: ['./profile-datos.component.css']
 })
 export class ProfileDatosComponent implements OnInit {
-  user: UsuarioResponse;
+  user: UsuarioResponse = {
+    usuarioID: 0,
+    nombreUsuario: '',
+    correoElectronico: '',
+    contraseña: '',
+    ciudad: '',
+    codigoPostal: '',
+    calle: '',
+    numeroPiso: 0,
+    letraPiso: '',
+    pais: '',
+    saldo: 0,
+    puntos: 0,
+  };
+
   updateMessage: string = '';
   errorMessage: string = '';
 
@@ -24,22 +38,32 @@ export class ProfileDatosComponent implements OnInit {
   constructor(private authService: AuthService, private userService: UserService) {}
 
   ngOnInit() {
-    const storedUser = localStorage.getItem('authUser');
-    if (storedUser) {
-      this.user = JSON.parse(storedUser);
-    } else {
-      this.errorMessage = 'No se encontraron datos del usuario. Por favor, inicia sesión nuevamente.';
+    this.authService.currentUser$.subscribe((userData: UsuarioResponse | null) => {
+      console.log('currentUser$ emitió:', userData); // Debug
+      if (userData) {
+        this.user = userData;
+      } else {
+        this.errorMessage = 'No se encontraron datos del usuario. Por favor, inicia sesión nuevamente.';
+      }
+    });
+  
+    // Opcional: como respaldo, si localStorage tiene datos y currentUser aun es el default
+    if (!this.user.usuarioID) {
+      const storedUser = localStorage.getItem('authUser');
+      if (storedUser) {
+        this.user = JSON.parse(storedUser);
+        console.log('Datos cargados desde localStorage:', this.user);
+      }
     }
-  }
+  }  
 
   saveChanges() {
-    // Se construye el objeto con la información que se quiere actualizar:
     const updatedUser: UsuarioCreate = {
       nombreUsuario: this.user.nombreUsuario,
       correoElectronico: this.user.correoElectronico,
-      contraseña: this.user.contraseña, // En un caso real se separaría la actualización de datos y la contraseña
-      saldo: 0, // Suponiendo que no se edita en el perfil
-      puntos: 0,
+      contraseña: this.user.contraseña ? this.user.contraseña : '',
+      saldo: this.user.saldo || 0,
+      puntos: this.user.puntos || 0,
       pais: this.user.pais,
       ciudad: this.user.ciudad,
       codigoPostal: this.user.codigoPostal,
@@ -50,8 +74,7 @@ export class ProfileDatosComponent implements OnInit {
 
     this.userService.updateUser(updatedUser).subscribe({
       next: (response: UsuarioResponse) => {
-        this.authService.currentUser$.next(response);
-        localStorage.setItem('authUser', JSON.stringify(response));
+        this.authService.setUser(response);
         this.updateMessage = 'Datos actualizados correctamente.';
         this.errorMessage = '';
       },
@@ -68,16 +91,26 @@ export class ProfileDatosComponent implements OnInit {
       this.errorMessage = 'La nueva contraseña y la confirmación no coinciden.';
       return;
     }
-    if (this.currentPassword !== this.user.contraseña) {  // Nota: en producción, la verificación se realiza en el backend
+    if (this.currentPassword !== (this.user.contraseña || '')) {
       this.errorMessage = 'La contraseña actual es incorrecta.';
       return;
     }
-    // Actualizamos la contraseña y realizamos la llamada de actualización
     this.user.contraseña = this.newPassword;
-    this.userService.updateUser(this.user).subscribe({
+    this.userService.updateUser({
+      nombreUsuario: this.user.nombreUsuario,
+      correoElectronico: this.user.correoElectronico,
+      contraseña: this.user.contraseña,
+      saldo: this.user.saldo || 0,
+      puntos: this.user.puntos || 0,
+      pais: this.user.pais,
+      ciudad: this.user.ciudad,
+      codigoPostal: this.user.codigoPostal,
+      calle: this.user.calle,
+      numeroPiso: this.user.numeroPiso,
+      letraPiso: this.user.letraPiso
+    }).subscribe({
       next: (response: UsuarioResponse) => {
-        this.authService.currentUser$.next(response);
-        localStorage.setItem('authUser', JSON.stringify(response));
+        this.authService.setUser(response);
         this.updateMessage = 'Contraseña actualizada correctamente.';
         this.errorMessage = '';
         this.currentPassword = '';
