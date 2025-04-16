@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService, UsuarioResponse } from '../../../services/auth.service';
-import { UserService, UsuarioCreate } from '../../../services/user.service';
+import { UserService, UsuarioUpdate } from '../../../services/user.service';
 
 @Component({
   selector: 'app-profile-datos',
@@ -38,90 +38,56 @@ export class ProfileDatosComponent implements OnInit {
   constructor(private authService: AuthService, private userService: UserService) {}
 
   ngOnInit() {
-    this.authService.currentUser$.subscribe((userData: UsuarioResponse | null) => {
-      console.log('currentUser$ emitió:', userData); // Debug
-      if (userData) {
-        this.user = userData;
-      } else {
-        this.errorMessage = 'No se encontraron datos del usuario. Por favor, inicia sesión nuevamente.';
+    const storedUser = localStorage.getItem('authUser');
+    
+    // Si hay usuario almacenado pero falta información
+    if (storedUser) {
+      this.user = JSON.parse(storedUser);
+      if (!this.user.nombreUsuario) { // Verifica un campo obligatorio
+        this.loadUserFromBackend();
       }
-    });
-  
-    // Opcional: como respaldo, si localStorage tiene datos y currentUser aun es el default
-    if (!this.user.usuarioID) {
-      const storedUser = localStorage.getItem('authUser');
-      if (storedUser) {
-        this.user = JSON.parse(storedUser);
-        console.log('Datos cargados desde localStorage:', this.user);
-      }
+    } else {
+      this.loadUserFromBackend();
     }
-  }  
+  }
+  
+  private loadUserFromBackend() {
+    const userId = this.authService.currentUser.value?.usuarioID;
+    if (userId) {
+      this.userService.getUserById(userId).subscribe({
+        next: (user) => {
+          this.user = user;
+          this.authService.setUser(user);
+        },
+        error: (err) => console.error('Error cargando usuario:', err)
+      });
+    }
+  }
 
   saveChanges() {
-    const updatedUser: UsuarioCreate = {
+    const updatedData: UsuarioUpdate = {
       nombreUsuario: this.user.nombreUsuario,
       correoElectronico: this.user.correoElectronico,
-      contraseña: this.user.contraseña ? this.user.contraseña : '',
-      saldo: this.user.saldo || 0,
-      puntos: this.user.puntos || 0,
-      pais: this.user.pais,
       ciudad: this.user.ciudad,
       codigoPostal: this.user.codigoPostal,
       calle: this.user.calle,
       numeroPiso: this.user.numeroPiso,
       letraPiso: this.user.letraPiso
     };
-
-    this.userService.updateUser(updatedUser).subscribe({
-      next: (response: UsuarioResponse) => {
+  
+    this.userService.updateUser(this.user.usuarioID, updatedData).subscribe({
+      next: (response) => {
         this.authService.setUser(response);
-        this.updateMessage = 'Datos actualizados correctamente.';
-        this.errorMessage = '';
+        this.updateMessage = '¡Datos actualizados correctamente!';
+        setTimeout(() => this.updateMessage = '', 3000);
       },
       error: (error) => {
-        console.error("Error actualizando usuario:", error);
-        this.errorMessage = 'No se pudieron actualizar los datos. Inténtalo de nuevo.';
-        this.updateMessage = '';
+        this.errorMessage = 'Error al actualizar: ' + error.error.message;
       }
     });
   }
 
   updatePassword() {
-    if (this.newPassword !== this.confirmPassword) {
-      this.errorMessage = 'La nueva contraseña y la confirmación no coinciden.';
-      return;
-    }
-    if (this.currentPassword !== (this.user.contraseña || '')) {
-      this.errorMessage = 'La contraseña actual es incorrecta.';
-      return;
-    }
-    this.user.contraseña = this.newPassword;
-    this.userService.updateUser({
-      nombreUsuario: this.user.nombreUsuario,
-      correoElectronico: this.user.correoElectronico,
-      contraseña: this.user.contraseña,
-      saldo: this.user.saldo || 0,
-      puntos: this.user.puntos || 0,
-      pais: this.user.pais,
-      ciudad: this.user.ciudad,
-      codigoPostal: this.user.codigoPostal,
-      calle: this.user.calle,
-      numeroPiso: this.user.numeroPiso,
-      letraPiso: this.user.letraPiso
-    }).subscribe({
-      next: (response: UsuarioResponse) => {
-        this.authService.setUser(response);
-        this.updateMessage = 'Contraseña actualizada correctamente.';
-        this.errorMessage = '';
-        this.currentPassword = '';
-        this.newPassword = '';
-        this.confirmPassword = '';
-      },
-      error: (error) => {
-        console.error("Error actualizando contraseña:", error);
-        this.errorMessage = 'No se pudo actualizar la contraseña.';
-        this.updateMessage = '';
-      }
-    });
+    //En progreso: Implementar la lógica para cambiar la contraseña
   }
 }

@@ -3,6 +3,7 @@ package com.bidco.api_rest.service.impl;
 import com.bidco.api_rest.dto.usuario.LoginDTO;
 import com.bidco.api_rest.dto.usuario.UsuarioCreateDTO;
 import com.bidco.api_rest.dto.usuario.UsuarioResponseDTO;
+import com.bidco.api_rest.dto.usuario.UsuarioUpdateDTO;
 import com.bidco.api_rest.mapper.UsuarioMapper;
 import com.bidco.api_rest.model.Usuario;
 import com.bidco.api_rest.repository.UsuarioRepository;
@@ -39,18 +40,20 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public UsuarioResponseDTO actualizarUsuario(UsuarioCreateDTO usuarioCreateDTO) {
-        if (usuarioCreateDTO == null) {
-            throw new IllegalArgumentException("El usuario no puede ser nulo");
-        }
-        Optional<Usuario> usuarioOptional = usuarioRepository.findByNombreUsuario(usuarioCreateDTO.getNombreUsuario());
-        if (!usuarioOptional.isPresent()) {
-            throw new EntityNotFoundException("Usuario no encontrado");
-        }
-        Usuario usuario = usuarioOptional.get();
-        Usuario usuarioActualizado = actualizarParametrosUsuario(usuario, usuarioCreateDTO);
-        usuarioRepository.save(usuarioActualizado);
-        return usuarioMapper.usuarioToUsuarioResponseDTO(usuarioActualizado);
+    public UsuarioResponseDTO actualizarUsuario(Long id, UsuarioUpdateDTO usuarioUpdateDTO) {
+        Usuario usuario = usuarioRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
+        
+        usuario.setNombreUsuario(usuarioUpdateDTO.getNombreUsuario());
+        usuario.setCorreoElectronico(usuarioUpdateDTO.getCorreoElectronico());
+        usuario.setCiudad(usuarioUpdateDTO.getCiudad());
+        usuario.setCodigoPostal(usuarioUpdateDTO.getCodigoPostal());
+        usuario.setCalle(usuarioUpdateDTO.getCalle());
+        usuario.setNumeroPiso(usuarioUpdateDTO.getNumeroPiso());
+        usuario.setLetraPiso(usuarioUpdateDTO.getLetraPiso());
+        
+        usuarioRepository.save(usuario);
+        return usuarioMapper.usuarioToUsuarioResponseDTO(usuario);
     }
 
     @Override

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { jwtDecode } from 'jwt-decode';
 
 export interface UsuarioResponse {
@@ -23,7 +23,7 @@ export interface UsuarioResponse {
 })
 export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(false);
-  private currentUser = new BehaviorSubject<UsuarioResponse | null>(null);
+  public currentUser = new BehaviorSubject<UsuarioResponse | null>(null);
   private userRole = new BehaviorSubject<string>('user'); 
 
   // Exponemos como observables
@@ -45,28 +45,36 @@ export class AuthService {
     try {
       const decoded: any = jwtDecode(token);
       const userID = +decoded.sub;
-      console.log('Token decodificado, userID:', userID); // Debug
+      
+      // Guardar el token inmediatamente
+      localStorage.setItem('authToken', token);
+      this.loggedIn.next(true);  // Actualizar estado de login
+  
       this.loadUserProfile(userID).subscribe({
         next: (user: UsuarioResponse) => {
-          console.log('Perfil cargado:', user); // Debug
-          this.setUser(user);
-          localStorage.setItem('authToken', token);
-          localStorage.setItem('authUser', JSON.stringify(user));
-          this.loggedIn.next(true);
+          console.log('Perfil cargado:', user);
+          this.setUser(user); // Esto actualiza currentUser y localStorage
         },
         error: (error) => {
           console.error("Error al cargar el perfil:", error);
+          this.logout(); // Limpiar estado si falla
         }
       });
     } catch (e) {
       console.error("Error decodificando el token:", e);
+      this.logout();
     }
   }
   
 
   // Llama al endpoint GET para obtener todos los datos del usuario
   loadUserProfile(userID: number): Observable<UsuarioResponse> {
-    return this.http.get<UsuarioResponse>(`${this.apiUrl}/${userID}`);
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+  
+    return this.http.get<UsuarioResponse>(`${this.apiUrl}/${userID}`, { headers });
   }
 
   // Actualiza el estado del usuario (además de guardar en localStorage)

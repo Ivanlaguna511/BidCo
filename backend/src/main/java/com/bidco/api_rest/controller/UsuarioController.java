@@ -3,9 +3,11 @@ package com.bidco.api_rest.controller;
 import com.bidco.api_rest.dto.usuario.LoginDTO;
 import com.bidco.api_rest.dto.usuario.UsuarioCreateDTO;
 import com.bidco.api_rest.dto.usuario.UsuarioResponseDTO;
+import com.bidco.api_rest.dto.usuario.UsuarioUpdateDTO;
 import com.bidco.api_rest.service.contract.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -28,10 +30,12 @@ public class UsuarioController {
         return usuarioService.registrarUsuario(usuarioCreateDTO);
     }
 
-    // Actualizar usuario (PUT)
-    @PutMapping
-    public UsuarioResponseDTO actualizarUsuario(@Valid @RequestBody UsuarioCreateDTO usuarioCreateDTO) {
-        return usuarioService.actualizarUsuario(usuarioCreateDTO);
+    // Actualizar usuario por ID (PUT)
+    @PutMapping("/{id}")
+    public ResponseEntity<UsuarioResponseDTO> actualizarUsuario(
+        @PathVariable Long id,
+        @Valid @RequestBody UsuarioUpdateDTO usuarioUpdateDTO) { // Usar DTO específico para actualización
+        return ResponseEntity.ok(usuarioService.actualizarUsuario(id, usuarioUpdateDTO));
     }
 
     // Buscar usuario por ID (GET)

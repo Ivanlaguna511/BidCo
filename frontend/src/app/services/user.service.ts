@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface UsuarioResponse {
@@ -31,6 +31,16 @@ export interface UsuarioCreate {
   letraPiso?: string;
 }
 
+export interface UsuarioUpdate {
+  nombreUsuario: string;
+  correoElectronico: string;
+  ciudad: string;
+  codigoPostal: string;
+  calle: string;
+  numeroPiso: number;
+  letraPiso?: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -40,8 +50,17 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   // Actualiza el usuario (PUT)
-  updateUser(usuario: UsuarioCreate): Observable<UsuarioResponse> {
-    return this.http.put<UsuarioResponse>(this.apiUrl, usuario);
+  updateUser(id: number, usuario: UsuarioUpdate): Observable<UsuarioResponse> {
+    const token = localStorage.getItem('authToken');
+    return this.http.put<UsuarioResponse>(
+      `${this.apiUrl}/${id}`, 
+      usuario,
+      {
+        headers: new HttpHeaders({
+          'Authorization': `Bearer ${token}`
+        })
+      }
+    );
   }
 
   // Registro (POST)

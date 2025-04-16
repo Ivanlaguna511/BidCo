@@ -11,6 +11,14 @@ public interface UsuarioMapper {
     @Mapping(target = "usuarioID", source = "usuarioID")
     @Mapping(target = "nombreUsuario", source = "nombreUsuario")
     @Mapping(target = "correoElectronico", source = "correoElectronico")
+    @Mapping(target = "ciudad", source = "ciudad")                  
+    @Mapping(target = "codigoPostal", source = "codigoPostal")      
+    @Mapping(target = "calle", source = "calle")                     
+    @Mapping(target = "numeroPiso", source = "numeroPiso")         
+    @Mapping(target = "letraPiso", source = "letraPiso")            
+    @Mapping(target = "pais", source = "pais")                     
+    @Mapping(target = "saldo", source = "saldo")                    
+    @Mapping(target = "puntos", source = "puntos")                   
     UsuarioResponseDTO usuarioToUsuarioResponseDTO(Usuario usuario);
 
     @Mapping(target = "nombreUsuario", source = "nombreUsuario")
