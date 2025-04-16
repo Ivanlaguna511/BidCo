@@ -9,6 +9,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
+
 @Mapper(componentModel = "spring")
 public interface SubastaMapper {
 
@@ -16,8 +17,15 @@ public interface SubastaMapper {
 
     // Mapear Subasta a SubastaResponseDTO
     @Mapping(source = "subastaID", target = "subastaID")
-    @Mapping(source = "nombreArticulo", target = "nombreArticulo")
+    @Mapping(source = "fechaInicial", target = "fechaInicial")
+    @Mapping(source = "fechaFinal", target = "fechaFinal")
+    @Mapping(source = "precioInicial", target = "precioInicial")
     @Mapping(source = "precioFinal", target = "precioFinal")
+    @Mapping(source = "subastaNormal", target = "subastaNormal")
+    @Mapping(source = "nombreArticulo", target = "nombreArticulo")
+    @Mapping(source = "descripcion", target = "descripcion")
+    @Mapping(source = "creador.usuarioID", target = "creadorId")
+    @Mapping(source = "imagen", target = "imagen")
     SubastaResponseDTO subastaToSubastaResponseDTO(Subasta subasta);
 
     @Named("longToUsuario")
@@ -31,6 +39,7 @@ public interface SubastaMapper {
     }
 
     // Mapear SubastaCreateDTO a Subasta
+    @Mapping(source = "subastaID", target = "subastaID")
     @Mapping(source = "creadorId", target = "creador", qualifiedByName = "longToUsuario")
     @Mapping(source = "fechaInicial", target = "fechaInicial")
     @Mapping(source = "fechaFinal", target = "fechaFinal")
@@ -38,6 +47,8 @@ public interface SubastaMapper {
     @Mapping(source = "subastaNormal", target = "subastaNormal")
     @Mapping(source = "nombreArticulo", target = "nombreArticulo")
     @Mapping(source = "descripcion", target = "descripcion")
+    @Mapping(source = "imagen", target = "imagen")
+    @Mapping(source = "precioFinal", target = "precioFinal")
     Subasta subastaCreateDTOToSubasta(SubastaCreateDTO subastaCreateDTO);
 
 }

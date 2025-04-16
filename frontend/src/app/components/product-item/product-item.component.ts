@@ -11,8 +11,11 @@ export class ProductItemComponent {
     isBlindAuction: boolean = false;
     isRaffle: boolean = false;
     countdown: string = '';
+    imageUrl: string = '';
 
     ngOnInit() {
+        console.log(this.product.imagen);
+        console.log('Producto:', this.product);
         //Determinar si el producto es de una subasta normal, a ciegas o de un sorteo
         if (this.product) {
             const esSorteo = this.product.hasOwnProperty('subastaNormal');
@@ -21,9 +24,14 @@ export class ProductItemComponent {
             } else {
                 this.isRaffle = this.product.type === 'raffle';
             }
+
+            // Construir ruta completa a la imagen
+            if (this.product.imagenUrl) {
+                this.imageUrl = `http://localhost:8080/uploads/${this.product.imagen}`;
+            }
         }
 
-        //this.setupCountdown(this.product.fechaFinal);
+        this.setupCountdown(this.product.fechaFinal);
     }
 
     setupCountdown(endDateString: string) {
@@ -46,9 +54,8 @@ export class ProductItemComponent {
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
         
-            this.countdown = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            this.countdown = `${days}d ${hours}h ${minutes}m `;
         }, 1000);
     }
 }

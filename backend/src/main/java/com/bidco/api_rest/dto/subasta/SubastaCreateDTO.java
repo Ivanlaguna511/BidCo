@@ -6,18 +6,19 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class SubastaCreateDTO {
-
+    private Long subastaID;
     private LocalDate fechaInicial;
     private LocalDate fechaFinal;
     private BigDecimal precioInicial;
+    private BigDecimal precioFinal;
     private boolean subastaNormal;
     private String nombreArticulo;
     private String descripcion;
     private Long creadorId;
-
+    private String imagen;
 
     public SubastaCreateDTO(LocalDate fechaInicial, LocalDate fechaFinal, BigDecimal precioInicial,
-                            boolean subastaNormal, String nombreArticulo, String descripcion,Long creadorId) {
+                            boolean subastaNormal, String nombreArticulo, String descripcion,Long creadorId, String imagen) {
         this.fechaInicial = fechaInicial;
         this.fechaFinal = fechaFinal;
         this.precioInicial = precioInicial;
@@ -25,8 +26,16 @@ public class SubastaCreateDTO {
         this.nombreArticulo = nombreArticulo;
         this.descripcion = descripcion;
         this.creadorId = creadorId;
+        this.imagen = imagen;
     }
 
+    public Long getSubastaID() {
+        return subastaID;
+    }
+
+    public void setSubastaID(Long subastaID) {
+        this.subastaID = subastaID;
+    }
 
     public LocalDate getFechaInicial() {
         return fechaInicial;
@@ -50,6 +59,14 @@ public class SubastaCreateDTO {
 
     public void setPrecioInicial(BigDecimal precioInicial) {
         this.precioInicial = precioInicial;
+    }
+
+    public BigDecimal getPrecioFinal() {
+        return precioFinal;
+    }
+
+    public void setPrecioFinal(BigDecimal precioFinal) {
+        this.precioFinal = precioFinal;
     }
 
     public boolean isSubastaNormal() {
@@ -82,5 +99,13 @@ public class SubastaCreateDTO {
 
     public void setCreador(Long creadorId) {
         this.creadorId = creadorId;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }

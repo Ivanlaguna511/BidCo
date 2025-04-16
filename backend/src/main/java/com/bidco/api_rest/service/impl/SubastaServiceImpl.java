@@ -16,10 +16,16 @@ import com.bidco.api_rest.service.contract.SubastaService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.List;
 
 
@@ -43,12 +49,27 @@ public class SubastaServiceImpl implements SubastaService {
     }
 
     @Override
-    public SubastaResponseDTO crearSubasta(SubastaCreateDTO subastaCreateDTO) {
+    public SubastaResponseDTO crearSubasta(SubastaCreateDTO subastaCreateDTO, MultipartFile imagen) {
         if(subastaCreateDTO==null){
             throw new IllegalArgumentException("La subasta no puede ser nula");
         }
+
         Subasta subasta = subastaMapper.subastaCreateDTOToSubasta(subastaCreateDTO);
         subasta.setPrecioFinal(subasta.getPrecioInicial());
+
+        if(imagen != null && !imagen.isEmpty()) {
+            try {
+                String nombreArchivo = UUID.randomUUID() + "_" + imagen.getOriginalFilename();
+                Path rutaImagen = Paths.get(System.getProperty("user.dir")).resolve("uploads").resolve(nombreArchivo);
+                Files.createDirectories(rutaImagen.getParent());
+                imagen.transferTo(rutaImagen.toFile());
+                subasta.setImagen(nombreArchivo);
+                
+            } catch (IOException e) {
+                throw new RuntimeException("Error al guardar la imagen ", e);
+            }
+        }
+
         subastaRepository.save(subasta);
         return subastaMapper.subastaToSubastaResponseDTO(subasta);
     }

@@ -40,6 +40,7 @@ CREATE TABLE subasta (
     descripcion TEXT NOT NULL,
     precio_final DECIMAL(10,2) DEFAULT 0.00,
     creador_id BIGINT NOT NULL,
+    imagen VARCHAR(255), 
     FOREIGN KEY (creador_id) REFERENCES usuario(usuario_id)
 );
 

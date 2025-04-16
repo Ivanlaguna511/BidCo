@@ -9,7 +9,7 @@
             <a *ngIf="isLoggedIn && !isExpert" id="crear-subasta" routerLink="/create-auction">Crear Subasta</a>
         </div>
         <div id="items">
-            <div id="item" *ngFor="let product of products">
+            <div id="item" *ngFor="let product of products; let i = index">
                 <a [routerLink]="['/product', product.subastaID]">
                     <app-product-item [product]="product"></app-product-item>
                 </a>

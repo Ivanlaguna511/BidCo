@@ -7,8 +7,17 @@ import com.bidco.api_rest.dto.usuario.UsuarioResponseDTO;
 import com.bidco.api_rest.service.contract.SubastaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.UrlResource;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -23,9 +32,11 @@ public class SubastaController {
     }
 
     // Crear subasta
-    @PostMapping
-    public SubastaResponseDTO crearSubasta(@Valid @RequestBody SubastaCreateDTO subastaCreateDTO) {
-        return subastaService.crearSubasta(subastaCreateDTO);
+    @PostMapping (consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public SubastaResponseDTO crearSubasta(
+                @RequestPart("subasta") @Valid SubastaCreateDTO subastaCreateDTO,
+                @RequestPart("imagen") MultipartFile imagen) {
+        return subastaService.crearSubasta(subastaCreateDTO, imagen);
     }
 
     // Buscar subasta por ID
@@ -44,4 +55,20 @@ public class SubastaController {
         return subastaService.buscarPorTipo(normal);
     }
 
+    @GetMapping("/uploads/{filename:.+}")
+    public ResponseEntity<Resource> verImagen(@PathVariable String filename) {
+        try {
+            Path ruta = Paths.get(System.getProperty("user.dir") + "/uploads").resolve(filename);
+            Resource recurso = new UrlResource(ruta.toUri());
+            if (recurso.exists() && recurso.isReadable()) {
+                return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + recurso.getFilename() + "\"")
+                    .body(recurso);
+            } else {
+                throw new RuntimeException("No se pudo leer el archivo");
+            }
+        } catch (MalformedURLException e) {
+            throw new RuntimeException("Error al cargar la imagen", e);
+        }
+    }
 }

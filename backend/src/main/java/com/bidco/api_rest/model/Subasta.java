@@ -41,6 +41,9 @@ public class Subasta {
     @JoinColumn(name = "creador_id")
     private Usuario creador;
 
+    @Column(name = "imagen")
+    private String imagen;
+
     @OneToMany(mappedBy = "subasta", fetch = FetchType.LAZY)
     private List<Puja> pujas;
 
@@ -48,7 +51,7 @@ public class Subasta {
     private List<Comentario> comentarios;
     
 
-    public Subasta(Long subastaID, LocalDate fechaInicial, LocalDate fechaFinal, BigDecimal precioInicial, boolean subastaNormal, String nombreArticulo, String descripcion,Usuario creador) {
+    public Subasta(Long subastaID, LocalDate fechaInicial, LocalDate fechaFinal, BigDecimal precioInicial, boolean subastaNormal, String nombreArticulo, String descripcion,Usuario creador, String imagen) {
         this.subastaID = subastaID;
         this.fechaInicial = fechaInicial;
         this.fechaFinal = fechaFinal;
@@ -60,6 +63,7 @@ public class Subasta {
         this.creador = creador;
         this.pujas = new ArrayList<>();
         this.comentarios = new ArrayList<>();
+        this.imagen = imagen;
     }
 
     public Subasta() {
@@ -102,6 +106,14 @@ public class Subasta {
         return precioFinal;
     }
 
+    public Usuario getCreador() {
+        return creador;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
     public List<Puja> getPujas() {
         return pujas;
     }
@@ -140,5 +152,9 @@ public class Subasta {
 
     public void setCreador(Usuario creador) {
         this.creador = creador;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }

@@ -6,7 +6,7 @@
         <!-- Sección para subir imagen -->
         <div class="image-upload">
         <label for="imagen" class="image-label">Subir Imagen</label>
-        <input type="file" id="imagen" name="imagen" accept="image/*">
+        <input type="file" id="imagen" name="imagen" (change)="onImgSelected($event)" accept="image/*">
         </div>
         
         <!-- Sección derecha con campos de formulario -->

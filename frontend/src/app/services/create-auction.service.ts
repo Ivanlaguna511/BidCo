@@ -16,6 +16,11 @@ export interface SubastaResponseDTO {
   subastaID: number;
   nombreArticulo: string;
   precioFinal: string;
+  imagenUrl?: string;
+  fechaFinal?: string;
+  descripcion?: string;
+  creadorId?: number;
+  subastaNormal?: boolean;
 }
 
 @Injectable({
@@ -26,7 +31,7 @@ export class SubastaService {
 
   constructor(private http: HttpClient) {}
 
-  crearSubasta(data: SubastaCreateDTO): Observable<SubastaResponseDTO> {
-    return this.http.post<SubastaResponseDTO>(this.apiUrl, data);
+  crearSubasta(data: FormData): Observable<any> {
+    return this.http.post(this.apiUrl, data);
   }
 }
