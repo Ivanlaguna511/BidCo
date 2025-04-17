@@ -37,9 +37,14 @@ public class Usuario {
     
     private String letraPiso;
 
-    private Boolean privacidadAnonimoPujas = false;
-    private Boolean privacidadEstadisticas = true;
-    private Boolean privacidadPerfilVisible = true;
+    @Column(name = "privacidad_anonimo_pujas", nullable = false)
+    private boolean privacidadAnonimoPujas = false;
+    
+    @Column(name = "privacidad_estadisticas", nullable = false)
+    private boolean privacidadEstadisticas = true;
+    
+    @Column(name = "privacidad_perfil_visible", nullable = false)
+    private boolean privacidadPerfilVisible = true;
 
 
     @OneToMany(mappedBy = "pujador",fetch = FetchType.LAZY)

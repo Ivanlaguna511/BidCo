@@ -41,6 +41,12 @@ export interface UsuarioUpdate {
   letraPiso?: string;
 }
 
+export interface Privacidad {
+  privacidadAnonimoPujas: boolean;
+  privacidadEstadisticas: boolean;
+  privacidadPerfilVisible: boolean;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -90,5 +96,13 @@ export class UserService {
   // Obtiene los datos del usuario por ID (GET)
   getUserById(id: number): Observable<UsuarioResponse> {
     return this.http.get<UsuarioResponse>(`${this.apiUrl}/${id}`);
+  }
+
+  getPrivacidad(id: number): Observable<Privacidad> {
+    return this.http.get<Privacidad>(`${this.apiUrl}/${id}/privacidad`);
+  }
+
+  updatePrivacidad(id: number, privacidad: Privacidad): Observable<UsuarioResponse> {
+    return this.http.put<UsuarioResponse>(`${this.apiUrl}/${id}/privacidad`,privacidad);
   }
 }

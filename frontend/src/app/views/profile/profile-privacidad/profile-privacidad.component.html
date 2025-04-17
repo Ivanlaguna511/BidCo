@@ -5,7 +5,11 @@
   <div class="toggle-container">
     <label>Mostrar nombre de usuario como anónimo en las pujas</label>
     <label class="switch">
-      <input type="checkbox" [(ngModel)]="privacidad.privacidadAnonimoPujas" (change)="guardarPrivacidad()" />
+      <input 
+        type="checkbox" 
+        [(ngModel)]="privacidad.privacidadAnonimoPujas" 
+        (change)="guardarPrivacidad()" 
+      />
       <span class="slider round"></span>
     </label>
   </div>
@@ -13,7 +17,11 @@
   <div class="toggle-container">
     <label>Usar tus datos en las estadísticas generales de la web</label>
     <label class="switch">
-      <input type="checkbox" [(ngModel)]="privacidad.privacidadEstadisticas" (change)="guardarPrivacidad()" />
+      <input 
+        type="checkbox" 
+        [(ngModel)]="privacidad.privacidadEstadisticas" 
+        (change)="guardarPrivacidad()" 
+      />
       <span class="slider round"></span>
     </label>
   </div>
@@ -21,7 +29,11 @@
   <div class="toggle-container">
     <label>Permitir que otros usuarios vean mi perfil</label>
     <label class="switch">
-      <input type="checkbox" [(ngModel)]="privacidad.privacidadPerfilVisible" (change)="guardarPrivacidad()" />
+      <input 
+        type="checkbox" 
+        [(ngModel)]="privacidad.privacidadPerfilVisible" 
+        (change)="guardarPrivacidad()" 
+      />
       <span class="slider round"></span>
     </label>
   </div>

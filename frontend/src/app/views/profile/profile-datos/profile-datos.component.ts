@@ -87,7 +87,7 @@ export class ProfileDatosComponent implements OnInit {
         setTimeout(() => this.updateMessage = '', 3000);
       },
       error: (error) => {
-        this.errorMessage = 'Error: ' + (error.error?.message || 'Error desconocido');
+        this.errorMessage = (error.error?.message || 'Error desconocido');
       }
     });
   }
@@ -110,9 +110,8 @@ export class ProfileDatosComponent implements OnInit {
         this.confirmPassword = '';
       },
       error: (error) => {
-        // Mostrar mensaje específico del backend
         this.errorMessage = error.message || 'Error al cambiar la contraseña';
-        console.error('Detalles del error:', error); // Depuración
+        setTimeout(() => this.errorMessage = '', 5000); 
       }
     });
   }

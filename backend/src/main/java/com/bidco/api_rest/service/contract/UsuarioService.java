@@ -5,7 +5,6 @@ import com.bidco.api_rest.dto.usuario.PrivacidadDTO;
 import com.bidco.api_rest.dto.usuario.UsuarioCreateDTO;
 import com.bidco.api_rest.dto.usuario.UsuarioResponseDTO;
 import com.bidco.api_rest.dto.usuario.UsuarioUpdateDTO;
-import com.bidco.api_rest.dto.usuario.PrivacidadDTO;
 
 public interface UsuarioService {
 
@@ -21,7 +20,7 @@ public interface UsuarioService {
 
     PrivacidadDTO getPrivacidad(Long id);
 
-    PrivacidadDTO updatePrivacidad(Long id, PrivacidadDTO privacidadDTO);
+    UsuarioResponseDTO actualizarPrivacidad(Long id, PrivacidadDTO privacidadDTO);
 
     // Nuevo método para login con JWT
     String login(LoginDTO loginDTO);

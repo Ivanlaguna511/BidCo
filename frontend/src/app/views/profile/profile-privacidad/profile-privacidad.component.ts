@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { PrivacityService, Privacidad } from '../../../services/privacity.service';
+import { UserService, Privacidad } from '../../../services/user.service';
+import { AuthService } from '../../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-profile-privacidad',
-  standalone: true,
   imports: [CommonModule, FormsModule],
+  standalone: true,
   templateUrl: './profile-privacidad.component.html',
   styleUrls: ['./profile-privacidad.component.css']
 })
@@ -17,31 +18,44 @@ export class ProfilePrivacidadComponent implements OnInit {
     privacidadPerfilVisible: true
   };
   cargando = true;
-  usuarioID: number = 0;
+
+  constructor(
+    private userService: UserService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
-    const storedUser = localStorage.getItem('authUser');
-    if (storedUser) {
-      const user = JSON.parse(storedUser);
-      this.usuarioID = user.usuarioID;
-      this.privacityService.getPrivacidad(this.usuarioID).subscribe({
-        next: data => {
+    this.cargarPrivacidad();
+  }
+
+  private cargarPrivacidad() {
+    const userId = this.authService.currentUser.value?.usuarioID;
+    if (userId) {
+      this.userService.getPrivacidad(userId).subscribe({
+        next: (data) => {
           this.privacidad = data;
           this.cargando = false;
         },
-        error: err => {
-          console.error('Error al cargar privacidad:', err);
+        error: (err) => {
+          console.error('Error cargando configuración:', err);
           this.cargando = false;
         }
       });
-    } else {
-      this.cargando = false;
     }
   }
 
-  constructor(private privacityService: PrivacityService) {}
-
   guardarPrivacidad() {
-    this.privacityService.updatePrivacidad(this.usuarioID, this.privacidad).subscribe();
+    const userId = this.authService.currentUser.value?.usuarioID;
+    if (userId) {
+      this.userService.updatePrivacidad(userId, this.privacidad).subscribe({
+        next: (response) => {
+          console.log('Configuración guardada:', response);
+        },
+        error: (err) => {
+          console.error('Error guardando cambios:', err);
+          alert('Error: ' + (err.error?.message || 'Verifica la consola'));
+        }
+      });
+    }
   }
 }

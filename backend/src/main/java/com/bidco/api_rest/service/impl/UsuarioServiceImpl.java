@@ -12,6 +12,7 @@ import com.bidco.api_rest.service.contract.UsuarioService;
 import com.bidco.api_rest.config.JwtUtil;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -119,15 +120,16 @@ public class UsuarioServiceImpl implements UsuarioService {
         dto.setPrivacidadPerfilVisible(usuario.getPrivacidadPerfilVisible());
         return dto;
     }
-
-    @Override
-    public PrivacidadDTO updatePrivacidad(Long id, PrivacidadDTO privacidadDTO) {
+    
+    public UsuarioResponseDTO actualizarPrivacidad(Long id, PrivacidadDTO privacidadUpdateDTO) {
         Usuario usuario = usuarioRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
-        usuario.setPrivacidadAnonimoPujas(privacidadDTO.getPrivacidadAnonimoPujas());
-        usuario.setPrivacidadEstadisticas(privacidadDTO.getPrivacidadEstadisticas());
-        usuario.setPrivacidadPerfilVisible(privacidadDTO.getPrivacidadPerfilVisible());
+        
+        usuario.setPrivacidadAnonimoPujas(privacidadUpdateDTO.getPrivacidadAnonimoPujas());
+        usuario.setPrivacidadEstadisticas(privacidadUpdateDTO.getPrivacidadEstadisticas());
+        usuario.setPrivacidadPerfilVisible(privacidadUpdateDTO.getPrivacidadPerfilVisible());
+        
         usuarioRepository.save(usuario);
-        return privacidadDTO;
+        return usuarioMapper.usuarioToUsuarioResponseDTO(usuario);
     }
 }

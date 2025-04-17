@@ -68,6 +68,24 @@ export class RegisterComponent {
         console.log("Registro exitoso:", respuesta);
         // En lugar de authService.login, usamos setUserRole para actualizar el rol
         this.authService.setUserRole('user');
+        
+        const loginData = {
+          identificador: this.email,
+          contraseña: this.password
+        };
+    
+        this.authService.loginUser(loginData).subscribe({
+          next: (data) => {
+            // Decodificamos el token y cargamos el perfil completo
+            this.authService.setUserFromToken(data.token);
+            this.router.navigateByUrl('/auction');
+          },
+          error: (err) => {
+            console.error("Error en login:", err);
+            this.formError = "Credenciales incorrectas. Revisa tu identificador y contraseña.";
+          }
+        });
+
         this.router.navigate(['/auction']);
       },
       error: (error) => {
@@ -78,6 +96,6 @@ export class RegisterComponent {
           this.formError = `Ha ocurrido un error durante el registro: ${error.statusText || 'Error desconocido'}. Inténtalo nuevamente.`;
         }
       }
-    });
+    }); 
   }
 }
