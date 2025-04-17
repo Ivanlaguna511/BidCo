@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { UserService } from './user.service';
 import { jwtDecode } from 'jwt-decode';
 
 export interface UsuarioResponse {
@@ -33,37 +34,24 @@ export class AuthService {
 
   private apiUrl: string = 'http://localhost:8080/api/usuarios';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private userService: UserService) {}
 
   // Método para hacer login; se espera que el backend retorne { token: string }
-  loginUser(loginData: { identificador: string, contraseña: string }): Observable<{ token: string }> {
-    return this.http.post<{ token: string }>(`${this.apiUrl}/login`, loginData);
+  loginUser(loginData: { identificador: string; contraseña: string }) {
+    return this.http.post<{ token: string }>(
+      `${this.apiUrl}/login`,
+      loginData
+    );
   }
 
   // Decodifica el token y carga el perfil completo del usuario
   setUserFromToken(token: string): void {
-    try {
-      const decoded: any = jwtDecode(token);
-      const userID = +decoded.sub;
-      
-      // Guardar el token inmediatamente
-      localStorage.setItem('authToken', token);
-      this.loggedIn.next(true);  // Actualizar estado de login
-  
-      this.loadUserProfile(userID).subscribe({
-        next: (user: UsuarioResponse) => {
-          console.log('Perfil cargado:', user);
-          this.setUser(user); // Esto actualiza currentUser y localStorage
-        },
-        error: (error) => {
-          console.error("Error al cargar el perfil:", error);
-          this.logout(); // Limpiar estado si falla
-        }
-      });
-    } catch (e) {
-      console.error("Error decodificando el token:", e);
-      this.logout();
-    }
+    localStorage.setItem('authToken', token);
+    this.loggedIn.next(true);
+    // Ahora sí pedimos el perfil
+    this.userService
+      .getUserById(+(jwtDecode(token).sub ?? 0))
+      .subscribe(user => this.setUser(user), () => this.logout());
   }
   
 

@@ -90,17 +90,21 @@ public class UsuarioServiceImpl implements UsuarioService {
         return jwtUtil.generateToken(usuario.getUsuarioID().toString());
     }
 
-    private Usuario actualizarParametrosUsuario(Usuario usuario, UsuarioCreateDTO usuarioCreateDTO) {
-        usuario.setCorreoElectronico(usuarioCreateDTO.getCorreoElectronico());
-        usuario.setContraseña(usuarioCreateDTO.getContraseña());
-        usuario.setSaldo(usuarioCreateDTO.getSaldo());
-        usuario.setPuntos(usuarioCreateDTO.getPuntos());
-        usuario.setPais(usuarioCreateDTO.getPais());
-        usuario.setCiudad(usuarioCreateDTO.getCiudad());
-        usuario.setCodigoPostal(usuarioCreateDTO.getCodigoPostal());
-        usuario.setCalle(usuarioCreateDTO.getCalle());
-        usuario.setNumeroPiso(usuarioCreateDTO.getNumeroPiso());
-        usuario.setLetraPiso(usuarioCreateDTO.getLetraPiso());
-        return usuario;
+    public void updatePassword(Long id, String currentPassword, String newPassword) {
+        Usuario usuario = usuarioRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
+        
+        // Verificar contraseña actual (si usas hashing, aplica aquí)
+        if (!usuario.getContraseña().equals(currentPassword)) {
+            throw new IllegalArgumentException("Contraseña actual incorrecta");
+        }
+        
+        // Validar nueva contraseña
+        if (newPassword == null || newPassword.length() < 6) {
+            throw new IllegalArgumentException("La nueva contraseña debe tener al menos 6 caracteres");
+        }
+        
+        usuario.setContraseña(newPassword);
+        usuarioRepository.save(usuario);
     }
 }

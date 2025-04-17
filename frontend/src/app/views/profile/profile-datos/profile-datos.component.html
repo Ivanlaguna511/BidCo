@@ -1,63 +1,55 @@
 <h2>Mis Datos</h2>
 
-<!-- Mensajes de actualización o error -->
 <div *ngIf="updateMessage" class="update-message">{{ updateMessage }}</div>
 <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 
 <div class="form-container">
   <form (ngSubmit)="saveChanges()">
-    <!-- Nombre de usuario -->
+    <!-- Campos editables -->
     <div class="form-group">
       <label for="nombreUsuario">Nombre de usuario</label>
       <input type="text" id="nombreUsuario" [(ngModel)]="user.nombreUsuario" name="nombreUsuario" required />
-      <button type="button">Cambiar</button>
     </div>
 
-    <!-- Correo -->
     <div class="form-group">
       <label for="correoElectronico">Correo</label>
       <input type="email" id="correoElectronico" [(ngModel)]="user.correoElectronico" name="correoElectronico" required />
-      <button type="button">Cambiar</button>
     </div>
 
-    <!-- Ciudad -->
     <div class="form-group">
-      <label for="ciudad">Ciudad de Residencia</label>
+      <label for="ciudad">Ciudad</label>
       <input type="text" id="ciudad" [(ngModel)]="user.ciudad" name="ciudad" required />
-      <button type="button">Cambiar</button>
     </div>
 
-    <!-- Código Postal -->
     <div class="form-group">
       <label for="codigoPostal">Código Postal</label>
       <input type="text" id="codigoPostal" [(ngModel)]="user.codigoPostal" name="codigoPostal" required />
-      <button type="button">Cambiar</button>
     </div>
 
-    <!-- Calle -->
     <div class="form-group">
       <label for="calle">Calle</label>
       <input type="text" id="calle" [(ngModel)]="user.calle" name="calle" required />
-      <button type="button">Cambiar</button>
     </div>
 
-    <!-- Número de Piso -->
     <div class="form-group">
-      <label for="numeroPiso">Número de Piso</label>
-      <input type="text" id="numeroPiso" [(ngModel)]="user.numeroPiso" name="numeroPiso" required />
-      <button type="button">Cambiar</button>
+      <label for="numeroPiso">Número</label>
+      <input type="number" id="numeroPiso" [(ngModel)]="user.numeroPiso" name="numeroPiso" required />
     </div>
 
-    <!-- Letra de Piso -->
     <div class="form-group">
-      <label for="letraPiso">Letra de Piso</label>
+      <label for="letraPiso">Letra</label>
       <input type="text" id="letraPiso" [(ngModel)]="user.letraPiso" name="letraPiso" />
-      <button type="button">Cambiar</button>
     </div>
+
+    <!-- Campos ocultos para datos no editables pero requeridos -->
+    <input type="hidden" [(ngModel)]="user.pais" name="pais" />
+    <input type="hidden" [(ngModel)]="user.saldo" name="saldo" />
+    <input type="hidden" [(ngModel)]="user.puntos" name="puntos" />
 
     <button type="submit" class="btn-save">Guardar Cambios</button>
   </form>
 
+  <!-- Sección de cambio de contraseña -->
   <h3>Cambiar Contraseña</h3>
   <form (ngSubmit)="updatePassword()">
     <div class="form-group">
@@ -66,15 +58,15 @@
     </div>
 
     <div class="form-group">
-      <label for="newPassword">Nueva Contraseña</label>
+      <label for="newPassword">Nueva contraseña</label>
       <input type="password" id="newPassword" [(ngModel)]="newPassword" name="newPassword" required />
     </div>
 
     <div class="form-group">
-      <label for="confirmPassword">Repetir Contraseña</label>
+      <label for="confirmPassword">Confirmar contraseña</label>
       <input type="password" id="confirmPassword" [(ngModel)]="confirmPassword" name="confirmPassword" required />
     </div>
 
-    <button type="submit" class="btn-save">Guardar Cambios</button>
+    <button type="submit" class="btn-save">Cambiar Contraseña</button>
   </form>
 </div>

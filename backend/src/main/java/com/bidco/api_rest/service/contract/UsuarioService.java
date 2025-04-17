@@ -15,6 +15,8 @@ public interface UsuarioService {
 
     UsuarioResponseDTO buscarUsuarioPorNombreUsuario(String nombreUsuario);
 
+    void updatePassword(Long id, String password, String newPassword);
+
     // Nuevo método para login con JWT
     String login(LoginDTO loginDTO);
 }

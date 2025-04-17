@@ -1,7 +1,7 @@
 /* Estructura de formularios */
 .form-container {
   position: relative;
-  padding-bottom: 60px; /* Espacio para el botón */
+  padding-bottom: 20px; /* Espacio para el botón */
 }
 
 .form-group {
@@ -24,26 +24,11 @@
   box-sizing: border-box;
 }
 
-.form-group button {
-  padding: 8px 12px;
-  border: none;
-  background-color: #0d0063;
-  color: #fff;
-  font-weight: 500;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.form-group button:hover {
-  background-color: #0b0052;
-}
-
 /* Botón de Guardar Cambios */
 .btn-save {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
+  display: block;
+  margin-top: 20px;
+  margin-left: auto; /* Alinea a la derecha */
   padding: 10px 15px;
   background-color: #28a745;
   border: none;
@@ -58,10 +43,28 @@
 }
 
 h2 {
+  text-align: center;
   margin-bottom: 3%;
 }
 
 h3 {
   margin-top: 7.5%;
   margin-bottom: 3%;
+}
+
+/* Mensajes */
+.update-message {
+  color: #155724;
+  background-color: #d4edda;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.error-message {
+  color: #721c24;
+  background-color: #f8d7da;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
 }

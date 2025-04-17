@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable } from 'rxjs';
 
 export interface UsuarioResponse {
   usuarioID: number;
@@ -60,6 +60,25 @@ export class UserService {
           'Authorization': `Bearer ${token}`
         })
       }
+    );
+  }
+
+  updatePassword(id: number, passwords: { currentPassword: string, newPassword: string }): Observable<void> {
+    const token = localStorage.getItem('authToken');
+    return this.http.patch<void>(
+      `${this.apiUrl}/${id}/password`,
+      passwords,
+      {
+        headers: new HttpHeaders({
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json' // Asegurar el tipo de contenido
+        })
+      }
+    ).pipe(
+      catchError((error) => {
+        // Lanzar error con mensaje específico del backend
+        throw new Error(error.error?.message || 'Error desconocido');
+      })
     );
   }
 

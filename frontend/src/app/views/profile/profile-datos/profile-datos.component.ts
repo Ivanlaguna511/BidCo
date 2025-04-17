@@ -65,29 +65,55 @@ export class ProfileDatosComponent implements OnInit {
   }
 
   saveChanges() {
-    const updatedData: UsuarioUpdate = {
+    const updatedData = {
       nombreUsuario: this.user.nombreUsuario,
       correoElectronico: this.user.correoElectronico,
       ciudad: this.user.ciudad,
       codigoPostal: this.user.codigoPostal,
       calle: this.user.calle,
       numeroPiso: this.user.numeroPiso,
-      letraPiso: this.user.letraPiso
+      letraPiso: this.user.letraPiso,
+      // Campos requeridos por el backend pero no editables
+      pais: this.user.pais,
+      saldo: this.user.saldo,
+      puntos: this.user.puntos,
+      contraseña: this.user.contraseña // Mantenemos la contraseña actual
     };
   
     this.userService.updateUser(this.user.usuarioID, updatedData).subscribe({
       next: (response) => {
         this.authService.setUser(response);
-        this.updateMessage = '¡Datos actualizados correctamente!';
+        this.updateMessage = '¡Datos actualizados!';
         setTimeout(() => this.updateMessage = '', 3000);
       },
       error: (error) => {
-        this.errorMessage = 'Error al actualizar: ' + error.error.message;
+        this.errorMessage = 'Error: ' + (error.error?.message || 'Error desconocido');
       }
     });
   }
-
+  
   updatePassword() {
-    //En progreso: Implementar la lógica para cambiar la contraseña
+    if (this.newPassword !== this.confirmPassword) {
+      this.errorMessage = 'Las contraseñas no coinciden.';
+      return;
+    }
+  
+    this.userService.updatePassword(this.user.usuarioID, {
+      currentPassword: this.currentPassword,
+      newPassword: this.newPassword
+    }).subscribe({
+      next: () => {
+        this.updateMessage = '¡Contraseña actualizada correctamente!';
+        setTimeout(() => this.updateMessage = '', 3000);
+        this.currentPassword = '';
+        this.newPassword = '';
+        this.confirmPassword = '';
+      },
+      error: (error) => {
+        // Mostrar mensaje específico del backend
+        this.errorMessage = error.message || 'Error al cambiar la contraseña';
+        console.error('Detalles del error:', error); // Depuración
+      }
+    });
   }
 }

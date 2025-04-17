@@ -5,8 +5,11 @@ import com.bidco.api_rest.dto.usuario.UsuarioCreateDTO;
 import com.bidco.api_rest.dto.usuario.UsuarioResponseDTO;
 import com.bidco.api_rest.dto.usuario.UsuarioUpdateDTO;
 import com.bidco.api_rest.service.contract.UsuarioService;
+
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,5 +60,22 @@ public class UsuarioController {
         Map<String, String> response = new HashMap<>();
         response.put("token", token);
         return response;
+    }
+
+    @PatchMapping("/{id}/password")
+    public ResponseEntity<?> updatePassword(
+        @PathVariable Long id,
+        @RequestBody Map<String, String> passwords
+    ) {
+        try {
+            usuarioService.updatePassword(id, passwords.get("currentPassword"), passwords.get("newPassword"));
+            return ResponseEntity.ok().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "Usuario no encontrado"));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(Map.of("message", "Error interno"));
+        }
     }
 }
