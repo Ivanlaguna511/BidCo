@@ -6,6 +6,9 @@ import com.bidco.api_rest.dto.sorteo.SorteoCreateDTO;
 import com.bidco.api_rest.dto.sorteo.SorteoResponseDTO;
 import com.bidco.api_rest.service.contract.SorteoService;
 import jakarta.validation.Valid;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -37,5 +40,11 @@ public class SorteoController {
     @PutMapping("/ganador/{id}")
     public PujaSorteoResponseDTO findGanadorSubasta(@PathVariable Long id) {
         return sorteoService.asignarGanadorYActualizarPrecioFinal(id);
+    }
+
+    // Obtener todos los sorteos
+    @GetMapping
+    public List<SorteoResponseDTO> obtenerTodosLosSorteos() {
+        return sorteoService.obtenerTodosLosSorteos();
     }
 }

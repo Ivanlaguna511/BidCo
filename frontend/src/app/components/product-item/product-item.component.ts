@@ -11,11 +11,8 @@ export class ProductItemComponent {
     isBlindAuction: boolean = false;
     isRaffle: boolean = false;
     countdown: string = '';
-    imageUrl: string = '';
 
     ngOnInit() {
-        console.log(this.product.imagen);
-        console.log('Producto:', this.product);
         //Determinar si el producto es de una subasta normal, a ciegas o de un sorteo
         if (this.product) {
             const esSorteo = this.product.hasOwnProperty('subastaNormal');
@@ -23,11 +20,6 @@ export class ProductItemComponent {
                 this.isBlindAuction = this.product.subastaNormal === true;
             } else {
                 this.isRaffle = this.product.type === 'raffle';
-            }
-
-            // Construir ruta completa a la imagen
-            if (this.product.imagenUrl) {
-                this.imageUrl = `http://localhost:8080/uploads/${this.product.imagen}`;
             }
         }
 

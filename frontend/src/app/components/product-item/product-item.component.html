@@ -1,5 +1,5 @@
 <div id="producto">
-    <div><img [src]="'http://localhost:8080/uploads/' + product.imageUrl" alt="{{ product.nombreArticulo }}" /></div>
+    <div><img [src]="'http://localhost:8080/uploads/' + product.imagen" alt="{{ product.nombreArticulo }}" /></div>
     <div id="detalles">
         <div><h1>{{ product.nombreArticulo }}</h1></div>
         <div>{{ isBlindAuction ? 'Precio Base: ' + product.precioInicial + '€' : isRaffle ? 'Puntos Para Participar: ' + product.puntosNecesarios : 'Precio Actual: ' + product.precioFinal + '€' }}</div>

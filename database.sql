@@ -19,7 +19,7 @@ CREATE TABLE usuario (
     codigo_postal VARCHAR(255) NOT NULL,
     calle VARCHAR(255) NOT NULL,
     numero_piso INT DEFAULT 0,
-    letra_piso VARCHAR(10) DEFAULT ' '
+    letra_piso VARCHAR(10) DEFAULT ' ',
     privacidad_anonimo_pujas BOOLEAN DEFAULT FALSE,
     privacidad_estadisticas BOOLEAN DEFAULT TRUE,
     privacidad_perfil_visible BOOLEAN DEFAULT TRUE
@@ -106,20 +106,20 @@ VALUES
 
 
 -- Insertar subastas
-INSERT INTO subasta (fecha_inicial, fecha_final, precio_inicial, precio_final, subasta_normal, nombre_articulo, descripcion, creador_id) 
+INSERT INTO subasta (fecha_inicial, fecha_final, precio_inicial, precio_final, subasta_normal, nombre_articulo, descripcion, creador_id, imagen) 
 VALUES 
 ('2023-05-01', '2025-10-10', 50.00, 70.00, TRUE, 'Reloj de bolsillo', 'Elegante y atemporal, este reloj de bolsillo combina artesanía clásica con precisión moderna. 
                     Su diseño vintage, con una fina cadena y detalles grabados, lo convierte en un accesorio 
-                    sofisticado para cualquier ocasión.', 1),  -- Creador es 'Juan Pérez'
+                    sofisticado para cualquier ocasión.', 1, 'Reloj.jpg'),  -- Creador es 'Juan Pérez'
 ('2025-04-01', '2025-06-10', 20.00, 30.00, TRUE, 'Sudadera', 'Disfruta del equilibrio perfecto entre comodidad y estilo con esta sudadera de diseño moderno. 
                     Confeccionada con materiales suaves y transpirables, ofrece un ajuste cómodo y versátil para cualquier ocasión. 
-                    Ideal para los días fríos, su interior afelpado te mantendrá abrigado sin perder el estilo.', 2),  -- Creador es 'Ana García'
+                    Ideal para los días fríos, su interior afelpado te mantendrá abrigado sin perder el estilo.', 2, 'sudadera_capucha_55_azulmarino_827_1024.jpg'),  -- Creador es 'Ana García'
 ('2023-05-01', '2025-09-05', 70.00, 100.00, FALSE, 'Camara de fotos', 'Captura cada momento con precisión y claridad con esta cámara de fotos de alta resolución. 
                     Equipada con tecnología avanzada, ofrece imágenes nítidas, colores vibrantes y un enfoque rápido 
-                    para no perder ningún detalle. Su diseño ergonómico y ligero la hace perfecta para llevar a cualquier aventura.', 1),  -- Creador es 'Juan Pérez'
+                    para no perder ningún detalle. Su diseño ergonómico y ligero la hace perfecta para llevar a cualquier aventura.', 1, 'portada-las-mejores-camaras-reflex-2019.jpg'),  -- Creador es 'Juan Pérez'
 ('2025-04-01', '2025-08-12', 50.00, 55.00, FALSE, 'Flexo', 'Un flexo moderno y funcional, ideal para iluminar tu espacio de trabajo o estudio. 
                     Su diseño ajustable permite dirigir la luz con precisión, mientras que su estructura resistente y 
-                    elegante se adapta a cualquier entorno. Perfecto para leer, escribir o trabajar con comodidad.', 2);  -- Creador es 'Ana García'
+                    elegante se adapta a cualquier entorno. Perfecto para leer, escribir o trabajar con comodidad.', 2, 'flexo-cadiz.jpg');  -- Creador es 'Ana García'
 
 
 -- Insertar pujas

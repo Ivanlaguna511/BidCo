@@ -16,7 +16,9 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class SorteoServiceImpl implements SorteoService {
@@ -72,5 +74,13 @@ public class SorteoServiceImpl implements SorteoService {
         sorteoRepository.save(sorteo);
 
         return pujaSorteoMapper.pujaSorteoToPujaSorteoResponseDTO(puja.get());
+    }
+
+    @Override
+    public List<SorteoResponseDTO> obtenerTodosLosSorteos() {
+        List<Sorteo> sorteos = sorteoRepository.findAll();
+        return sorteos.stream()
+                .map(sorteoMapper::sorteoToSorteoResponseDTO)
+                .collect(Collectors.toList());
     }
 }

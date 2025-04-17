@@ -21,7 +21,9 @@ export const routes: Routes = [
   { path: 'raffle', component: RaffleComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'product/:id', component: ProductComponent },
+  { path: 'auction/product/:id', component: ProductComponent, data: { tipo: 'subasta' } },
+  { path: 'blind-auctions/product/:id', component: ProductComponent, data: { tipo: 'ciega' } },
+  { path: 'raflle/product/:id', component: ProductComponent, data: { tipo: 'sorteo' } },
   { path: 'create-auction', component: CreateAuctionComponent },
   { path: 'my-bids', component: MyBidsComponent },
   { path: 'my-auctions', component: MyAuctionsComponent},
@@ -42,5 +44,5 @@ export const routes: Routes = [
       { path: 'estadisticas', component: ProfileEstadisticasComponent }
     ]
   },
-  { path: '**', redirectTo: '/home' }
+  { path: '**', redirectTo: '/auction' }
 ];

@@ -1,5 +1,7 @@
 package com.bidco.api_rest.service.contract;
 
+import java.util.List;
+
 import com.bidco.api_rest.dto.puja.PujaResponseDTO;
 import com.bidco.api_rest.dto.pujasorteo.PujaSorteoResponseDTO;
 import com.bidco.api_rest.dto.sorteo.SorteoCreateDTO;
@@ -12,4 +14,5 @@ public interface SorteoService {
     SorteoResponseDTO crearSorteo(SorteoCreateDTO sorteoCreateDTO);
     SorteoResponseDTO buscarSorteoPorId(Long id);
     PujaSorteoResponseDTO asignarGanadorYActualizarPrecioFinal(Long id);
+    List<SorteoResponseDTO> obtenerTodosLosSorteos();
 }

@@ -26,7 +26,7 @@ export interface SubastaResponseDTO {
 @Injectable({
   providedIn: 'root'
 })
-export class SubastaService {
+export class CreateSubastaService {
   private apiUrl = 'http://localhost:8080/api/subastas';
 
   constructor(private http: HttpClient) {}

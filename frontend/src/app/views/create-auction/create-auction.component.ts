@@ -3,8 +3,9 @@ import { HeaderComponent } from '../../components/header/header.component';
 import { FooterComponent } from "../../components/footer/footer.component";
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
-import { SubastaService, SubastaCreateDTO } from '../../services/create-auction.service';
+import { CreateSubastaService, SubastaCreateDTO } from '../../services/create-auction.service';
 
 @Component({
   selector: 'app-create-auction',
@@ -12,12 +13,14 @@ import { SubastaService, SubastaCreateDTO } from '../../services/create-auction.
   imports: [
     HeaderComponent,
     FooterComponent,
-    FormsModule],
+    FormsModule,
+    CommonModule],
   templateUrl: './create-auction.component.html',
   styleUrls: ['./create-auction.component.css']
 })
 export class CreateAuctionComponent {
     imagen: File | null = null;
+    imagenPreview: string | ArrayBuffer | null = null;
     subasta: SubastaCreateDTO = {
         fechaInicial: new Date().toISOString().split('T')[0],
         fechaFinal: '',
@@ -28,7 +31,7 @@ export class CreateAuctionComponent {
         creadorId: 1 
     };
     
-    constructor(private subastaService: SubastaService, private router: Router) {}
+    constructor(private crearSubastaService: CreateSubastaService, private router: Router) {}
     
     onSubmit() {
         const storedUser = localStorage.getItem('authUser');
@@ -44,7 +47,7 @@ export class CreateAuctionComponent {
                 formData.append('imagen', this.imagen);
             }
         
-            this.subastaService.crearSubasta(formData).subscribe({
+            this.crearSubastaService.crearSubasta(formData).subscribe({
                 next: (res) => {
                     console.log('Subasta creada con éxito:', res);
                     this.router.navigate(['/']);
@@ -61,6 +64,12 @@ export class CreateAuctionComponent {
 
         if (input.files && input.files.length > 0) {
             this.imagen = input.files[0];
+
+            const reader = new FileReader();
+            reader.onload = () => {
+                this.imagenPreview = reader.result;
+            };
+            reader.readAsDataURL(this.imagen);
         }
     }
 }

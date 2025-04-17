@@ -9,6 +9,7 @@ import { FooterComponent } from "../../components/footer/footer.component";
 
 import { PRODUCTS } from '../../datos_estaticos/products';
 import { AuthService } from '../../services/auth.service';
+import { SubastaResponseDTO, SubastaService } from '../../services/auction.service';
 
 @Component({
   selector: 'app-blind-auction',
@@ -24,14 +25,17 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './blind-auction.component.css'
 })
 export class BlindAuctionComponent {
-    products = PRODUCTS;
+    products: SubastaResponseDTO[] = [];
     isLoggedIn = false;
     isExpert = false;
 
-    constructor(private authService: AuthService) {}
+    constructor(private authService: AuthService, private subastaService: SubastaService) {}
 
     ngOnInit() {
-        this.products = PRODUCTS.filter(product => product.type === "blind");
+        this.subastaService.getSubastasPorTipo(false).subscribe({
+            next: data => this.products = data,
+            error: err => console.error('Error al obtener las subastas normales: ', err)
+        });
 
         this.authService.isLoggedIn$.subscribe((estado) => {
             this.isLoggedIn = estado;

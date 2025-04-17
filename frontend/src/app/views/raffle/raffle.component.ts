@@ -7,9 +7,9 @@ import { FilterComponent } from '../../components/filter/filter.component';
 import { ProductItemComponent } from '../../components/product-item/product-item.component';
 import { FooterComponent } from "../../components/footer/footer.component";
 
-import { PRODUCTS } from '../../datos_estaticos/products';
 import { DATA_USER } from '../../datos_estaticos/user_estadisticas';
 import { AuthService } from '../../services/auth.service';
+import { SorteoService, SorteoResponseDto } from '../../services/raffle.service';
 
 @Component({
   selector: 'app-raffle',
@@ -25,15 +25,18 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './raffle.component.css'
 })
 export class RaffleComponent {
-    products = PRODUCTS;
+    products: SorteoResponseDto[] = [];
     user = DATA_USER;
     isLoggedIn = false;
     isExpert = false;
 
-    constructor(private authService: AuthService) {}
+    constructor(private authService: AuthService, private sorteoService: SorteoService) {}
 
     ngOnInit() {
-        this.products = PRODUCTS.filter(product => product.type === "raffle");
+        this.sorteoService.getSorteos().subscribe({
+            next: data => this.products = data,
+            error: err => console.error('Error al obtener los sorteos: ', err)
+        });
 
         this.authService.isLoggedIn$.subscribe((estado) => {
             this.isLoggedIn = estado;
