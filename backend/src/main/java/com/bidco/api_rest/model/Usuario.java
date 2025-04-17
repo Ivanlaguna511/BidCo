@@ -37,6 +37,10 @@ public class Usuario {
     
     private String letraPiso;
 
+    private Boolean privacidadAnonimoPujas = false;
+    private Boolean privacidadEstadisticas = true;
+    private Boolean privacidadPerfilVisible = true;
+
 
     @OneToMany(mappedBy = "pujador",fetch = FetchType.LAZY)
     private List<PujaSorteo> pujasSorteo;
@@ -190,4 +194,13 @@ public class Usuario {
     public void setSubastas(List<Subasta> subastas) {
         this.subastas = subastas;
     }
+
+    public Boolean getPrivacidadAnonimoPujas() { return privacidadAnonimoPujas; }
+    public void setPrivacidadAnonimoPujas(Boolean v) { this.privacidadAnonimoPujas = v; }
+
+    public Boolean getPrivacidadEstadisticas() { return privacidadEstadisticas; }
+    public void setPrivacidadEstadisticas(Boolean v) { this.privacidadEstadisticas = v; }
+
+    public Boolean getPrivacidadPerfilVisible() { return privacidadPerfilVisible; }
+    public void setPrivacidadPerfilVisible(Boolean v) { this.privacidadPerfilVisible = v; }
 }

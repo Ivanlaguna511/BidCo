@@ -20,6 +20,9 @@ CREATE TABLE usuario (
     calle VARCHAR(255) NOT NULL,
     numero_piso INT DEFAULT 0,
     letra_piso VARCHAR(10) DEFAULT ' '
+    privacidad_anonimo_pujas BOOLEAN DEFAULT FALSE,
+    privacidad_estadisticas BOOLEAN DEFAULT TRUE,
+    privacidad_perfil_visible BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE trabajador (

@@ -1,6 +1,7 @@
 package com.bidco.api_rest.service.impl;
 
 import com.bidco.api_rest.dto.usuario.LoginDTO;
+import com.bidco.api_rest.dto.usuario.PrivacidadDTO;
 import com.bidco.api_rest.dto.usuario.UsuarioCreateDTO;
 import com.bidco.api_rest.dto.usuario.UsuarioResponseDTO;
 import com.bidco.api_rest.dto.usuario.UsuarioUpdateDTO;
@@ -106,5 +107,27 @@ public class UsuarioServiceImpl implements UsuarioService {
         
         usuario.setContraseña(newPassword);
         usuarioRepository.save(usuario);
+    }
+
+    @Override
+    public PrivacidadDTO getPrivacidad(Long id) {
+        Usuario usuario = usuarioRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
+        PrivacidadDTO dto = new PrivacidadDTO();
+        dto.setPrivacidadAnonimoPujas(usuario.getPrivacidadAnonimoPujas());
+        dto.setPrivacidadEstadisticas(usuario.getPrivacidadEstadisticas());
+        dto.setPrivacidadPerfilVisible(usuario.getPrivacidadPerfilVisible());
+        return dto;
+    }
+
+    @Override
+    public PrivacidadDTO updatePrivacidad(Long id, PrivacidadDTO privacidadDTO) {
+        Usuario usuario = usuarioRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
+        usuario.setPrivacidadAnonimoPujas(privacidadDTO.getPrivacidadAnonimoPujas());
+        usuario.setPrivacidadEstadisticas(privacidadDTO.getPrivacidadEstadisticas());
+        usuario.setPrivacidadPerfilVisible(privacidadDTO.getPrivacidadPerfilVisible());
+        usuarioRepository.save(usuario);
+        return privacidadDTO;
     }
 }

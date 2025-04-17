@@ -1,9 +1,11 @@
 package com.bidco.api_rest.service.contract;
 
 import com.bidco.api_rest.dto.usuario.LoginDTO;
+import com.bidco.api_rest.dto.usuario.PrivacidadDTO;
 import com.bidco.api_rest.dto.usuario.UsuarioCreateDTO;
 import com.bidco.api_rest.dto.usuario.UsuarioResponseDTO;
 import com.bidco.api_rest.dto.usuario.UsuarioUpdateDTO;
+import com.bidco.api_rest.dto.usuario.PrivacidadDTO;
 
 public interface UsuarioService {
 
@@ -16,6 +18,10 @@ public interface UsuarioService {
     UsuarioResponseDTO buscarUsuarioPorNombreUsuario(String nombreUsuario);
 
     void updatePassword(Long id, String password, String newPassword);
+
+    PrivacidadDTO getPrivacidad(Long id);
+
+    PrivacidadDTO updatePrivacidad(Long id, PrivacidadDTO privacidadDTO);
 
     // Nuevo método para login con JWT
     String login(LoginDTO loginDTO);

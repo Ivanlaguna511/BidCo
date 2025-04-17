@@ -1,0 +1,50 @@
+package com.bidco.api_rest.controller;
+
+import com.bidco.api_rest.dto.usuario.PrivacidadDTO;
+import com.bidco.api_rest.dto.usuario.UsuarioResponseDTO;
+import com.bidco.api_rest.service.contract.UsuarioService;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/privacidad")
+public class PrivacidadController {
+
+    private final UsuarioService usuarioService;
+
+    @Autowired
+    public PrivacidadController(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
+
+    // Obtener privacidad de un usuario por ID
+    @GetMapping("/{id}")
+    public ResponseEntity<PrivacidadDTO> getPrivacidad(@PathVariable Long id) {
+        try {
+            PrivacidadDTO privacidad = usuarioService.getPrivacidad(id);
+            return ResponseEntity.ok(privacidad);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    // Actualizar privacidad de un usuario por ID
+    @PutMapping("/{id}")
+    public ResponseEntity<PrivacidadDTO> updatePrivacidad(
+            @PathVariable Long id,
+            @RequestBody PrivacidadDTO privacidadDTO) {
+        try {
+            PrivacidadDTO updated = usuarioService.updatePrivacidad(id, privacidadDTO);
+            return ResponseEntity.ok(updated);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+}
