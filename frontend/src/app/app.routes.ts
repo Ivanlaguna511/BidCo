@@ -23,7 +23,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'auction/product/:id', component: ProductComponent, data: { tipo: 'subasta' } },
   { path: 'blind-auctions/product/:id', component: ProductComponent, data: { tipo: 'ciega' } },
-  { path: 'raflle/product/:id', component: ProductComponent, data: { tipo: 'sorteo' } },
+  { path: 'raffle/product/:id', component: ProductComponent, data: { tipo: 'sorteo' } },
   { path: 'create-auction', component: CreateAuctionComponent },
   { path: 'my-bids', component: MyBidsComponent },
   { path: 'my-auctions', component: MyAuctionsComponent},

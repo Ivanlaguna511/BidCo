@@ -27,6 +27,8 @@ public class Sorteo {
 
     @Column(name = "puntos_finales")
     private int puntosFinales;
+    @Column(nullable = false,name= "imagen")
+    private String imagen;
 
     @OneToMany(mappedBy = "sorteo", fetch = FetchType.LAZY)
     private List<PujaSorteo> pujasSorteos;
@@ -35,7 +37,7 @@ public class Sorteo {
     @JoinColumn(name = "trabajador_id")
     private Trabajador creador;
 
-    public Sorteo(Long sorteoID, String nombreArticulo, String descripcion, LocalDate fechaInicio, LocalDate fechaFin, int puntosNecesarios,Trabajador creador) {
+    public Sorteo(Long sorteoID, String nombreArticulo, String descripcion, LocalDate fechaInicio, LocalDate fechaFin, int puntosNecesarios,Trabajador creador, String imagen) {
         this.sorteoID = sorteoID;
         this.nombreArticulo = nombreArticulo;
         this.descripcion = descripcion;
@@ -45,6 +47,7 @@ public class Sorteo {
         this.pujasSorteos = new ArrayList<>();
         this.puntosFinales = 0;
         this.creador = creador;
+        this.imagen = imagen;
     }
     public Sorteo() {
 
@@ -120,5 +123,13 @@ public class Sorteo {
 
     public void setPuntosFinales(int puntosFinales) {
         this.puntosFinales = puntosFinales;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }

@@ -7,7 +7,6 @@ import { FilterComponent } from '../../components/filter/filter.component';
 import { ProductItemComponent } from '../../components/product-item/product-item.component';
 import { FooterComponent } from "../../components/footer/footer.component";
 
-import { DATA_USER } from '../../datos_estaticos/user_estadisticas';
 import { AuthService } from '../../services/auth.service';
 import { SorteoService, SorteoResponseDto } from '../../services/raffle.service';
 
@@ -26,9 +25,9 @@ import { SorteoService, SorteoResponseDto } from '../../services/raffle.service'
 })
 export class RaffleComponent {
     products: SorteoResponseDto[] = [];
-    user = DATA_USER;
     isLoggedIn = false;
     isExpert = false;
+    userPoints = 0;
 
     constructor(private authService: AuthService, private sorteoService: SorteoService) {}
 
@@ -45,5 +44,12 @@ export class RaffleComponent {
         this.authService.userRole$.subscribe((estado) => {
             this.isExpert = estado === 'expert';
         }); 
+
+        const storedUser = localStorage.getItem('authUser');
+        
+        if(storedUser) {
+            const user = JSON.parse(storedUser);
+            this.userPoints = user.puntos;
+        }
     }
 }

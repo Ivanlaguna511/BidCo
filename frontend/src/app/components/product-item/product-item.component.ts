@@ -19,11 +19,15 @@ export class ProductItemComponent {
             if (esSorteo) {
                 this.isBlindAuction = this.product.subastaNormal === true;
             } else {
-                this.isRaffle = this.product.type === 'raffle';
+                this.isRaffle = true;
             }
         }
 
-        this.setupCountdown(this.product.fechaFinal);
+        if(this.isRaffle) {
+            this.setupCountdown(this.product.fechaFin);
+        } else {
+            this.setupCountdown(this.product.fechaFinal);
+        }
     }
 
     setupCountdown(endDateString: string) {

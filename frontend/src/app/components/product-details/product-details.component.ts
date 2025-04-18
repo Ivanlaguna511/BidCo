@@ -32,7 +32,7 @@ export class ProductDetailsComponent {
                     this.productoSubasta = product;
                     console.log(this.productoSubasta);
                     this.productoService.getUsuarioPorId(this.productoSubasta.creadorId).subscribe((user) => {
-                        if(user.privacidad_anonimo === false) {
+                        if(user.privacidadAnonimoPujas === false) {
                             this.nombreUsuario = user.nombreUsuario;
                         } else {
                             this.nombreUsuario = "Anónimo";
@@ -46,7 +46,7 @@ export class ProductDetailsComponent {
                     this.productoSubasta = product;
                     console.log(this.productoSubasta);
                     this.productoService.getUsuarioPorId(this.productoSubasta.creadorId).subscribe((user) => {
-                        if(user.privacidad_anonimo === false) {
+                        if(user.privacidadAnonimoPujas === false) {
                             this.nombreUsuario = user.nombreUsuario;
                         } else {
                             this.nombreUsuario = "Anónimo";
@@ -66,7 +66,5 @@ export class ProductDetailsComponent {
                 console.error('Tipo de producto no válido');
                 break;
         }
-
-        console.log(this.nombreUsuario);
     }
 }

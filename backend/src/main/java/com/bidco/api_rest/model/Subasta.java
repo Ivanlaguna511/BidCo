@@ -59,7 +59,7 @@ public class Subasta {
         this.subastaNormal = subastaNormal;
         this.nombreArticulo = nombreArticulo;
         this.descripcion = descripcion;
-        this.precioFinal = new BigDecimal("0.0");
+        this.precioFinal = precioInicial;
         this.creador = creador;
         this.pujas = new ArrayList<>();
         this.comentarios = new ArrayList<>();

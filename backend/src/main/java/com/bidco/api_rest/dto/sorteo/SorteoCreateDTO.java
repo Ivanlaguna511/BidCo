@@ -14,17 +14,19 @@ public class SorteoCreateDTO {
     private LocalDate fechaFin;
     private int puntosNecesarios;
     private Long creadorId;
+    private String imagen;
 
 
     // Constructor
     public SorteoCreateDTO(String nombreArticulo, String descripcion, LocalDate fechaInicio, LocalDate fechaFin,
-                           int puntosNecesarios, Long creadorId) {
+                           int puntosNecesarios, Long creadorId, String imagen) {
         this.nombreArticulo = nombreArticulo;
         this.descripcion = descripcion;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.puntosNecesarios = puntosNecesarios;
         this.creadorId = creadorId;
+        this.imagen = imagen;
     }
 
     // Getters y Setters
@@ -74,5 +76,13 @@ public class SorteoCreateDTO {
 
     public void setCreadorId(Long creadorId) {
         this.creadorId = creadorId;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }

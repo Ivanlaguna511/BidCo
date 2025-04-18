@@ -6,14 +6,14 @@
         <form id="puja-form" *ngIf="!(isRaffle && isExpert)">
             <div *ngIf="product">
                 <h3>{{ isLoggedIn ? isBlindAuction ? 'Subasta a Ciegas' : isRaffle ? 'Tus Puntos:' : 'Precio Actual:' : 'Inicia Sesión Para Participar'}}</h3>
-                <h2>{{ isLoggedIn ? isBlindAuction ? null : isRaffle ? user.points : product.actual_price + '€' : ''}}</h2>
+                <h2>{{ isLoggedIn ? isBlindAuction ? null : isRaffle ? user.puntos : product.precioFinal + '€' : ''}}</h2>
                 <input *ngIf="isLoggedIn && !isExpert"
                     type="number" 
                     id="cantidad" 
                     name="cantidad" 
                     placeholder="{{ isRaffle ? 'Introduce número de puntos' : 'Introduce tu puja' }}"
                     [(ngModel)]="cantidadPuja"
-                    [min]="product.actual_price" required>
+                    [min]="isRaffle ? product.puntosNecesarios : product.precioFinal" required>
             </div>
 
             <div id="puja-submit" *ngIf="isLoggedIn && !isExpert">

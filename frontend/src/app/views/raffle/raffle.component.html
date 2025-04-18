@@ -6,7 +6,7 @@
     <div id="sorteos">
         <div id="top-items">
             <h1>Sorteos Actuales</h1>
-            <h2 *ngIf="isLoggedIn && !isExpert && user">Puntos actuales: {{ user.points }}</h2>
+            <h2 *ngIf="isLoggedIn && !isExpert">Puntos actuales: {{ userPoints }}</h2>
         </div>
         <div id="items">
             <div id="item" *ngFor="let product of products">

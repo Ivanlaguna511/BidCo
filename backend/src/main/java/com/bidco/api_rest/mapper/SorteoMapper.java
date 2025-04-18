@@ -20,12 +20,18 @@ public interface SorteoMapper {
     @Mapping(source = "descripcion", target = "descripcion")
     @Mapping(source = "puntosNecesarios",target = "puntosNecesarios")
     @Mapping(source = "nombreArticulo", target = "nombreArticulo")
+    @Mapping(source = "imagen", target = "imagen")
     Sorteo sorteoCreateDTOToSorteo(SorteoCreateDTO dto);
 
     // Convertir Sorteo a SorteoResponseDTO
     @Mapping(source = "sorteoID", target = "sorteoID")
+    @Mapping(source = "fechaInicio", target = "fechaInicio")
+    @Mapping(source = "fechaFin", target = "fechaFin")
+    @Mapping(source = "descripcion", target = "descripcion")
+    @Mapping(source = "puntosNecesarios",target = "puntosNecesarios")
     @Mapping(source = "nombreArticulo", target = "nombreArticulo")
     @Mapping(source = "puntosFinales", target = "puntosFinales")
+    @Mapping(source = "imagen", target = "imagen")
     SorteoResponseDTO sorteoToSorteoResponseDTO(Sorteo sorteo);
 
     // Convertir Long a Trabajador
