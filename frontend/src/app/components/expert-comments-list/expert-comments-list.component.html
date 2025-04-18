@@ -1,0 +1,28 @@
+<div *ngFor="let comentario of comentarios" class="comentario">
+  <!-- Componente para mostrar comentario -->
+  <app-expert-comments
+    [comment]="comentario"
+    [expert]="usuario"
+    (editClicked)="onEditClicked(comentario)">
+  </app-expert-comments>
+
+  <!-- Formulario de edición si es el comentario seleccionado -->
+  <div *ngIf="editandoComentario?.comentario_id === comentario.comentario_id" class="form-editar">
+    <label>Editar comentario:</label>
+    <textarea [(ngModel)]="comentarioEditado.comentario" rows="3"></textarea>
+    <label>Precio estimado:</label>
+    <input type="number" [(ngModel)]="comentarioEditado.precio_estimado">
+    <button (click)="saveEdit()">Guardar</button>
+    <button (click)="cancelEdit()">Cancelar</button>
+  </div>
+</div>
+
+<hr>
+
+<!-- Formulario para nuevo comentario -->
+<div class="form-nuevo">
+  <h4>Nuevo comentario</h4>
+  <textarea [(ngModel)]="nuevoComentario.comentario" placeholder="Escribe tu comentario..." rows="3"></textarea>
+  <input type="number" [(ngModel)]="nuevoComentario.precio_estimado" placeholder="Precio estimado">
+  <button (click)="createComment()">Publicar</button>
+</div>
