@@ -115,4 +115,24 @@ export class ProfileDatosComponent implements OnInit {
       }
     });
   }
+
+  cantidadRecarga: number = 0;
+  recargaMessage: string = '';
+
+  recargarSaldo() {
+    if (this.cantidadRecarga > 0) {
+      this.userService.recargarSaldo(this.user.usuarioID, this.cantidadRecarga).subscribe({
+        next: (nuevoSaldo) => {
+          this.user.saldo = nuevoSaldo;
+          this.recargaMessage = '¡Saldo recargado correctamente!';
+          this.cantidadRecarga = 0;
+          setTimeout(() => this.recargaMessage = '', 5000);
+        },
+        error: () => {
+          this.recargaMessage = 'Error al recargar saldo.';
+          setTimeout(() => this.recargaMessage = '', 5000);
+        }
+      });
+    }
+}
 }

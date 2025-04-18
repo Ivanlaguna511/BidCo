@@ -69,4 +69,21 @@
 
     <button type="submit" class="btn-save">Cambiar Contraseña</button>
   </form>
+  
+  <!-- Recarga de saldo -->
+  <h3>Recargar Saldo</h3>
+  <div class="saldo-section">
+    <div class="saldo-actual">
+      <span>Saldo actual:</span>
+      <span class="saldo-cantidad">{{ user.saldo | currency:'EUR':'symbol' }}</span>
+    </div>
+    <form (ngSubmit)="recargarSaldo()">
+      <div class="form-group">
+        <label for="cantidadRecarga">Cantidad a recargar</label>
+        <input type="number" id="cantidadRecarga" [(ngModel)]="cantidadRecarga" name="cantidadRecarga" min="1" required />
+      </div>
+      <button type="submit" class="btn-recharge">Recargar</button>
+    </form>
+    <div *ngIf="recargaMessage" class="recarga-message">{{ recargaMessage }}</div>
+  </div>
 </div>

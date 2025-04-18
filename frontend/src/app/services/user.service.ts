@@ -118,4 +118,8 @@ export class UserService {
   getUserStats(id: number): Observable<Stats> {
     return this.http.get<Stats>(`${this.apiUrl}/${id}/stats`);
   }
+
+  recargarSaldo(usuarioID: number, cantidad: number): Observable<number> {
+    return this.http.patch<number>(`/api/usuarios/${usuarioID}/recargar-saldo`, { cantidad });
+  }
 }

@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -100,5 +101,15 @@ public class UsuarioController {
     public ResponseEntity<StatsDTO> getStats(@PathVariable Long id) {
         StatsDTO stats = usuarioService.getStats(id);
         return ResponseEntity.ok(stats);
+    }
+
+    @PatchMapping("/{id}/recargar-saldo")
+    public ResponseEntity<BigDecimal> recargarSaldo(
+        @PathVariable Long id,
+        @RequestBody Map<String, BigDecimal> body
+    ) {
+        BigDecimal cantidad = body.get("cantidad");
+        BigDecimal nuevoSaldo = usuarioService.recargarSaldo(id, cantidad);
+        return ResponseEntity.ok(nuevoSaldo);
     }
 }

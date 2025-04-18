@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 @Service
@@ -157,5 +158,14 @@ public class UsuarioServiceImpl implements UsuarioService {
             0, // wonDraws (requiere ajuste en BD)
             0  // createdDraws (solo para trabajadores)
         );
+    }
+
+    @Override
+    public BigDecimal recargarSaldo(Long usuarioId, BigDecimal cantidad) {
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+            .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
+        usuario.setSaldo(usuario.getSaldo().add(cantidad));
+        usuarioRepository.save(usuario);
+        return usuario.getSaldo();
     }
 }

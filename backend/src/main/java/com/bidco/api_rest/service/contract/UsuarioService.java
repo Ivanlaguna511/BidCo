@@ -1,5 +1,7 @@
 package com.bidco.api_rest.service.contract;
 
+import java.math.BigDecimal;
+
 import com.bidco.api_rest.dto.usuario.LoginDTO;
 import com.bidco.api_rest.dto.usuario.PrivacidadDTO;
 import com.bidco.api_rest.dto.usuario.StatsDTO;
@@ -24,6 +26,8 @@ public interface UsuarioService {
     UsuarioResponseDTO actualizarPrivacidad(Long id, PrivacidadDTO privacidadDTO);
 
     StatsDTO getStats(Long usuarioId);
+
+    BigDecimal recargarSaldo(Long usuarioId, BigDecimal cantidad);
 
     // Nuevo método para login con JWT
     String login(LoginDTO loginDTO);
