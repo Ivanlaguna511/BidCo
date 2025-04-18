@@ -2,11 +2,15 @@ package com.bidco.api_rest.service.impl;
 
 import com.bidco.api_rest.dto.usuario.LoginDTO;
 import com.bidco.api_rest.dto.usuario.PrivacidadDTO;
+import com.bidco.api_rest.dto.usuario.StatsDTO;
 import com.bidco.api_rest.dto.usuario.UsuarioCreateDTO;
 import com.bidco.api_rest.dto.usuario.UsuarioResponseDTO;
 import com.bidco.api_rest.dto.usuario.UsuarioUpdateDTO;
 import com.bidco.api_rest.mapper.UsuarioMapper;
 import com.bidco.api_rest.model.Usuario;
+import com.bidco.api_rest.repository.PujaRepository;
+import com.bidco.api_rest.repository.PujaSorteoRepository;
+import com.bidco.api_rest.repository.SubastaRepository;
 import com.bidco.api_rest.repository.UsuarioRepository;
 import com.bidco.api_rest.service.contract.UsuarioService;
 import com.bidco.api_rest.config.JwtUtil;
@@ -21,14 +25,25 @@ import java.util.Optional;
 public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final PujaRepository pujaRepository;
+    private final SubastaRepository subastaRepository;
+    private final PujaSorteoRepository pujaSorteoRepository;
     private final UsuarioMapper usuarioMapper;
     // Puedes inyectar JwtUtil si lo configuras como bean; para este ejemplo lo instancio manualmente.
     private final JwtUtil jwtUtil = new JwtUtil();
 
     @Autowired
-    public UsuarioServiceImpl(UsuarioRepository usuarioRepository, UsuarioMapper usuarioMapper) {
+    public UsuarioServiceImpl(
+            UsuarioRepository usuarioRepository,
+            UsuarioMapper usuarioMapper,
+            PujaRepository pujaRepository,
+            SubastaRepository subastaRepository,
+            PujaSorteoRepository pujaSorteoRepository) {
         this.usuarioRepository = usuarioRepository;
         this.usuarioMapper = usuarioMapper;
+        this.pujaRepository = pujaRepository;
+        this.subastaRepository = subastaRepository;
+        this.pujaSorteoRepository = pujaSorteoRepository;
     }
 
     @Override
@@ -131,5 +146,16 @@ public class UsuarioServiceImpl implements UsuarioService {
         
         usuarioRepository.save(usuario);
         return usuarioMapper.usuarioToUsuarioResponseDTO(usuario);
+    }
+
+    public StatsDTO getStats(Long usuarioId) {
+        return new StatsDTO(
+            pujaRepository.countParticipatedBidsByUsuarioId(usuarioId),
+            pujaRepository.countWonBidsByUsuarioId(usuarioId),
+            subastaRepository.countCreatedBidsByUsuarioId(usuarioId),
+            pujaSorteoRepository.countParticipatedDrawsByUsuarioId(usuarioId),
+            0, // wonDraws (requiere ajuste en BD)
+            0  // createdDraws (solo para trabajadores)
+        );
     }
 }

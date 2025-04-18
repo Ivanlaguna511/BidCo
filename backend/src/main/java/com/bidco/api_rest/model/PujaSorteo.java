@@ -10,7 +10,7 @@ import java.time.LocalDate;
 public class PujaSorteo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "puja_id")
+    @Column(name = "puja_sorteo_id")
     private Long pujaID;
 
     @Column(nullable = false)

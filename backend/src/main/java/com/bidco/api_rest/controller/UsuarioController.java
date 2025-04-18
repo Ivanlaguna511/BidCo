@@ -2,6 +2,7 @@ package com.bidco.api_rest.controller;
 
 import com.bidco.api_rest.dto.usuario.LoginDTO;
 import com.bidco.api_rest.dto.usuario.PrivacidadDTO;
+import com.bidco.api_rest.dto.usuario.StatsDTO;
 import com.bidco.api_rest.dto.usuario.UsuarioCreateDTO;
 import com.bidco.api_rest.dto.usuario.UsuarioResponseDTO;
 import com.bidco.api_rest.dto.usuario.UsuarioUpdateDTO;
@@ -93,5 +94,11 @@ public class UsuarioController {
     ) {
         UsuarioResponseDTO response = usuarioService.actualizarPrivacidad(id, privacidadUpdateDTO);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{id}/stats")
+    public ResponseEntity<StatsDTO> getStats(@PathVariable Long id) {
+        StatsDTO stats = usuarioService.getStats(id);
+        return ResponseEntity.ok(stats);
     }
 }

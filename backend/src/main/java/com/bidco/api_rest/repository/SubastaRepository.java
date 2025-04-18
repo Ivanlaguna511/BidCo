@@ -1,12 +1,7 @@
 package com.bidco.api_rest.repository;
 
-import com.bidco.api_rest.dto.subasta.SubastaCreateDTO;
-import com.bidco.api_rest.dto.subasta.SubastaResponseDTO;
-import com.bidco.api_rest.dto.usuario.UsuarioResponseDTO;
 import com.bidco.api_rest.model.Puja;
-import com.bidco.api_rest.model.PujaSorteo;
 import com.bidco.api_rest.model.Subasta;
-import com.bidco.api_rest.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -25,5 +20,8 @@ public interface SubastaRepository extends JpaRepository<Subasta, Long> {
     Optional<BigDecimal> findImporteMayorBySubastaId(Long id);
 
     List<Subasta> findBySubastaNormal(boolean subastaNormal);
+
+    @Query("SELECT COUNT(s) FROM Subasta s WHERE s.creador.usuarioID = :usuarioID")
+    int countCreatedBidsByUsuarioId(Long usuarioID);
 
 }

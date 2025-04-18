@@ -47,6 +47,15 @@ export interface Privacidad {
   privacidadPerfilVisible: boolean;
 }
 
+export interface Stats {
+  participatedBids: number;
+  wonBids: number;
+  createdBids: number;
+  participatedDraws: number;
+  wonDraws: number;
+  createdDraws: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -104,5 +113,9 @@ export class UserService {
 
   updatePrivacidad(id: number, privacidad: Privacidad): Observable<UsuarioResponse> {
     return this.http.put<UsuarioResponse>(`${this.apiUrl}/${id}/privacidad`,privacidad);
+  }
+
+  getUserStats(id: number): Observable<Stats> {
+    return this.http.get<Stats>(`${this.apiUrl}/${id}/stats`);
   }
 }

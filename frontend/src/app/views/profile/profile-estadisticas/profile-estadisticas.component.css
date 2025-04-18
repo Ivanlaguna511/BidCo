@@ -2,51 +2,78 @@ h2 {
   margin-bottom: 3%;
   text-align: center;
   color: #333;
+  letter-spacing: 1.5px;
 }
 
-/* Contenedor general para alinear la lista y el gráfico */
 .stats-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+  margin: 20px auto;
+  max-width: 800px;
 }
 
-/* Estilos para la lista de estadísticas */
 .stats-list {
-  list-style: none;
-  padding: 0;
-  margin-bottom: 2rem;
   width: 100%;
-  max-width: 600px;
-  border: 1px solid #ddd;
+  margin-bottom: 30px;
+  border: 2px solid #e0e0e0;
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background: #fff;
 }
 
 .stats-list li {
   display: flex;
   justify-content: space-between;
-  padding: 10px 15px;
+  align-items: center;
+  padding: 15px 20px;
   border-bottom: 1px solid #eee;
-  font-size: 1rem;
+  transition: background-color 0.2s;
 }
 
-.stats-list li:last-child {
-  border-bottom: none;
+.stats-list li:hover {
+  background-color: #f8f9fa;
 }
 
 .stat-label {
   font-weight: 500;
-  color: #555;
+  color: #444;
+  font-size: 0.95rem;
 }
 
 .stat-value {
-  font-weight: bold;
-  color: #333;
+  font-weight: 700;
+  color: #2c3e50;
+  font-size: 1.1rem;
 }
 
-/* Contenedor para el gráfico */
 .chart-container {
   width: 100%;
-  max-width: 600px;
+  height: 400px;
+  padding: 15px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
+  .stats-container {
+    margin: 10px;
+    padding: 10px;
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+  }
+
+  .stat-value {
+    font-size: 1rem;
+  }
+
+  .chart-container {
+    height: 300px;
+  }
 }
