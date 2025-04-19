@@ -13,6 +13,9 @@ import { ProfilePrivacidadComponent } from './views/profile/profile-privacidad/p
 import { ProfileEstadisticasComponent } from './views/profile/profile-estadisticas/profile-estadisticas.component';
 import { AuctionComponent } from './views/auction/auction.component';
 import { RaffleComponent } from './views/raffle/raffle.component';
+import { AdminLoginComponent } from './views/admin/admin-login/admin-login.component';
+import { AdminDashboardComponent } from './views/admin/admin-dashboard/admin-dashboard.component';
+import { AdminGuard } from './services/admin.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/auction', pathMatch: 'full' },
@@ -27,6 +30,12 @@ export const routes: Routes = [
   { path: 'create-auction', component: CreateAuctionComponent },
   { path: 'my-bids', component: MyBidsComponent },
   { path: 'my-auctions', component: MyAuctionsComponent},
+  { path: 'admin/login', component: AdminLoginComponent },
+  {
+    path: 'admin',
+    component: AdminDashboardComponent,
+    canActivate: [AdminGuard]
+  },
   {
     path: 'profile',
     component: ProfileComponent,

@@ -1,0 +1,24 @@
+<!-- src/app/admin/admin-sorteo.component.html -->
+<h3>Nuevo Sorteo</h3>
+<form (ngSubmit)="submit()" enctype="multipart/form-data">
+  <label>Nombre</label>
+  <input [(ngModel)]="sorteo.nombreArticulo" name="nombreArticulo" required/>
+
+  <label>Descripción</label>
+  <textarea [(ngModel)]="sorteo.descripcion" name="descripcion" required></textarea>
+
+  <label>Inicio</label>
+  <input type="date" [(ngModel)]="sorteo.fechaInicio" name="fechaInicio" required/>
+
+  <label>Fin</label>
+  <input type="date" [(ngModel)]="sorteo.fechaFin" name="fechaFin" required/>
+
+  <label>Puntos</label>
+  <input type="number" [(ngModel)]="sorteo.puntosNecesarios" name="puntosNecesarios" required/>
+
+  <label>Imagen</label>
+  <input type="file" (change)="onFile($event)" />
+
+  <button type="submit">Crear Sorteo</button>
+  <div *ngIf="message">{{ message }}</div>
+</form>

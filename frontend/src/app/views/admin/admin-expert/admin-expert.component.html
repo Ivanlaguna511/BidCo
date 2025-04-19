@@ -1,0 +1,15 @@
+<!-- src/app/admin/admin-expert.component.html -->
+<h3>Registrar Experto</h3>
+<form (ngSubmit)="submit()">
+  <label>Nombre de Usuario</label>
+  <input [(ngModel)]="expert.nombreUsuario" name="nombreUsuario" required/>
+
+  <label>Correo Electrónico</label>
+  <input type="email" [(ngModel)]="expert.correoElectronico" name="correoElectronico" required/>
+
+  <label>Contraseña</label>
+  <input type="password" [(ngModel)]="expert.contrasena" name="contraseña" required/>
+
+  <button type="submit">Registrar</button>
+  <div *ngIf="message">{{ message }}</div>
+</form>

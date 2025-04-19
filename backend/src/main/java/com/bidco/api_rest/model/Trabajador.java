@@ -96,4 +96,9 @@ public class Trabajador {
         this.trabajadorID = trabajadorID;
     }
 
+    public boolean getRolTrabajador() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getRolTrabajador'");
+    }
+
 }

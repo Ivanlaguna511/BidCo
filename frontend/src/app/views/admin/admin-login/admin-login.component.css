@@ -1,0 +1,4 @@
+.admin-login-container { max-width: 400px; margin: 40px auto; padding: 24px; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #0001; }
+input { display: block; width: 100%; margin-bottom: 12px; padding: 8px; }
+button { width: 100%; background: #0d0063; color: #fff; border: none; padding: 10px; border-radius: 4px; }
+.error { color: #c00; margin-top: 10px; }
