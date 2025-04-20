@@ -1,24 +1,57 @@
-<!-- src/app/admin/admin-sorteo.component.html -->
-<h3>Nuevo Sorteo</h3>
-<form (ngSubmit)="submit()" enctype="multipart/form-data">
-  <label>Nombre</label>
-  <input [(ngModel)]="sorteo.nombreArticulo" name="nombreArticulo" required/>
-
-  <label>Descripción</label>
-  <textarea [(ngModel)]="sorteo.descripcion" name="descripcion" required></textarea>
-
-  <label>Inicio</label>
-  <input type="date" [(ngModel)]="sorteo.fechaInicio" name="fechaInicio" required/>
-
-  <label>Fin</label>
-  <input type="date" [(ngModel)]="sorteo.fechaFin" name="fechaFin" required/>
-
-  <label>Puntos</label>
-  <input type="number" [(ngModel)]="sorteo.puntosNecesarios" name="puntosNecesarios" required/>
-
-  <label>Imagen</label>
-  <input type="file" (change)="onFile($event)" />
-
-  <button type="submit">Crear Sorteo</button>
-  <div *ngIf="message">{{ message }}</div>
-</form>
+<section class="form-container">
+  <h3 class="form-title">Nuevo Sorteo</h3>
+  <form class="form" (ngSubmit)="submit()" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="sor-nombre">Nombre</label>
+      <input id="sor-nombre"
+             type="text"
+             [(ngModel)]="sorteo.nombreArticulo"
+             name="nombreArticulo"
+             required />
+    </div>
+    <div class="form-group">
+      <label for="sor-desc">Descripción</label>
+      <textarea id="sor-desc"
+                rows="4"
+                [(ngModel)]="sorteo.descripcion"
+                name="descripcion"
+                required></textarea>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="sor-inicio">Inicio</label>
+        <input id="sor-inicio"
+               type="date"
+               [(ngModel)]="sorteo.fechaInicio"
+               name="fechaInicio"
+               required />
+      </div>
+      <div class="form-group">
+        <label for="sor-fin">Fin</label>
+        <input id="sor-fin"
+               type="date"
+               [(ngModel)]="sorteo.fechaFin"
+               name="fechaFin"
+               required />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="sor-puntos">Puntos</label>
+        <input id="sor-puntos"
+               type="number"
+               [(ngModel)]="sorteo.puntosNecesarios"
+               name="puntosNecesarios"
+               required />
+      </div>
+      <div class="form-group">
+        <label for="sor-img">Imagen</label>
+        <input id="sor-img"
+               type="file"
+               (change)="onFile($event)" />
+      </div>
+    </div>
+    <div *ngIf="message" class="success-message">{{ message }}</div>
+    <button class="btn-primary" type="submit">Crear Sorteo</button>
+  </form>
+</section>

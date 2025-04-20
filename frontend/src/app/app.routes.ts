@@ -16,6 +16,8 @@ import { RaffleComponent } from './views/raffle/raffle.component';
 import { AdminLoginComponent } from './views/admin/admin-login/admin-login.component';
 import { AdminDashboardComponent } from './views/admin/admin-dashboard/admin-dashboard.component';
 import { AdminGuard } from './services/admin.guard';
+import { AdminSorteoComponent } from './views/admin/admin-sorteo/admin-sorteo.component';
+import { AdminExpertComponent } from './views/admin/admin-expert/admin-expert.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/auction', pathMatch: 'full' },
@@ -34,7 +36,13 @@ export const routes: Routes = [
   {
     path: 'admin',
     component: AdminDashboardComponent,
-    canActivate: [AdminGuard]
+    canActivate: [AdminGuard],
+    children: [
+      // Cuando navegues a /admin/sorteo carga AdminSorteoComponent
+      { path: 'sorteo',  component: AdminSorteoComponent },
+      // Cuando navegues a /admin/expertos carga AdminExpertComponent
+      { path: 'expertos', component: AdminExpertComponent }
+    ]
   },
   {
     path: 'profile',

@@ -1,7 +1,6 @@
 // admin-dashboard.component.ts
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { HeaderComponent } from "../../../components/header/header.component";
 import { FooterComponent } from "../../../components/footer/footer.component";
 
 @Component({
@@ -9,7 +8,7 @@ import { FooterComponent } from "../../../components/footer/footer.component";
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.css',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, RouterModule],
+  imports: [FooterComponent, RouterModule],
 })
 export class AdminDashboardComponent {
   constructor(private router: Router) {}

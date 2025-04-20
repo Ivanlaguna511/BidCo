@@ -1,21 +1,21 @@
 package com.bidco.api_rest.service.impl;
 
-import com.bidco.api_rest.dto.admin.AdminLoginDTO;
-import com.bidco.api_rest.dto.admin.ExpertCreateDTO;
 import com.bidco.api_rest.dto.admin.SorteoCreateDTO;
+import com.bidco.api_rest.dto.admin.AdminLoginDTO;
 import com.bidco.api_rest.model.Sorteo;
 import com.bidco.api_rest.model.Trabajador;
 import com.bidco.api_rest.repository.SorteoRepository;
 import com.bidco.api_rest.repository.TrabajadorRepository;
 import com.bidco.api_rest.service.contract.AdminService;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -23,10 +23,10 @@ public class AdminServiceImpl implements AdminService {
     private final TrabajadorRepository trabajadorRepo;
     private final SorteoRepository    sorteoRepo;
 
-    @Autowired
     public AdminServiceImpl(
-            TrabajadorRepository trabajadorRepo,
-            SorteoRepository sorteoRepo) {
+        TrabajadorRepository trabajadorRepo,
+        SorteoRepository sorteoRepo
+    ) {
         this.trabajadorRepo = trabajadorRepo;
         this.sorteoRepo     = sorteoRepo;
     }
@@ -37,15 +37,12 @@ public class AdminServiceImpl implements AdminService {
             .findByNombreUsuario(dto.getUsername())
             .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
 
-        // Comprueba que sea administrador
         if (!admin.isExperto()) {
             throw new IllegalArgumentException("Acceso denegado: no es administrador");
         }
-        // Comparación de contraseñas en texto plano
         if (!admin.getContraseña().equals(dto.getPassword())) {
             throw new IllegalArgumentException("Contraseña incorrecta");
         }
-        // Guarda el ID en sesión
         session.setAttribute("adminId", admin.getTrabajadorID());
     }
 
@@ -53,11 +50,12 @@ public class AdminServiceImpl implements AdminService {
     public void createSorteo(SorteoCreateDTO dto, HttpSession session) {
         Long adminId = (Long) session.getAttribute("adminId");
         if (adminId == null) {
-            throw new IllegalArgumentException("No autenticado como administrador");
+            throw new IllegalArgumentException("No autenticado como admin");
         }
-        // Valida fechas
+
+        // Validar fechas
         if (dto.getFechaInicio().isAfter(dto.getFechaFin())) {
-            throw new IllegalArgumentException("La fecha de inicio debe ser anterior a la de fin");
+            throw new IllegalArgumentException("Fecha inicio debe ser anterior a fin");
         }
 
         Sorteo sorteo = new Sorteo();
@@ -67,22 +65,22 @@ public class AdminServiceImpl implements AdminService {
         sorteo.setFechaFin(dto.getFechaFin());
         sorteo.setPuntosNecesarios(dto.getPuntosNecesarios());
         sorteo.setPuntosFinales(0);
-        // Relación ManyToOne: setCreador espera un Trabajador
+
+        // Relación ManyToOne
         Trabajador creador = new Trabajador();
         creador.setTrabajadorID(adminId);
         sorteo.setCreador(creador);
 
-        // Procesa imagen si existe
+        // Guardar imagen en disco
         MultipartFile img = dto.getImagen();
         if (img != null && !img.isEmpty()) {
             try {
-                String uploadsDir = "/uploads/sorteos/";
-                File folder = new File(uploadsDir);
-                if (!folder.exists()) folder.mkdirs();
-
+                // Igual que en SubastaServiceImpl: carpeta "uploads" dentro de tu working dir
+                Path folder = Paths.get(System.getProperty("user.dir"), "uploads", "sorteos");
+                Files.createDirectories(folder);
                 String filename = System.currentTimeMillis() + "_" + img.getOriginalFilename();
-                File dest = new File(folder, filename);
-                img.transferTo(dest);
+                Path filePath = folder.resolve(filename);
+                img.transferTo(filePath.toFile());
                 sorteo.setImagen(filename);
             } catch (IOException e) {
                 throw new RuntimeException("Error al guardar la imagen", e);
@@ -93,28 +91,6 @@ public class AdminServiceImpl implements AdminService {
             sorteoRepo.save(sorteo);
         } catch (DataIntegrityViolationException e) {
             throw new IllegalArgumentException("Datos inválidos para sorteo", e);
-        }
-    }
-
-    @Override
-    public void createExpert(ExpertCreateDTO dto, HttpSession session) {
-        Long adminId = (Long) session.getAttribute("adminId");
-        if (adminId == null) {
-            throw new IllegalArgumentException("No autenticado como administrador");
-        }
-
-        Trabajador expert = new Trabajador();
-        expert.setNombreUsuario(dto.getNombreUsuario());
-        expert.setCorreoElectronico(dto.getCorreoElectronico());
-        // Almacenamiento en texto plano
-        expert.setContraseña(dto.getContraseña());
-        // 'experto' en tu entidad marca si es experto o admin; aquí false = experto normal
-        expert.setExperto(false);
-
-        try {
-            trabajadorRepo.save(expert);
-        } catch (DataIntegrityViolationException e) {
-            throw new IllegalArgumentException("El nombre de usuario o correo ya existe", e);
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.bidco.api_rest.dto.trabajador;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -16,6 +18,7 @@ public class TrabajadorCreateDTO {
 
     @NotNull(message = "La contraseña no puede ser nula")
     @Size(min = 6, max = 100, message = "La contraseña debe tener entre 6 y 100 caracteres")
+     @JsonProperty("contrasena")
     private String contraseña;
 
     private boolean experto;

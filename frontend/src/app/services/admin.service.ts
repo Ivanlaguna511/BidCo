@@ -22,6 +22,7 @@ export interface ExpertDTO {
   nombreUsuario:     string;
   correoElectronico: string;
   contrasena:        string;
+  experto:           boolean;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -40,19 +41,27 @@ export class AdminService {
     );
   }
 
-  createSorteo(data: FormData): Observable<void> {
-    return this.http.post<void>(
-      `${this.api}/sorteos`,
-      data,
-      { withCredentials: true }
-    ).pipe(
-      catchError(err => throwError(() => new Error(err.error?.message || 'Error creando sorteo')))
-    );
+  createSorteo(sorteo: any, imagen: File | null) {
+    const formData = new FormData();
+    formData.append('sorteo', new Blob([JSON.stringify({
+      nombreArticulo: sorteo.nombreArticulo,
+      descripcion: sorteo.descripcion,
+      fechaInicio: sorteo.fechaInicio,
+      fechaFin: sorteo.fechaFin,
+      puntosNecesarios: sorteo.puntosNecesarios
+    })], { type: 'application/json' }));
+  
+    if (imagen) {
+      formData.append('imagen', imagen, imagen.name);
+    }
+
+    return this.http.post<void>(`${this.api}/sorteos`, formData, { withCredentials: true });
   }
+  
 
   createExpert(dto: ExpertDTO): Observable<void> {
     return this.http.post<void>(
-      `${this.api}/expertos`,
+      `/api/trabajadores`,
       dto,
       { withCredentials: true }
     ).pipe(

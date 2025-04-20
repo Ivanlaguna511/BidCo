@@ -1,4 +1,3 @@
-// admin-sorteo.component.ts
 import { Component } from '@angular/core';
 import { AdminService, SorteoDTO } from '../../../services/admin.service';
 import { CommonModule } from '@angular/common';
@@ -12,33 +11,26 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './admin-sorteo.component.css'
 })
 export class AdminSorteoComponent {
-  sorteo: SorteoDTO = {
+  sorteo: Omit<SorteoDTO, 'imagen'> = {
     nombreArticulo: '',
     descripcion: '',
     fechaInicio: '',
     fechaFin: '',
-    puntosNecesarios: 0,
-    imagen: null
+    puntosNecesarios: 0
   };
+
+  selectedFile: File | null = null;
   message = '';
+
   constructor(private admin: AdminService) {}
 
   onFile(evt: Event) {
-    const f = (evt.target as HTMLInputElement).files![0];
-    this.sorteo.imagen = f;
+    const f = (evt.target as HTMLInputElement).files?.[0];
+    this.selectedFile = f ?? null;
   }
 
   submit() {
-    const formData = new FormData();
-    formData.append('nombreArticulo', this.sorteo.nombreArticulo);
-    formData.append('descripcion', this.sorteo.descripcion);
-    formData.append('fechaInicio', this.sorteo.fechaInicio);
-    formData.append('fechaFin', this.sorteo.fechaFin);
-    formData.append('puntosNecesarios', this.sorteo.puntosNecesarios.toString());
-    if (this.sorteo.imagen) {
-      formData.append('imagen', this.sorteo.imagen);
-    }
-    this.admin.createSorteo(formData).subscribe({
+    this.admin.createSorteo(this.sorteo, this.selectedFile!).subscribe({
       next: () => this.message = 'Sorteo creado',
       error: e => this.message = 'Error: ' + e.message
     });

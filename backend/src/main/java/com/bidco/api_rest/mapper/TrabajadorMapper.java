@@ -10,8 +10,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface TrabajadorMapper {
 
-
-
     // Mapear Trabajador a TrabajadorResponseDTO
     @Mapping(source = "trabajadorID", target = "trabajadorID")
     @Mapping(source = "nombreUsuario", target = "nombreUsuario")
