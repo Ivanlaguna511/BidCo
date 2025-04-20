@@ -1,17 +1,21 @@
 package com.bidco.api_rest.dto.cometario;
 
+import java.math.BigDecimal;
+
 public class ComentarioResponseDTO {
 
     private Long comentarioID;
     private String comentario;
+    private BigDecimal precioEstimado;
     private Long trabajadorID;
     private Long subastaID;
 
 
     // Constructor
-    public ComentarioResponseDTO(Long comentarioID, String comentario, Long trabajadorID, Long subastaID) {
+    public ComentarioResponseDTO(Long comentarioID,BigDecimal precioEstimado, String comentario, Long trabajadorID, Long subastaID) {
         this.comentarioID = comentarioID;
         this.comentario = comentario;
+        this.precioEstimado = precioEstimado;
         this.trabajadorID = trabajadorID;
         this.subastaID = subastaID;
 
@@ -51,5 +55,11 @@ public class ComentarioResponseDTO {
         this.subastaID = subastaID;
     }
 
+    public BigDecimal getPrecioEstimado() {
+        return precioEstimado;
+    }
 
+    public void setPrecioEstimado(BigDecimal precioEstimado) {
+        this.precioEstimado = precioEstimado;
+    }
 }

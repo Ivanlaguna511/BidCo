@@ -8,7 +8,7 @@ import com.bidco.api_rest.model.Trabajador;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
-import org.mapstruct.factory.Mappers;
+
 
 @Mapper(componentModel = "spring")
 public interface ComentarioMapper {
@@ -17,11 +17,13 @@ public interface ComentarioMapper {
     @Mapping(target = "trabajador", source = "trabajadorId", qualifiedByName = "longToTrabajador")
     @Mapping(target = "subasta", source = "subastaID", qualifiedByName = "longToSubasta")
     @Mapping(target = "comentario", source = "comentario")
+    @Mapping(target = "precioEstimado", source = "precioEstimado")
     Comentario comentarioCreateDTOToComentario(ComentarioCreateDTO dto);
 
     // Mapea Comentario a ComentarioResponseDTO
     @Mapping(source = "comentarioID", target = "comentarioID")
     @Mapping(source = "comentario", target = "comentario")
+    @Mapping(target = "precioEstimado", source = "precioEstimado")
     @Mapping(source = "trabajador.trabajadorID", target = "trabajadorID")
     @Mapping(source = "subasta.subastaID", target = "subastaID")
     ComentarioResponseDTO comentarioToComentarioResponseDTO(Comentario comentario);
