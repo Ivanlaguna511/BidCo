@@ -32,9 +32,11 @@ public class ComentarioServiceImpl implements ComentarioService {
 
     @Override
     public ComentarioResponseDTO buscarComentarioPorId(Long id) {
+        
         Comentario comentario = comentarioRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("el comentario no existe"));
 
+        
         return comentarioMapper.comentarioToComentarioResponseDTO(comentario);
     }
 }

@@ -22,7 +22,7 @@ public class ComentarioController {
     }
 
     // Endpoint para añadir un comentario
-    @PostMapping
+    @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     public ComentarioResponseDTO añadirComentario(@Valid @RequestBody ComentarioCreateDTO comentarioCreateDTO) {
         System.out.println("hola");
