@@ -10,9 +10,10 @@ import { ExpertCommentsComponent } from '../../components/expert-comments/expert
 import { FooterComponent } from "../../components/footer/footer.component";
 
 import { DATA_EXPERT } from '../../datos_estaticos/user_estadisticas';
-import { COMMENTS } from '../../datos_estaticos/expert_comments';
 import { AuthService } from '../../services/auth.service';
 import { ProductoService } from '../../services/product.service';
+import { CommentService } from '../../services/comment.service';
+
 
 @Component({
   selector: 'app-product',
@@ -25,128 +26,162 @@ import { ProductoService } from '../../services/product.service';
     ProductDetailsComponent,
     ExpertCommentsComponent,
     FooterComponent
-    ],
+  ],
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent {
-    product: any;
-    comments = COMMENTS;
-    isBlindAuction: boolean = false;
-    isRaffle: boolean = false;
-    user: any;
-    expert = DATA_EXPERT;
-    isLoggedIn = false;
-    isExpert = false;
-    showExpertForm = false;
-    reviewText = '';
-    estimatedPrice = 0;
-    cantidadPuja: number | null = null;
-    isExpertComment = false;
-    tipo = "";
-    
-    constructor(private route: ActivatedRoute, private authService: AuthService, private productoService: ProductoService) {}
+  product: any;
+  comments: any[] = [];
+  isBlindAuction: boolean = false;
+  isRaffle: boolean = false;
+  user: any;
+  expert = DATA_EXPERT;
+  isLoggedIn = false;
+  isExpert = false;
+  showExpertForm = false;
+  reviewText = '';
+  estimatedPrice = 0;
+  cantidadPuja: number | null = null;
+  isExpertComment = false;
+  tipo = '';
+  editandoComentario: any = null;
+  comentarioEditado = { comment: '', estimated_price: 0 };
 
-    ngOnInit() {
-        
-        //Se comprueba si esta la sesion iniciada para obligar a hacerlo en caso de que no este y asi poder pujar
-        this.authService.isLoggedIn$.subscribe((estado) => {
-            this.isLoggedIn = estado;
+  constructor(
+    private route: ActivatedRoute,
+    private authService: AuthService,
+    private productoService: ProductoService,
+    private commentService: CommentService
+  ) {}
+
+  ngOnInit() {
+    this.authService.isLoggedIn$.subscribe((estado) => {
+      this.isLoggedIn = estado;
+    });
+
+    this.authService.userRole$.subscribe((estado) => {
+      this.isExpert = estado === 'expert';
+    });
+
+    const storedUser = localStorage.getItem('authUser');
+    if (storedUser) {
+      this.user = JSON.parse(storedUser);
+    }
+
+    const productId = Number(this.route.snapshot.paramMap.get('id'));
+
+    this.commentService.getComments(productId).subscribe((comments) => {
+      this.comments = comments;
+    });
+
+    this.tipo = this.route.snapshot.data['tipo'];
+    if (this.tipo === 'ciega') this.isBlindAuction = true;
+    else if (this.tipo === 'sorteo') this.isRaffle = true;
+
+    switch (this.tipo) {
+      case 'subasta':
+      case 'ciega':
+        this.productoService.getSubastaPorId(productId).subscribe((product) => {
+          this.product = product;
         });
-        
-        this.authService.userRole$.subscribe((estado) => {
-            this.isExpert = estado === 'expert';
+        break;
+      case 'sorteo':
+        this.productoService.getSorteoPorId(productId).subscribe((product) => {
+          this.product = product;
         });
+        break;
+      default:
+        console.error('Tipo de producto no válido');
+    }
+  }
 
-        //Datos del usuario
-        const storedUser = localStorage.getItem('authUser');
-        if(storedUser) {
-            this.user = JSON.parse(storedUser);
-        }
-
-        //Obtener el id de la URL
-        const productId = Number(this.route.snapshot.paramMap.get('id'));
-    
-        this.comments = COMMENTS.filter(comment => productId == comment.product_id);
-    
-        //Determinar si el producto es de una subasta normal, a ciegas o de un sorteo
-        this.tipo = this.route.snapshot.data['tipo'];
-    
-        if (this.tipo === 'ciega') {
-            this.isBlindAuction = true;
-        } else if (this.tipo === 'sorteo') {
-            this.isRaffle = true;
-        }
-
-        //obtener el producto correspondiente
-        switch (this.tipo) {
-            case 'subasta':
-                this.productoService.getSubastaPorId(productId).subscribe((product) => {
-                    this.product = product;
-                    console.log(this.product);
-                });
-                break;
-        
-            case 'ciega':
-                this.productoService.getSubastaPorId(productId).subscribe((product) => {
-                    this.product = product;
-                    console.log(this.product);
-                });
-                break;
-        
-            case 'sorteo':
-                this.productoService.getSorteoPorId(productId).subscribe((product) => {
-                    this.product = product;
-                    console.log(this.product);
-                });
-                break;
-        
-            default:
-                console.error('Tipo de producto no válido');
-                break;
-        }
-
-
-        //si un experto inicia sesión y aparece un comentario suyo, se habilita la opcion de editar
-        if(this.isExpert) {
-            
-        }
+  onSubmit() {
+    if (this.cantidadPuja == null) {
+      alert('Debes ingresar una cantidad.');
+      return;
     }
 
-    onSubmit() {
-        if (this.cantidadPuja === null || this.cantidadPuja === undefined) {
-            alert("Debes ingresar una cantidad.");
-        } else {
-            if(this.isRaffle && this.product.actual_price >= this.cantidadPuja) {
-                alert("La cantidad dada debe ser mayor a la minima para participar.");
-            } else if (this.isBlindAuction && this.product.base_price >= this.cantidadPuja) {
-                alert("La puja tiene que ser mayor que el precio base del producto.");
-            } else if (this.product.actual_price >= this.cantidadPuja) {
-                alert("La puja tiene que ser mayor que el precio actual del producto.");
-            }
-        }
+    if (this.isRaffle && this.product.actual_price >= this.cantidadPuja) {
+      alert('La cantidad dada debe ser mayor a la mínima para participar.');
+    } else if (this.isBlindAuction && this.product.base_price >= this.cantidadPuja) {
+      alert('La puja tiene que ser mayor que el precio base del producto.');
+    } else if (!this.isBlindAuction && this.product.actual_price >= this.cantidadPuja) {
+      alert('La puja tiene que ser mayor que el precio actual del producto.');
+    }
+  }
+
+  openExpertForm() {
+    this.showExpertForm = true;
+  }
+
+  editExpertForm(comment: any) {
+    this.editandoComentario = comment;
+    this.comentarioEditado = {
+      comment: comment.comentario,
+      estimated_price: comment.precioEstimado
+    };
+    this.showExpertForm = true;
+  }
+
+  closeExpertForm() {
+    this.showExpertForm = false;
+    this.editandoComentario = null;
+    this.comentarioEditado = { comment: '', estimated_price: 0 };
+  }
+
+  submitReview() {
+    if (!this.comentarioEditado.comment || this.comentarioEditado.estimated_price <= 0) {
+      alert('Debes completar todos los campos requeridos');
+      return;
     }
 
-    openExpertForm() {
-        this.showExpertForm = true;
-        console.log(this.showExpertForm);
-    }
+    const productId = Number(this.route.snapshot.paramMap.get('id'));
 
-    editExpertForm(comment: any) {
-        this.reviewText = comment.comment;
-        this.estimatedPrice = comment.estimated_price;
-        this.showExpertForm = true;
-        console.log(this.showExpertForm);
-    }
+    const nuevoComentario = {
+      comentario: this.comentarioEditado.comment,
+      precioEstimado: this.comentarioEditado.estimated_price,
+      subastaId: productId,
+      trabajadorId: this.user.usuarioID
+    };
 
-    closeExpertForm() {
-        this.showExpertForm = false;
-        this.reviewText = '';
-        this.estimatedPrice = 0;
-    }
-
-    submitReview() {
-        console.log("Valoración enviada:", this.reviewText, "Puntuación:", this.estimatedPrice);
+    this.commentService.createComment(nuevoComentario).subscribe({
+      next: (res) => {
+        console.log('Comentario creado:', res);
+        this.comments.push(res);
         this.closeExpertForm();
+      },
+      error: (err) => {
+        console.error('Error al crear comentario:', err);
       }
+    });
+  }
+
+  saveEdit(): void {
+    if (!this.editandoComentario) return;
+
+    const updatedComentario = {
+      comentario: this.comentarioEditado.comment,
+      precioEstimado: this.comentarioEditado.estimated_price
+    };
+
+    this.commentService.editComment(this.editandoComentario.id, updatedComentario).subscribe({
+      next: (res) => {
+        const index = this.comments.findIndex(c => c.id === this.editandoComentario.id);
+        if (index !== -1) {
+          this.comments[index] = { ...this.comments[index], ...res };
+        }
+        console.log('Comentario editado:', res);
+        this.closeExpertForm();
+      },
+      error: (err) => {
+        console.error('Error al editar comentario:', err);
+      }
+    });
+  }
+
+  cancelEdit(): void {
+    this.closeExpertForm();
+  }
 }
+
