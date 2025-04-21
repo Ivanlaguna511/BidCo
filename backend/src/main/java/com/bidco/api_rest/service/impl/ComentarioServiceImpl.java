@@ -9,6 +9,10 @@ import com.bidco.api_rest.service.contract.ComentarioService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class ComentarioServiceImpl implements ComentarioService {
 
@@ -32,11 +36,25 @@ public class ComentarioServiceImpl implements ComentarioService {
 
     @Override
     public ComentarioResponseDTO buscarComentarioPorId(Long id) {
-        
         Comentario comentario = comentarioRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("el comentario no existe"));
 
-        
         return comentarioMapper.comentarioToComentarioResponseDTO(comentario);
+    }
+
+    @Override
+    public List<ComentarioResponseDTO> buscarComentariosPorSubastaId(Long id) {
+        // Llamada al repositorio para obtener los comentarios
+        List<Comentario> comentarios = comentarioRepository.findComentariosBySubastaId(id);
+
+        // Lista para almacenar los DTOs convertidos
+        List<ComentarioResponseDTO> comentarioResponseDTOList = new ArrayList<>();
+
+        // Usamos un ciclo for para convertir los Comentarios a ComentarioResponseDTO
+        for (Comentario comentario : comentarios) {
+            ComentarioResponseDTO dto = comentarioMapper.comentarioToComentarioResponseDTO(comentario);
+            comentarioResponseDTOList.add(dto);
+        }
+        return comentarioResponseDTOList;
     }
 }
