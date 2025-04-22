@@ -29,13 +29,16 @@ public class PujaServiceImpl implements PujaService {
             throw new IllegalArgumentException("La puja no puede ser nula");
         }
         Puja puja = pujaMapper.pujaCreateDTOToPuja(pujaCreateDTO);
-        if((!subastaRepository.existsById(puja.getSubasta().getSubastaID()))){
-            throw new IllegalArgumentException("La Subasta no existe");
+    
+        var subasta = subastaRepository.findById(pujaCreateDTO.getSubastaID())
+            .orElseThrow(() -> new IllegalArgumentException("La Subasta no existe"));
+    
+        if (pujaCreateDTO.getFecha().isAfter(subasta.getFechaFinal())) {
+            throw new IllegalArgumentException("La subasta ya cerró");
         }
-        if(puja.getFecha().isAfter(puja.getSubasta().getFechaFinal())){
-            throw new IllegalArgumentException("La subasta ya cerro");
-        }
+
         pujaRepository.save(puja);
+        System.out.println(puja);
         return pujaMapper.pujaToPujaResponseDTO(puja);
     }
 

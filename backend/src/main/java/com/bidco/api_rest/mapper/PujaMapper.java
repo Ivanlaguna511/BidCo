@@ -49,7 +49,7 @@ public interface PujaMapper {
     @Mapping(source = "puja.fecha", target = "fecha")
     @Mapping(source = "puja.ganadora", target = "ganadora")
     @Mapping(source = "puja.subasta.subastaID", target = "subastaID")
-    @Mapping(source = "puja.pujador.usuarioID", target = "pujadorID")
+    @Mapping(source = "puja.pujador", target = "pujadorID")
     PujaResponseDTO pujaToPujaResponseDTO(Puja puja);
 
 }

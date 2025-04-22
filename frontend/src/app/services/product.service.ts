@@ -33,11 +33,19 @@ export interface UsuarioResponseDto {
     nombreUsuario: string;
 }
 
+export interface PujaDTO {
+    importe: number;
+    fecha: string;
+    subastaID: number;
+    pujadorID: number;
+  }
+
 @Injectable({
     providedIn: 'root'
 })
 export class ProductoService {
     private subastaUrl = 'http://localhost:8080/api/subastas';
+    private pujaSubastaUrl = 'http://localhost:8080/api/pujas';
     private sorteoUrl = 'http://localhost:8080/api/sorteos';
     private usuarioUrl = 'http://localhost:8080/api/usuarios';
 
@@ -53,5 +61,9 @@ export class ProductoService {
 
     getUsuarioPorId(id: number): Observable<any> {
         return this.http.get(`${this.usuarioUrl}/${id}`);
+    }
+
+    crearPuja(puja: PujaDTO): Observable<PujaDTO> {
+        return this.http.post<PujaDTO>(this.pujaSubastaUrl, puja);
     }
 }
