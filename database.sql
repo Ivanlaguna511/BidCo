@@ -62,7 +62,7 @@ CREATE TABLE puja (
 CREATE TABLE comentario (
     comentario_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     comentario TEXT NOT NULL,
-    precioEstimado BIGINT NOT NULL,
+    precio_estimado DECIMAL(10,2) NOT NULL,
     fecha DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     trabajador_id BIGINT NOT NULL,
     subasta_id BIGINT NOT NULL,
@@ -158,11 +158,11 @@ VALUES
 
 
 
-INSERT INTO comentario (comentario, precioEstimado, trabajador_id, subasta_id) 
+INSERT INTO comentario (comentario, precio_estimado, trabajador_id, subasta_id) 
 VALUES 
 ('Este es un comentario sobre la subasta 2', 30,  1, 2),
 ('Excelente subasta, muy recomendable', 50,  2, 1),
-('La subasta fue muy interesante', 25 , 2, 1),
+('La subasta fue muy interesante', 25 , 1, 2),
 ('Este comentario tiene detalles importantes sobre la subasta 4',60, 1, 1);
 
 

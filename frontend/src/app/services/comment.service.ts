@@ -6,13 +6,13 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CommentService {
-  private apiUrl = '/api/comentarios';
+  private apiUrl = 'http://localhost:8080/api/comentarios';
 
   constructor(private http: HttpClient) {}
 
-  // Obtener comentarios por subasta
+  // ✅ Obtener comentarios por subasta con nuevo endpoint
   getComments(auctionId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}?subasta_id=${auctionId}`);
+    return this.http.get<any[]>(`${this.apiUrl}/subasta/${auctionId}`);
   }
 
   // Crear comentario nuevo
@@ -24,5 +24,4 @@ export class CommentService {
   editComment(id: number, newComment: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/${id}`, newComment);
   }
-
 }

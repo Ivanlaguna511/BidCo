@@ -35,6 +35,9 @@ public class Comentario {
         this.subasta = subasta;
     }
 
+    public Comentario() {
+    }
+
     public Long getComentarioID() {
         return comentarioID;
     }

@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/comentarios")
 public class ComentarioController {
@@ -22,10 +24,9 @@ public class ComentarioController {
     }
 
     // Endpoint para añadir un comentario
-    @PostMapping
+    @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     public ComentarioResponseDTO añadirComentario(@Valid @RequestBody ComentarioCreateDTO comentarioCreateDTO) {
-        System.out.println("hola");
         return comentarioService.añadirComentario(comentarioCreateDTO);
     }
 
@@ -38,5 +39,13 @@ public class ComentarioController {
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
+    }
+
+    // Método para obtener los comentarios por subastaId
+    @GetMapping("/subasta/{subastaId}")
+    public ResponseEntity<List<ComentarioResponseDTO>> buscarComentariosPorSubastaId(@PathVariable Long subastaId) {
+        System.out.println("uno");
+        List<ComentarioResponseDTO> comentarios = comentarioService.buscarComentariosPorSubastaId(subastaId);
+        return ResponseEntity.ok(comentarios);
     }
 }
