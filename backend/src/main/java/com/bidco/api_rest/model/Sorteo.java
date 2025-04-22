@@ -30,6 +30,12 @@ public class Sorteo {
     @Column(nullable = false,name= "imagen")
     private String imagen;
 
+    @Column(name = "categoria",nullable = false)
+    private String categoria;
+
+    @Column(name = "ganador_id")
+    private Long ganador;
+
     @OneToMany(mappedBy = "sorteo", fetch = FetchType.LAZY)
     private List<PujaSorteo> pujasSorteos;
 
@@ -37,7 +43,7 @@ public class Sorteo {
     @JoinColumn(name = "trabajador_id")
     private Trabajador creador;
 
-    public Sorteo(Long sorteoID, String nombreArticulo, String descripcion, LocalDate fechaInicio, LocalDate fechaFin, int puntosNecesarios,Trabajador creador, String imagen) {
+    public Sorteo(Long sorteoID, String nombreArticulo, String descripcion, LocalDate fechaInicio, LocalDate fechaFin, int puntosNecesarios,Trabajador creador, String imagen, String categoria) {
         this.sorteoID = sorteoID;
         this.nombreArticulo = nombreArticulo;
         this.descripcion = descripcion;
@@ -48,6 +54,8 @@ public class Sorteo {
         this.puntosFinales = 0;
         this.creador = creador;
         this.imagen = imagen;
+        this.categoria = categoria;
+        this.ganador = null;
     }
     public Sorteo() {
 
@@ -131,5 +139,21 @@ public class Sorteo {
 
     public void setImagen(String imagen) {
         this.imagen = imagen;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public Long getGanador() {
+        return ganador;
+    }
+
+    public void setGanador(Long ganador) {
+        this.ganador = ganador;
     }
 }

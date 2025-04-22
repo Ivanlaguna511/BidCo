@@ -15,11 +15,13 @@ public class SorteoCreateDTO {
     private int puntosNecesarios;
     private Long creadorId;
     private String imagen;
-
+    private String categoria;
+    private Long ganador;
 
     // Constructor
     public SorteoCreateDTO(String nombreArticulo, String descripcion, LocalDate fechaInicio, LocalDate fechaFin,
-                           int puntosNecesarios, Long creadorId, String imagen) {
+                           int puntosNecesarios, Long creadorId, String imagen, String categoria,
+                            Long ganador) {
         this.nombreArticulo = nombreArticulo;
         this.descripcion = descripcion;
         this.fechaInicio = fechaInicio;
@@ -27,6 +29,8 @@ public class SorteoCreateDTO {
         this.puntosNecesarios = puntosNecesarios;
         this.creadorId = creadorId;
         this.imagen = imagen;
+        this.categoria = categoria;
+        this.ganador = ganador;
     }
 
     // Getters y Setters
@@ -84,5 +88,21 @@ public class SorteoCreateDTO {
 
     public void setImagen(String imagen) {
         this.imagen = imagen;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public Long getGanador() {
+        return ganador;
+    }
+
+    public void setGanador(Long ganador) {
+        this.ganador = ganador;
     }
 }

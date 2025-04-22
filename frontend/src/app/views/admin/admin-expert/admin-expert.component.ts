@@ -19,12 +19,18 @@ export class AdminExpertComponent {
     contrasena:        '',
     experto:          true
   };
-
+  formularioInvalido = false;
   message: string = '';
 
   constructor(private adminSvc: AdminService) {}
 
-  submit(): void {
+  submit(form:any): void {
+    this.formularioInvalido = false;
+
+    if (!form.valid) {
+        this.formularioInvalido = true;
+        return;
+    }
     // Llamada al servicio para registrar un experto
     this.adminSvc.createExpert(this.expert).subscribe({
       next: () => {
@@ -32,9 +38,9 @@ export class AdminExpertComponent {
         // Opcional: limpiar el formulario
         this.expert = { nombreUsuario: '', correoElectronico: '', contrasena: '', experto: true };
       },
-      error: (err: Error) => {
-        this.message = 'Error: ' + err.message;
-      }
+      //error: (err: Error) => {
+      //  this.message = 'Error: ' + err.message;
+      //}
     });
   }
 }

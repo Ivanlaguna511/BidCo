@@ -32,6 +32,8 @@ public interface SorteoMapper {
     @Mapping(source = "nombreArticulo", target = "nombreArticulo")
     @Mapping(source = "puntosFinales", target = "puntosFinales")
     @Mapping(source = "imagen", target = "imagen")
+    @Mapping(source = "categoria", target = "categoria")
+    @Mapping(source = "ganador", target = "ganador")
     SorteoResponseDTO sorteoToSorteoResponseDTO(Sorteo sorteo);
 
     // Convertir Long a Trabajador

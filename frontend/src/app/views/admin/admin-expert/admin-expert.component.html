@@ -1,6 +1,6 @@
 <section class="form-container">
   <h3 class="form-title">Registrar Experto</h3>
-  <form class="form" (ngSubmit)="submit()">
+  <form class="form" #form="ngForm" (ngSubmit)="submit(form)">
     <div class="form-group">
       <label for="exp-user">Usuario</label>
       <input id="exp-user"
@@ -26,6 +26,9 @@
              required />
     </div>
     <div *ngIf="message" class="success-message">{{ message }}</div>
+    <div *ngIf="formularioInvalido" class="error-box">
+        Los datos introducidos no son válidos.
+    </div>
     <button class="btn-primary" type="submit">Registrar</button>
   </form>
 </section>

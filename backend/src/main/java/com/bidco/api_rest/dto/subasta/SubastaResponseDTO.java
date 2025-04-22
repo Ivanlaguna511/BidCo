@@ -15,10 +15,12 @@ public class SubastaResponseDTO {
     private String descripcion;
     private Long creadorId;
     private String imagen;
+    private String categoria;
+    private Long ganador;
 
     public SubastaResponseDTO(Long subastaID, LocalDate fechaInicial, LocalDate fechaFinal, BigDecimal precioInicial,
                                BigDecimal precioFinal, boolean subastaNormal, String nombreArticulo,
-                               String descripcion, Long creadorId, String imagen) {
+                               String descripcion, Long creadorId, String imagen, String categoria, Long ganador) {
         this.subastaID = subastaID;
         this.fechaInicial = fechaInicial;
         this.fechaFinal = fechaFinal;
@@ -29,6 +31,8 @@ public class SubastaResponseDTO {
         this.descripcion = descripcion;
         this.creadorId = creadorId;
         this.imagen = imagen;
+        this.categoria = categoria;
+        this.ganador = ganador;
     }
 
     public Long getSubastaID() {
@@ -109,5 +113,21 @@ public class SubastaResponseDTO {
 
     public void setImagen(String imagen) {
         this.imagen = imagen;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public Long getGanador() {
+        return ganador;
+    }
+
+    public void setGanador(Long ganador) {
+        this.ganador = ganador;
     }
 }

@@ -26,6 +26,8 @@ public interface SubastaMapper {
     @Mapping(source = "descripcion", target = "descripcion")
     @Mapping(source = "creador.usuarioID", target = "creadorId")
     @Mapping(source = "imagen", target = "imagen")
+    @Mapping(source = "categoria", target = "categoria")
+    @Mapping(source = "ganador", target = "ganador")
     SubastaResponseDTO subastaToSubastaResponseDTO(Subasta subasta);
 
     @Named("longToUsuario")

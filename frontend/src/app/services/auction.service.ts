@@ -6,6 +6,7 @@ export interface SubastaResponseDTO {
     subastaID: number;
     nombreArticulo: string;
     precioFinal: string;
+    categoria: string;
 }
 
 @Injectable({

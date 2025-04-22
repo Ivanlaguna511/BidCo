@@ -45,6 +45,7 @@ CREATE TABLE subasta (
     imagen VARCHAR(255), 
     creador_id BIGINT NOT NULL,
     ganador_id BIGINT,
+    categoria VARCHAR(255),
     FOREIGN KEY (creador_id) REFERENCES usuario(usuario_id)
 );
 
@@ -80,7 +81,8 @@ CREATE TABLE sorteo (
     puntos_finales INT default 0,  -- Este campo ha sido añadido según tu solicitud
     trabajador_id BIGINT NOT NULL,  -- Asumiendo que 'creador' es un trabajador, y 'creador_id' es la clave foránea
     ganador_id BIGINT,
-    imagen VARCHAR(255), 
+    imagen VARCHAR(255),
+    categoria VARCHAR(255),
     FOREIGN KEY (trabajador_id) REFERENCES trabajador(trabajador_id)  -- Asumiendo que existe una tabla 'trabajador' con la columna 'trabajador_id'
 );
 
@@ -111,20 +113,20 @@ VALUES
 
 
 -- Insertar subastas
-INSERT INTO subasta (fecha_inicial, fecha_final, precio_inicial, precio_final, subasta_normal, nombre_articulo, descripcion, creador_id, imagen, ganador_id) 
+INSERT INTO subasta (fecha_inicial, fecha_final, precio_inicial, precio_final, subasta_normal, nombre_articulo, descripcion, creador_id, imagen, categoria) 
 VALUES 
 ('2023-05-01', '2025-10-10', 50.00, 70.00, TRUE, 'Reloj de bolsillo', 'Elegante y atemporal, este reloj de bolsillo combina artesanía clásica con precisión moderna. 
                     Su diseño vintage, con una fina cadena y detalles grabados, lo convierte en un accesorio 
-                    sofisticado para cualquier ocasión.', 1, 'Reloj.jpg', 2),  -- Creador es 'Juan Pérez'
+                    sofisticado para cualquier ocasión.', 1, 'Reloj.jpg', 'moda'),  -- Creador es 'Juan Pérez'
 ('2025-04-01', '2025-06-10', 20.00, 30.00, TRUE, 'Sudadera', 'Disfruta del equilibrio perfecto entre comodidad y estilo con esta sudadera de diseño moderno. 
                     Confeccionada con materiales suaves y transpirables, ofrece un ajuste cómodo y versátil para cualquier ocasión. 
-                    Ideal para los días fríos, su interior afelpado te mantendrá abrigado sin perder el estilo.', 2, 'sudadera_capucha_55_azulmarino_827_1024.jpg', 1),  -- Creador es 'Ana García'
+                    Ideal para los días fríos, su interior afelpado te mantendrá abrigado sin perder el estilo.', 2, 'sudadera_capucha_55_azulmarino_827_1024.jpg', 'moda'),  -- Creador es 'Ana García'
 ('2023-05-01', '2025-09-05', 70.00, 100.00, FALSE, 'Camara de fotos', 'Captura cada momento con precisión y claridad con esta cámara de fotos de alta resolución. 
                     Equipada con tecnología avanzada, ofrece imágenes nítidas, colores vibrantes y un enfoque rápido 
-                    para no perder ningún detalle. Su diseño ergonómico y ligero la hace perfecta para llevar a cualquier aventura.', 1, 'portada-las-mejores-camaras-reflex-2019.jpg', 2),  -- Creador es 'Juan Pérez'
+                    para no perder ningún detalle. Su diseño ergonómico y ligero la hace perfecta para llevar a cualquier aventura.', 1, 'portada-las-mejores-camaras-reflex-2019.jpg', 'tecnologia'),  -- Creador es 'Juan Pérez'
 ('2025-04-01', '2025-08-12', 50.00, 55.00, FALSE, 'Flexo', 'Un flexo moderno y funcional, ideal para iluminar tu espacio de trabajo o estudio. 
                     Su diseño ajustable permite dirigir la luz con precisión, mientras que su estructura resistente y 
-                    elegante se adapta a cualquier entorno. Perfecto para leer, escribir o trabajar con comodidad.', 2, 'flexo-cadiz.jpg', 1);  -- Creador es 'Ana García'
+                    elegante se adapta a cualquier entorno. Perfecto para leer, escribir o trabajar con comodidad.', 2, 'flexo-cadiz.jpg', 'hogar');  -- Creador es 'Ana García'
 
 
 -- Insertar pujas
@@ -136,14 +138,15 @@ VALUES
 ('2025-05-03', 55.00, FALSE, 2, 4);  -- Puja de 'Ana García' en la subasta 4 (Flexo)
 
 -- Insertar un sorteo
-INSERT INTO sorteo (nombre_articulo, descripcion, fecha_inicio, fecha_fin, puntos_necesarios, trabajador_id, imagen)
+INSERT INTO sorteo (nombre_articulo, descripcion, fecha_inicio, fecha_fin, puntos_necesarios, trabajador_id, imagen, categoria)
 VALUES
 ('LEGO McLaren F1', 'Revive la emoción de la Fórmula 1 con este increíble set de LEGO. Diseñado con gran detalle, este modelo 
                     captura la esencia de un monoplaza de carreras, con neumáticos realistas, alerones aerodinámicos y un diseño fiel a 
                     la competición. Perfecto para fans del automovilismo y constructores apasionados, este set ofrece una experiencia de ensamblaje 
-                    envolvente y un resultado espectacular para exhibir. ¡Siente la velocidad y la adrenalina en cada pieza!', '2025-04-01', '2025-06-15', 3500,  1, '77251_boxprod_v39_en-gb.png'),  -- Ejemplo con un trabajador con id 2
-('Televisor 4K', 'Un televisor de alta definición 4K de 50 pulgadas', '2025-05-01', '2024-05-15', 500,  1, 'tele.jpg'),  -- Ejemplo con un trabajador con id 1
-('Smartphone', 'Smartphone de última tecnología con pantalla AMOLED', '2025-07-01', '2025-07-15', 200,  1, 'movil.jpg');  -- Ejemplo con un trabajador con id 3
+                    envolvente y un resultado espectacular para exhibir. ¡Siente la velocidad y la adrenalina en cada pieza!', '2025-04-01', '2025-06-15', 3500,  
+                    1, '77251_boxprod_v39_en-gb.png', 'juguetes'),  -- Ejemplo con un trabajador con id 2
+('Televisor 4K', 'Un televisor de alta definición 4K de 50 pulgadas', '2025-05-01', '2024-05-15', 500,  1, 'tele.jpg', 'tecnologia'),  -- Ejemplo con un trabajador con id 1
+('Smartphone', 'Smartphone de última tecnología con pantalla AMOLED', '2025-07-01', '2025-07-15', 200,  1, 'movil.jpg', 'tecnologia');  -- Ejemplo con un trabajador con id 3
 
 
 
