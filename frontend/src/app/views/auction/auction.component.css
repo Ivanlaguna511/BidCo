@@ -9,7 +9,14 @@
     justify-content: space-between;
 }
 
+#top-items div{
+    display: flex;
+    min-width: 30%;
+    justify-content: right;
+}
+
 #crear-subasta {
+    margin-left: 5%;
     margin-right: 5%;
     text-decoration: none;
     padding: 10px 15px;

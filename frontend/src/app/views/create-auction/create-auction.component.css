@@ -187,3 +187,12 @@ h2 {
     padding: 8px;
     font-size: 14px;
 }
+
+.error-box {
+    background-color: #ffe0e0;
+    border: 1px solid #ff5c5c;
+    color: #b00000;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+  }

@@ -29,6 +29,7 @@ export class AuctionComponent {
     products: SubastaResponseDTO[] = [];
     isLoggedIn = false;
     isExpert = false;
+    saldoUser = 0;
 
     constructor(private authService: AuthService, private subastaService: SubastaService) {}
 
@@ -40,10 +41,17 @@ export class AuctionComponent {
         
         this.authService.isLoggedIn$.subscribe((estado) => {
             this.isLoggedIn = estado;
+
+            const storedUser = localStorage.getItem('authUser');
+        
+            if(storedUser) {
+                const user = JSON.parse(storedUser);
+                this.saldoUser = user.saldo;
+            }
         });
 
         this.authService.userRole$.subscribe((estado) => {
             this.isExpert = estado === 'expert';
-        });  
+        }); 
     }
 }

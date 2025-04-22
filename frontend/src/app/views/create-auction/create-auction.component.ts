@@ -30,10 +30,31 @@ export class CreateAuctionComponent {
         descripcion: '',
         creadorId: 1 
     };
+    formularioInvalido: boolean = false;
     
     constructor(private crearSubastaService: CreateSubastaService, private router: Router) {}
     
-    onSubmit() {
+    onSubmit(form: any) {
+        this.formularioInvalido = false;
+
+        if (!form.valid) {
+            this.formularioInvalido = true;
+            return;
+        }
+
+        const hoy = new Date();
+        const fechaFin = new Date(this.subasta.fechaFinal);
+
+        if (fechaFin < hoy) {
+            this.formularioInvalido = true;
+            return;
+        }
+
+        if (this.imagenPreview === null) {
+            this.formularioInvalido = true;
+            return;
+        }
+        
         const storedUser = localStorage.getItem('authUser');
         
         if(storedUser) {

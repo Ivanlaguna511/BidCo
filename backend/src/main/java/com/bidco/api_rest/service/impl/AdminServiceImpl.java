@@ -76,7 +76,7 @@ public class AdminServiceImpl implements AdminService {
         if (img != null && !img.isEmpty()) {
             try {
                 // Igual que en SubastaServiceImpl: carpeta "uploads" dentro de tu working dir
-                Path folder = Paths.get(System.getProperty("user.dir"), "uploads", "sorteos");
+                Path folder = Paths.get(System.getProperty("user.dir"), "uploads");
                 Files.createDirectories(folder);
                 String filename = System.currentTimeMillis() + "_" + img.getOriginalFilename();
                 Path filePath = folder.resolve(filename);

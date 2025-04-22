@@ -2,11 +2,11 @@
 <app-header></app-header>
 <main>
     <h2>Crear Subasta</h2>
-    <form class="auction-form" (ngSubmit)="onSubmit()">
+    <form class="auction-form" #form="ngForm" (ngSubmit)="onSubmit(form)">
         <!-- Sección para subir imagen -->
         <div class="image-upload">
             <label for="imagen" class="image-label" *ngIf="!imagenPreview">Subir Imagen</label>
-            <input type="file" id="imagen" name="imagen" (change)="onImgSelected($event)" accept="image/*">
+            <input type="file" id="imagen" name="imagen" (change)="onImgSelected($event)" accept="image/*" required>
 
             <div *ngIf="imagenPreview" class="image-preview">
                 <img [src]="imagenPreview" alt="Vista previa de la imagen" class="preview-img" />
@@ -74,6 +74,9 @@
         <button type="submit" class="create-button">Crear la puja</button>
         </div>
   </form>
+  <div *ngIf="formularioInvalido" class="error-box">
+    Los datos introducidos no son válidos. Asegurate de haber rellenado los campos y de haber elegido una fecha posterior a la de hoy.
+  </div>
 </main>
 
 <app-footer/>

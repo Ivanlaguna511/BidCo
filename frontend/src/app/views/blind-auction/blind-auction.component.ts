@@ -28,6 +28,7 @@ export class BlindAuctionComponent {
     products: SubastaResponseDTO[] = [];
     isLoggedIn = false;
     isExpert = false;
+    saldoUser = 0;
 
     constructor(private authService: AuthService, private subastaService: SubastaService) {}
 
@@ -39,6 +40,13 @@ export class BlindAuctionComponent {
 
         this.authService.isLoggedIn$.subscribe((estado) => {
             this.isLoggedIn = estado;
+
+            const storedUser = localStorage.getItem('authUser');
+        
+            if(storedUser) {
+                const user = JSON.parse(storedUser);
+                this.saldoUser = user.saldo;
+            }
         });
 
         this.authService.userRole$.subscribe((estado) => {
