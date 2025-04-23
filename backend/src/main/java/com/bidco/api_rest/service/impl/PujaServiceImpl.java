@@ -4,6 +4,7 @@ import com.bidco.api_rest.dto.puja.PujaCreateDTO;
 import com.bidco.api_rest.dto.puja.PujaResponseDTO;
 import com.bidco.api_rest.mapper.PujaMapper;
 import com.bidco.api_rest.model.Puja;
+import com.bidco.api_rest.model.Subasta;
 import com.bidco.api_rest.repository.PujaRepository;
 import com.bidco.api_rest.repository.SubastaRepository;
 import com.bidco.api_rest.service.contract.PujaService;
@@ -30,7 +31,7 @@ public class PujaServiceImpl implements PujaService {
         }
         Puja puja = pujaMapper.pujaCreateDTOToPuja(pujaCreateDTO);
     
-        var subasta = subastaRepository.findById(pujaCreateDTO.getSubastaID())
+        Subasta subasta = subastaRepository.findById(pujaCreateDTO.getSubastaID())
             .orElseThrow(() -> new IllegalArgumentException("La Subasta no existe"));
     
         if (pujaCreateDTO.getFecha().isAfter(subasta.getFechaFinal())) {
@@ -38,7 +39,10 @@ public class PujaServiceImpl implements PujaService {
         }
 
         pujaRepository.save(puja);
-        System.out.println(puja);
+        
+        subasta.setPrecioFinal(puja.getImporte());
+        subastaRepository.save(subasta);
+
         return pujaMapper.pujaToPujaResponseDTO(puja);
     }
 

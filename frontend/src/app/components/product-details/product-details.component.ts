@@ -30,10 +30,12 @@ export class ProductDetailsComponent {
             case 'subasta':
                 this.productoService.getSubastaPorId(productId).subscribe((product) => {
                     this.productoSubasta = product;
-                    console.log(this.productoSubasta);
-                    this.productoService.getUsuarioPorId(this.productoSubasta.creadorId).subscribe((user) => {
-                        if(user.privacidadAnonimoPujas === false) {
-                            this.nombreUsuario = user.nombreUsuario;
+                    
+                    this.productoService.obtenerPrivacidad(this.productoSubasta.creadorId).subscribe((userPriv) => {
+                        if(userPriv.privacidadAnonimoPujas === false) {
+                            this.productoService.getUsuarioPorId(this.productoSubasta.creadorId).subscribe((user) => {
+                                this.nombreUsuario = user.nombreUsuario;
+                            })
                         } else {
                             this.nombreUsuario = "Anónimo";
                         }
@@ -44,10 +46,12 @@ export class ProductDetailsComponent {
             case 'ciega':
                 this.productoService.getSubastaPorId(productId).subscribe((product) => {
                     this.productoSubasta = product;
-                    console.log(this.productoSubasta);
-                    this.productoService.getUsuarioPorId(this.productoSubasta.creadorId).subscribe((user) => {
-                        if(user.privacidadAnonimoPujas === false) {
-                            this.nombreUsuario = user.nombreUsuario;
+                    
+                    this.productoService.obtenerPrivacidad(this.productoSubasta.creadorId).subscribe((userPriv) => {
+                        if(userPriv.privacidadAnonimoPujas === false) {
+                            this.productoService.getUsuarioPorId(this.productoSubasta.creadorId).subscribe((user) => {
+                                this.nombreUsuario = user.nombreUsuario;
+                            })
                         } else {
                             this.nombreUsuario = "Anónimo";
                         }

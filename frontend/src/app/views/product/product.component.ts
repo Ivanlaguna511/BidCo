@@ -106,9 +106,11 @@ export class ProductComponent {
             }
             
             const userId = puja.pujadorID;
-            this.productoService.getUsuarioPorId(userId).subscribe((user) => {
-                if(user.privacidadAnonimoPujas === false) {
-                    this.candidatoGanadorPuja = user.nombreUsuario;
+            this.productoService.obtenerPrivacidad(userId).subscribe((userPriv) => {
+                if(userPriv.privacidadAnonimoPujas === false) {
+                    this.productoService.getUsuarioPorId(userId).subscribe((user) => {
+                        this.candidatoGanadorPuja = user.nombreUsuario;
+                    })
                 } else {
                     this.candidatoGanadorPuja = "Anónimo";
                 }
@@ -145,6 +147,7 @@ export class ProductComponent {
             pujadorId: this.user.usuarioID
         }
         this.productoService.crearPuja(nuevaPuja).subscribe({
+            next: () => {this.ngOnInit();},
             error: (err) => {
                 alert('❌ Error al realizar la puja.');
             }

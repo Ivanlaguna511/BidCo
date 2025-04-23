@@ -72,6 +72,10 @@ export class ProductoService {
         return this.http.get(`${this.usuarioUrl}/${id}`);
     }
 
+    obtenerPrivacidad(id: number): Observable<any> {
+        return this.http.get(`${this.usuarioUrl}/${id}/privacidad`);
+    }
+
     crearPuja(puja: PujaCreateDTO): Observable<PujaCreateDTO> {
         return this.http.post<PujaCreateDTO>(this.pujaSubastaUrl, puja);
     }

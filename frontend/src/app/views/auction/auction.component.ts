@@ -41,14 +41,11 @@ export class AuctionComponent {
         
         this.authService.isLoggedIn$.subscribe((estado) => {
             this.isLoggedIn = estado;
-
-            const storedUser = localStorage.getItem('authUser');
-        
-            if(storedUser) {
-                const user = JSON.parse(storedUser);
-                this.saldoUser = user.saldo;
-            }
         });
+
+        this.authService.currentUser$.subscribe((user) => {
+            if (user) this.saldoUser = user.saldo ?? 0;
+        })
 
         this.authService.userRole$.subscribe((estado) => {
             this.isExpert = estado === 'expert';

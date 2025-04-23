@@ -34,7 +34,15 @@ export class AuthService {
 
   private apiUrl: string = 'http://localhost:8080/api/usuarios';
 
-  constructor(private http: HttpClient, private userService: UserService) {}
+  constructor(private http: HttpClient, private userService: UserService) {
+    const token = localStorage.getItem('authToken');
+    const userData = localStorage.getItem('authUser');
+
+    if (token && userData) {
+        this.loggedIn.next(true);
+        this.currentUser.next(JSON.parse(userData));
+    }
+  }
 
   // Método para hacer login; se espera que el backend retorne { token: string }
   loginUser(loginData: { identificador: string; contraseña: string }) {

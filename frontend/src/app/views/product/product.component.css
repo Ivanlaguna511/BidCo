@@ -26,6 +26,11 @@ app-product-details {
     margin-bottom: 5%;
 }
 
+#puja-form h4{
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
 #puja-form input {
     width: 130%;
     padding: 8px;
