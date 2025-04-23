@@ -36,8 +36,8 @@ export interface UsuarioResponseDto {
 export interface PujaDTO {
     importe: number;
     fecha: string;
-    subastaID: number;
-    pujadorID: number;
+    subastaId: number;
+    pujadorId: number;
   }
 
 @Injectable({

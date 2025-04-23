@@ -43,13 +43,18 @@ public interface PujaMapper {
         usuario.setUsuarioID(usuarioId);
         return usuario;
     }
+    
+    @Named("usuarioToLong")
+    public static Long usuarioToLong(Usuario usuario) {
+        return usuario != null ? usuario.getUsuarioID() : null;
+    }
 
     @Mapping(source = "puja.pujaID", target = "pujaID")
     @Mapping(source = "puja.importe", target = "importe")
     @Mapping(source = "puja.fecha", target = "fecha")
     @Mapping(source = "puja.ganadora", target = "ganadora")
     @Mapping(source = "puja.subasta.subastaID", target = "subastaID")
-    @Mapping(source = "puja.pujador", target = "pujadorID")
+    @Mapping(source = "puja.pujador", target = "pujadorID", qualifiedByName = "usuarioToLong")
     PujaResponseDTO pujaToPujaResponseDTO(Puja puja);
 
 }

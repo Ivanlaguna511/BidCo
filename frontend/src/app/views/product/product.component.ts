@@ -122,10 +122,9 @@ export class ProductComponent {
         const nuevaPuja: PujaDTO = {
             importe: this.cantidadPuja,
             fecha: new Date().toISOString().split('T')[0], // yyyy-MM-dd
-            subastaID: this.productId,
-            pujadorID: this.user.usuarioID
+            subastaId: this.productId,
+            pujadorId: this.user.usuarioID
         }
-
         this.productoService.crearPuja(nuevaPuja).subscribe({
             error: (err) => {
                 alert('❌ Error al realizar la puja.');
