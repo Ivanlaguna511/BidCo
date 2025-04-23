@@ -11,7 +11,7 @@ import { FooterComponent } from "../../components/footer/footer.component";
 
 import { DATA_EXPERT } from '../../datos_estaticos/user_estadisticas';
 import { AuthService } from '../../services/auth.service';
-import { ProductoService, PujaDTO} from '../../services/product.service';
+import { ProductoService, PujaCreateDTO, PujaResponseDTO} from '../../services/product.service';
 import { CommentService } from '../../services/comment.service';
 
 
@@ -33,20 +33,23 @@ import { CommentService } from '../../services/comment.service';
 export class ProductComponent {
     product: any;
     productId = 0;
-    comments: any[] = [];
+    tipo = '';
     isBlindAuction: boolean = false;
     isRaffle: boolean = false;
+    
     user: any;
-    expert = DATA_EXPERT;
     isLoggedIn = false;
-    isExpert = false;
-    showExpertForm = false;
-    reviewText = '';
-    estimatedPrice = 0;
     cantidadPuja: number | null = null;
+    candidatoGanadorPuja: string | null = null;
+
+    expert = DATA_EXPERT;
+    isExpert = false;
+    comments: any[] = [];
+    showExpertForm = false;
     isExpertComment = false;
-    tipo = '';
     editandoComentario: any = null;
+    estimatedPrice = 0;
+    reviewText = '';
     comentarioEditado = { comment: '', estimated_price: 0 };
 
     constructor(
@@ -73,7 +76,7 @@ export class ProductComponent {
         this.productId = Number(this.route.snapshot.paramMap.get('id'));
 
         this.commentService.getComments(this.productId).subscribe((comments) => {
-        this.comments = comments;
+            this.comments = comments;
         });
 
         this.tipo = this.route.snapshot.data['tipo'];
@@ -95,6 +98,22 @@ export class ProductComponent {
             default:
                 console.error('Tipo de producto no válido');
         }
+
+
+        this.productoService.obtenerPujaMaximaPorSubasta(this.productId).subscribe((puja) => {
+            if (!puja || !puja.pujadorID) {
+                return;
+            }
+            
+            const userId = puja.pujadorID;
+            this.productoService.getUsuarioPorId(userId).subscribe((user) => {
+                if(user.privacidadAnonimoPujas === false) {
+                    this.candidatoGanadorPuja = user.nombreUsuario;
+                } else {
+                    this.candidatoGanadorPuja = "Anónimo";
+                }
+            })
+        })
     }
 
     onSubmit() {
@@ -119,7 +138,7 @@ export class ProductComponent {
 
         const storedUser = localStorage.getItem('authUser');
 
-        const nuevaPuja: PujaDTO = {
+        const nuevaPuja: PujaCreateDTO = {
             importe: this.cantidadPuja,
             fecha: new Date().toISOString().split('T')[0], // yyyy-MM-dd
             subastaId: this.productId,

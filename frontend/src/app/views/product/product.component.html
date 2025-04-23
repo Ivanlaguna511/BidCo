@@ -7,6 +7,7 @@
               <div *ngIf="product">
                   <h3>{{ isLoggedIn ? isBlindAuction ? 'Subasta a Ciegas' : isRaffle ? 'Tus Puntos:' : 'Precio Actual:' : 'Inicia Sesión Para Participar'}}</h3>
                   <h2>{{ isLoggedIn ? isBlindAuction ? null : isRaffle ? user.puntos : product.precioFinal + '€' : ''}}</h2>
+                  <h4 *ngIf="candidatoGanadorPuja">Puja más alta de: {{ candidatoGanadorPuja }}</h4>
                   <input *ngIf="isLoggedIn && !isExpert"
                       type="number" 
                       id="cantidad" 

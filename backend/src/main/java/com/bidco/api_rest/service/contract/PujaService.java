@@ -7,4 +7,5 @@ public interface PujaService {
 
     PujaResponseDTO crearPuja(PujaCreateDTO pujaCreateDTO);
     PujaResponseDTO buscarPujaPorId(Long id);
+    public PujaResponseDTO obtenerPujaMasAlta(Long subastaId);
 }

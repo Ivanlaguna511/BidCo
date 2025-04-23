@@ -33,12 +33,21 @@ export interface UsuarioResponseDto {
     nombreUsuario: string;
 }
 
-export interface PujaDTO {
+export interface PujaCreateDTO {
     importe: number;
     fecha: string;
     subastaId: number;
     pujadorId: number;
-  }
+}
+
+export interface PujaResponseDTO {
+    pujaID: number;
+    importe: number;
+    fecha: string;
+    ganadora: boolean;
+    subastaID: number;
+    pujadorID: number;
+}
 
 @Injectable({
     providedIn: 'root'
@@ -63,7 +72,11 @@ export class ProductoService {
         return this.http.get(`${this.usuarioUrl}/${id}`);
     }
 
-    crearPuja(puja: PujaDTO): Observable<PujaDTO> {
-        return this.http.post<PujaDTO>(this.pujaSubastaUrl, puja);
+    crearPuja(puja: PujaCreateDTO): Observable<PujaCreateDTO> {
+        return this.http.post<PujaCreateDTO>(this.pujaSubastaUrl, puja);
+    }
+
+    obtenerPujaMaximaPorSubasta(subastaId: number): Observable<PujaResponseDTO> {
+        return this.http.get<PujaResponseDTO>(`${this.pujaSubastaUrl}/mayor/${subastaId}`);
     }
 }

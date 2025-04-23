@@ -29,4 +29,10 @@ public class PujaController {
     public PujaResponseDTO buscarPujaPorId(@PathVariable Long id) {
         return pujaService.buscarPujaPorId(id);
     }
+
+    @GetMapping("/mayor/{subastaId}")
+    public PujaResponseDTO obtenerPujaMasAlta(@PathVariable Long subastaId) {
+        return pujaService.obtenerPujaMasAlta(subastaId);
+    }
+
 }

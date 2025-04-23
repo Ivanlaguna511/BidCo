@@ -49,4 +49,15 @@ public class PujaServiceImpl implements PujaService {
 
         return pujaMapper.pujaToPujaResponseDTO(puja);
     }
+
+    @Override
+    public PujaResponseDTO obtenerPujaMasAlta(Long subastaId) {
+        Puja pujaMaxima = pujaRepository.findTopBySubastaIdOrderByImporteDesc(subastaId);
+        if (pujaMaxima == null) {
+            throw new EntityNotFoundException("No hay pujas para esta subasta");
+        }
+
+        return pujaMapper.pujaToPujaResponseDTO(pujaMaxima);
+    }
+
 }

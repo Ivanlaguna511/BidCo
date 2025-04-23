@@ -12,4 +12,8 @@ public interface PujaRepository extends JpaRepository<Puja, Long> {
     
     @Query("SELECT COUNT(p) FROM Puja p WHERE p.pujador.usuarioID = :usuarioID AND p.ganadora = true")
     int countWonBidsByUsuarioId(Long usuarioID);
+
+    @Query("SELECT p FROM Puja p WHERE p.subasta.subastaID = :subastaId ORDER BY p.importe DESC LIMIT 1")
+    Puja findTopBySubastaIdOrderByImporteDesc(Long subastaId);
+
 }
