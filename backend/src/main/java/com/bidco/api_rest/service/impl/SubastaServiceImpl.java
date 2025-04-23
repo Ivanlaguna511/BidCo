@@ -100,10 +100,16 @@ public class SubastaServiceImpl implements SubastaService {
             throw new IllegalStateException("No hubo ninguna puja en la subasta.");
         }
 
+        Usuario user = userRepository.findById(puja.getPujador().getUsuarioID())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        user.setSaldo(user.getSaldo().subtract(puja.getImporte()));
         puja.setGanadora(true);
-        subasta.setGanador(puja.getPujador().getUsuarioID());
+        subasta.setGanador(user.getUsuarioID());
+
         subastaRepository.save(subasta);
         pujaRepository.save(puja);
+        usuarioRepository.save(user);
     }
 
     @Override

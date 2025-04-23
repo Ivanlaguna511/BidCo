@@ -11,7 +11,7 @@ import { FooterComponent } from "../../components/footer/footer.component";
 
 import { DATA_EXPERT } from '../../datos_estaticos/user_estadisticas';
 import { AuthService } from '../../services/auth.service';
-import { ProductoService, PujaCreateDTO, PujaResponseDTO} from '../../services/product.service';
+import { ProductoService, PujaCreateDTO, PujaResponseDTO, PujaSorteoCreateDTO} from '../../services/product.service';
 import { CommentService } from '../../services/comment.service';
 
 
@@ -126,7 +126,7 @@ export class ProductComponent {
             return;
         }
 
-        if (this.isRaffle && this.product.puntosNecesarios >= this.cantidadPuja) {
+        if (this.isRaffle && this.product.puntosNecesarios > this.cantidadPuja) {
             alert('La cantidad dada debe ser mayor a la mínima para participar.');
             return;
         } else if (this.isBlindAuction && this.product.precioInicial >= this.cantidadPuja) {
@@ -135,25 +135,54 @@ export class ProductComponent {
         } else if (!this.isBlindAuction && this.product.precioFinal >= this.cantidadPuja) {
             alert('La puja tiene que ser mayor que el precio actual del producto.');
             return;
-        } else if (this.cantidadPuja > this.user.saldo) {
+        } else if (this.isRaffle && this.cantidadPuja > this.user.puntos) {
+            alert('No tienes suficientes puntos para participar.');
+            return;
+        } else if (!this.isRaffle && this.cantidadPuja > this.user.saldo) {
             alert('Saldo insuficiente.');
             return;
         }
 
-        const storedUser = localStorage.getItem('authUser');
-
-        const nuevaPuja: PujaCreateDTO = {
-            importe: this.cantidadPuja,
-            fecha: new Date().toISOString().split('T')[0], // yyyy-MM-dd
-            subastaId: this.productId,
-            pujadorId: this.user.usuarioID
-        }
-        this.productoService.crearPuja(nuevaPuja).subscribe({
-            next: () => {this.ngOnInit();},
-            error: (err) => {
-                alert('❌ Error al realizar la puja.');
+        if (this.isRaffle) {
+            const nuevaPujaSorteo: PujaSorteoCreateDTO = {
+                puntos: this.cantidadPuja,
+                fecha: new Date().toISOString().split('T')[0], // yyyy-MM-dd
+                sorteoId: this.productId,
+                pujadorId: this.user.usuarioID
             }
-        });
+            this.productoService.crearPujaSorteo(nuevaPujaSorteo).subscribe({
+                next: () => {
+                    this.authService.loadUserProfile(this.user.usuarioID).subscribe({
+                        next: (usuarioActualizado) => {
+                            this.user = usuarioActualizado;
+                            localStorage.setItem('authUser', JSON.stringify(usuarioActualizado));
+                        },
+                        error: (err) => {
+                            console.error('Error al actualizar el usuario:', err);
+                        }
+                    });
+                    this.ngOnInit();
+                },
+                error: (err) => {
+                    alert('❌ Error al realizar la puja.');
+                }
+            });
+
+        } else {
+            const nuevaPuja: PujaCreateDTO = {
+                importe: this.cantidadPuja,
+                fecha: new Date().toISOString().split('T')[0], // yyyy-MM-dd
+                subastaId: this.productId,
+                pujadorId: this.user.usuarioID
+            }
+            this.productoService.crearPuja(nuevaPuja).subscribe({
+                next: () => {this.ngOnInit();},
+                error: (err) => {
+                    alert('❌ Error al realizar la puja.');
+                }
+            });
+        }
+
         
     }
 

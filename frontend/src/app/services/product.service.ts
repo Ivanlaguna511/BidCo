@@ -49,6 +49,21 @@ export interface PujaResponseDTO {
     pujadorID: number;
 }
 
+export interface PujaSorteoCreateDTO {
+    puntos: number;
+    fecha: string;
+    sorteoId: number;
+    pujadorId: number;
+}
+
+export interface PujaSorteoResponseDTO {
+    pujaID: number;
+    puntos: number;
+    fecha: string;
+    sorteoID: number;
+    pujadorID: number;
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -56,6 +71,7 @@ export class ProductoService {
     private subastaUrl = 'http://localhost:8080/api/subastas';
     private pujaSubastaUrl = 'http://localhost:8080/api/pujas';
     private sorteoUrl = 'http://localhost:8080/api/sorteos';
+    private pujaSorteoUrl = 'http://localhost:8080/api/pujas-sorteo';
     private usuarioUrl = 'http://localhost:8080/api/usuarios';
 
     constructor(private http: HttpClient) {}
@@ -76,8 +92,8 @@ export class ProductoService {
         return this.http.get(`${this.usuarioUrl}/${id}/privacidad`);
     }
 
-    crearPuja(puja: PujaCreateDTO): Observable<PujaCreateDTO> {
-        return this.http.post<PujaCreateDTO>(this.pujaSubastaUrl, puja);
+    crearPuja(puja: PujaCreateDTO): Observable<PujaResponseDTO> {
+        return this.http.post<PujaResponseDTO>(this.pujaSubastaUrl, puja);
     }
 
     obtenerPujaMaximaPorSubasta(subastaId: number): Observable<PujaResponseDTO> {
@@ -87,4 +103,9 @@ export class ProductoService {
     finalizarSubasta(id: number) {
         return this.http.put<void>(`${this.subastaUrl}/final/${id}`, {});
     }
+
+    crearPujaSorteo(puja: PujaSorteoCreateDTO) {
+        return this.http.post<PujaSorteoResponseDTO>(this.pujaSorteoUrl, puja);
+    }
+      
 }

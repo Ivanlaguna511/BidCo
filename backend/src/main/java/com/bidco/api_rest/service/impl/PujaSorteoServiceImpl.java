@@ -42,16 +42,18 @@ public class PujaSorteoServiceImpl implements PujaSorteoService {
         Sorteo sorteo = sorteoRepository.findById(pujaSorteoCreateDTO.getSorteoId())
                 .orElseThrow(() -> new IllegalArgumentException("El sorteo no existe"));
 
-
-
         // Crear la entidad PujaSorteo
         PujaSorteo pujaSorteo = pujaSorteoMapper.pujaSorteoCreateDTOToPujaSorteo(pujaSorteoCreateDTO);
 
+        Usuario user = usuarioRepository.findById(pujaSorteo.getPujador().getUsuarioID())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+            
 
+        user.setPuntos(user.getPuntos() - pujaSorteo.getPuntos().intValue());
 
         // Guardar la puja en el repositorio
         pujaSorteo = pujaSorteoRepository.save(pujaSorteo);
-
+        usuarioRepository.save(user);
         // Retornar el DTO de respuesta
         return pujaSorteoMapper.pujaSorteoToPujaSorteoResponseDTO(pujaSorteo);
     }
