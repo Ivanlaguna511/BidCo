@@ -36,6 +36,7 @@ export class ProductComponent {
     tipo = '';
     isBlindAuction: boolean = false;
     isRaffle: boolean = false;
+    countdown: string = '';
     
     user: any;
     isLoggedIn = false;
@@ -88,18 +89,19 @@ export class ProductComponent {
             case 'ciega':
                 this.productoService.getSubastaPorId(this.productId).subscribe((product) => {
                     this.product = product;
+                    this.setupCountdown(this.product.fechaFinal);
                 });
                 break;
             case 'sorteo':
                 this.productoService.getSorteoPorId(this.productId).subscribe((product) => {
                     this.product = product;
+                    this.setupCountdown(this.product.fechaFin);
                 });
                 break;
             default:
                 console.error('Tipo de producto no válido');
         }
-
-
+        
         this.productoService.obtenerPujaMaximaPorSubasta(this.productId).subscribe((puja) => {
             if (!puja || !puja.pujadorID) {
                 return;
@@ -153,6 +155,43 @@ export class ProductComponent {
             }
         });
         
+    }
+
+    setupCountdown(endDateString: string) {
+        const fullDateString = endDateString.includes('T') 
+            ? endDateString 
+            : `${endDateString}T23:59:59`;
+
+        const endDate = new Date(fullDateString).getTime();
+      
+        const interval = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = endDate - now;
+        
+            if (distance < 0) {
+                this.countdown = "Finalizada";
+                
+                switch (this.tipo) {
+                    case 'subasta':
+                    case 'ciega':
+                        this.productoService.finalizarSubasta(this.productId).subscribe();
+                        break;
+                    case 'sorteo':
+                                
+                        break;
+                }
+                            
+                clearInterval(interval);
+                return;
+            }
+        
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+            this.countdown = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }, 1000);
     }
 
     openExpertForm() {

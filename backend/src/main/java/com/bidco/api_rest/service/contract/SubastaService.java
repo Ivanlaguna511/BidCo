@@ -13,7 +13,7 @@ public interface SubastaService {
 
     SubastaResponseDTO crearSubasta(SubastaCreateDTO subastaCreateDTO, MultipartFile imagen);
     SubastaResponseDTO buscarSubastaPorId(Long id);
-    PujaResponseDTO asignarGanadorYActualizarPrecioFinal(Long id);
+    void asignarGanadorYActualizarPrecioFinal(Long id);
     List<SubastaResponseDTO> buscarPorTipo(boolean normal);
 
 }

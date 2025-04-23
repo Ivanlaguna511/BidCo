@@ -36,9 +36,10 @@ public class SubastaController {
         return subastaService.buscarSubastaPorId(id);
     }
 
-    @PutMapping("/ganador/{id}")
-    public PujaResponseDTO findGanadorSubasta(@PathVariable Long id) {
-        return subastaService.asignarGanadorYActualizarPrecioFinal(id);
+    @PutMapping("/final/{id}")
+    public void finalizarSubasta(@PathVariable Long id) {
+        System.out.print("Se llama a asignar ganador - id: " + id);
+        subastaService.asignarGanadorYActualizarPrecioFinal(id);
     }
 
     @GetMapping("/filtrar")

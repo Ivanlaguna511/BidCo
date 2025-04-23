@@ -5,10 +5,12 @@
       <div >
           <form id="puja-form" *ngIf="!(isRaffle && isExpert)">
               <div *ngIf="product">
-                  <h3>{{ isLoggedIn ? isBlindAuction ? 'Subasta a Ciegas' : isRaffle ? 'Tus Puntos:' : 'Precio Actual:' : 'Inicia Sesión Para Participar'}}</h3>
+                  <h3>{{ isLoggedIn ? isBlindAuction ? 'Subasta a Ciegas' : isRaffle ? 'Tus Puntos:' : countdown == 'Finalizada' ? 'Vendido Por:' : 'Precio Actual:' : 'Inicia Sesión Para Participar'}}</h3>
                   <h2>{{ isLoggedIn ? isBlindAuction ? null : isRaffle ? user.puntos : product.precioFinal + '€' : ''}}</h2>
-                  <h4 *ngIf="isLoggedIn && candidatoGanadorPuja">Puja más alta de: {{ candidatoGanadorPuja }}</h4>
-                  <input *ngIf="isLoggedIn && !isExpert"
+                  <h3 *ngIf="isLoggedIn && candidatoGanadorPuja && !isBlindAuction && !(countdown == 'Finalizada')">Puja más alta de: {{ candidatoGanadorPuja }}</h3>
+                  <h3 *ngIf="isLoggedIn && countdown == 'Finalizada' && candidatoGanadorPuja">Ganador: {{ candidatoGanadorPuja }}</h3>
+                  <h4>Tiempo restante: {{ countdown }}</h4>
+                  <input *ngIf="isLoggedIn && !isExpert && !(countdown == 'Finalizada')"
                       type="number" 
                       id="cantidad" 
                       name="cantidad" 
@@ -17,7 +19,7 @@
                       [min]="isRaffle ? product.puntosNecesarios : product.precioFinal" required>
               </div>
 
-              <div id="puja-submit" *ngIf="isLoggedIn && !isExpert">
+              <div id="puja-submit" *ngIf="isLoggedIn && !isExpert && !(countdown == 'Finalizada')">
                   <button (click)="onSubmit()" type="submit">Pujar</button>
               </div>
               <div id="login-btn" *ngIf="!isLoggedIn">

@@ -33,7 +33,7 @@ export class BlindAuctionComponent {
     constructor(private authService: AuthService, private subastaService: SubastaService) {}
 
     ngOnInit() {
-        this.subastaService.getSubastasPorTipo(true).subscribe({
+        this.subastaService.getSubastasPorTipo(false).subscribe({
             next: data => this.products = data,
             error: err => console.error('Error al obtener las subastas normales: ', err)
         });

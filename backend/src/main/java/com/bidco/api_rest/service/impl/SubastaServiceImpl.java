@@ -10,6 +10,7 @@ import com.bidco.api_rest.mapper.UsuarioMapper;
 import com.bidco.api_rest.model.Puja;
 import com.bidco.api_rest.model.Subasta;
 import com.bidco.api_rest.model.Usuario;
+import com.bidco.api_rest.repository.PujaRepository;
 import com.bidco.api_rest.repository.SubastaRepository;
 import com.bidco.api_rest.repository.UsuarioRepository;
 import com.bidco.api_rest.service.contract.SubastaService;
@@ -37,14 +38,17 @@ public class SubastaServiceImpl implements SubastaService {
     private final UsuarioMapper usuarioMapper;
     private final UsuarioRepository userRepository;
     private final UsuarioRepository usuarioRepository;
+    private final PujaRepository pujaRepository;
     private final PujaMapper pujaMapper;
 
-    public SubastaServiceImpl(SubastaRepository subastaRepository, SubastaMapper subastaMapper, UsuarioMapper usuarioMapper, UsuarioRepository userRepository, UsuarioRepository usuarioRepository, PujaMapper pujaMapper) {
+    public SubastaServiceImpl(SubastaRepository subastaRepository, SubastaMapper subastaMapper, UsuarioMapper usuarioMapper, 
+                UsuarioRepository userRepository, UsuarioRepository usuarioRepository, PujaRepository pujaRepository, PujaMapper pujaMapper) {
         this.subastaRepository = subastaRepository;
         this.subastaMapper = subastaMapper;
         this.usuarioMapper = usuarioMapper;
         this.userRepository = userRepository;
         this.usuarioRepository = usuarioRepository;
+        this.pujaRepository = pujaRepository;
         this.pujaMapper = pujaMapper;
     }
 
@@ -84,31 +88,22 @@ public class SubastaServiceImpl implements SubastaService {
 
     @Override
     @Transactional
-    public PujaResponseDTO asignarGanadorYActualizarPrecioFinal(Long id) {
+    public void asignarGanadorYActualizarPrecioFinal(Long id) {
         // Verificamos que la subasta exista
         Subasta subasta = subastaRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("No se encontró la subasta con ID: " + id));
+        System.out.print("Se encuentra subasta");
 
-        // Comprobamos que ya haya finalizado
-        if (subasta.getFechaFinal().isAfter(LocalDate.now())) {
-            throw new IllegalArgumentException("La subasta todavía no se ha cerrado.");
-        }
+        Puja puja = pujaRepository.findTopBySubastaIdOrderByImporteDesc(id);
 
-        // Obtenemos el usuario ganador
-        Optional<Puja> puja = subastaRepository.findGanadorSubastaBySubastaId(id);
-        Optional<BigDecimal> importeMayorOpt = subastaRepository.findImporteMayorBySubastaId(id);
-
-        if (puja.isEmpty() || importeMayorOpt.isEmpty()) {
+        if (puja == null) {
             throw new IllegalStateException("No hubo ninguna puja en la subasta.");
         }
 
-
-
-        // Actualizamos el campo precioFinal y ganador
-        subasta.setPrecioFinal(importeMayorOpt.get());
+        puja.setGanadora(true);
+        subasta.setGanador(puja.getPujador().getUsuarioID());
         subastaRepository.save(subasta);
-
-        return pujaMapper.pujaToPujaResponseDTO(puja.get());
+        pujaRepository.save(puja);
     }
 
     @Override

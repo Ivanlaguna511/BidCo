@@ -83,4 +83,8 @@ export class ProductoService {
     obtenerPujaMaximaPorSubasta(subastaId: number): Observable<PujaResponseDTO> {
         return this.http.get<PujaResponseDTO>(`${this.pujaSubastaUrl}/mayor/${subastaId}`);
     }
+
+    finalizarSubasta(id: number) {
+        return this.http.put<void>(`${this.subastaUrl}/final/${id}`, {});
+    }
 }
