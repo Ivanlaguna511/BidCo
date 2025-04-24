@@ -15,5 +15,6 @@ public interface SubastaService {
     SubastaResponseDTO buscarSubastaPorId(Long id);
     void asignarGanadorYActualizarPrecioFinal(Long id);
     List<SubastaResponseDTO> buscarPorTipo(boolean normal);
+    List<SubastaResponseDTO> listarSubastasPorCreador(Long id);
 
 }

@@ -45,4 +45,9 @@ public class SubastaController {
     public List<SubastaResponseDTO> filtrarPorTipo(@RequestParam boolean normal) {
         return subastaService.buscarPorTipo(normal);
     }
+
+    @GetMapping("/filtrar-creador")
+    public List<SubastaResponseDTO> filtrarPorCreador(@RequestParam Long id) {
+        return subastaService.listarSubastasPorCreador(id);
+    }
 }

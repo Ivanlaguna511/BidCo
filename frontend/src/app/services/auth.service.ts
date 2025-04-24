@@ -41,6 +41,18 @@ export class AuthService {
     if (token && userData) {
         this.loggedIn.next(true);
         this.currentUser.next(JSON.parse(userData));
+
+        // Llamar a loadUserProfile para obtener datos actualizados del servidor
+        this.loadUserProfile(this.currentUser.value!.usuarioID).subscribe({
+            next: (updatedUser) => {
+                // Actualizamos la información del usuario en localStorage
+                localStorage.setItem('authUser', JSON.stringify(updatedUser));
+                this.currentUser.next(updatedUser);
+            },
+            error: (err) => {
+                console.error('Error al cargar el perfil del usuario:', err);
+            }
+        });
     }
   }
 

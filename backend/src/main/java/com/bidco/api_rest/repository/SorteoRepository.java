@@ -19,4 +19,7 @@ public interface SorteoRepository extends JpaRepository<Sorteo, Long> {
     
     @SuppressWarnings("null")
     List<Sorteo> findAll();
+
+    @Query("SELECT COUNT(s) FROM Sorteo s WHERE s.ganador = :usuarioID")
+    int countWonDrawsByUsuarioId(Long usuarioID);
 }

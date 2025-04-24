@@ -8,6 +8,8 @@ import { ProductItemComponent } from '../../components/product-item/product-item
 import { FooterComponent } from "../../components/footer/footer.component";
 
 import { PRODUCTS } from '../../datos_estaticos/products';
+import { AuthService } from '../../services/auth.service';
+import { SubastaService } from '../../services/auction.service';
 
 @Component({
   selector: 'app-my-auctions',
@@ -23,9 +25,19 @@ import { PRODUCTS } from '../../datos_estaticos/products';
   styleUrl: './my-auctions.component.css'
 })
 export class MyAuctionsComponent {
-    products = PRODUCTS;
+    products: any;
+    userId: number | null = null;
+
+    constructor(private authService: AuthService, private subastaService: SubastaService) {}
 
     ngOnInit() {
-        this.products = PRODUCTS.filter(product => product.creator_user === "UsuarioX");
+        this.authService.currentUser$.subscribe((user) => {
+            if (user) {
+                this.subastaService.getSubastasPorCreador(user.usuarioID).subscribe((lista) => {
+                    this.products = lista;
+                    console.log(this.products);
+                });
+            }
+        })
     }
 }

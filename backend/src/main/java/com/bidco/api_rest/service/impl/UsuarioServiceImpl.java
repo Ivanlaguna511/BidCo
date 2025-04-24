@@ -10,6 +10,7 @@ import com.bidco.api_rest.mapper.UsuarioMapper;
 import com.bidco.api_rest.model.Usuario;
 import com.bidco.api_rest.repository.PujaRepository;
 import com.bidco.api_rest.repository.PujaSorteoRepository;
+import com.bidco.api_rest.repository.SorteoRepository;
 import com.bidco.api_rest.repository.SubastaRepository;
 import com.bidco.api_rest.repository.UsuarioRepository;
 import com.bidco.api_rest.service.contract.UsuarioService;
@@ -30,6 +31,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final SubastaRepository subastaRepository;
     private final PujaSorteoRepository pujaSorteoRepository;
     private final UsuarioMapper usuarioMapper;
+    private final SorteoRepository sorteoRepository;
     // Puedes inyectar JwtUtil si lo configuras como bean; para este ejemplo lo instancio manualmente.
     private final JwtUtil jwtUtil = new JwtUtil();
 
@@ -39,12 +41,14 @@ public class UsuarioServiceImpl implements UsuarioService {
             UsuarioMapper usuarioMapper,
             PujaRepository pujaRepository,
             SubastaRepository subastaRepository,
-            PujaSorteoRepository pujaSorteoRepository) {
+            PujaSorteoRepository pujaSorteoRepository,
+            SorteoRepository sorteoRepository) {
         this.usuarioRepository = usuarioRepository;
         this.usuarioMapper = usuarioMapper;
         this.pujaRepository = pujaRepository;
         this.subastaRepository = subastaRepository;
         this.pujaSorteoRepository = pujaSorteoRepository;
+        this.sorteoRepository = sorteoRepository;
     }
 
     @Override
@@ -155,7 +159,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             pujaRepository.countWonBidsByUsuarioId(usuarioId),
             subastaRepository.countCreatedBidsByUsuarioId(usuarioId),
             pujaSorteoRepository.countParticipatedDrawsByUsuarioId(usuarioId),
-            0, // wonDraws (requiere ajuste en BD)
+            sorteoRepository.countWonDrawsByUsuarioId(usuarioId),
             0  // createdDraws (solo para trabajadores)
         );
     }

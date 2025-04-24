@@ -4,6 +4,7 @@ import com.bidco.api_rest.model.Puja;
 import com.bidco.api_rest.model.Subasta;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
@@ -20,6 +21,9 @@ public interface SubastaRepository extends JpaRepository<Subasta, Long> {
     Optional<BigDecimal> findImporteMayorBySubastaId(Long id);
 
     List<Subasta> findBySubastaNormal(boolean subastaNormal);
+    
+    @Query("SELECT s FROM Subasta s WHERE s.creador.id = :id")
+    List<Subasta> findByCreadorId(@Param("id") Long id);
 
     @Query("SELECT COUNT(s) FROM Subasta s WHERE s.creador.usuarioID = :usuarioID")
     int countCreatedBidsByUsuarioId(Long usuarioID);

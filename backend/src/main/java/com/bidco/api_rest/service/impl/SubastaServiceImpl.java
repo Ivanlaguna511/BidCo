@@ -120,4 +120,12 @@ public class SubastaServiceImpl implements SubastaService {
                 .toList();
     }
 
+    @Override
+    public List<SubastaResponseDTO> listarSubastasPorCreador(Long id) {
+        List<Subasta> subastas = subastaRepository.findByCreadorId(id);
+        return subastas.stream()
+                .map(subastaMapper::subastaToSubastaResponseDTO)
+                .toList();
+    }
+
 }

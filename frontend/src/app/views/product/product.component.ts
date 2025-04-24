@@ -204,17 +204,19 @@ export class ProductComponent {
             if (distance < 0) {
                 this.countdown = "Finalizada";
                 
-                switch (this.tipo) {
-                    case 'subasta':
-                    case 'ciega':
-                        this.productoService.finalizarSubasta(this.productId).subscribe();
-                        break;
-                    case 'sorteo':
-                        this.productoService.finalizarSorteo(this.productId).subscribe((sorteoActualizado) => {
-                            this.product = sorteoActualizado;
-                            this.setGanadorSorteo();
-                        });
-                        break;
+                if(!this.product.ganador) {
+                    switch (this.tipo) {
+                        case 'subasta':
+                        case 'ciega':
+                            this.productoService.finalizarSubasta(this.productId).subscribe();
+                            break;
+                        case 'sorteo':
+                            this.productoService.finalizarSorteo(this.productId).subscribe((sorteoActualizado) => {
+                                this.product = sorteoActualizado;
+                                this.setGanadorSorteo();
+                            });
+                            break;
+                    }
                 }
                             
                 clearInterval(interval);

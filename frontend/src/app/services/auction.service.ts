@@ -20,4 +20,8 @@ export class SubastaService {
     getSubastasPorTipo(normal: boolean): Observable<SubastaResponseDTO[]> {
         return this.http.get<SubastaResponseDTO[]>(`${this.apiUrl}/filtrar?normal=${normal}`);
     }
+
+    getSubastasPorCreador(id: number): Observable<SubastaResponseDTO[]> {
+        return this.http.get<SubastaResponseDTO[]>(`${this.apiUrl}/filtrar-creador`, {params: { id: id }});
+    }    
 }
