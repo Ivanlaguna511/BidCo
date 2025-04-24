@@ -37,8 +37,8 @@ public class SorteoController {
         return sorteoService.buscarSorteoPorId(id);
     }
 
-    @PutMapping("/ganador/{id}")
-    public PujaSorteoResponseDTO findGanadorSubasta(@PathVariable Long id) {
+    @PutMapping("/final/{id}")
+    public SorteoResponseDTO finalizarSorteo(@PathVariable Long id) {
         return sorteoService.asignarGanadorYActualizarPrecioFinal(id);
     }
 

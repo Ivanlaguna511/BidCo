@@ -38,7 +38,6 @@ public class SubastaController {
 
     @PutMapping("/final/{id}")
     public void finalizarSubasta(@PathVariable Long id) {
-        System.out.print("Se llama a asignar ganador - id: " + id);
         subastaService.asignarGanadorYActualizarPrecioFinal(id);
     }
 

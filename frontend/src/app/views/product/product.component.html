@@ -8,7 +8,7 @@
                   <h3>{{ isLoggedIn ? isBlindAuction ? 'Subasta a Ciegas' : isRaffle ? 'Tus Puntos:' : countdown == 'Finalizada' ? 'Vendido Por:' : 'Precio Actual:' : 'Inicia Sesión Para Participar'}}</h3>
                   <h2>{{ isLoggedIn ? isBlindAuction ? null : isRaffle ? user.puntos : product.precioFinal + '€' : ''}}</h2>
                   <h3 *ngIf="isLoggedIn && candidatoGanadorPuja && !isBlindAuction && !isRaffle && !(countdown == 'Finalizada')">Puja más alta de: {{ candidatoGanadorPuja }}</h3>
-                  <h3 *ngIf="isLoggedIn && countdown == 'Finalizada' && candidatoGanadorPuja">Ganador: {{ candidatoGanadorPuja }}</h3>
+                  <h3 *ngIf="isLoggedIn && countdown == 'Finalizada'">Ganador: {{ isRaffle ? ganadorSorteo : candidatoGanadorPuja }}</h3>
                   <h4>Tiempo restante: {{ countdown }}</h4>
                   <input *ngIf="isLoggedIn && !isExpert && !(countdown == 'Finalizada')"
                       type="number" 

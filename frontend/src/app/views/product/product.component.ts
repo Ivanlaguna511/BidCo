@@ -42,6 +42,7 @@ export class ProductComponent {
     isLoggedIn = false;
     cantidadPuja: number | null = null;
     candidatoGanadorPuja: string | null = null;
+    ganadorSorteo: string | null = null;
 
     expert = DATA_EXPERT;
     isExpert = false;
@@ -102,6 +103,8 @@ export class ProductComponent {
                 console.error('Tipo de producto no válido');
         }
         
+            
+        
         this.productoService.obtenerPujaMaximaPorSubasta(this.productId).subscribe((puja) => {
             if (!puja || !puja.pujadorID) {
                 return;
@@ -118,6 +121,7 @@ export class ProductComponent {
                 }
             })
         })
+
     }
 
     onSubmit() {
@@ -206,7 +210,10 @@ export class ProductComponent {
                         this.productoService.finalizarSubasta(this.productId).subscribe();
                         break;
                     case 'sorteo':
-                                
+                        this.productoService.finalizarSorteo(this.productId).subscribe((sorteoActualizado) => {
+                            this.product = sorteoActualizado;
+                            this.setGanadorSorteo();
+                        });
                         break;
                 }
                             
@@ -221,6 +228,19 @@ export class ProductComponent {
         
             this.countdown = `${days}d ${hours}h ${minutes}m ${seconds}s`;
         }, 1000);
+    }
+
+    setGanadorSorteo() {
+        console.log(this.product.ganador);
+        this.productoService.obtenerPrivacidad(this.product.ganador).subscribe((userPriv) => {
+            if(userPriv.privacidadAnonimoPujas === false) {
+                this.productoService.getUsuarioPorId(this.product.ganador).subscribe((user) => {
+                    this.ganadorSorteo = user.nombreUsuario;
+                })
+            } else {
+                this.ganadorSorteo = "Anónimo";
+            }
+        });
     }
 
     openExpertForm() {

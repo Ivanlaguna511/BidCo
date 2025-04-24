@@ -9,15 +9,21 @@ import com.bidco.api_rest.model.Puja;
 import com.bidco.api_rest.model.PujaSorteo;
 import com.bidco.api_rest.model.Sorteo;
 import com.bidco.api_rest.model.Subasta;
+import com.bidco.api_rest.model.Usuario;
+import com.bidco.api_rest.repository.PujaSorteoRepository;
 import com.bidco.api_rest.repository.SorteoRepository;
+import com.bidco.api_rest.repository.UsuarioRepository;
 import com.bidco.api_rest.service.contract.SorteoService;
 import jakarta.persistence.EntityNotFoundException;
+
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,11 +32,16 @@ public class SorteoServiceImpl implements SorteoService {
     private final SorteoRepository sorteoRepository;
     private final SorteoMapper sorteoMapper;
     private final PujaSorteoMapper pujaSorteoMapper;
+    private final PujaSorteoRepository pujaSorteoRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    public SorteoServiceImpl(SorteoRepository sorteoRepository, SorteoMapper sorteoMapper, PujaSorteoMapper pujaSorteoMapper) {
+    public SorteoServiceImpl(SorteoRepository sorteoRepository, SorteoMapper sorteoMapper, PujaSorteoMapper pujaSorteoMapper, 
+                    PujaSorteoRepository pujaSorteoRepository, UsuarioRepository usuarioRepository) {
         this.sorteoRepository = sorteoRepository;
         this.sorteoMapper = sorteoMapper;
         this.pujaSorteoMapper = pujaSorteoMapper;
+        this.pujaSorteoRepository = pujaSorteoRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @Override
@@ -51,29 +62,28 @@ public class SorteoServiceImpl implements SorteoService {
     }
 
     @Override
-    public PujaSorteoResponseDTO asignarGanadorYActualizarPrecioFinal(Long id) {
-        // Verificamos que la subasta exista
+    public SorteoResponseDTO asignarGanadorYActualizarPrecioFinal(Long id) {
+        // Verificamos que el sorteo exista
         Sorteo sorteo = sorteoRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("No se encontró la subasta con ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró el sorteo con ID: " + id));
 
-        // Comprobamos que ya haya finalizado
-        if (sorteo.getFechaFin().isAfter(LocalDate.now())) {
-            throw new IllegalArgumentException("La subasta todavía no se ha cerrado.");
+
+        //Se genera el ganador del sorteo de forma aleatoria, teniendo en cuenta las participaciones extra.
+        List<PujaSorteo> participaciones = pujaSorteoRepository.findBySorteoSorteoID(sorteo.getSorteoID());
+        int totalPuntos = participaciones.stream().mapToInt(p -> p.getPuntos().intValue()).sum();
+        int corte = new Random().nextInt(totalPuntos);
+        int acumulado = 0;
+        
+        PujaSorteo participacion = participaciones.get(0);
+        for(int i = 0; i < participaciones.size() && corte >= acumulado; i++) {
+            participacion = participaciones.get(i);
+            acumulado += participacion.getPuntos().intValue();
         }
 
-        // Obtenemos el usuario ganador
-        Optional<PujaSorteo> puja = sorteoRepository.findGanadorSorteoBySorteoId(id);
-        Optional<Integer> puntosfinales = sorteoRepository.findImporteMayorBySorteoId(id);
-
-        if (puja.isEmpty() || puntosfinales.isEmpty()) {
-            throw new IllegalStateException("No hubo ninguna puja en la subasta.");
-        }
-
-        // Actualizamos el campo precioFinal y ganador
-        sorteo.setPuntosFinales(puntosfinales.get());
+        sorteo.setGanador(participacion.getPujador().getUsuarioID());
         sorteoRepository.save(sorteo);
 
-        return pujaSorteoMapper.pujaSorteoToPujaSorteoResponseDTO(puja.get());
+        return sorteoMapper.sorteoToSorteoResponseDTO(sorteo);
     }
 
     @Override

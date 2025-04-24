@@ -13,6 +13,6 @@ public interface SorteoService {
 
     SorteoResponseDTO crearSorteo(SorteoCreateDTO sorteoCreateDTO);
     SorteoResponseDTO buscarSorteoPorId(Long id);
-    PujaSorteoResponseDTO asignarGanadorYActualizarPrecioFinal(Long id);
+    SorteoResponseDTO asignarGanadorYActualizarPrecioFinal(Long id);
     List<SorteoResponseDTO> obtenerTodosLosSorteos();
 }

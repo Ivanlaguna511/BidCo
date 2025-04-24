@@ -26,6 +26,7 @@ export interface SorteoResponseDto {
     fechaFin: string;
     puntosNecesarios: number;
     imagen: string;
+    ganador: number
 }
 
 export interface UsuarioResponseDto {
@@ -106,6 +107,10 @@ export class ProductoService {
 
     crearPujaSorteo(puja: PujaSorteoCreateDTO) {
         return this.http.post<PujaSorteoResponseDTO>(this.pujaSorteoUrl, puja);
+    }
+
+    finalizarSorteo(id: number) {
+        return this.http.put<SorteoResponseDto>(`${this.sorteoUrl}/final/${id}`, {});
     }
       
 }
