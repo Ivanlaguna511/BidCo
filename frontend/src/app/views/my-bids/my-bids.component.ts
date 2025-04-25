@@ -9,6 +9,8 @@ import { FooterComponent } from "../../components/footer/footer.component";
 
 import { PRODUCTS } from '../../datos_estaticos/products';
 import { DATA_USER } from '../../datos_estaticos/user_estadisticas';
+import { AuthService } from '../../services/auth.service';
+import { SubastaService } from '../../services/auction.service';
 
 @Component({
   selector: 'app-my-bids',
@@ -25,10 +27,19 @@ import { DATA_USER } from '../../datos_estaticos/user_estadisticas';
   styleUrls: ['./my-bids.component.css']
 })
 export class MyBidsComponent {
-    products = PRODUCTS;
-    pujas = DATA_USER.bidsIds
+    products: any;
+    userId: number | null = null;
+    
+    constructor(private authService: AuthService, private subastaService: SubastaService) {}
 
     ngOnInit() {
-        this.products = PRODUCTS.filter(product => this.pujas.includes(product.id));
+        this.authService.currentUser$.subscribe((user) => {
+            if (user) {
+                this.subastaService.getSubastasPujasUsuaroId(user.usuarioID).subscribe((lista) => {
+                    this.products = lista;
+                    console.log(this.products);
+                });
+            }
+        })
     }
 }

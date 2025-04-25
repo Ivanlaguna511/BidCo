@@ -13,15 +13,20 @@ export interface SubastaResponseDTO {
     providedIn: 'root'
 })
 export class SubastaService {
-    private apiUrl = 'http://localhost:8080/api/subastas';
+    private subastasUrl = 'http://localhost:8080/api/subastas';
+    private pujasSubastasUrl = 'http://localhost:8080/api/pujas';
 
     constructor(private http: HttpClient) {}
 
     getSubastasPorTipo(normal: boolean): Observable<SubastaResponseDTO[]> {
-        return this.http.get<SubastaResponseDTO[]>(`${this.apiUrl}/filtrar?normal=${normal}`);
+        return this.http.get<SubastaResponseDTO[]>(`${this.subastasUrl}/filtrar?normal=${normal}`);
     }
 
     getSubastasPorCreador(id: number): Observable<SubastaResponseDTO[]> {
-        return this.http.get<SubastaResponseDTO[]>(`${this.apiUrl}/filtrar-creador`, {params: { id: id }});
-    }    
+        return this.http.get<SubastaResponseDTO[]>(`${this.subastasUrl}/filtrar-creador`, {params: { id: id }});
+    }   
+
+    getSubastasPujasUsuaroId(id: number): Observable<SubastaResponseDTO[]> {
+        return this.http.get<SubastaResponseDTO[]>(`${this.pujasSubastasUrl}/subastas-usuario/${id}`)
+    }
 }

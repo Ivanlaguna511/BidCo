@@ -125,6 +125,10 @@ export class ProductComponent {
     }
 
     onSubmit() {
+        if(this.user.usuarioID == this.product.creadorId) {
+            alert('No puedes pujar en una subasta que has creado.');
+        }
+
         if (this.cantidadPuja == null) {
             alert('Debes ingresar una cantidad.');
             return;

@@ -9,6 +9,9 @@ import com.bidco.api_rest.repository.PujaRepository;
 import com.bidco.api_rest.repository.SubastaRepository;
 import com.bidco.api_rest.service.contract.PujaService;
 import jakarta.persistence.EntityNotFoundException;
+
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -62,6 +65,11 @@ public class PujaServiceImpl implements PujaService {
         }
 
         return pujaMapper.pujaToPujaResponseDTO(pujaMaxima);
+    }
+
+    @Override
+    public List<Subasta> obtenerSubastasPorUsuarioId(Long usuarioId) {
+        return pujaRepository.findSubastasByUsuarioId(usuarioId);
     }
 
 }

@@ -7,7 +7,6 @@ import { FilterComponent } from '../../components/filter/filter.component';
 import { ProductItemComponent } from '../../components/product-item/product-item.component';
 import { FooterComponent } from "../../components/footer/footer.component";
 
-import { PRODUCTS } from '../../datos_estaticos/products';
 import { AuthService } from '../../services/auth.service';
 import { SubastaService } from '../../services/auction.service';
 
