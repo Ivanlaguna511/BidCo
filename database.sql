@@ -1,5 +1,4 @@
-
-drop table IF exists puja_sorteo;
+DROP TABLE IF EXISTS puja_sorteo;
 DROP TABLE IF EXISTS puja;
 DROP TABLE IF EXISTS comentario;
 DROP TABLE IF EXISTS sorteo;
@@ -78,12 +77,12 @@ CREATE TABLE sorteo (
     fecha_inicio DATE NOT NULL,
     fecha_fin DATE NOT NULL,
     puntos_necesarios INT NOT NULL,
-    puntos_finales INT default 0,  -- Este campo ha sido añadido según tu solicitud
-    trabajador_id BIGINT NOT NULL,  -- Asumiendo que 'creador' es un trabajador, y 'creador_id' es la clave foránea
+    puntos_finales INT default 0, 
+    trabajador_id BIGINT NOT NULL,
     ganador_id BIGINT,
     imagen VARCHAR(255),
     categoria VARCHAR(255),
-    FOREIGN KEY (trabajador_id) REFERENCES trabajador(trabajador_id)  -- Asumiendo que existe una tabla 'trabajador' con la columna 'trabajador_id'
+    FOREIGN KEY (trabajador_id) REFERENCES trabajador(trabajador_id)
 );
 
 
@@ -94,15 +93,15 @@ CREATE TABLE puja_sorteo (
     puntos DECIMAL(10, 2) NOT NULL,
     usuario_id BIGINT NOT NULL,
     sorteo_id BIGINT NOT NULL,
-    FOREIGN KEY (usuario_id) REFERENCES usuario(usuario_id),  -- Asumiendo que existe una tabla 'usuario' con una columna 'usuario_id'
-    FOREIGN KEY (sorteo_id) REFERENCES sorteo(sorteo_id)  -- Asumiendo que existe una tabla 'sorteo' con una columna 'sorteo_id'
+    FOREIGN KEY (usuario_id) REFERENCES usuario(usuario_id), 
+    FOREIGN KEY (sorteo_id) REFERENCES sorteo(sorteo_id)
 );
 
 -- Insertar usuarios
 INSERT INTO usuario (nombre_usuario, correo_electronico, contraseña, saldo, puntos, pais, ciudad, codigo_postal, calle, numero_piso, letra_piso) 
 VALUES 
-('juanperez', 'juan@example.com', 'password123', 100.00, 50, 'España', 'Madrid', '28001', 'Calle Falsa', 1, 'A'),
-('anagarcia', 'ana@example.com', 'password123', 200.00, 80, 'España', 'Madrid', '28002', 'Calle Real', 2, 'B');
+('juanperez', 'juan@example.com', 'password123', 100.00, 50000, 'España', 'Madrid', '28001', 'Calle Falsa', 1, 'A'),
+('anagarcia', 'ana@example.com', 'password123', 200.00, 8000, 'España', 'Madrid', '28002', 'Calle Real', 2, 'B');
 
 
 -- Insertar trabajadores
@@ -132,10 +131,10 @@ VALUES
 -- Insertar pujas
 INSERT INTO puja (fecha, importe, ganadora, usuario_id, subasta_id) 
 VALUES 
-('2025-05-02', 70.00, FALSE, 1, 1),  -- Puja de 'Juan Pérez' en la subasta 1 (Reloj)
-('2025-05-03', 30.00, FALSE, 2, 2),  -- Puja de 'Ana García' en la subasta 2 (Sudadera)
-('2025-05-04', 100.00, FALSE, 1, 3),  -- Puja de 'Juan Pérez' en la subasta 3 (Camara)
-('2025-05-03', 55.00, FALSE, 2, 4);  -- Puja de 'Ana García' en la subasta 4 (Flexo)
+('2025-05-02', 70.00, FALSE, 2, 1),  -- Puja de 'Ana García' en la subasta 1 (Reloj)
+('2025-05-03', 30.00, FALSE, 1, 2),  -- Puja de 'Juan Pérez' en la subasta 2 (Sudadera)
+('2025-05-04', 100.00, FALSE, 2, 3),  -- Puja de 'Ana García' en la subasta 3 (Camara)
+('2025-05-03', 55.00, FALSE, 1, 4);  -- Puja de 'Juan Pérez' en la subasta 4 (Flexo)
 
 -- Insertar un sorteo
 INSERT INTO sorteo (nombre_articulo, descripcion, fecha_inicio, fecha_fin, puntos_necesarios, trabajador_id, imagen, categoria)
@@ -144,19 +143,19 @@ VALUES
                     captura la esencia de un monoplaza de carreras, con neumáticos realistas, alerones aerodinámicos y un diseño fiel a 
                     la competición. Perfecto para fans del automovilismo y constructores apasionados, este set ofrece una experiencia de ensamblaje 
                     envolvente y un resultado espectacular para exhibir. ¡Siente la velocidad y la adrenalina en cada pieza!', '2025-04-01', '2025-06-15', 3500,  
-                    1, '77251_boxprod_v39_en-gb.png', 'juguetes'),  -- Ejemplo con un trabajador con id 2
-('Televisor 4K', 'Un televisor de alta definición 4K de 50 pulgadas', '2025-05-01', '2024-05-15', 500,  1, 'tele.jpg', 'tecnologia'),  -- Ejemplo con un trabajador con id 1
-('Smartphone', 'Smartphone de última tecnología con pantalla AMOLED', '2025-07-01', '2025-07-15', 200,  1, 'movil.jpg', 'tecnologia');  -- Ejemplo con un trabajador con id 3
+                    1, '77251_boxprod_v39_en-gb.png', 'juguetes'),
+('Televisor 4K', 'Un televisor de alta definición 4K de 50 pulgadas', '2025-06-01', '2024-05-15', 500,  1, 'tele.jpg', 'tecnologia'),
+('Smartphone', 'Smartphone de última tecnología con pantalla AMOLED', '2025-07-01', '2025-07-15', 200,  1, 'movil.jpg', 'tecnologia');
 
 
 
 
 INSERT INTO puja_sorteo (fecha, puntos, usuario_id, sorteo_id)
 VALUES
-('2024-04-10', 4100, 1, 1),  -- Ejemplo de una puja en el sorteo con ID 1, realizada por el usuario con ID 1, por 100 puntos
-('2024-04-11', 3500, 2, 1),  -- Ejemplo de una puja en el sorteo con ID 1, realizada por el usuario con ID 2, por 150 puntos
-('2025-04-12', 500, 2, 2),  -- Ejemplo de una puja en el sorteo con ID 2, realizada por el usuario con ID 2, por 200 puntos
-('2025-04-13', 550, 1, 2),  -- Ejemplo de una puja en el sorteo con ID 2, realizada por el usuario con ID 1, por 250 puntos
+('2024-04-10', 4100, 1, 1),  -- Ejemplo de una puja en el sorteo con ID 1, realizada por el usuario con ID 1, por 4100 puntos
+('2024-04-11', 3500, 2, 1),  -- Ejemplo de una puja en el sorteo con ID 1, realizada por el usuario con ID 2, por 3500 puntos
+('2025-04-12', 500, 2, 2),  -- Ejemplo de una puja en el sorteo con ID 2, realizada por el usuario con ID 2, por 500 puntos
+('2025-04-13', 550, 1, 2),  -- Ejemplo de una puja en el sorteo con ID 2, realizada por el usuario con ID 1, por 550 puntos
 ('2025-04-14', 300, 2, 3);  -- Ejemplo de una puja en el sorteo con ID 3, realizada por el usuario con ID 2, por 300 puntos
 
 
