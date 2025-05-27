@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { HttpParams } from '@angular/common/http';
 
 import { HeaderComponent } from '../../components/header/header.component';
 import { FilterComponent } from '../../components/filter/filter.component';
@@ -8,7 +9,7 @@ import { ProductItemComponent } from '../../components/product-item/product-item
 import { FooterComponent } from "../../components/footer/footer.component";
 
 import { AuthService } from '../../services/auth.service';
-import { SorteoService, SorteoResponseDto } from '../../services/raffle.service';
+import { SorteoService, SorteoResponseDto, Filtro } from '../../services/raffle.service';
 
 @Component({
   selector: 'app-raffle',
@@ -51,5 +52,20 @@ export class RaffleComponent {
             const user = JSON.parse(storedUser);
             this.userPoints = user.puntos;
         }
+    }
+
+    handleFilterApplied(filtro: Filtro) {
+        var camposFiltro = new HttpParams()
+        camposFiltro = camposFiltro.append("minPrice", filtro.minPrice);
+        camposFiltro = camposFiltro.append("maxPrice", filtro.maxPrice);
+        filtro.categories.forEach(categoria => {
+            camposFiltro = camposFiltro.append("categorias", categoria);
+        })
+        camposFiltro = camposFiltro.append("dateOrder", filtro.dateOrder)
+        
+        this.sorteoService.getSorteosPorFiltro(camposFiltro).subscribe({
+            next: data => this.products = data,
+            error: err => console.error("Error al obtener sorteos filtrados: ", err)
+        });
     }
 }

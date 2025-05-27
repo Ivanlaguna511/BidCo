@@ -62,6 +62,11 @@ public class SubastaServiceImpl implements SubastaService {
         Subasta subasta = subastaMapper.subastaCreateDTOToSubasta(subastaCreateDTO);
         subasta.setPrecioFinal(subasta.getPrecioInicial());
 
+        Usuario user = userRepository.findById(subasta.getCreador().getUsuarioID())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        
+        user.setPuntos(user.getPuntos() + 50);
+
         if(imagen != null && !imagen.isEmpty()) {
             try {
                 String nombreArchivo = UUID.randomUUID() + "_" + imagen.getOriginalFilename();
@@ -76,6 +81,7 @@ public class SubastaServiceImpl implements SubastaService {
         }
 
         subastaRepository.save(subasta);
+        usuarioRepository.save(user);
         return subastaMapper.subastaToSubastaResponseDTO(subasta);
     }
 
@@ -105,6 +111,11 @@ public class SubastaServiceImpl implements SubastaService {
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         user.setSaldo(user.getSaldo().subtract(puja.getImporte()));
+        if (subasta.isSubastaNormal()) {
+            user.setPuntos(user.getPuntos() + 100);
+        } else {
+            user.setPuntos(user.getPuntos() + 200);
+        }
         puja.setGanadora(true);
         subasta.setGanador(user.getUsuarioID());
 
@@ -145,4 +156,51 @@ public class SubastaServiceImpl implements SubastaService {
                 .toList();
     }
 
+    @Override
+    public List<SubastaResponseDTO> buscarPorFiltroCiega(FiltroDTO filtro) {
+        String[] listaCategorias = {"Tecnología", "Hogar", "Moda", "Deportes", "Juguetes", "Otros"};
+        String[] queryCategorias;
+
+        if (filtro.getCategorias() == null || filtro.getCategorias().length == 0) {
+            queryCategorias = listaCategorias;
+        } else {
+            queryCategorias = filtro.getCategorias();
+        }
+        List<Subasta> subastas = subastaRepository.findByFiltroCiega(filtro.getMinPrice(), filtro.getMaxPrice(), queryCategorias, filtro.getDateOrder());
+        return subastas.stream()
+                .map(subastaMapper::subastaToSubastaResponseDTO)
+                .toList();
+    }
+
+    @Override
+    public List<SubastaResponseDTO> buscarPorFiltroMisSubastas(FiltroDTO filtro, int id) {
+        String[] listaCategorias = {"Tecnología", "Hogar", "Moda", "Deportes", "Juguetes", "Otros"};
+        String[] queryCategorias;
+
+        if (filtro.getCategorias() == null || filtro.getCategorias().length == 0) {
+            queryCategorias = listaCategorias;
+        } else {
+            queryCategorias = filtro.getCategorias();
+        }
+        List<Subasta> subastas = subastaRepository.findByFiltroMisSubastas(id, filtro.getMinPrice(), filtro.getMaxPrice(), queryCategorias, filtro.getDateOrder());
+        return subastas.stream()
+                .map(subastaMapper::subastaToSubastaResponseDTO)
+                .toList();
+    }
+
+    @Override
+    public List<SubastaResponseDTO> buscarPorFiltroMisPujas(FiltroDTO filtro, int id) {
+        String[] listaCategorias = {"Tecnología", "Hogar", "Moda", "Deportes", "Juguetes", "Otros"};
+        String[] queryCategorias;
+
+        if (filtro.getCategorias() == null || filtro.getCategorias().length == 0) {
+            queryCategorias = listaCategorias;
+        } else {
+            queryCategorias = filtro.getCategorias();
+        }
+        List<Subasta> subastas = subastaRepository.findByFiltroMisPujas(id, filtro.getMinPrice(), filtro.getMaxPrice(), queryCategorias, filtro.getDateOrder());
+        return subastas.stream()
+                .map(subastaMapper::subastaToSubastaResponseDTO)
+                .toList();
+    }
 }

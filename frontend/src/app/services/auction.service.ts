@@ -37,7 +37,23 @@ export class SubastaService {
         return this.http.get<SubastaResponseDTO[]>(`${this.pujasSubastasUrl}/subastas-usuario/${id}`);
     }
 
-    getSubastasFiltradas(filtro: HttpParams): Observable<SubastaResponseDTO[]> {
+    getSubastasFiltradasNormal(filtro: HttpParams): Observable<SubastaResponseDTO[]> {
         return this.http.get<SubastaResponseDTO[]>(`${this.subastasUrl}/filtro-normal`, {params: filtro});
+    }
+
+    getSubastasFiltradasCiega(filtro: HttpParams): Observable<SubastaResponseDTO[]> {
+        return this.http.get<SubastaResponseDTO[]>(`${this.subastasUrl}/filtro-ciega`, {params: filtro});
+    }
+
+    getSubastasFiltradasMisSubastas(filtro: HttpParams, id: number): Observable<SubastaResponseDTO[]> {
+        var params = new HttpParams();
+        params = filtro.append("id", id);
+        return this.http.get<SubastaResponseDTO[]>(`${this.subastasUrl}/filtro-mis-subastas`, {params: params});
+    }
+
+    getSubastasFiltradasMisPujas(filtro: HttpParams, id: number): Observable<SubastaResponseDTO[]> {
+        var params = new HttpParams();
+        params = filtro.append("id", id);
+        return this.http.get<SubastaResponseDTO[]>(`${this.subastasUrl}/filtro-mis-pujas`, {params: params});
     }
 }

@@ -2,6 +2,7 @@ package com.bidco.api_rest.repository;
 
 import com.bidco.api_rest.model.PujaSorteo;
 import com.bidco.api_rest.model.Sorteo;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -22,4 +23,7 @@ public interface SorteoRepository extends JpaRepository<Sorteo, Long> {
 
     @Query("SELECT COUNT(s) FROM Sorteo s WHERE s.ganador = :usuarioID")
     int countWonDrawsByUsuarioId(Long usuarioID);
+
+    @Query("SELECT s FROM Sorteo s WHERE s.puntosNecesarios >= :minPrice AND s.puntosNecesarios <= :maxPrice AND s.categoria in :categorias ORDER BY CASE WHEN :dateOrder = 'asc' THEN s.fechaFin END ASC, CASE WHEN :dateOrder = 'desc' THEN s.fechaFin END DESC, s.sorteoID ASC")
+    List<Sorteo> findByFiltro(int minPrice, int maxPrice, String[] categorias, String dateOrder);
 }

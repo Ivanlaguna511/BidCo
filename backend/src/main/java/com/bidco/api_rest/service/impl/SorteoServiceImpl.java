@@ -1,5 +1,6 @@
 package com.bidco.api_rest.service.impl;
 
+import com.bidco.api_rest.dto.FiltroDTO;
 import com.bidco.api_rest.dto.pujasorteo.PujaSorteoResponseDTO;
 import com.bidco.api_rest.dto.sorteo.SorteoCreateDTO;
 import com.bidco.api_rest.dto.sorteo.SorteoResponseDTO;
@@ -92,5 +93,21 @@ public class SorteoServiceImpl implements SorteoService {
         return sorteos.stream()
                 .map(sorteoMapper::sorteoToSorteoResponseDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SorteoResponseDTO> buscarPorFiltro(FiltroDTO filtro) {
+        String[] listaCategorias = {"Tecnología", "Hogar", "Moda", "Deportes", "Juguetes", "Otros"};
+        String[] queryCategorias;
+
+        if (filtro.getCategorias() == null || filtro.getCategorias().length == 0) {
+            queryCategorias = listaCategorias;
+        } else {
+            queryCategorias = filtro.getCategorias();
+        }
+        List<Sorteo> sorteo = sorteoRepository.findByFiltro(filtro.getMinPrice(), filtro.getMaxPrice(), queryCategorias, filtro.getDateOrder());
+        return sorteo.stream()
+                .map(sorteoMapper::sorteoToSorteoResponseDTO)
+                .toList();
     }
 }

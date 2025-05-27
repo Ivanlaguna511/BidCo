@@ -57,6 +57,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new IllegalArgumentException("El usuario no puede ser nulo");
         }
         Usuario usuario = usuarioMapper.usuarioCreateDTOToUsuario(usuarioCreateDTO);
+        usuario.setPuntos(10);
         usuarioRepository.save(usuario);
         return usuarioMapper.usuarioToUsuarioResponseDTO(usuario);
     }
