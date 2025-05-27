@@ -92,9 +92,12 @@ export class ProfileDatosComponent implements OnInit {
     });
   }
   
+  updatePasswdMessage: string = '';
+  errorPasswdMessage: string = '';
+
   updatePassword() {
     if (this.newPassword !== this.confirmPassword) {
-      this.errorMessage = 'Las contraseñas no coinciden.';
+      this.errorPasswdMessage = 'Las contraseñas no coinciden.';
       return;
     }
   
@@ -103,15 +106,15 @@ export class ProfileDatosComponent implements OnInit {
       newPassword: this.newPassword
     }).subscribe({
       next: () => {
-        this.updateMessage = '¡Contraseña actualizada correctamente!';
-        setTimeout(() => this.updateMessage = '', 3000);
+        this.updatePasswdMessage = '¡Contraseña actualizada correctamente!';
+        setTimeout(() => this.updatePasswdMessage = '', 3000);
         this.currentPassword = '';
         this.newPassword = '';
         this.confirmPassword = '';
       },
       error: (error) => {
-        this.errorMessage = error.message || 'Error al cambiar la contraseña';
-        setTimeout(() => this.errorMessage = '', 5000); 
+        this.errorPasswdMessage = error.message || 'Error al cambiar la contraseña';
+        setTimeout(() => this.errorPasswdMessage = '', 5000); 
       }
     });
   }

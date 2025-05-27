@@ -23,7 +23,7 @@ public interface PujaSorteoMapper {
 
     // Conversión de Long a Subasta
     @Named("longToSorteo")
-    default Sorteo longToSubasta(Long sorteoId) {
+    default Sorteo longToSorteo(Long sorteoId) {
         if (sorteoId == null) {
             return null; // Maneja como sea necesario si es nulo
         }

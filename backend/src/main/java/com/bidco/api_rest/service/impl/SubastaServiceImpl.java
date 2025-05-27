@@ -4,6 +4,7 @@ import com.bidco.api_rest.dto.puja.PujaResponseDTO;
 import com.bidco.api_rest.dto.subasta.SubastaCreateDTO;
 import com.bidco.api_rest.dto.subasta.SubastaResponseDTO;
 import com.bidco.api_rest.dto.usuario.UsuarioResponseDTO;
+import com.bidco.api_rest.dto.FiltroDTO;
 import com.bidco.api_rest.mapper.PujaMapper;
 import com.bidco.api_rest.mapper.SubastaMapper;
 import com.bidco.api_rest.mapper.UsuarioMapper;
@@ -123,6 +124,22 @@ public class SubastaServiceImpl implements SubastaService {
     @Override
     public List<SubastaResponseDTO> listarSubastasPorCreador(Long id) {
         List<Subasta> subastas = subastaRepository.findByCreadorId(id);
+        return subastas.stream()
+                .map(subastaMapper::subastaToSubastaResponseDTO)
+                .toList();
+    }
+
+    @Override
+    public List<SubastaResponseDTO> buscarPorFiltroNormal(FiltroDTO filtro) {
+        String[] listaCategorias = {"Tecnología", "Hogar", "Moda", "Deportes", "Juguetes", "Otros"};
+        String[] queryCategorias;
+
+        if (filtro.getCategorias() == null || filtro.getCategorias().length == 0) {
+            queryCategorias = listaCategorias;
+        } else {
+            queryCategorias = filtro.getCategorias();
+        }
+        List<Subasta> subastas = subastaRepository.findByFiltroNormal(filtro.getMinPrice(), filtro.getMaxPrice(), queryCategorias, filtro.getDateOrder());
         return subastas.stream()
                 .map(subastaMapper::subastaToSubastaResponseDTO)
                 .toList();

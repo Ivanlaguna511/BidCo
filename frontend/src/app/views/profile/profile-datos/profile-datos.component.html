@@ -1,7 +1,6 @@
 <h2>Mis Datos</h2>
 
-<div *ngIf="updateMessage" class="update-message">{{ updateMessage }}</div>
-<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
 
 <div class="form-container">
   <form (ngSubmit)="saveChanges()">
@@ -47,6 +46,9 @@
     <input type="hidden" [(ngModel)]="user.puntos" name="puntos" />
 
     <button type="submit" class="btn-save">Guardar Cambios</button>
+
+    <div *ngIf="updateMessage" class="update-message">{{ updateMessage }}</div>
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
   </form>
 
   <!-- Sección de cambio de contraseña -->
@@ -68,6 +70,9 @@
     </div>
 
     <button type="submit" class="btn-save">Cambiar Contraseña</button>
+
+    <div *ngIf="updatePasswdMessage" class="update-message">{{ updatePasswdMessage }}</div>
+    <div *ngIf="errorPasswdMessage" class="error-message">{{ errorPasswdMessage }}</div>
   </form>
   
   <!-- Recarga de saldo -->

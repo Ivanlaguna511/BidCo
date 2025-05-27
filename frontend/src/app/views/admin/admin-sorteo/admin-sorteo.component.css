@@ -79,4 +79,19 @@
   .btn-primary:hover {
     background: #13008d;
   }
+
+.category-section {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+  
+.category-section label {
+    margin-bottom: 5px;
+}
+  
+.category-section select {
+    padding: 8px;
+    font-size: 14px;
+}
   

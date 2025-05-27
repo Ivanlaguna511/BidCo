@@ -8,6 +8,7 @@ public class SorteoCreateDTO {
 
     private String nombreArticulo;
     private String descripcion;
+    private String categoria;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaInicio;
@@ -36,4 +37,8 @@ public class SorteoCreateDTO {
 
     public MultipartFile getImagen() { return imagen; }
     public void setImagen(MultipartFile imagen) { this.imagen = imagen; }
+
+    public String getCategoria() { return categoria; }
+
+    public void setCategoria(String categoria) { this.categoria = categoria; }
 }

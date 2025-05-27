@@ -28,7 +28,8 @@ export class CreateAuctionComponent {
         subastaNormal: true,
         nombreArticulo: '',
         descripcion: '',
-        creadorId: 1 
+        creadorId: 1,
+        categoria: ''
     };
     formularioInvalido: boolean = false;
     
@@ -51,6 +52,11 @@ export class CreateAuctionComponent {
         }
 
         if (this.imagenPreview === null) {
+            this.formularioInvalido = true;
+            return;
+        }
+
+        if (this.subasta.categoria === "") {
             this.formularioInvalido = true;
             return;
         }

@@ -127,6 +127,7 @@ export class ProductComponent {
     onSubmit() {
         if(this.user.usuarioID == this.product.creadorId) {
             alert('No puedes pujar en una subasta que has creado.');
+            return;
         }
 
         if (this.cantidadPuja == null) {
@@ -150,7 +151,7 @@ export class ProductComponent {
             alert('Saldo insuficiente.');
             return;
         }
-
+        alert('Puja realizada correctamente.');
         if (this.isRaffle) {
             const nuevaPujaSorteo: PujaSorteoCreateDTO = {
                 puntos: this.cantidadPuja,

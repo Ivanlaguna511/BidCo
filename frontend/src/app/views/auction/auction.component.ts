@@ -7,7 +7,7 @@ import { FilterComponent } from '../../components/filter/filter.component';
 import { ProductItemComponent } from '../../components/product-item/product-item.component';
 import { FooterComponent } from "../../components/footer/footer.component";
 
-import { SubastaService, SubastaResponseDTO } from '../../services/auction.service';
+import { SubastaService, SubastaResponseDTO, Filtro } from '../../services/auction.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -50,5 +50,12 @@ export class AuctionComponent {
         this.authService.userRole$.subscribe((estado) => {
             this.isExpert = estado === 'expert';
         }); 
+    }
+
+    handleFilterApplied(filtro: Filtro) {
+        this.subastaService.getSubastasFiltradas(filtro).subscribe({
+            next: data => this.products = data,
+            error: err => console.error("Error al obtener subastas filtradas: ", err)
+        });
     }
 }

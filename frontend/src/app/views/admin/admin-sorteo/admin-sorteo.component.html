@@ -51,6 +51,20 @@
                (change)="onFile($event)" />
       </div>
     </div>
+    <div class="form-group">
+      <div class="category-section">
+          <label for="categoria">Categoría:</label>
+          <select id="categoria" name="categoria" [(ngModel)]="sorteo.categoria" required>
+              <option value="" disabled selected>Selecciona una categoría</option>
+              <option value="tecnologia">Tecnología</option>
+              <option value="hogar">Hogar</option>
+              <option value="moda">Moda</option>
+              <option value="deportes">Deportes</option>
+              <option value="juguetes">Juguetes</option>
+              <option value="otros">Otros</option>
+          </select>
+      </div>
+    </div>
     <div *ngIf="message" class="success-message">{{ message }}</div>
     <button class="btn-primary" type="submit">Crear Sorteo</button>
   </form>

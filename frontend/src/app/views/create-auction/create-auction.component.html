@@ -52,7 +52,7 @@
             <!-- Categoría -->
             <div class="category-section">
                 <label for="categoria">Categoría:</label>
-                <select id="categoria" name="categoria" required>
+                <select id="categoria" name="categoria" [(ngModel)]="subasta.categoria" required>
                     <option value="" disabled selected>Selecciona una categoría</option>
                     <option value="tecnologia">Tecnología</option>
                     <option value="hogar">Hogar</option>

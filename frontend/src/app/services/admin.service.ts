@@ -16,6 +16,7 @@ export interface SorteoDTO {
   fechaFin:           string;         // Formato "YYYY-MM-DD"
   puntosNecesarios:   number;
   imagen:             File | null;    // Para adjuntar la imagen en FormData
+  categoria:          string;
 }
 
 export interface ExpertDTO {

@@ -15,9 +15,9 @@ export class ProductItemComponent {
     ngOnInit() {
         //Determinar si el producto es de una subasta normal, a ciegas o de un sorteo
         if (this.product) {
-            const esSorteo = this.product.hasOwnProperty('subastaNormal');
-            if (esSorteo) {
-                this.isBlindAuction = this.product.subastaNormal === true;
+            const esSubasta = this.product.hasOwnProperty('subastaNormal');
+            if (esSubasta) {
+                this.isBlindAuction = this.product.subastaNormal === false;
             } else {
                 this.isRaffle = true;
             }

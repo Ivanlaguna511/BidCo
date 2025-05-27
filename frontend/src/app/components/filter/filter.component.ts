@@ -2,6 +2,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
+import { Filtro, SubastaService } from '../../services/auction.service';
+
 @Component({
   selector: 'app-filter',
   imports: [FormsModule, CommonModule],
@@ -10,20 +12,28 @@ import { CommonModule } from '@angular/common';
 })
 export class FilterComponent {
     minPossible: number = 0;
-    maxPossible: number = 1000;
-    minPrice: number = 100;  // Valor inicial, ajustable según necesidad
-    maxPrice: number = 900;  // Valor inicial, ajustable según necesidad
+    maxPossible: number = 10000;
+    minPrice: number = 0;  // Valor inicial, ajustable según necesidad
+    maxPrice: number = 10000;  // Valor inicial, ajustable según necesidad
 
-    categories: string[] = ['Electrónica', 'Ropa', 'Hogar', 'Juguetes'];
+    categories: string[] = ['Tecnología', 'Hogar', 'Moda', 'Deportes', 'Juguetes', 'Otros'];
     selectedCategories: string[] = [];
     dateOrder: string = '';
 
-    @Output() filterChanged = new EventEmitter<{ 
-        minPrice: number, 
-        maxPrice: number, 
-        categories: string[], 
-        dateOrder: string 
-    }>();
+    constructor(private subastaService: SubastaService) {}
+
+    @Output() filterChanged = new EventEmitter<Filtro>();
+
+    filtro: Filtro = {
+        minPrice: 0, 
+        maxPrice: 0, 
+        categories: null, 
+        dateOrder: ""
+    };
+
+    ngOnInit() {
+        this.applyFilter();
+    }
 
     updateCategoryFilter(event: any) {
         const category = event.target.value;
@@ -41,17 +51,23 @@ export class FilterComponent {
      * Si cambia el máximo y este es menor que el mínimo, se ajusta el mínimo.
      */
     applyFilter(changedField?: 'min' | 'max') {
-      if (changedField === 'min' && this.minPrice > this.maxPrice) {
-         this.maxPrice = this.minPrice;
-      } else if (changedField === 'max' && this.maxPrice < this.minPrice) {
-         this.minPrice = this.maxPrice;
-      }
-      
-      this.filterChanged.emit({
-          minPrice: this.minPrice,
-          maxPrice: this.maxPrice,
-          categories: this.selectedCategories,
-          dateOrder: this.dateOrder
-      });
+        if (changedField === 'min' && this.minPrice > this.maxPrice) {
+            this.maxPrice = this.minPrice;
+        } else if (changedField === 'max' && this.maxPrice < this.minPrice) {
+            this.minPrice = this.maxPrice;
+        }
+
+        //Que no se salga de los limites
+        if (this.minPrice < this.minPossible) this.minPrice = this.minPossible;
+        if (this.maxPrice > this.maxPossible) this.maxPrice = this.maxPossible;
+        if (this.minPrice > this.maxPossible) this.minPrice = this.maxPossible; 
+        if (this.maxPrice < this.minPossible) this.maxPrice = this.minPossible;
+        
+        this.filterChanged.emit({
+            minPrice: this.minPrice,
+            maxPrice: this.maxPrice,
+            categories: [...this.selectedCategories],
+            dateOrder: this.dateOrder
+        });
     }
 }

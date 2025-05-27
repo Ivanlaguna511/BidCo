@@ -3,6 +3,7 @@ package com.bidco.api_rest.controller;
 import com.bidco.api_rest.dto.puja.PujaResponseDTO;
 import com.bidco.api_rest.dto.subasta.SubastaCreateDTO;
 import com.bidco.api_rest.dto.subasta.SubastaResponseDTO;
+import com.bidco.api_rest.dto.FiltroDTO;
 import com.bidco.api_rest.service.contract.SubastaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,5 +50,10 @@ public class SubastaController {
     @GetMapping("/filtrar-creador")
     public List<SubastaResponseDTO> filtrarPorCreador(@RequestParam Long id) {
         return subastaService.listarSubastasPorCreador(id);
+    }
+
+    @GetMapping("/filtro-normal")
+    public List<SubastaResponseDTO> filtrarPorTipoNormal(FiltroDTO filtro) {
+        return subastaService.buscarPorFiltroNormal(filtro);
     }
 }

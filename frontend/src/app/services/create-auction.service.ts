@@ -10,6 +10,7 @@ export interface SubastaCreateDTO {
   nombreArticulo: string;
   descripcion: string;
   creadorId: number;
+  categoria: string;
 }
 
 export interface SubastaResponseDTO {

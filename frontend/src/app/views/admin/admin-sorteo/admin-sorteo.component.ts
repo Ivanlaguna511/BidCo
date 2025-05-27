@@ -16,7 +16,8 @@ export class AdminSorteoComponent {
     descripcion: '',
     fechaInicio: '',
     fechaFin: '',
-    puntosNecesarios: 0
+    puntosNecesarios: 0,
+    categoria: ''
   };
 
   selectedFile: File | null = null;

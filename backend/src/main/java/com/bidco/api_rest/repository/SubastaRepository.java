@@ -28,4 +28,7 @@ public interface SubastaRepository extends JpaRepository<Subasta, Long> {
     @Query("SELECT COUNT(s) FROM Subasta s WHERE s.creador.usuarioID = :usuarioID")
     int countCreatedBidsByUsuarioId(Long usuarioID);
 
+    @Query("SELECT s FROM Subasta s WHERE subastaNormal = TRUE AND s.precioFinal >= :minPrice AND s.precioFinal <= :maxPrice AND s.categoria in :categorias ORDER BY CASE WHEN :dateOrder = 'Ascendente' THEN s.fechaFinal END ASC, CASE WHEN :dateOrder = 'Descendente' THEN s.fechaFinal END DESC, s.subastaID ASC")
+    List<Subasta> findByFiltroNormal(int minPrice, int maxPrice, String[] categorias, String dateOrder);
+
 }

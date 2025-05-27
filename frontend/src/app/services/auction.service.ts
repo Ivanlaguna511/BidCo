@@ -9,6 +9,13 @@ export interface SubastaResponseDTO {
     categoria: string;
 }
 
+export interface Filtro {
+    minPrice: number, 
+    maxPrice: number, 
+    categories: string[]|null, 
+    dateOrder: string 
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -28,5 +35,9 @@ export class SubastaService {
 
     getSubastasPujasUsuaroId(id: number): Observable<SubastaResponseDTO[]> {
         return this.http.get<SubastaResponseDTO[]>(`${this.pujasSubastasUrl}/subastas-usuario/${id}`)
+    }
+
+    getSubastasFiltradas(filtro: Filtro): Observable<SubastaResponseDTO[]> {
+        return this.http.get<SubastaResponseDTO[]>(`${this.subastasUrl}/filtro-normal`)
     }
 }

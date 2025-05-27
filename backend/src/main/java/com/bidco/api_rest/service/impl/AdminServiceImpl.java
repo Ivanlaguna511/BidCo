@@ -65,6 +65,7 @@ public class AdminServiceImpl implements AdminService {
         sorteo.setFechaFin(dto.getFechaFin());
         sorteo.setPuntosNecesarios(dto.getPuntosNecesarios());
         sorteo.setPuntosFinales(0);
+        sorteo.setCategoria(dto.getCategoria());
 
         // Relación ManyToOne
         Trabajador creador = new Trabajador();
