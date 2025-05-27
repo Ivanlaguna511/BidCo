@@ -53,12 +53,8 @@ export class AuctionComponent {
     }
 
     handleFilterApplied(filtro: Filtro) {
-        console.log(filtro);
         this.subastaService.getSubastasFiltradas(filtro).subscribe({
-            next: data => {
-                this.products = data;
-                console.log(data);
-            },
+            next: data => this.products = data,
             error: err => console.error("Error al obtener subastas filtradas: ", err)
         });
     }

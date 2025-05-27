@@ -140,7 +140,6 @@ public class SubastaServiceImpl implements SubastaService {
             queryCategorias = filtro.getCategorias();
         }
         List<Subasta> subastas = subastaRepository.findByFiltroNormal(filtro.getMinPrice(), filtro.getMaxPrice(), queryCategorias, filtro.getDateOrder());
-        
         return subastas.stream()
                 .map(subastaMapper::subastaToSubastaResponseDTO)
                 .toList();
