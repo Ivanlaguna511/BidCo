@@ -54,6 +54,7 @@ public class SubastaController {
 
     @GetMapping("/filtro-normal")
     public List<SubastaResponseDTO> filtrarPorTipoNormal(FiltroDTO filtro) {
+        System.out.println(filtro.toString());
         return subastaService.buscarPorFiltroNormal(filtro);
     }
 }

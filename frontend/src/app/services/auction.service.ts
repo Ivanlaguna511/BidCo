@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface SubastaResponseDTO {
@@ -12,7 +12,7 @@ export interface SubastaResponseDTO {
 export interface Filtro {
     minPrice: number, 
     maxPrice: number, 
-    categories: string[]|null, 
+    categories: string[], 
     dateOrder: string 
 }
 
@@ -34,10 +34,10 @@ export class SubastaService {
     }   
 
     getSubastasPujasUsuaroId(id: number): Observable<SubastaResponseDTO[]> {
-        return this.http.get<SubastaResponseDTO[]>(`${this.pujasSubastasUrl}/subastas-usuario/${id}`)
+        return this.http.get<SubastaResponseDTO[]>(`${this.pujasSubastasUrl}/subastas-usuario/${id}`);
     }
 
-    getSubastasFiltradas(filtro: Filtro): Observable<SubastaResponseDTO[]> {
-        return this.http.get<SubastaResponseDTO[]>(`${this.subastasUrl}/filtro-normal`)
+    getSubastasFiltradas(filtro: HttpParams): Observable<SubastaResponseDTO[]> {
+        return this.http.get<SubastaResponseDTO[]>(`${this.subastasUrl}/filtro-normal`, {params: filtro});
     }
 }

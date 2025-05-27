@@ -49,7 +49,8 @@ export class AdminService {
       descripcion: sorteo.descripcion,
       fechaInicio: sorteo.fechaInicio,
       fechaFin: sorteo.fechaFin,
-      puntosNecesarios: sorteo.puntosNecesarios
+      puntosNecesarios: sorteo.puntosNecesarios,
+      categoria: sorteo.categoria
     })], { type: 'application/json' }));
   
     if (imagen) {

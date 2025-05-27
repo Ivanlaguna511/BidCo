@@ -9,6 +9,7 @@ import { FooterComponent } from "../../components/footer/footer.component";
 
 import { SubastaService, SubastaResponseDTO, Filtro } from '../../services/auction.service';
 import { AuthService } from '../../services/auth.service';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-auction',
@@ -53,7 +54,15 @@ export class AuctionComponent {
     }
 
     handleFilterApplied(filtro: Filtro) {
-        this.subastaService.getSubastasFiltradas(filtro).subscribe({
+        var camposFiltro = new HttpParams()
+        camposFiltro = camposFiltro.append("minPrice", filtro.minPrice);
+        camposFiltro = camposFiltro.append("maxPrice", filtro.maxPrice);
+        filtro.categories.forEach(categoria => {
+            camposFiltro = camposFiltro.append("categorias", categoria);
+        })
+        camposFiltro = camposFiltro.append("dateOrder", filtro.dateOrder)
+        
+        this.subastaService.getSubastasFiltradas(camposFiltro).subscribe({
             next: data => this.products = data,
             error: err => console.error("Error al obtener subastas filtradas: ", err)
         });

@@ -27,7 +27,7 @@ export class FilterComponent {
     filtro: Filtro = {
         minPrice: 0, 
         maxPrice: 0, 
-        categories: null, 
+        categories: [], 
         dateOrder: ""
     };
 
