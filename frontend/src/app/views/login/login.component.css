@@ -1,0 +1,148 @@
+/* login.component.css */
+
+/* Reseteo básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Fuente y color de fondo general */
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f8f9fa;
+}
+
+/* Contenedor principal del login */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 60px;
+}
+
+/* Título grande (BidCo) */
+.login-container h1 {
+  margin-bottom: 20px;
+  font-size: 36px;
+  color: #333;
+}
+
+/* Tarjeta (caja) donde va el formulario */
+.login-box {
+  width: 400px;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Título del formulario (Iniciar Sesión) */
+.login-box h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  text-align: center;
+  color: #0d0063;
+}
+
+/* Mensaje general de error centrado */
+.error-summary {
+  display: block;
+  color: #d93025;
+  text-align: center;
+  font-size: 0.95rem;
+  margin-bottom: 15px;
+}
+
+/* Formulario interno */
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Etiquetas */
+.login-form label {
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #555;
+}
+
+/* Inputs de texto */
+.login-form input {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+}
+
+.login-form input:focus {
+  border-color: #0d0063;
+  box-shadow: 0 0 3px rgba(13, 0, 99, 0.2);
+}
+
+/* Opciones debajo de los inputs */
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Contenedor del checkbox */
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+}
+
+/* Opcionalmente, ajusta el checkbox */
+.remember-me input[type="checkbox"] {
+  margin-top: 10%;
+}
+
+/* Enlace para contraseña olvidada */
+.options a {
+  font-size: 14px;
+  color: #0d0063;
+  text-decoration: none;
+}
+
+.options a:hover {
+  text-decoration: underline;
+}
+
+/* Botón de "Iniciar Sesión" */
+.login-form button {
+  background-color: #0d0063;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-form button:hover {
+  background-color: #080046;
+}
+
+/* Enlace de registro */
+.register {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.register a {
+  color: #0d0063;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.register a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,34 @@
+<app-header></app-header>
+
+<div class="container">
+  <!-- Barra lateral -->
+  <aside class="sidebar">
+    <h2>Mi perfil</h2>
+    <nav>
+      <ul>
+        <li>
+          <a routerLink="mis-datos" routerLinkActive="active">
+            Mis Datos
+          </a>
+        </li>
+        <li *ngIf="!isExpert">
+          <a routerLink="privacidad" routerLinkActive="active">
+            Privacidad
+          </a>
+        </li>
+        <li *ngIf="!isExpert">
+          <a routerLink="estadisticas" routerLinkActive="active">
+            Mis estadísticas
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Aquí se inyectan las rutas hijas -->
+  <main class="profile-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>
+
+<app-footer></app-footer>

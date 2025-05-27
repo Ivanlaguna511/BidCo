@@ -1,0 +1,166 @@
+.filter-container {
+  position: fixed;
+  top: 20%;
+  width: 18%;
+  height: auto;
+  background-color: #fff;
+  border-right: 1px solid #e0e0e0;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+  overflow-y: auto;
+  font-family: 'Roboto', sans-serif;
+}
+
+.filter-container h2 {
+  margin-bottom: 20px;
+  font-size: 1.5em;
+  color: #000;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 10px;
+}
+
+.filter-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.filter-container fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.filter-container legend {
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  color: #000;
+  font-weight: 600;
+}
+
+.filter-container input[type="number"],
+.filter-container select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s;
+}
+
+.filter-container input[type="number"]:focus,
+.filter-container select:focus {
+  border-color: #0d0063;
+  outline: none;
+}
+
+/* Estilos para navegadores basados en WebKit */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px; /* Ancho de la bola */
+  height: 20px; /* Alto de la bola */
+  margin-top: 3%; /* Ajuste vertical */
+  cursor: pointer;
+  border-radius: 50%; /* Forma circular */
+}
+
+.price-filter {
+  display: flex;
+  gap: 10px;
+}
+
+.price-filter input {
+  flex: 1;
+}
+
+/* Range slider styles */
+.range-slider {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  margin-top: 7%;
+}
+
+.slider {
+  position: relative;
+  width: 100%;
+  height: 6px;
+  background: #ddd;
+  border-radius: 3px;
+}
+
+.slider .track {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #ddd;
+  border-radius: 3px;
+}
+
+.slider .range {
+  position: absolute;
+  height: 100%;
+  background: #0d0063;
+  border-radius: 3px;
+}
+
+/* Ocultamos el slider nativo y estilizamos los thumbs */
+input[type="range"].thumb {
+  position: absolute;
+  width: 100%;
+  height: 0;
+  pointer-events: none;
+  background: transparent;
+}
+
+input[type="range"].thumb::-webkit-slider-thumb {
+  pointer-events: all;
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #0d0063;
+  cursor: pointer;
+  border: none;
+}
+
+input[type="range"].thumb::-moz-range-thumb {
+  pointer-events: all;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #0d0063;
+  cursor: pointer;
+  border: none;
+}
+
+/* Opcional: para separar visualmente los thumbs (en caso de superposición) */
+.thumb--left {
+  z-index: 3;
+}
+.thumb--right {
+  z-index: 2;
+}
+
+/* Categoría y fecha */
+.category-filter .checkbox-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.category-filter .checkbox-group input[type="checkbox"] {
+  margin: 0 8px 0 0;
+  width: 18px;
+  height: 18px;
+  accent-color: #0d0063;
+}
+
+.category-filter .checkbox-group label {
+  cursor: pointer;
+  font-size: 0.95em;
+  color: #000;
+}
+
+.date-filter select {
+  padding: 10px;
+}

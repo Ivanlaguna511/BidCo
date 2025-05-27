@@ -1,0 +1,198 @@
+/* Reseteo básico y tipografía */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+  
+body {
+    font-family: Arial, sans-serif;
+}
+  
+/* Contenedor principal */
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+  
+h2 {
+    margin-bottom: 20px;
+}
+  
+/* Formulario */
+.auction-form {
+    display: flex;
+    gap: 20px;         /* Espacio entre la sección de imagen y la parte derecha */
+    align-items: flex-start;
+}
+  
+/* Sección de subida de imagen */
+.image-upload {
+    flex: 1;
+    height: 300px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed #ccc; /* Recuadro para la imagen */
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    overflow: hidden; /* Asegura que la imagen no se desborde */
+}
+
+/* Texto de la etiqueta */
+.image-label {
+    color: #666;
+    text-align: center;
+    pointer-events: none;
+    position: absolute;
+    z-index: 1;
+}
+
+/* Imagen de vista previa */
+.image-preview {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Hace que la imagen se ajuste sin recortar */
+}
+
+/* Ocultar el texto solo cuando haya imagen seleccionada */
+.image-upload img {
+    display: block; /* Se asegura que la imagen sea visible */
+}
+
+.image-upload input[type="file"] {
+    opacity: 0;       /* Lo hace invisible pero clicable */
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+  
+/* Sección derecha del formulario */
+.right-section {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+  
+/* Fila para Nombre y Precio base */
+.product-info {
+    display: flex;
+    gap: 20px;
+}
+  
+/* Grupo de formulario para cada campo */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+  
+.form-group label {
+    margin-bottom: 5px;
+}
+  
+.form-group input {
+    padding: 8px;
+}
+  
+/* Descripción */
+.description-section label {
+    margin-bottom: 5px;
+}
+  
+.description-section textarea {
+    width: 100%;
+    padding: 8px;
+    resize: vertical;
+}
+  
+/* Tipo de subasta */
+.auction-type {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+  
+.auction-type-options {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+  
+/* Duración */
+.duration-section {
+    display: flex;
+    flex-direction: column;
+}
+  
+.duration-section label {
+    margin-bottom: 5px;
+}
+  
+.duration-section input {
+    padding: 8px;
+}
+  
+/* Botón de crear la puja */
+.create-button {
+    align-self: flex-end;
+    padding: 10px 20px;
+    background-color: #0d0063;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+}
+  
+.create-button:hover {
+    background-color: #0d0063;
+}
+
+/* Contenedor para tipo de subasta y categoría en fila */
+.type-and-category {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    align-items: flex-end;
+}
+  
+/* Categoría */
+.category-section {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+  
+.category-section label {
+    margin-bottom: 5px;
+}
+  
+.category-section select {
+    padding: 8px;
+    font-size: 14px;
+}
+
+.error-box {
+    background-color: #ffe0e0;
+    border: 1px solid #ff5c5c;
+    color: #b00000;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+  }

@@ -1,0 +1,149 @@
+package com.bidco.api_rest.service.impl;
+
+import com.bidco.api_rest.dto.puja.PujaResponseDTO;
+import com.bidco.api_rest.dto.subasta.SubastaCreateDTO;
+import com.bidco.api_rest.dto.subasta.SubastaResponseDTO;
+import com.bidco.api_rest.dto.usuario.UsuarioResponseDTO;
+import com.bidco.api_rest.dto.FiltroDTO;
+import com.bidco.api_rest.mapper.PujaMapper;
+import com.bidco.api_rest.mapper.SubastaMapper;
+import com.bidco.api_rest.mapper.UsuarioMapper;
+import com.bidco.api_rest.model.Puja;
+import com.bidco.api_rest.model.Subasta;
+import com.bidco.api_rest.model.Usuario;
+import com.bidco.api_rest.repository.PujaRepository;
+import com.bidco.api_rest.repository.SubastaRepository;
+import com.bidco.api_rest.repository.UsuarioRepository;
+import com.bidco.api_rest.service.contract.SubastaService;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.List;
+
+
+@Service
+public class SubastaServiceImpl implements SubastaService {
+
+    private final SubastaRepository subastaRepository;
+    private final SubastaMapper subastaMapper;
+    private final UsuarioMapper usuarioMapper;
+    private final UsuarioRepository userRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final PujaRepository pujaRepository;
+    private final PujaMapper pujaMapper;
+
+    public SubastaServiceImpl(SubastaRepository subastaRepository, SubastaMapper subastaMapper, UsuarioMapper usuarioMapper, 
+                UsuarioRepository userRepository, UsuarioRepository usuarioRepository, PujaRepository pujaRepository, PujaMapper pujaMapper) {
+        this.subastaRepository = subastaRepository;
+        this.subastaMapper = subastaMapper;
+        this.usuarioMapper = usuarioMapper;
+        this.userRepository = userRepository;
+        this.usuarioRepository = usuarioRepository;
+        this.pujaRepository = pujaRepository;
+        this.pujaMapper = pujaMapper;
+    }
+
+    @Override
+    public SubastaResponseDTO crearSubasta(SubastaCreateDTO subastaCreateDTO, MultipartFile imagen) {
+        if(subastaCreateDTO==null){
+            throw new IllegalArgumentException("La subasta no puede ser nula");
+        }
+
+        Subasta subasta = subastaMapper.subastaCreateDTOToSubasta(subastaCreateDTO);
+        subasta.setPrecioFinal(subasta.getPrecioInicial());
+
+        if(imagen != null && !imagen.isEmpty()) {
+            try {
+                String nombreArchivo = UUID.randomUUID() + "_" + imagen.getOriginalFilename();
+                Path rutaImagen = Paths.get(System.getProperty("user.dir")).resolve("uploads").resolve(nombreArchivo);
+                Files.createDirectories(rutaImagen.getParent());
+                imagen.transferTo(rutaImagen.toFile());
+                subasta.setImagen(nombreArchivo);
+                
+            } catch (IOException e) {
+                throw new RuntimeException("Error al guardar la imagen ", e);
+            }
+        }
+
+        subastaRepository.save(subasta);
+        return subastaMapper.subastaToSubastaResponseDTO(subasta);
+    }
+
+    @Override
+    public SubastaResponseDTO buscarSubastaPorId(Long id) {
+        Subasta subasta = subastaRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Subasta no encontrada"));
+
+        return subastaMapper.subastaToSubastaResponseDTO(subasta);
+    }
+
+    @Override
+    @Transactional
+    public void asignarGanadorYActualizarPrecioFinal(Long id) {
+        // Verificamos que la subasta exista
+        Subasta subasta = subastaRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró la subasta con ID: " + id));
+        System.out.print("Se encuentra subasta");
+
+        Puja puja = pujaRepository.findTopBySubastaIdOrderByImporteDesc(id);
+
+        if (puja == null) {
+            throw new IllegalStateException("No hubo ninguna puja en la subasta.");
+        }
+
+        Usuario user = userRepository.findById(puja.getPujador().getUsuarioID())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        user.setSaldo(user.getSaldo().subtract(puja.getImporte()));
+        puja.setGanadora(true);
+        subasta.setGanador(user.getUsuarioID());
+
+        subastaRepository.save(subasta);
+        pujaRepository.save(puja);
+        usuarioRepository.save(user);
+    }
+
+    @Override
+    public List<SubastaResponseDTO> buscarPorTipo(boolean normal) {
+        List<Subasta> subastas = subastaRepository.findBySubastaNormal(normal);
+        return subastas.stream()
+                .map(subastaMapper::subastaToSubastaResponseDTO)
+                .toList();
+    }
+
+    @Override
+    public List<SubastaResponseDTO> listarSubastasPorCreador(Long id) {
+        List<Subasta> subastas = subastaRepository.findByCreadorId(id);
+        return subastas.stream()
+                .map(subastaMapper::subastaToSubastaResponseDTO)
+                .toList();
+    }
+
+    @Override
+    public List<SubastaResponseDTO> buscarPorFiltroNormal(FiltroDTO filtro) {
+        String[] listaCategorias = {"Tecnología", "Hogar", "Moda", "Deportes", "Juguetes", "Otros"};
+        String[] queryCategorias;
+
+        if (filtro.getCategorias() == null || filtro.getCategorias().length == 0) {
+            queryCategorias = listaCategorias;
+        } else {
+            queryCategorias = filtro.getCategorias();
+        }
+        List<Subasta> subastas = subastaRepository.findByFiltroNormal(filtro.getMinPrice(), filtro.getMaxPrice(), queryCategorias, filtro.getDateOrder());
+        
+        return subastas.stream()
+                .map(subastaMapper::subastaToSubastaResponseDTO)
+                .toList();
+    }
+
+}

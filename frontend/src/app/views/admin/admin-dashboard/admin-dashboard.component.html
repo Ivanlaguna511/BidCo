@@ -1,0 +1,12 @@
+<main class="dashboard-container">
+  <h2 class="dashboard-title">Panel de Administración</h2>
+  <div class="dashboard-actions">
+    <button class="btn-secondary" (click)="goToSorteo()">Añadir Sorteo</button>
+    <button class="btn-secondary" (click)="goToExpertos()">Registrar Expertos</button>
+    <button class="btn-secondary" (click)="cerrarSesion()">Cerrar Sesión</button>
+  </div>
+  <section class="dashboard-content">
+    <router-outlet></router-outlet>
+  </section>
+</main>
+<app-footer></app-footer>
