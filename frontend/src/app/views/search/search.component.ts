@@ -12,6 +12,7 @@ import { FooterComponent } from "../../components/footer/footer.component";
 
 import { SubastaService, SubastaResponseDTO, Filtro } from '../../services/auction.service';
 import { AuthService } from '../../services/auth.service';
+import { AuthExpertService } from '../../services/auth.expert.service';
 ;
 
 @Component({
@@ -45,7 +46,7 @@ export class SearchComponent {
     noCoincidencias = false;
     primeraCarga = false;
 
-    constructor(private authService: AuthService, private subastaService: SubastaService, private activatedRoute: ActivatedRoute) {}
+    constructor(private authService: AuthService, private expertAuthService: AuthExpertService, private subastaService: SubastaService, private activatedRoute: ActivatedRoute) {}
 
     ngOnInit() {
         this.authService.isLoggedIn$.subscribe((estado) => {
@@ -56,8 +57,9 @@ export class SearchComponent {
             if (user) this.saldoUser = user.saldo ?? 0;
         })
 
-        this.authService.userRole$.subscribe((estado) => {
-            this.isExpert = estado === 'expert';
+        //Comprobamos si un experto ha iniciado sesion
+        this.expertAuthService.isLoggedIn$.subscribe((estado) => {
+            this.isExpert = estado;
         });
 
         this.activatedRoute.queryParamMap.pipe(

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { FooterComponent } from "../../components/footer/footer.component";
 import { HeaderComponent } from "../../components/header/header.component";
-import { AuthService } from '../../services/auth.service';
+import { AuthExpertService } from '../../services/auth.expert.service';
 
 @Component({
   selector: 'app-profile',
@@ -23,11 +23,12 @@ import { AuthService } from '../../services/auth.service';
 export class ProfileComponent {
     isExpert = false;
     
-    constructor(private authService: AuthService) {}
+    constructor(private expertAuthService: AuthExpertService) {}
 
     ngOnInit() {
-        this.authService.userRole$.subscribe((estado) => {
-            this.isExpert = estado === 'expert';
+        //Comprobamos si un experto ha iniciado sesion
+        this.expertAuthService.isLoggedIn$.subscribe((estado) => {
+            this.isExpert = estado;
         });
     }
 }

@@ -32,7 +32,6 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final PujaSorteoRepository pujaSorteoRepository;
     private final UsuarioMapper usuarioMapper;
     private final SorteoRepository sorteoRepository;
-    // Puedes inyectar JwtUtil si lo configuras como bean; para este ejemplo lo instancio manualmente.
     private final JwtUtil jwtUtil = new JwtUtil();
 
     @Autowired

@@ -10,6 +10,7 @@ import { FooterComponent } from "../../components/footer/footer.component";
 
 import { AuthService } from '../../services/auth.service';
 import { SorteoService, SorteoResponseDto, Filtro } from '../../services/raffle.service';
+import { AuthExpertService } from '../../services/auth.expert.service';
 
 @Component({
   selector: 'app-raffle',
@@ -30,7 +31,7 @@ export class RaffleComponent {
     isExpert = false;
     userPoints = 0;
 
-    constructor(private authService: AuthService, private sorteoService: SorteoService) {}
+    constructor(private authService: AuthService, private expertAuthService: AuthExpertService, private sorteoService: SorteoService) {}
 
     ngOnInit() {
         this.sorteoService.getSorteos().subscribe({
@@ -42,9 +43,10 @@ export class RaffleComponent {
             this.isLoggedIn = estado;
         });
 
-        this.authService.userRole$.subscribe((estado) => {
-            this.isExpert = estado === 'expert';
-        }); 
+        //Comprobamos si un experto ha iniciado sesion
+        this.expertAuthService.isLoggedIn$.subscribe((estado) => {
+            this.isExpert = estado;
+        });
 
         const storedUser = localStorage.getItem('authUser');
         

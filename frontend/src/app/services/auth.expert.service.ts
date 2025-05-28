@@ -6,27 +6,13 @@ import { UserService } from './user.service';
 import { ExpertoResponse, ExpertService } from './expert.service';
 import { jwtDecode } from 'jwt-decode';
 
-export interface UsuarioResponse {
-  usuarioID: number;
-  nombreUsuario: string;
-  correoElectronico: string;
-  contraseña?: string;
-  ciudad: string;
-  codigoPostal: string;
-  calle: string;
-  numeroPiso: number;
-  letraPiso?: string;
-  pais: string;
-  saldo?: number;
-  puntos?: number;
-}
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthExpertService {
   private loggedIn = new BehaviorSubject<boolean>(false);
-  public currentUser = new BehaviorSubject<UsuarioResponse | null>(null);
+  public currentUser = new BehaviorSubject<ExpertoResponse | null>(null);
   private userRole = new BehaviorSubject<string>('user'); 
 
   // Exponemos como observables
@@ -34,7 +20,7 @@ export class AuthService {
   public currentUser$ = this.currentUser.asObservable();
   public userRole$ = this.userRole.asObservable();
 
-  private userApiUrl: string = 'http://localhost:8080/api/usuarios';
+  private expertApiUrl: string = 'http://localhost:8080/api/trabajadores';
 
   constructor(private http: HttpClient, private userService: UserService, private expertService: ExpertService) {
     const token = localStorage.getItem('authToken');
@@ -45,7 +31,7 @@ export class AuthService {
         this.currentUser.next(JSON.parse(userData));
 
         // Llamar a loadUserProfile para obtener datos actualizados del servidor
-        this.loadUserProfile(this.currentUser.value!.usuarioID).subscribe({
+        this.loadExpertProfile(this.currentUser.value!.usuarioID).subscribe({
             next: (updatedUser) => {
                 // Actualizamos la información del usuario en localStorage
                 localStorage.setItem('authUser', JSON.stringify(updatedUser));
@@ -58,43 +44,39 @@ export class AuthService {
     }
   }
 
-  // Método para hacer login; se espera que el backend retorne { token: string }
-  loginUser(loginData: { identificador: string; contraseña: string }) {
+
+  loginExpert(loginData: { identificador: string; contraseña: string }) {
     return this.http.post<{ token: string }>(
-      `${this.userApiUrl}/login`,
+      `${this.expertApiUrl}/login`,
       loginData
     );
   }
 
-  // Decodifica el token y carga el perfil completo del usuario
-  setUserFromToken(token: string): void {
+  setExpertFromToken(token: string): void {
     localStorage.setItem('authToken', token);
     this.loggedIn.next(true);
     // Ahora sí pedimos el perfil
-    this.userService
-      .getUserById(+(jwtDecode(token).sub ?? 0))
-      .subscribe(user => this.setUser(user), () => this.logout());
+    this.expertService
+      .getExpertoById(+(jwtDecode(token).sub ?? 0))
+      .subscribe(user => this.setExperto(user), () => this.logout());
   }
-  
 
-  // Llama al endpoint GET para obtener todos los datos del usuario
-  loadUserProfile(userID: number): Observable<UsuarioResponse> {
+  loadExpertProfile(userID: number): Observable<ExpertoResponse> {
     const token = localStorage.getItem('authToken');
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
   
-    return this.http.get<UsuarioResponse>(`${this.userApiUrl}/${userID}`, { headers });
+    return this.http.get<ExpertoResponse>(`${this.expertApiUrl}/${userID}`, { headers });
   }
 
   // Actualiza el estado del usuario (además de guardar en localStorage)
-  setUser(user: UsuarioResponse): void {
+  setExperto(user: ExpertoResponse): void {
     console.log("Actualizando currentUser en AuthService:", user);
     this.currentUser.next(user);
     localStorage.setItem('authUser', JSON.stringify(user));
-    this.setUserRole("user");
+    this.setUserRole("expert");
   }
-
 
   // Para actualizar el rol (por ejemplo, "user" o "expert")
   setUserRole(role: string): void {

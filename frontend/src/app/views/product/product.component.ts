@@ -13,6 +13,7 @@ import { DATA_EXPERT } from '../../datos_estaticos/user_estadisticas';
 import { AuthService } from '../../services/auth.service';
 import { ProductoService, PujaCreateDTO, PujaResponseDTO, PujaSorteoCreateDTO} from '../../services/product.service';
 import { CommentService } from '../../services/comment.service';
+import { AuthExpertService } from '../../services/auth.expert.service';
 
 
 @Component({
@@ -57,6 +58,7 @@ export class ProductComponent {
     constructor(
         private route: ActivatedRoute,
         private authService: AuthService,
+        private expertAuthService: AuthExpertService,
         private productoService: ProductoService,
         private commentService: CommentService
     ) {}
@@ -66,8 +68,9 @@ export class ProductComponent {
             this.isLoggedIn = estado;
         });
 
-        this.authService.userRole$.subscribe((estado) => {
-            this.isExpert = estado === 'expert';
+        //Comprobamos si un experto ha iniciado sesion
+        this.expertAuthService.isLoggedIn$.subscribe((estado) => {
+            this.isExpert = estado;
         });
 
         const storedUser = localStorage.getItem('authUser');

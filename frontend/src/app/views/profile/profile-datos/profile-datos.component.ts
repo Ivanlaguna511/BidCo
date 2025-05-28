@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService, UsuarioResponse } from '../../../services/auth.service';
 import { UserService, UsuarioUpdate } from '../../../services/user.service';
+import { AuthExpertService } from '../../../services/auth.expert.service';
 
 @Component({
   selector: 'app-profile-datos',
@@ -34,10 +35,15 @@ export class ProfileDatosComponent implements OnInit {
   currentPassword: string = '';
   newPassword: string = '';
   confirmPassword: string = '';
+  isExpert = false;
 
-  constructor(private authService: AuthService, private userService: UserService) {}
+  constructor(private authService: AuthService, private expertAuthService: AuthExpertService, private userService: UserService) {}
 
   ngOnInit() {
+    //Comprobamos si un experto ha iniciado sesion
+    this.expertAuthService.isLoggedIn$.subscribe((estado) => {
+        this.isExpert = estado;
+    });
     const storedUser = localStorage.getItem('authUser');
     
     // Si hay usuario almacenado pero falta información
