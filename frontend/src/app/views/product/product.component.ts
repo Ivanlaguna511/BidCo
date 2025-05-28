@@ -82,27 +82,26 @@ export class ProductComponent {
         });
 
         this.tipo = this.route.snapshot.data['tipo'];
-        if (this.tipo === 'ciega') this.isBlindAuction = true;
-        else if (this.tipo === 'sorteo') this.isRaffle = true;
 
         switch (this.tipo) {
             case 'subasta':
-            case 'ciega':
                 this.productoService.getSubastaPorId(this.productId).subscribe((product) => {
                     this.product = product;
+                    this.isBlindAuction = !product.subastaNormal;
                     this.setupCountdown(this.product.fechaFinal);
                 });
                 break;
             case 'sorteo':
                 this.productoService.getSorteoPorId(this.productId).subscribe((product) => {
                     this.product = product;
+                    this.isRaffle = true
                     this.setupCountdown(this.product.fechaFin);
                 });
                 break;
             default:
                 console.error('Tipo de producto no válido');
+                
         }
-        
             
         
         this.productoService.obtenerPujaMaximaPorSubasta(this.productId).subscribe((puja) => {

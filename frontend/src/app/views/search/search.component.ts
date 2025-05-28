@@ -41,15 +41,13 @@ export class SearchComponent {
         dateOrder: ""
     };
     searchTerm: string|null = "";
+    cargaDeProductos = false;
+    noCoincidencias = false;
+    primeraCarga = false;
 
     constructor(private authService: AuthService, private subastaService: SubastaService, private activatedRoute: ActivatedRoute) {}
 
     ngOnInit() {
-        this.subastaService.getSubastasPorTipo(true).subscribe({
-            next: data => this.products = data,
-            error: err => console.error('Error al obtener las subastas normales: ', err)
-        });
-        
         this.authService.isLoggedIn$.subscribe((estado) => {
             this.isLoggedIn = estado;
         });
@@ -66,8 +64,8 @@ export class SearchComponent {
             map(params => params.get('search')),
             distinctUntilChanged(),
             tap(searchTerm => this.searchTerm = searchTerm)
-        ).subscribe(searchTerm => {
-            this.buscarSubastasPorFiltroYNombre();
+        ).subscribe(() => {
+            if (this.primeraCarga) this.buscarSubastasPorFiltroYNombre();
         })
     }
 
@@ -77,6 +75,10 @@ export class SearchComponent {
     }
 
     buscarSubastasPorFiltroYNombre() {
+        this.cargaDeProductos = true;
+        this.noCoincidencias = false;
+        this.primeraCarga = true;
+
         var camposFiltro = new HttpParams()
         camposFiltro = camposFiltro.append("minPrice", this.filtro.minPrice);
         camposFiltro = camposFiltro.append("maxPrice", this.filtro.maxPrice);
@@ -86,8 +88,18 @@ export class SearchComponent {
         camposFiltro = camposFiltro.append("dateOrder", this.filtro.dateOrder)
         
         this.subastaService.getSubastasFiltradasPorNombre(camposFiltro, this.searchTerm || '').subscribe({
-            next: data => this.products = data,
-            error: err => console.error("Error al obtener subastas filtradas: ", err)
+            next: data => {
+                this.products = data;
+                if(data && data.length === 0) {
+                    this.noCoincidencias = true;
+                }
+                this.cargaDeProductos = false;
+            },
+            error: err => {
+                this.noCoincidencias = true;
+                this.cargaDeProductos = false;
+                console.error("Error al obtener subastas filtradas: ", err);
+            }
         });
     }
 }

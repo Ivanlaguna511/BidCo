@@ -7,6 +7,7 @@ export interface SubastaResponseDTO {
     nombreArticulo: string;
     precioFinal: string;
     categoria: string;
+    subastaNormal: boolean;
 }
 
 export interface Filtro {
