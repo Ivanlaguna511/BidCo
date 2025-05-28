@@ -17,11 +17,11 @@ export class CommentService {
 
   // Crear comentario nuevo
   createComment(comment: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, comment);
+    return this.http.post<any>(`${this.apiUrl}/nuevo`, comment);
   }
 
   // Editar comentario existente
   editComment(id: number, newComment: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${id}`, newComment);
+    return this.http.put<any>(`${this.apiUrl}/editar/${id}`, newComment);
   }
 }

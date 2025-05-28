@@ -57,4 +57,15 @@ public class ComentarioServiceImpl implements ComentarioService {
         }
         return comentarioResponseDTOList;
     }
+
+    @Override
+    public ComentarioResponseDTO editarComentarioPorId(Long id, ComentarioCreateDTO comentarioDTO) {
+        Comentario comentario = comentarioRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Comentario no encontrado con ID: " + id));
+        comentario.setComentario(comentarioDTO.getComentario());
+        comentario.setPrecioEstimado(comentarioDTO.getPrecioEstimado());
+
+        Comentario comentarioActualizado = comentarioRepository.save(comentario);
+
+        return comentarioMapper.comentarioToComentarioResponseDTO(comentarioActualizado);
+    }
 }

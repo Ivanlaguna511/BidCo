@@ -10,4 +10,5 @@ public interface ComentarioService {
     ComentarioResponseDTO añadirComentario(ComentarioCreateDTO comentarioCreateDTO);
     ComentarioResponseDTO buscarComentarioPorId(Long id);
     List<ComentarioResponseDTO> buscarComentariosPorSubastaId(Long id);
+    ComentarioResponseDTO editarComentarioPorId(Long id, ComentarioCreateDTO comentario);
 }
