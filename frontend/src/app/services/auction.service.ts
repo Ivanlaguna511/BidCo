@@ -56,4 +56,10 @@ export class SubastaService {
         params = filtro.append("id", id);
         return this.http.get<SubastaResponseDTO[]>(`${this.subastasUrl}/filtro-mis-pujas`, {params: params});
     }
+
+    getSubastasFiltradasPorNombre(filtro: HttpParams, searchTerm: string): Observable<SubastaResponseDTO[]> {
+        var params = new HttpParams();
+        params = filtro.append("searchTerm", searchTerm);
+        return this.http.get<SubastaResponseDTO[]>(`${this.subastasUrl}/filtro-nombre`, {params: params});
+    }
 }

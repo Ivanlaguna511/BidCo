@@ -3,6 +3,8 @@ import { RouterLink, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 
+import { map, distinctUntilChanged, tap } from 'rxjs/operators';
+
 import { HeaderComponent } from '../../components/header/header.component';
 import { FilterComponent } from '../../components/filter/filter.component';
 import { ProductItemComponent } from '../../components/product-item/product-item.component';
@@ -13,7 +15,7 @@ import { AuthService } from '../../services/auth.service';
 ;
 
 @Component({
-  selector: 'app-auction',
+  selector: 'app-search',
   standalone: true,
   imports: [
     RouterLink,
@@ -23,15 +25,22 @@ import { AuthService } from '../../services/auth.service';
     ProductItemComponent,
     FooterComponent
 ],
-  templateUrl: './auction.component.html',
-  styleUrl: './auction.component.css'
+  templateUrl: './search.component.html',
+  styleUrl: './search.component.css'
 })
 
-export class AuctionComponent {
+export class SearchComponent {
     products: SubastaResponseDTO[] = [];
     isLoggedIn = false;
     isExpert = false;
     saldoUser = 0;
+    filtro: Filtro = {
+        minPrice: 0, 
+        maxPrice: 0, 
+        categories: [], 
+        dateOrder: ""
+    };
+    searchTerm: string|null = "";
 
     constructor(private authService: AuthService, private subastaService: SubastaService, private activatedRoute: ActivatedRoute) {}
 
@@ -52,18 +61,31 @@ export class AuctionComponent {
         this.authService.userRole$.subscribe((estado) => {
             this.isExpert = estado === 'expert';
         });
+
+        this.activatedRoute.queryParamMap.pipe(
+            map(params => params.get('search')),
+            distinctUntilChanged(),
+            tap(searchTerm => this.searchTerm = searchTerm)
+        ).subscribe(searchTerm => {
+            this.buscarSubastasPorFiltroYNombre();
+        })
     }
 
     handleFilterApplied(filtro: Filtro) {
+        this.filtro = filtro;
+        this.buscarSubastasPorFiltroYNombre();
+    }
+
+    buscarSubastasPorFiltroYNombre() {
         var camposFiltro = new HttpParams()
-        camposFiltro = camposFiltro.append("minPrice", filtro.minPrice);
-        camposFiltro = camposFiltro.append("maxPrice", filtro.maxPrice);
-        filtro.categories.forEach(categoria => {
+        camposFiltro = camposFiltro.append("minPrice", this.filtro.minPrice);
+        camposFiltro = camposFiltro.append("maxPrice", this.filtro.maxPrice);
+        this.filtro.categories.forEach(categoria => {
             camposFiltro = camposFiltro.append("categorias", categoria);
         })
-        camposFiltro = camposFiltro.append("dateOrder", filtro.dateOrder)
+        camposFiltro = camposFiltro.append("dateOrder", this.filtro.dateOrder)
         
-        this.subastaService.getSubastasFiltradasNormal(camposFiltro).subscribe({
+        this.subastaService.getSubastasFiltradasPorNombre(camposFiltro, this.searchTerm || '').subscribe({
             next: data => this.products = data,
             error: err => console.error("Error al obtener subastas filtradas: ", err)
         });

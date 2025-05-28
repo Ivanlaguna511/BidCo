@@ -203,4 +203,22 @@ public class SubastaServiceImpl implements SubastaService {
                 .map(subastaMapper::subastaToSubastaResponseDTO)
                 .toList();
     }
+
+    @Override
+    public List<SubastaResponseDTO> buscarPorFiltroYNombre(FiltroDTO filtro, String searchTerm) {
+        String[] listaCategorias = {"Tecnología", "Hogar", "Moda", "Deportes", "Juguetes", "Otros"};
+        String[] queryCategorias;
+
+        if (filtro.getCategorias() == null || filtro.getCategorias().length == 0) {
+            queryCategorias = listaCategorias;
+        } else {
+            queryCategorias = filtro.getCategorias();
+        }
+        List<Subasta> subastas = subastaRepository.findByFiltroNombre(searchTerm, filtro.getMinPrice(), filtro.getMaxPrice(), queryCategorias, filtro.getDateOrder());
+        return subastas.stream()
+                .map(subastaMapper::subastaToSubastaResponseDTO)
+                .toList();
+    }
+
+    
 }

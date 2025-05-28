@@ -39,4 +39,7 @@ public interface SubastaRepository extends JpaRepository<Subasta, Long> {
 
     @Query("SELECT s FROM Subasta s JOIN s.pujas p ON s.subastaID = p.subasta.subastaID WHERE p.pujador.id = :id AND s.precioFinal >= :minPrice AND s.precioFinal <= :maxPrice AND s.categoria in :categorias ORDER BY CASE WHEN :dateOrder = 'asc' THEN s.fechaFinal END ASC, CASE WHEN :dateOrder = 'desc' THEN s.fechaFinal END DESC, s.subastaID ASC")
     List<Subasta> findByFiltroMisPujas(int id, int minPrice, int maxPrice, String[] categorias, String dateOrder);
+
+    @Query("SELECT s FROM Subasta s WHERE LOWER(s.nombreArticulo) LIKE LOWER(CONCAT('%', :searchTerm, '%')) AND s.precioFinal >= :minPrice AND s.precioFinal <= :maxPrice AND s.categoria in :categorias ORDER BY CASE WHEN :dateOrder = 'asc' THEN s.fechaFinal END ASC, CASE WHEN :dateOrder = 'desc' THEN s.fechaFinal END DESC, s.subastaID ASC")
+    List<Subasta> findByFiltroNombre(String searchTerm, int minPrice, int maxPrice, String[] categorias, String dateOrder);
 }

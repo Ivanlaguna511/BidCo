@@ -21,4 +21,5 @@ public interface SubastaService {
     List<SubastaResponseDTO> buscarPorFiltroCiega(FiltroDTO filtro);
     List<SubastaResponseDTO> buscarPorFiltroMisSubastas(FiltroDTO filtro, int id);
     List<SubastaResponseDTO> buscarPorFiltroMisPujas(FiltroDTO filtro, int id);
+    List<SubastaResponseDTO> buscarPorFiltroYNombre(FiltroDTO filtro, String searchTerm);
 }

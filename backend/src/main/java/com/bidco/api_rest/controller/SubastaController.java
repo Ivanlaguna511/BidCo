@@ -71,4 +71,10 @@ public class SubastaController {
     public List<SubastaResponseDTO> buscarPorFiltroMisPujas(FiltroDTO filtro, int id) {
         return subastaService.buscarPorFiltroMisPujas(filtro, id);
     }
+
+    @GetMapping("/filtro-nombre")
+    public List<SubastaResponseDTO> buscarPorFiltroYNombre(FiltroDTO filtro, String searchTerm) {
+        System.out.println("Filtro: " + filtro.toString() + "|| searchTerm: " + searchTerm);
+        return subastaService.buscarPorFiltroYNombre(filtro, searchTerm);
+    }
 }
