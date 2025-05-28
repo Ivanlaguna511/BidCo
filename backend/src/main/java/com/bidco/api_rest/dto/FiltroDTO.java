@@ -1,10 +1,15 @@
 package com.bidco.api_rest.dto;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class FiltroDTO {
     private int minPrice;
     private int maxPrice;
     private String[] categorias;
     private String dateOrder;
+
+    public FiltroDTO() {}
 
     public int getMinPrice() {
         return minPrice;
@@ -36,5 +41,10 @@ public class FiltroDTO {
 
     public void setDateOrder(String dateOrder) {
         this.dateOrder = dateOrder;
+    }
+
+    @Override
+    public String toString() {
+        return "Filtro: minPrice = " + minPrice + ", maxPrice = " + maxPrice + ", categorias = " + Arrays.toString(categorias) + ", dateOrder = " + dateOrder;
     }
 }

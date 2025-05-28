@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { HttpParams } from '@angular/common/http';
 
 import { HeaderComponent } from '../../components/header/header.component';
 import { FilterComponent } from '../../components/filter/filter.component';
 import { ProductItemComponent } from '../../components/product-item/product-item.component';
 import { FooterComponent } from "../../components/footer/footer.component";
 
-import { PRODUCTS } from '../../datos_estaticos/products';
 import { AuthService } from '../../services/auth.service';
-import { SubastaResponseDTO, SubastaService } from '../../services/auction.service';
+import { SubastaResponseDTO, SubastaService, Filtro } from '../../services/auction.service';
 
 @Component({
   selector: 'app-blind-auction',
@@ -49,5 +49,20 @@ export class BlindAuctionComponent {
         this.authService.userRole$.subscribe((estado) => {
             this.isExpert = estado === 'expert';
         }); 
+    }
+
+    handleFilterApplied(filtro: Filtro) {
+        var camposFiltro = new HttpParams()
+        camposFiltro = camposFiltro.append("minPrice", filtro.minPrice);
+        camposFiltro = camposFiltro.append("maxPrice", filtro.maxPrice);
+        filtro.categories.forEach(categoria => {
+            camposFiltro = camposFiltro.append("categorias", categoria);
+        })
+        camposFiltro = camposFiltro.append("dateOrder", filtro.dateOrder)
+        
+        this.subastaService.getSubastasFiltradasCiega(camposFiltro).subscribe({
+            next: data => this.products = data,
+            error: err => console.error("Error al obtener subastas filtradas: ", err)
+        });
     }
 }

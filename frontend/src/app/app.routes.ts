@@ -18,6 +18,7 @@ import { AdminDashboardComponent } from './views/admin/admin-dashboard/admin-das
 import { AdminGuard } from './services/admin.guard';
 import { AdminSorteoComponent } from './views/admin/admin-sorteo/admin-sorteo.component';
 import { AdminExpertComponent } from './views/admin/admin-expert/admin-expert.component';
+import { SearchComponent } from './views/search/search.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/auction', pathMatch: 'full' },
@@ -27,11 +28,13 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'auction/product/:id', component: ProductComponent, data: { tipo: 'subasta' } },
-  { path: 'blind-auctions/product/:id', component: ProductComponent, data: { tipo: 'ciega' } },
+  { path: 'blind-auctions/product/:id', component: ProductComponent, data: { tipo: 'subasta' } },
   { path: 'raffle/product/:id', component: ProductComponent, data: { tipo: 'sorteo' } },
   { path: 'create-auction', component: CreateAuctionComponent },
   { path: 'my-bids', component: MyBidsComponent },
   { path: 'my-auctions', component: MyAuctionsComponent},
+  { path: 'search', component: SearchComponent },
+  { path: 'search/product/:id', component: ProductComponent, data: { tipo: 'subasta' } },
   { path: 'admin/login', component: AdminLoginComponent },
   {
     path: 'admin',

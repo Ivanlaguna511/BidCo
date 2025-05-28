@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface SubastaResponseDTO {
@@ -7,12 +7,13 @@ export interface SubastaResponseDTO {
     nombreArticulo: string;
     precioFinal: string;
     categoria: string;
+    subastaNormal: boolean;
 }
 
 export interface Filtro {
     minPrice: number, 
     maxPrice: number, 
-    categories: string[]|null, 
+    categories: string[], 
     dateOrder: string 
 }
 
@@ -34,10 +35,32 @@ export class SubastaService {
     }   
 
     getSubastasPujasUsuaroId(id: number): Observable<SubastaResponseDTO[]> {
-        return this.http.get<SubastaResponseDTO[]>(`${this.pujasSubastasUrl}/subastas-usuario/${id}`)
+        return this.http.get<SubastaResponseDTO[]>(`${this.pujasSubastasUrl}/subastas-usuario/${id}`);
     }
 
-    getSubastasFiltradas(filtro: Filtro): Observable<SubastaResponseDTO[]> {
-        return this.http.get<SubastaResponseDTO[]>(`${this.subastasUrl}/filtro-normal`)
+    getSubastasFiltradasNormal(filtro: HttpParams): Observable<SubastaResponseDTO[]> {
+        return this.http.get<SubastaResponseDTO[]>(`${this.subastasUrl}/filtro-normal`, {params: filtro});
+    }
+
+    getSubastasFiltradasCiega(filtro: HttpParams): Observable<SubastaResponseDTO[]> {
+        return this.http.get<SubastaResponseDTO[]>(`${this.subastasUrl}/filtro-ciega`, {params: filtro});
+    }
+
+    getSubastasFiltradasMisSubastas(filtro: HttpParams, id: number): Observable<SubastaResponseDTO[]> {
+        var params = new HttpParams();
+        params = filtro.append("id", id);
+        return this.http.get<SubastaResponseDTO[]>(`${this.subastasUrl}/filtro-mis-subastas`, {params: params});
+    }
+
+    getSubastasFiltradasMisPujas(filtro: HttpParams, id: number): Observable<SubastaResponseDTO[]> {
+        var params = new HttpParams();
+        params = filtro.append("id", id);
+        return this.http.get<SubastaResponseDTO[]>(`${this.subastasUrl}/filtro-mis-pujas`, {params: params});
+    }
+
+    getSubastasFiltradasPorNombre(filtro: HttpParams, searchTerm: string): Observable<SubastaResponseDTO[]> {
+        var params = new HttpParams();
+        params = filtro.append("searchTerm", searchTerm);
+        return this.http.get<SubastaResponseDTO[]>(`${this.subastasUrl}/filtro-nombre`, {params: params});
     }
 }

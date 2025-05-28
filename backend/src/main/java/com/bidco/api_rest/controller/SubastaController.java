@@ -53,7 +53,28 @@ public class SubastaController {
     }
 
     @GetMapping("/filtro-normal")
-    public List<SubastaResponseDTO> filtrarPorTipoNormal(FiltroDTO filtro) {
+    public List<SubastaResponseDTO> buscarPorFiltroNormal(FiltroDTO filtro) {
         return subastaService.buscarPorFiltroNormal(filtro);
+    }
+
+    @GetMapping("/filtro-ciega")
+    public List<SubastaResponseDTO> buscarPorFiltroCiega(FiltroDTO filtro) {
+        return subastaService.buscarPorFiltroCiega(filtro);
+    }
+
+    @GetMapping("/filtro-mis-subastas")
+    public List<SubastaResponseDTO> buscarPorFiltroMisSubastas(FiltroDTO filtro, int id) {
+        return subastaService.buscarPorFiltroMisSubastas(filtro, id);
+    }
+
+    @GetMapping("/filtro-mis-pujas")
+    public List<SubastaResponseDTO> buscarPorFiltroMisPujas(FiltroDTO filtro, int id) {
+        return subastaService.buscarPorFiltroMisPujas(filtro, id);
+    }
+
+    @GetMapping("/filtro-nombre")
+    public List<SubastaResponseDTO> buscarPorFiltroYNombre(FiltroDTO filtro, String searchTerm) {
+        System.out.println("Filtro: " + filtro.toString() + "|| searchTerm: " + searchTerm);
+        return subastaService.buscarPorFiltroYNombre(filtro, searchTerm);
     }
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { HttpParams } from '@angular/common/http';
 
 import { HeaderComponent } from '../../components/header/header.component';
 import { FilterComponent } from '../../components/filter/filter.component';
@@ -9,6 +10,7 @@ import { FooterComponent } from "../../components/footer/footer.component";
 
 import { SubastaService, SubastaResponseDTO, Filtro } from '../../services/auction.service';
 import { AuthService } from '../../services/auth.service';
+;
 
 @Component({
   selector: 'app-auction',
@@ -31,7 +33,7 @@ export class AuctionComponent {
     isExpert = false;
     saldoUser = 0;
 
-    constructor(private authService: AuthService, private subastaService: SubastaService) {}
+    constructor(private authService: AuthService, private subastaService: SubastaService, private activatedRoute: ActivatedRoute) {}
 
     ngOnInit() {
         this.subastaService.getSubastasPorTipo(true).subscribe({
@@ -49,11 +51,19 @@ export class AuctionComponent {
 
         this.authService.userRole$.subscribe((estado) => {
             this.isExpert = estado === 'expert';
-        }); 
+        });
     }
 
     handleFilterApplied(filtro: Filtro) {
-        this.subastaService.getSubastasFiltradas(filtro).subscribe({
+        var camposFiltro = new HttpParams()
+        camposFiltro = camposFiltro.append("minPrice", filtro.minPrice);
+        camposFiltro = camposFiltro.append("maxPrice", filtro.maxPrice);
+        filtro.categories.forEach(categoria => {
+            camposFiltro = camposFiltro.append("categorias", categoria);
+        })
+        camposFiltro = camposFiltro.append("dateOrder", filtro.dateOrder)
+        
+        this.subastaService.getSubastasFiltradasNormal(camposFiltro).subscribe({
             next: data => this.products = data,
             error: err => console.error("Error al obtener subastas filtradas: ", err)
         });

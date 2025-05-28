@@ -1,14 +1,17 @@
 import { Component, HostListener, ElementRef } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../services/auth.service'; // Ajusta la ruta a tu servicio
+import { FormsModule } from '@angular/forms';
+
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [
     CommonModule,
-    RouterLink
+    RouterLink,
+    FormsModule
   ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
@@ -19,6 +22,7 @@ export class HeaderComponent {
   isExamplesDropdownOpen = false;
   isLoggedIn = false; // Control local del estado de login
   isExpert = false;
+  searchTerm: string = '';
 
   constructor(
     private elRef: ElementRef,
@@ -27,12 +31,10 @@ export class HeaderComponent {
   ) {}
 
   ngOnInit() {
-    // Suscríbete para actualizar el estado del login
     this.authService.isLoggedIn$.subscribe((estado: boolean) => {
       this.isLoggedIn = estado;
     });
 
-    // Suscríbete al userRole (asegúrate de tiparlo explícitamente)
     this.authService.userRole$.subscribe((estado: string) => {
       this.isExpert = estado === 'expert';
     });
@@ -65,7 +67,7 @@ export class HeaderComponent {
   
   logout() {
     this.authService.logout();
-    this.router.navigateByUrl('/auction');
+    this.router.navigateByUrl('/search');
   }
 
   loginUser() {
@@ -75,4 +77,11 @@ export class HeaderComponent {
   loginExpert() {
     this.authService.setUserRole('expert');
   }
+
+    onSearch() {
+        if (this.searchTerm && this.searchTerm.trim() !== '') {
+            this.router.navigate(['/search'], { queryParams: { search: this.searchTerm.trim() } })
+            this.searchTerm = '';
+        }
+    }
 }

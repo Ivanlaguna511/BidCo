@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { HttpParams } from '@angular/common/http';
 
 import { HeaderComponent } from '../../components/header/header.component';
 import { FilterComponent } from '../../components/filter/filter.component';
@@ -8,7 +9,7 @@ import { ProductItemComponent } from '../../components/product-item/product-item
 import { FooterComponent } from "../../components/footer/footer.component";
 
 import { AuthService } from '../../services/auth.service';
-import { SubastaService } from '../../services/auction.service';
+import { SubastaService, Filtro } from '../../services/auction.service';
 
 @Component({
   selector: 'app-my-auctions',
@@ -32,11 +33,27 @@ export class MyAuctionsComponent {
     ngOnInit() {
         this.authService.currentUser$.subscribe((user) => {
             if (user) {
+                this.userId = user.usuarioID;
                 this.subastaService.getSubastasPorCreador(user.usuarioID).subscribe((lista) => {
                     this.products = lista;
                     console.log(this.products);
                 });
             }
         })
+    }
+
+    handleFilterApplied(filtro: Filtro) {
+        var camposFiltro = new HttpParams()
+        camposFiltro = camposFiltro.append("minPrice", filtro.minPrice);
+        camposFiltro = camposFiltro.append("maxPrice", filtro.maxPrice);
+        filtro.categories.forEach(categoria => {
+            camposFiltro = camposFiltro.append("categorias", categoria);
+        })
+        camposFiltro = camposFiltro.append("dateOrder", filtro.dateOrder)
+        
+        this.subastaService.getSubastasFiltradasMisSubastas(camposFiltro, this.userId!).subscribe({
+            next: data => this.products = data,
+            error: err => console.error("Error al obtener subastas filtradas: ", err)
+        });
     }
 }

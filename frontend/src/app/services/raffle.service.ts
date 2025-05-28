@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface SorteoResponseDto {
@@ -12,6 +12,13 @@ export interface SorteoResponseDto {
     creadorId: number; 
 }
 
+export interface Filtro {
+    minPrice: number, 
+    maxPrice: number, 
+    categories: string[], 
+    dateOrder: string 
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -22,5 +29,9 @@ export class SorteoService {
 
     getSorteos(): Observable<SorteoResponseDto[]> {
         return this.http.get<SorteoResponseDto[]>(this.apiUrl);
-      }
+    }
+
+    getSorteosPorFiltro(filtro: HttpParams): Observable<SorteoResponseDto[]> {
+        return this.http.get<SorteoResponseDto[]>(`${this.apiUrl}/filtro`, {params: filtro});
+    }
 }

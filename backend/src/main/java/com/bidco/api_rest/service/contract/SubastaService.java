@@ -18,5 +18,8 @@ public interface SubastaService {
     List<SubastaResponseDTO> buscarPorTipo(boolean normal);
     List<SubastaResponseDTO> listarSubastasPorCreador(Long id);
     List<SubastaResponseDTO> buscarPorFiltroNormal(FiltroDTO filtro);
-
+    List<SubastaResponseDTO> buscarPorFiltroCiega(FiltroDTO filtro);
+    List<SubastaResponseDTO> buscarPorFiltroMisSubastas(FiltroDTO filtro, int id);
+    List<SubastaResponseDTO> buscarPorFiltroMisPujas(FiltroDTO filtro, int id);
+    List<SubastaResponseDTO> buscarPorFiltroYNombre(FiltroDTO filtro, String searchTerm);
 }

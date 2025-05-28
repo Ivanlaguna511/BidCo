@@ -5,18 +5,21 @@
     </div>
     <div id="subastas">
         <div id="top-items">
-            <h1>Subastas a Ciegas Actuales</h1>
+            <h1>Resultados De La Busqueda</h1>
             <div *ngIf="isLoggedIn && !isExpert">
                 <h2>Saldo: {{ saldoUser }}€</h2>
                 <a id="crear-subasta" routerLink="/create-auction">Crear Subasta</a>
             </div>
         </div>
-        <div id="items">
+        <div id="items" *ngIf="!cargaDeProductos && products.length > 0">
             <div id="item" *ngFor="let product of products">
-                <a [routerLink]="['/blind-auctions/product', product.subastaID]">
+                <a [routerLink]="['/search/product', product.subastaID]">
                     <app-product-item [product]="product"></app-product-item>
                 </a>
             </div>
+        </div>
+        <div id="noItems" *ngIf="!cargaDeProductos && noCoincidencias">
+            <h3>No se han encontrado las subastas pedidas</h3>
         </div>
     </div>
 </div>

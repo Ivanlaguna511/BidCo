@@ -1,9 +1,11 @@
 package com.bidco.api_rest.controller;
 
+import com.bidco.api_rest.dto.FiltroDTO;
 import com.bidco.api_rest.dto.puja.PujaResponseDTO;
 import com.bidco.api_rest.dto.pujasorteo.PujaSorteoResponseDTO;
 import com.bidco.api_rest.dto.sorteo.SorteoCreateDTO;
 import com.bidco.api_rest.dto.sorteo.SorteoResponseDTO;
+import com.bidco.api_rest.dto.subasta.SubastaResponseDTO;
 import com.bidco.api_rest.service.contract.SorteoService;
 import jakarta.validation.Valid;
 
@@ -46,5 +48,10 @@ public class SorteoController {
     @GetMapping
     public List<SorteoResponseDTO> obtenerTodosLosSorteos() {
         return sorteoService.obtenerTodosLosSorteos();
+    }
+
+    @GetMapping("/filtro")
+    public List<SorteoResponseDTO> filtrarPorTipo(FiltroDTO filtro) {
+        return sorteoService.buscarPorFiltro(filtro);
     }
 }

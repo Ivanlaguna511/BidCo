@@ -32,8 +32,8 @@
 
     <!-- BARRA DE BÚSQUEDA -->
     <div id="search-bar">
-        <input type="text" placeholder="Buscar en BidCo..." />
-        <button type="submit">
+        <input type="text" placeholder="Buscar en BidCo..." [(ngModel)]="searchTerm" (keyup.enter)="onSearch()"/>
+        <button type="button" (click)="onSearch()">
         <svg
             xmlns="http://www.w3.org/2000/svg"
             height="24"

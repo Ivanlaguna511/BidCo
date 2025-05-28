@@ -1,7 +1,7 @@
 <app-header/>
 <div>
     <div>
-        <app-filter></app-filter>
+        <app-filter (filterChanged)="handleFilterApplied($event)"></app-filter>
     </div>
     <div id="sorteos">
         <div id="top-items">
