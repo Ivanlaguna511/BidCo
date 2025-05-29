@@ -12,9 +12,7 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface SubastaMapper {
-
-    SubastaMapper INSTANCE = Mappers.getMapper(SubastaMapper.class);
-
+    
     // Mapear Subasta a SubastaResponseDTO
     @Mapping(source = "subastaID", target = "subastaID")
     @Mapping(source = "fechaInicial", target = "fechaInicial")
