@@ -65,8 +65,7 @@
         <div id="comment" *ngFor="let comment of comments">
           <app-expert-comments 
             (editClicked)="editExpertForm(comment)" 
-            [comment]="comment" 
-            [expert]="expert">
+            [comment]="comment">
           </app-expert-comments>
         </div>
       </div>
