@@ -23,6 +23,18 @@ public class TrabajadorController {
         this.trabajadorService = trabajadorService;
     }
 
+     // Registrar trabajador (POST)
+    @PostMapping
+    public TrabajadorResponseDTO registrarTrabajador(@Valid @RequestBody TrabajadorCreateDTO trabajadorCreateDTO) {
+        return trabajadorService.registrarTrabajador(trabajadorCreateDTO);
+    }
+
+    // Actualizar trabajador (PUT)
+    @PutMapping
+    public TrabajadorResponseDTO actualizarTrabajador(@Valid @RequestBody TrabajadorCreateDTO trabajadorCreateDTO) {
+        return trabajadorService.actualizarTrabajador(trabajadorCreateDTO);
+    }
+
     // Buscar trabajador por ID (GET)
     @GetMapping("/{id}")
     public TrabajadorResponseDTO buscarTrabajadorPorId(@PathVariable Long id) {

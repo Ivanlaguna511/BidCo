@@ -13,7 +13,7 @@ import { jwtDecode } from 'jwt-decode';
 export class AuthExpertService {
   private loggedIn = new BehaviorSubject<boolean>(false);
   public currentUser = new BehaviorSubject<ExpertoResponse | null>(null);
-  private userRole = new BehaviorSubject<string>('user'); 
+  private userRole = new BehaviorSubject<string | null>(null); 
 
   // Exponemos como observables
   public isLoggedIn$ = this.loggedIn.asObservable();
@@ -23,18 +23,18 @@ export class AuthExpertService {
   private expertApiUrl: string = 'http://localhost:8080/api/trabajadores';
 
   constructor(private http: HttpClient, private userService: UserService, private expertService: ExpertService) {
-    const token = localStorage.getItem('authToken');
-    const userData = localStorage.getItem('authUser');
+    const token = localStorage.getItem('authTokenExpert');
+    const userData = localStorage.getItem('authExpert');
 
     if (token && userData) {
         this.loggedIn.next(true);
         this.currentUser.next(JSON.parse(userData));
-
+        
         // Llamar a loadUserProfile para obtener datos actualizados del servidor
         this.loadExpertProfile(this.currentUser.value!.usuarioID).subscribe({
             next: (updatedUser) => {
                 // Actualizamos la información del usuario en localStorage
-                localStorage.setItem('authUser', JSON.stringify(updatedUser));
+                localStorage.setItem('authExpert', JSON.stringify(updatedUser));
                 this.currentUser.next(updatedUser);
             },
             error: (err) => {
@@ -53,7 +53,7 @@ export class AuthExpertService {
   }
 
   setExpertFromToken(token: string): void {
-    localStorage.setItem('authToken', token);
+    localStorage.setItem('authTokenExpert', token);
     this.loggedIn.next(true);
     // Ahora sí pedimos el perfil
     this.expertService
@@ -62,7 +62,7 @@ export class AuthExpertService {
   }
 
   loadExpertProfile(userID: number): Observable<ExpertoResponse> {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem('authTokenExpert');
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
@@ -74,19 +74,20 @@ export class AuthExpertService {
   setExperto(user: ExpertoResponse): void {
     console.log("Actualizando currentUser en AuthService:", user);
     this.currentUser.next(user);
-    localStorage.setItem('authUser', JSON.stringify(user));
+    localStorage.setItem('authExpert', JSON.stringify(user));
     this.setUserRole("expert");
   }
 
   // Para actualizar el rol (por ejemplo, "user" o "expert")
-  setUserRole(role: string): void {
+  setUserRole(role: string | null): void {
     this.userRole.next(role);
   }
 
   logout(): void {
     this.loggedIn.next(false);
     this.currentUser.next(null);
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('authUser');
+    this.setUserRole(null);
+    localStorage.removeItem('authTokenExpert');
+    localStorage.removeItem('authExpert');
   }
 }

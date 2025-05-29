@@ -50,6 +50,7 @@ export class ProductComponent {
     comments: any[] = [];
     showExpertForm = false;
     isExpertComment = false;
+    puedeComentar = true;
     editandoComentario = false;
     comentarioAEditar: any = null;
     estimatedPrice = 0;
@@ -78,7 +79,7 @@ export class ProductComponent {
         this.expertAuthService.isLoggedIn$.subscribe((estado) => {
             this.isExpert = estado;
 
-            const storedUser = localStorage.getItem('authUser');
+            const storedUser = localStorage.getItem('authExpert');
             if (storedUser) {
                 this.expert = JSON.parse(storedUser);
             }
@@ -90,6 +91,12 @@ export class ProductComponent {
 
         this.commentService.getComments(this.productId).subscribe((comments) => {
             this.comments = comments;
+            comments.forEach((comment) => {
+                console.log(comment);
+                if (comment.trabajadorID === this.expert.trabajadorID) {
+                    this.puedeComentar = false;
+                }
+            })
         });
 
         this.tipo = this.route.snapshot.data['tipo'];
@@ -261,15 +268,7 @@ export class ProductComponent {
     }
 
     openExpertForm() {
-        var open = true;
-        this.comments.forEach((comment) => {
-            console.log(comment);
-            if (comment.trabajadorID === this.expert.trabajadorID) {
-                alert("Ya has comentado en este producto. Si quieres cambiar tu valoración editala!");
-                open = false;
-            }
-        })
-        if (open) this.showExpertForm = true;
+        this.showExpertForm = true;
     }
 
     editExpertForm(comment: any) {

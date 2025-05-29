@@ -18,12 +18,11 @@ public interface SorteoRepository extends JpaRepository<Sorteo, Long> {
     @Query(value = "select P.puntos from puja_sorteo P inner join sorteo S on P.sorteo_id=S.sorteo_id where S.sorteo_id = ?1 and P.puntos >= ALL ( select P1.puntos from puja_sorteo P1 inner join sorteo S1 on P1.sorteo_id=S1.sorteo_id where P.puntos and S1.sorteo_id = ?1)",nativeQuery = true )
     Optional<Integer> findImporteMayorBySorteoId(Long id);
     
-    @SuppressWarnings("null")
-    List<Sorteo> findAll();
+    List<Sorteo> findAllByOrderByFechaInicioDesc();
 
     @Query("SELECT COUNT(s) FROM Sorteo s WHERE s.ganador = :usuarioID")
     int countWonDrawsByUsuarioId(Long usuarioID);
 
-    @Query("SELECT s FROM Sorteo s WHERE s.puntosNecesarios >= :minPrice AND s.puntosNecesarios <= :maxPrice AND s.categoria in :categorias ORDER BY CASE WHEN :dateOrder = 'asc' THEN s.fechaFin END ASC, CASE WHEN :dateOrder = 'desc' THEN s.fechaFin END DESC, s.sorteoID ASC")
+    @Query("SELECT s FROM Sorteo s WHERE s.puntosNecesarios >= :minPrice AND s.puntosNecesarios <= :maxPrice AND s.categoria in :categorias ORDER BY CASE WHEN :dateOrder = 'asc' THEN s.fechaFin END ASC, CASE WHEN :dateOrder = 'desc' THEN s.fechaFin END DESC, s.fechaInicio DESC")
     List<Sorteo> findByFiltro(int minPrice, int maxPrice, String[] categorias, String dateOrder);
 }

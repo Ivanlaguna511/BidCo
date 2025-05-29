@@ -40,11 +40,14 @@ export class ProfileDatosComponent implements OnInit {
   constructor(private authService: AuthService, private expertAuthService: AuthExpertService, private userService: UserService) {}
 
   ngOnInit() {
+    var storedUser;
     //Comprobamos si un experto ha iniciado sesion
     this.expertAuthService.isLoggedIn$.subscribe((estado) => {
         this.isExpert = estado;
+        if (estado) storedUser = localStorage.getItem('authExpert');
+        else storedUser = localStorage.getItem('authUser');
     });
-    const storedUser = localStorage.getItem('authUser');
+
     
     // Si hay usuario almacenado pero falta información
     if (storedUser) {

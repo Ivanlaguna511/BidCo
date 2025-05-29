@@ -70,7 +70,8 @@ export class HeaderComponent {
   
   logout() {
     this.authService.logout();
-    this.router.navigateByUrl('/search');
+    this.expertAuthService.logout();
+    this.router.navigateByUrl('/auction');
   }
 
   loginUser() {

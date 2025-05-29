@@ -89,7 +89,7 @@ public class SorteoServiceImpl implements SorteoService {
 
     @Override
     public List<SorteoResponseDTO> obtenerTodosLosSorteos() {
-        List<Sorteo> sorteos = sorteoRepository.findAll();
+        List<Sorteo> sorteos = sorteoRepository.findAllByOrderByFechaInicioDesc();
         return sorteos.stream()
                 .map(sorteoMapper::sorteoToSorteoResponseDTO)
                 .collect(Collectors.toList());

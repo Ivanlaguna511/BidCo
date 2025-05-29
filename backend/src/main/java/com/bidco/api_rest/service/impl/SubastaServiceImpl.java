@@ -126,7 +126,7 @@ public class SubastaServiceImpl implements SubastaService {
 
     @Override
     public List<SubastaResponseDTO> buscarPorTipo(boolean normal) {
-        List<Subasta> subastas = subastaRepository.findBySubastaNormal(normal);
+        List<Subasta> subastas = subastaRepository.findBySubastaNormalOrderByFechaInicialDesc(normal);
         return subastas.stream()
                 .map(subastaMapper::subastaToSubastaResponseDTO)
                 .toList();

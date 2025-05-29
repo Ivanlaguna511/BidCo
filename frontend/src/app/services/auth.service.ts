@@ -27,7 +27,7 @@ export interface UsuarioResponse {
 export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(false);
   public currentUser = new BehaviorSubject<UsuarioResponse | null>(null);
-  private userRole = new BehaviorSubject<string>('user'); 
+  private userRole = new BehaviorSubject<string | null>(null); 
 
   // Exponemos como observables
   public isLoggedIn$ = this.loggedIn.asObservable();
@@ -97,13 +97,14 @@ export class AuthService {
 
 
   // Para actualizar el rol (por ejemplo, "user" o "expert")
-  setUserRole(role: string): void {
+  setUserRole(role: string | null): void {
     this.userRole.next(role);
   }
 
   logout(): void {
     this.loggedIn.next(false);
     this.currentUser.next(null);
+    this.setUserRole(null);
     localStorage.removeItem('authToken');
     localStorage.removeItem('authUser');
   }

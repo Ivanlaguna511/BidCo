@@ -30,7 +30,7 @@
   </div>
   <div id="expertos" *ngIf="!isRaffle">
       <h1>Valoraciones de expertos</h1>
-      <button *ngIf="isExpert && !editandoComentario" (click)="openExpertForm()">Añadir Valoración</button>
+      <button *ngIf="isExpert && !editandoComentario && puedeComentar" (click)="openExpertForm()">Añadir Valoración</button>
     
       <div id="expertForm" *ngIf="showExpertForm">
         <form (ngSubmit)="handleFormSubmit()">

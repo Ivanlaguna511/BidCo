@@ -21,24 +21,24 @@ export class ExpertLoginComponent {
 
     login() {
         const loginData = {
-        identificador: this.email,
-        contraseña: this.password
+            identificador: this.email,
+            contraseña: this.password
         };
 
         this.auth.loginExpert(loginData).subscribe({
-        next: (data) => {
-            // data.token contiene el JWT generado en el backend
-            if (this.remember) {
-            localStorage.setItem('authToken', data.token);
+            next: (data) => {
+                // data.token contiene el JWT generado en el backend
+                if (this.remember) {
+                    localStorage.setItem('authTokenExpert', data.token);
+                }
+                // Decodificamos el token y cargamos el perfil completo
+                this.auth.setExpertFromToken(data.token);
+                this.router.navigateByUrl('/auction');
+            },
+            error: (err) => {
+                console.error("Error en login:", err);
+                this.loginError = "Credenciales incorrectas. Revisa tu identificador y contraseña.";
             }
-            // Decodificamos el token y cargamos el perfil completo
-            this.auth.setExpertFromToken(data.token);
-            this.router.navigateByUrl('/auction');
-        },
-        error: (err) => {
-            console.error("Error en login:", err);
-            this.loginError = "Credenciales incorrectas. Revisa tu identificador y contraseña.";
-        }
         });
     }
 }
