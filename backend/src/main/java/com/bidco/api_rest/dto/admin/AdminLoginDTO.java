@@ -3,6 +3,7 @@ package com.bidco.api_rest.dto.admin;
 public class AdminLoginDTO {
     private String username;
     private String password;
+    private boolean rol;
 
     public AdminLoginDTO() {}
 
@@ -25,5 +26,13 @@ public class AdminLoginDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean getRol() {
+        return rol;
+    }
+
+    public void setRol(boolean rol) {
+        this.rol = rol;
     }
 }

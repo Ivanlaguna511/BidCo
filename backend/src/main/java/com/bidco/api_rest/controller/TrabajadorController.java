@@ -1,8 +1,8 @@
 package com.bidco.api_rest.controller;
 
+import com.bidco.api_rest.dto.trabajador.LoginTrabajadorDTO;
 import com.bidco.api_rest.dto.trabajador.TrabajadorCreateDTO;
 import com.bidco.api_rest.dto.trabajador.TrabajadorResponseDTO;
-import com.bidco.api_rest.dto.usuario.LoginDTO;
 import com.bidco.api_rest.service.contract.TrabajadorService;
 import jakarta.validation.Valid;
 
@@ -48,7 +48,7 @@ public class TrabajadorController {
     }
 
     @PostMapping("/login")
-    public Map<String, String> login(@Valid @RequestBody LoginDTO loginDTO) {
+    public Map<String, String> login(@Valid @RequestBody LoginTrabajadorDTO loginDTO) {
         String token = trabajadorService.login(loginDTO);
         Map<String, String> response = new HashMap<>();
         response.put("token", token);

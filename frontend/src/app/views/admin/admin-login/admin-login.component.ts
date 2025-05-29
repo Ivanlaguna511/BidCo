@@ -25,7 +25,7 @@ export class AdminLoginComponent {
   ) {}
 
   login() {
-    this.adminSvc.loginAdmin({ username: this.username, password: this.password })
+    this.adminSvc.loginAdmin({ username: this.username, password: this.password, rol: false})
       .subscribe({
         next: () => {
           this.auth.setUserRole('admin');

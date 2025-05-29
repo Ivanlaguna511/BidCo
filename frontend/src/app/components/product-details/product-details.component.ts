@@ -43,22 +43,6 @@ export class ProductDetailsComponent {
                 });
                 break;
         
-            case 'ciega':
-                this.productoService.getSubastaPorId(productId).subscribe((product) => {
-                    this.productoSubasta = product;
-                    
-                    this.productoService.obtenerPrivacidad(this.productoSubasta.creadorId).subscribe((userPriv) => {
-                        if(userPriv.privacidadAnonimoPujas === false) {
-                            this.productoService.getUsuarioPorId(this.productoSubasta.creadorId).subscribe((user) => {
-                                this.nombreUsuario = user.nombreUsuario;
-                            })
-                        } else {
-                            this.nombreUsuario = "Anónimo";
-                        }
-                    })
-                });
-                break;
-        
             case 'sorteo':
                 this.productoService.getSorteoPorId(productId).subscribe((product) => {
                     this.productoSorteo = product;

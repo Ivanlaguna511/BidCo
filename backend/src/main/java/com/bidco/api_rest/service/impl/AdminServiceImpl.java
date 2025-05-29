@@ -37,7 +37,7 @@ public class AdminServiceImpl implements AdminService {
             .findByNombreUsuario(dto.getUsername())
             .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
 
-        if (!admin.isExperto()) {
+        if (admin.isExperto() != dto.getRol()) {
             throw new IllegalArgumentException("Acceso denegado: no es administrador");
         }
         if (!admin.getContraseña().equals(dto.getPassword())) {

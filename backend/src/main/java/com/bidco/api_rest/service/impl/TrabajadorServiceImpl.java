@@ -1,8 +1,8 @@
 package com.bidco.api_rest.service.impl;
 
+import com.bidco.api_rest.dto.trabajador.LoginTrabajadorDTO;
 import com.bidco.api_rest.dto.trabajador.TrabajadorCreateDTO;
 import com.bidco.api_rest.dto.trabajador.TrabajadorResponseDTO;
-import com.bidco.api_rest.dto.usuario.LoginDTO;
 import com.bidco.api_rest.mapper.TrabajadorMapper;
 import com.bidco.api_rest.model.Trabajador;
 import com.bidco.api_rest.model.Usuario;
@@ -72,7 +72,7 @@ public class TrabajadorServiceImpl implements TrabajadorService {
     }
 
     @Override
-    public String login(LoginDTO loginDTO) {
+    public String login(LoginTrabajadorDTO loginDTO) {
         // Buscar usuario por nombre de usuario
         Optional<Trabajador> trabajadorOpt = trabajadorRepository.findByNombreUsuario(loginDTO.getIdentificador());
         // Si no encuentra, se puede buscar por correo electrónico (asegúrate de tener el método en el repositorio)
@@ -87,6 +87,12 @@ public class TrabajadorServiceImpl implements TrabajadorService {
         if (!trabajador.getContraseña().equals(loginDTO.getContraseña())) {
             throw new IllegalArgumentException("Credenciales incorrectas");
         }
+
+        //Validar el rol
+        if (trabajador.isExperto() != loginDTO.getRol()) {
+            throw new IllegalArgumentException("Credenciales incorrectas");
+        }
+
         // Generar el token JWT usando el ID del usuario (se guarda en el claim "sub")
         return jwtUtil.generateToken(trabajador.getTrabajadorID().toString());
     }

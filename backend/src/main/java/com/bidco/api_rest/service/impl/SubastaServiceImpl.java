@@ -110,7 +110,7 @@ public class SubastaServiceImpl implements SubastaService {
         Usuario user = userRepository.findById(puja.getPujador().getUsuarioID())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        user.setSaldo(user.getSaldo().subtract(puja.getImporte()));
+        
         if (subasta.isSubastaNormal()) {
             user.setPuntos(user.getPuntos() + 100);
         } else {

@@ -107,8 +107,9 @@ VALUES
 -- Insertar trabajadores
 INSERT INTO trabajador (nombre_usuario, correo_electronico, contraseña, rol_trabajador)
 VALUES 
-('admin', 'admin@bidco.com', 'adminpassword', TRUE),
-('moderador', 'moderador@bidco.com', 'modpassword', FALSE);
+('admin', 'admin@bidco.com', 'adminpassword', FALSE),
+('pedro', 'pedro@bidco.com', 'modpassword', TRUE),
+('jose', 'jose@bidco.com', 'modpassword', TRUE);
 
 
 -- Insertar subastas
@@ -162,10 +163,10 @@ VALUES
 
 INSERT INTO comentario (comentario, precio_estimado, trabajador_id, subasta_id) 
 VALUES 
-('Este es un comentario sobre la subasta 2', 30,  1, 2),
-('Excelente subasta, muy recomendable', 50,  2, 1),
-('La subasta fue muy interesante', 25 , 1, 2),
-('Este comentario tiene detalles importantes sobre la subasta 4',60, 1, 1);
+('Este es un comentario sobre la subasta 2', 30,  3, 2),
+('Excelente subasta, muy recomendable', 50,  3, 1),
+('La subasta fue muy interesante', 25 , 2, 2),
+('Este comentario tiene detalles importantes sobre la subasta 4',60, 2, 1);
 
 
 

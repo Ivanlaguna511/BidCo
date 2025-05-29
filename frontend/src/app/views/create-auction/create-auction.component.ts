@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import { CreateSubastaService, SubastaCreateDTO } from '../../services/create-auction.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-create-auction',
@@ -33,7 +34,7 @@ export class CreateAuctionComponent {
     };
     formularioInvalido: boolean = false;
     
-    constructor(private crearSubastaService: CreateSubastaService, private router: Router) {}
+    constructor(private crearSubastaService: CreateSubastaService, private router: Router, private authService: AuthService) {}
     
     onSubmit(form: any) {
         this.formularioInvalido = false;
@@ -77,6 +78,9 @@ export class CreateAuctionComponent {
             this.crearSubastaService.crearSubasta(formData).subscribe({
                 next: (res) => {
                     console.log('Subasta creada con éxito:', res);
+                    this.authService.loadUserProfile(user.usuarioID).subscribe({
+                        next: (userActualizado) => this.authService.setUser(userActualizado)
+                    });
                     this.router.navigate(['/']);
                 },
                 error: (err) => {

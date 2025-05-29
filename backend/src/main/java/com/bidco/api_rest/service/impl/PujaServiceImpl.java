@@ -5,8 +5,10 @@ import com.bidco.api_rest.dto.puja.PujaResponseDTO;
 import com.bidco.api_rest.mapper.PujaMapper;
 import com.bidco.api_rest.model.Puja;
 import com.bidco.api_rest.model.Subasta;
+import com.bidco.api_rest.model.Usuario;
 import com.bidco.api_rest.repository.PujaRepository;
 import com.bidco.api_rest.repository.SubastaRepository;
+import com.bidco.api_rest.repository.UsuarioRepository;
 import com.bidco.api_rest.service.contract.PujaService;
 import jakarta.persistence.EntityNotFoundException;
 
@@ -20,11 +22,13 @@ public class PujaServiceImpl implements PujaService {
     private final PujaRepository pujaRepository;
     private final PujaMapper pujaMapper;
     private final SubastaRepository subastaRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    public PujaServiceImpl(PujaRepository pujaRepository, PujaMapper pujaMapper, SubastaRepository subastaRepository) {
+    public PujaServiceImpl(PujaRepository pujaRepository, PujaMapper pujaMapper, SubastaRepository subastaRepository, UsuarioRepository usuarioRepository) {
         this.pujaRepository = pujaRepository;
         this.pujaMapper = pujaMapper;
         this.subastaRepository = subastaRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @Override
@@ -41,10 +45,27 @@ public class PujaServiceImpl implements PujaService {
             throw new IllegalArgumentException("La subasta ya cerró");
         }
 
-        pujaRepository.save(puja);
+        Puja pujaAnterior = pujaRepository.findTopBySubastaIdOrderByImporteDesc(pujaCreateDTO.getSubastaID());
+
+        if (pujaAnterior != null) {
+            Usuario pujador = usuarioRepository.findById(pujaAnterior.getPujador().getUsuarioID())
+                .orElseThrow(() -> new IllegalArgumentException("Usuario No Encontrado"));
+
+            pujador.setSaldo(pujador.getSaldo().add(pujaAnterior.getImporte()));
+            usuarioRepository.save(pujador);
+        }
+
+        Usuario pujador = usuarioRepository.findById(puja.getPujador().getUsuarioID())
+                .orElseThrow(() -> new IllegalArgumentException("Usuario No Encontrado"));
+
+        pujador.setSaldo(pujador.getSaldo().subtract(puja.getImporte()));
         
         subasta.setPrecioFinal(puja.getImporte());
+        
         subastaRepository.save(subasta);
+        usuarioRepository.save(pujador);
+        pujaRepository.save(puja);
+        
 
         return pujaMapper.pujaToPujaResponseDTO(puja);
     }

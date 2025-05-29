@@ -47,10 +47,13 @@ export class BlindAuctionComponent {
             if (user) this.saldoUser = user.saldo ?? 0;
         })
 
-        //Comprobamos si un experto ha iniciado sesion
-        this.expertAuthService.isLoggedIn$.subscribe((estado) => {
-            this.isExpert = estado;
-        });
+        //Si no hay sesion de usuario se comprueba si hay sesion de experto
+        if(!this.isLoggedIn) {
+            this.expertAuthService.isLoggedIn$.subscribe((estado) => {
+                this.isLoggedIn = estado;
+                this.isExpert = estado;
+            });
+        }
     }
 
     handleFilterApplied(filtro: Filtro) {

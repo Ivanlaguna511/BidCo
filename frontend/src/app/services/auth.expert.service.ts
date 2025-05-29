@@ -45,7 +45,7 @@ export class AuthExpertService {
   }
 
 
-  loginExpert(loginData: { identificador: string; contraseña: string }) {
+  loginExpert(loginData: { identificador: string; contraseña: string; rol: boolean }) {
     return this.http.post<{ token: string }>(
       `${this.expertApiUrl}/login`,
       loginData

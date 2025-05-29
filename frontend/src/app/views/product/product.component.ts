@@ -68,35 +68,38 @@ export class ProductComponent {
     ngOnInit() {
         this.authService.isLoggedIn$.subscribe((estado) => {
             this.isLoggedIn = estado;
-
+            
             const storedUser = localStorage.getItem('authUser');
             if (storedUser) {
                 this.user = JSON.parse(storedUser);
             }
         });
 
-        //Comprobamos si un experto ha iniciado sesion
-        this.expertAuthService.isLoggedIn$.subscribe((estado) => {
-            this.isExpert = estado;
-
-            const storedUser = localStorage.getItem('authExpert');
-            if (storedUser) {
-                this.expert = JSON.parse(storedUser);
-            }
-        });
+        //Si no hay sesion de usuario se comprueba si hay sesion de experto
+        if(!this.isLoggedIn) {
+            this.expertAuthService.isLoggedIn$.subscribe((estado) => {
+                this.isLoggedIn = estado;
+                this.isExpert = estado;
+    
+                const storedUser = localStorage.getItem('authExpert');
+                if (storedUser) {
+                    this.expert = JSON.parse(storedUser);
+                }
+            });
+        }
 
         
-
         this.productId = Number(this.route.snapshot.paramMap.get('id'));
 
         this.commentService.getComments(this.productId).subscribe((comments) => {
             this.comments = comments;
-            comments.forEach((comment) => {
-                console.log(comment);
-                if (comment.trabajadorID === this.expert.trabajadorID) {
-                    this.puedeComentar = false;
-                }
-            })
+            if(this.expert) {
+                comments.forEach((comment) => {
+                    if (comment.trabajadorID === this.expert.trabajadorID) {
+                        this.puedeComentar = false;
+                    }
+                })
+            }
         });
 
         this.tipo = this.route.snapshot.data['tipo'];
@@ -229,8 +232,13 @@ export class ProductComponent {
                 if(!this.product.ganador) {
                     switch (this.tipo) {
                         case 'subasta':
-                        case 'ciega':
-                            this.productoService.finalizarSubasta(this.productId).subscribe();
+                            this.productoService.finalizarSubasta(this.productId).subscribe({
+                                next: () => {
+                                    this.authService.loadUserProfile(this.user.usuarioID).subscribe({
+                                        next: (userActualizado) => this.authService.setUser(userActualizado)
+                                    });
+                                }
+                            });
                             break;
                         case 'sorteo':
                             this.productoService.finalizarSorteo(this.productId).subscribe((sorteoActualizado) => {

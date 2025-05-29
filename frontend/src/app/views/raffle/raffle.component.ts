@@ -42,19 +42,22 @@ export class RaffleComponent {
 
         this.authService.isLoggedIn$.subscribe((estado) => {
             this.isLoggedIn = estado;
+            if(estado) storedUser = localStorage.getItem('authUser');
         });
-
-        //Comprobamos si un experto ha iniciado sesion
-        this.expertAuthService.isLoggedIn$.subscribe((estado) => {
-            this.isExpert = estado;
-            if(!estado) storedUser = localStorage.getItem('authUser');
-        });
-
         
+        //Si no hay sesion de usuario se comprueba si hay sesion de experto
+        if(!this.isLoggedIn) {
+            this.expertAuthService.isLoggedIn$.subscribe((estado) => {
+                this.isLoggedIn = estado;
+                this.isExpert = estado;
+            });
+        }
+
         if(storedUser) {
             const user = JSON.parse(storedUser);
             this.userPoints = user.puntos;
         }
+        
     }
 
     handleFilterApplied(filtro: Filtro) {

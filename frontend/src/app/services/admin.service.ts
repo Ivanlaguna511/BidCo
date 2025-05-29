@@ -7,6 +7,7 @@ import { catchError } from 'rxjs/operators';
 export interface AdminLoginDTO {
   username: string;
   password: string;
+  rol: boolean;
 }
 
 export interface SorteoDTO {
@@ -35,7 +36,7 @@ export class AdminService {
   loginAdmin(dto: AdminLoginDTO): Observable<void> {
     return this.http.post<void>(
       `${this.api}/login`,
-      dto,
+      dto, 
       { withCredentials: true }
     ).pipe(
       catchError(err => throwError(() => new Error(err.error?.message || 'Login admin fallido')))

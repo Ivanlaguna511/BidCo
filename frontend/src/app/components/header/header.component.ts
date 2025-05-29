@@ -37,10 +37,13 @@ export class HeaderComponent {
       this.isLoggedIn = estado;
     });
 
-    //Comprobamos si un experto ha iniciado sesion
-    this.expertAuthService.isLoggedIn$.subscribe((estado) => {
-        this.isExpert = estado;
-    });
+    //Si no hay sesion de usuario se comprueba si hay sesion de experto
+    if(!this.isLoggedIn) {
+        this.expertAuthService.isLoggedIn$.subscribe((estado) => {
+            this.isLoggedIn = estado;
+            this.isExpert = estado;
+        });
+    }
   }
 
   toggleDropdown(event: MouseEvent) {

@@ -136,6 +136,7 @@ export class ProfileDatosComponent implements OnInit {
       this.userService.recargarSaldo(this.user.usuarioID, this.cantidadRecarga).subscribe({
         next: (nuevoSaldo) => {
           this.user.saldo = nuevoSaldo;
+          this.authService.setUser(this.user);
           this.recargaMessage = '¡Saldo recargado correctamente!';
           this.cantidadRecarga = 0;
           setTimeout(() => this.recargaMessage = '', 5000);

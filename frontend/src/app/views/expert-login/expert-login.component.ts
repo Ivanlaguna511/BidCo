@@ -22,7 +22,8 @@ export class ExpertLoginComponent {
     login() {
         const loginData = {
             identificador: this.email,
-            contraseña: this.password
+            contraseña: this.password,
+            rol: true
         };
 
         this.auth.loginExpert(loginData).subscribe({
