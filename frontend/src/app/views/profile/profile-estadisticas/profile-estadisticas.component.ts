@@ -81,7 +81,7 @@ export class ProfileEstadisticasComponent implements OnInit, AfterViewInit, OnDe
 
   private getChartData(): any {
     return {
-      labels: ['Pujas', 'Sorteos'],
+      labels: ['Subastas', 'Sorteos'],
       datasets: [{
         label: 'Participadas',
         data: [0, 0],
