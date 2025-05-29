@@ -2,10 +2,13 @@ package com.bidco.api_rest.service.impl;
 
 import com.bidco.api_rest.dto.trabajador.TrabajadorCreateDTO;
 import com.bidco.api_rest.dto.trabajador.TrabajadorResponseDTO;
+import com.bidco.api_rest.dto.usuario.LoginDTO;
 import com.bidco.api_rest.mapper.TrabajadorMapper;
 import com.bidco.api_rest.model.Trabajador;
+import com.bidco.api_rest.model.Usuario;
 import com.bidco.api_rest.repository.TrabajadorRepository;
 import com.bidco.api_rest.service.contract.TrabajadorService;
+import com.bidco.api_rest.config.JwtUtil;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
@@ -15,6 +18,7 @@ public class TrabajadorServiceImpl implements TrabajadorService {
 
     private final TrabajadorRepository trabajadorRepository;
     private final TrabajadorMapper trabajadorMapper;
+    private final JwtUtil jwtUtil = new JwtUtil();
 
     public TrabajadorServiceImpl(TrabajadorRepository trabajadorRepository, TrabajadorMapper trabajadorMapper) {
         this.trabajadorRepository = trabajadorRepository;
@@ -65,5 +69,25 @@ public class TrabajadorServiceImpl implements TrabajadorService {
                 .orElseThrow(() -> new EntityNotFoundException("Usuario con nombre de usuario " + nombreUsuario + " no encontrado"));
 
         return trabajadorMapper.trabajadorToTrabajadorResponseDTO(trabajador);
+    }
+
+    @Override
+    public String login(LoginDTO loginDTO) {
+        // Buscar usuario por nombre de usuario
+        Optional<Trabajador> trabajadorOpt = trabajadorRepository.findByNombreUsuario(loginDTO.getIdentificador());
+        // Si no encuentra, se puede buscar por correo electrónico (asegúrate de tener el método en el repositorio)
+        if (!trabajadorOpt.isPresent()) {
+            trabajadorOpt = trabajadorRepository.findByCorreoElectronico(loginDTO.getIdentificador());
+        }
+        if (!trabajadorOpt.isPresent()) {
+            throw new EntityNotFoundException("Credenciales incorrectas");
+        }
+        Trabajador trabajador = trabajadorOpt.get();
+        // Validar la contraseña (en producción, utiliza hashing)
+        if (!trabajador.getContraseña().equals(loginDTO.getContraseña())) {
+            throw new IllegalArgumentException("Credenciales incorrectas");
+        }
+        // Generar el token JWT usando el ID del usuario (se guarda en el claim "sub")
+        return jwtUtil.generateToken(trabajador.getTrabajadorID().toString());
     }
 }

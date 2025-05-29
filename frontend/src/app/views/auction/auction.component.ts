@@ -10,6 +10,7 @@ import { FooterComponent } from "../../components/footer/footer.component";
 
 import { SubastaService, SubastaResponseDTO, Filtro } from '../../services/auction.service';
 import { AuthService } from '../../services/auth.service';
+import { AuthExpertService } from '../../services/auth.expert.service';
 ;
 
 @Component({
@@ -33,7 +34,7 @@ export class AuctionComponent {
     isExpert = false;
     saldoUser = 0;
 
-    constructor(private authService: AuthService, private subastaService: SubastaService, private activatedRoute: ActivatedRoute) {}
+    constructor(private authService: AuthService, private expertAuthService: AuthExpertService, private subastaService: SubastaService, private activatedRoute: ActivatedRoute) {}
 
     ngOnInit() {
         this.subastaService.getSubastasPorTipo(true).subscribe({
@@ -41,6 +42,7 @@ export class AuctionComponent {
             error: err => console.error('Error al obtener las subastas normales: ', err)
         });
         
+        //Comprobamos si un usuario tiene la sesion iniciada
         this.authService.isLoggedIn$.subscribe((estado) => {
             this.isLoggedIn = estado;
         });
@@ -49,8 +51,9 @@ export class AuctionComponent {
             if (user) this.saldoUser = user.saldo ?? 0;
         })
 
-        this.authService.userRole$.subscribe((estado) => {
-            this.isExpert = estado === 'expert';
+        //Comprobamos si un experto ha iniciado sesion
+        this.expertAuthService.isLoggedIn$.subscribe((estado) => {
+            this.isExpert = estado;
         });
     }
 

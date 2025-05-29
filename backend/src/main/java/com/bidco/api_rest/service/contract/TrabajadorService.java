@@ -2,6 +2,7 @@ package com.bidco.api_rest.service.contract;
 
 import com.bidco.api_rest.dto.trabajador.TrabajadorCreateDTO;
 import com.bidco.api_rest.dto.trabajador.TrabajadorResponseDTO;
+import com.bidco.api_rest.dto.usuario.LoginDTO;
 import com.bidco.api_rest.dto.usuario.UsuarioCreateDTO;
 import com.bidco.api_rest.dto.usuario.UsuarioResponseDTO;
 
@@ -11,4 +12,5 @@ public interface TrabajadorService {
     TrabajadorResponseDTO actualizarTrabajador(TrabajadorCreateDTO trabajadorCreateDTO);
     TrabajadorResponseDTO buscarTrabajadorPorId(Long id);
     TrabajadorResponseDTO buscarTrabajadorPorNombreUsuario(String nomreUsuario);
+    String login(LoginDTO loginDTO);
 }

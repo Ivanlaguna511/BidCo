@@ -15,45 +15,45 @@
       <input type="email" id="correoElectronico" [(ngModel)]="user.correoElectronico" name="correoElectronico" required />
     </div>
 
-    <div class="form-group">
+    <div *ngIf="!isExpert" class="form-group">
       <label for="ciudad">Ciudad</label>
       <input type="text" id="ciudad" [(ngModel)]="user.ciudad" name="ciudad" required />
     </div>
 
-    <div class="form-group">
+    <div *ngIf="!isExpert" class="form-group">
       <label for="codigoPostal">Código Postal</label>
       <input type="text" id="codigoPostal" [(ngModel)]="user.codigoPostal" name="codigoPostal" required />
     </div>
 
-    <div class="form-group">
+    <div *ngIf="!isExpert" class="form-group">
       <label for="calle">Calle</label>
       <input type="text" id="calle" [(ngModel)]="user.calle" name="calle" required />
     </div>
 
-    <div class="form-group">
+    <div *ngIf="!isExpert" class="form-group">
       <label for="numeroPiso">Número</label>
       <input type="number" id="numeroPiso" [(ngModel)]="user.numeroPiso" name="numeroPiso" required />
     </div>
 
-    <div class="form-group">
+    <div *ngIf="!isExpert" class="form-group">
       <label for="letraPiso">Letra</label>
       <input type="text" id="letraPiso" [(ngModel)]="user.letraPiso" name="letraPiso" />
     </div>
 
     <!-- Campos ocultos para datos no editables pero requeridos -->
-    <input type="hidden" [(ngModel)]="user.pais" name="pais" />
-    <input type="hidden" [(ngModel)]="user.saldo" name="saldo" />
-    <input type="hidden" [(ngModel)]="user.puntos" name="puntos" />
+    <input *ngIf="!isExpert" type="hidden" [(ngModel)]="user.pais" name="pais" />
+    <input *ngIf="!isExpert" type="hidden" [(ngModel)]="user.saldo" name="saldo" />
+    <input *ngIf="!isExpert" type="hidden" [(ngModel)]="user.puntos" name="puntos" />
 
-    <button type="submit" class="btn-save">Guardar Cambios</button>
+    <button *ngIf="!isExpert" type="submit" class="btn-save">Guardar Cambios</button>
 
     <div *ngIf="updateMessage" class="update-message">{{ updateMessage }}</div>
     <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
   </form>
 
   <!-- Sección de cambio de contraseña -->
-  <h3>Cambiar Contraseña</h3>
-  <form (ngSubmit)="updatePassword()">
+  <h3 *ngIf="!isExpert">Cambiar Contraseña</h3>
+  <form *ngIf="!isExpert" (ngSubmit)="updatePassword()">
     <div class="form-group">
       <label for="currentPassword">Contraseña actual</label>
       <input type="password" id="currentPassword" [(ngModel)]="currentPassword" name="currentPassword" required />
@@ -76,8 +76,8 @@
   </form>
   
   <!-- Recarga de saldo -->
-  <h3>Recargar Saldo</h3>
-  <div class="saldo-section">
+  <h3 *ngIf="!isExpert">Recargar Saldo</h3>
+  <div *ngIf="!isExpert" class="saldo-section">
     <div class="saldo-actual">
       <span>Saldo actual:</span>
       <span class="saldo-cantidad">{{ user.saldo | currency:'EUR':'symbol' }}</span>

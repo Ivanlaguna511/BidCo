@@ -33,7 +33,7 @@
       <button *ngIf="isExpert && !editandoComentario" (click)="openExpertForm()">Añadir Valoración</button>
     
       <div id="expertForm" *ngIf="showExpertForm">
-        <form (ngSubmit)="submitReview()">
+        <form (ngSubmit)="handleFormSubmit()">
           <h2>{{ editandoComentario ? 'Editar Valoración' : 'Añadir Valoración' }}</h2>
     
           <label for="review">Tu valoración:</label>

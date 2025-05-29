@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { AuthService } from '../../services/auth.service';
+import { AuthExpertService } from '../../services/auth.expert.service';
 
 @Component({
   selector: 'app-header',
@@ -27,6 +28,7 @@ export class HeaderComponent {
   constructor(
     private elRef: ElementRef,
     private authService: AuthService,
+    private expertAuthService: AuthExpertService,
     private router: Router
   ) {}
 
@@ -35,8 +37,9 @@ export class HeaderComponent {
       this.isLoggedIn = estado;
     });
 
-    this.authService.userRole$.subscribe((estado: string) => {
-      this.isExpert = estado === 'expert';
+    //Comprobamos si un experto ha iniciado sesion
+    this.expertAuthService.isLoggedIn$.subscribe((estado) => {
+        this.isExpert = estado;
     });
   }
 

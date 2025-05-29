@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AuthService } from '../../services/auth.service';
+import { AuthExpertService } from '../../services/auth.expert.service';
 
 @Component({
   selector: 'app-expert-comments',
@@ -16,11 +16,12 @@ export class ExpertCommentsComponent {
     isExpert = false;
     @Output() editClicked = new EventEmitter<any>();
 
-    constructor(private authService: AuthService) {}
+    constructor(private expertAuthService: AuthExpertService) {}
 
     ngOnInit() {
-        this.authService.userRole$.subscribe((estado) => {
-            this.isExpert = estado === 'expert';
+        //Comprobamos si un experto ha iniciado sesion
+        this.expertAuthService.isLoggedIn$.subscribe((estado) => {
+            this.isExpert = estado;
         });
     }
 

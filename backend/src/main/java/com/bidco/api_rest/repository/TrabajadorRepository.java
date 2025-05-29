@@ -11,7 +11,10 @@ import java.util.Optional;
 @Repository
 public interface TrabajadorRepository extends JpaRepository<Trabajador, Long> {
 
-    @Query(value = "SELECT * FROM trabajador U WHERE U.nombre_usuario = ?1", nativeQuery = true)
+    @Query(value = "SELECT U FROM Trabajador U WHERE U.nombreUsuario = :nombreUsuario")
     Optional<Trabajador> findByNombreUsuario(String nombreUsuario);
+
+    @Query(value = "SELECT U FROM Trabajador U WHERE U.correoElectronico = :correo")
+    Optional<Trabajador> findByCorreoElectronico(String correo);
 
 }

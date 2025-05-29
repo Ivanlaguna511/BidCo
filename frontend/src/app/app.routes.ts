@@ -19,6 +19,7 @@ import { AdminGuard } from './services/admin.guard';
 import { AdminSorteoComponent } from './views/admin/admin-sorteo/admin-sorteo.component';
 import { AdminExpertComponent } from './views/admin/admin-expert/admin-expert.component';
 import { SearchComponent } from './views/search/search.component';
+import { ExpertLoginComponent } from './views/expert-login/expert-login.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/auction', pathMatch: 'full' },
@@ -27,6 +28,7 @@ export const routes: Routes = [
   { path: 'raffle', component: RaffleComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'expert', component: ExpertLoginComponent },
   { path: 'auction/product/:id', component: ProductComponent, data: { tipo: 'subasta' } },
   { path: 'blind-auctions/product/:id', component: ProductComponent, data: { tipo: 'subasta' } },
   { path: 'raffle/product/:id', component: ProductComponent, data: { tipo: 'sorteo' } },

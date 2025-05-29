@@ -24,7 +24,7 @@ public class ComentarioController {
     }
 
     // Endpoint para añadir un comentario
-    @PostMapping("/")
+    @PostMapping("/nuevo")
     @ResponseStatus(HttpStatus.CREATED)
     public ComentarioResponseDTO añadirComentario(@Valid @RequestBody ComentarioCreateDTO comentarioCreateDTO) {
         return comentarioService.añadirComentario(comentarioCreateDTO);
@@ -47,5 +47,10 @@ public class ComentarioController {
         System.out.println("uno");
         List<ComentarioResponseDTO> comentarios = comentarioService.buscarComentariosPorSubastaId(subastaId);
         return ResponseEntity.ok(comentarios);
+    }
+
+    @PutMapping("editar/{id}")
+    public ComentarioResponseDTO editarComentarioPorId(@PathVariable Long id, @RequestBody ComentarioCreateDTO comentario) {
+        return comentarioService.editarComentarioPorId(id, comentario);
     }
 }

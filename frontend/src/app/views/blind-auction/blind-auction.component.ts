@@ -10,6 +10,7 @@ import { FooterComponent } from "../../components/footer/footer.component";
 
 import { AuthService } from '../../services/auth.service';
 import { SubastaResponseDTO, SubastaService, Filtro } from '../../services/auction.service';
+import { AuthExpertService } from '../../services/auth.expert.service';
 
 @Component({
   selector: 'app-blind-auction',
@@ -30,7 +31,7 @@ export class BlindAuctionComponent {
     isExpert = false;
     saldoUser = 0;
 
-    constructor(private authService: AuthService, private subastaService: SubastaService) {}
+    constructor(private authService: AuthService, private expertAuthService: AuthExpertService, private subastaService: SubastaService) {}
 
     ngOnInit() {
         this.subastaService.getSubastasPorTipo(false).subscribe({
@@ -46,9 +47,10 @@ export class BlindAuctionComponent {
             if (user) this.saldoUser = user.saldo ?? 0;
         })
 
-        this.authService.userRole$.subscribe((estado) => {
-            this.isExpert = estado === 'expert';
-        }); 
+        //Comprobamos si un experto ha iniciado sesion
+        this.expertAuthService.isLoggedIn$.subscribe((estado) => {
+            this.isExpert = estado;
+        });
     }
 
     handleFilterApplied(filtro: Filtro) {

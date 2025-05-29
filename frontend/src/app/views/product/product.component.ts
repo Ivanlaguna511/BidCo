@@ -13,6 +13,7 @@ import { DATA_EXPERT } from '../../datos_estaticos/user_estadisticas';
 import { AuthService } from '../../services/auth.service';
 import { ProductoService, PujaCreateDTO, PujaResponseDTO, PujaSorteoCreateDTO} from '../../services/product.service';
 import { CommentService } from '../../services/comment.service';
+import { AuthExpertService } from '../../services/auth.expert.service';
 
 
 @Component({
@@ -44,12 +45,13 @@ export class ProductComponent {
     candidatoGanadorPuja: string | null = null;
     ganadorSorteo: string | null = null;
 
-    expert = DATA_EXPERT;
+    expert: any;
     isExpert = false;
     comments: any[] = [];
     showExpertForm = false;
     isExpertComment = false;
-    editandoComentario: any = null;
+    editandoComentario = false;
+    comentarioAEditar: any = null;
     estimatedPrice = 0;
     reviewText = '';
     comentarioEditado = { comment: '', estimated_price: 0 };
@@ -57,6 +59,7 @@ export class ProductComponent {
     constructor(
         private route: ActivatedRoute,
         private authService: AuthService,
+        private expertAuthService: AuthExpertService,
         private productoService: ProductoService,
         private commentService: CommentService
     ) {}
@@ -64,16 +67,24 @@ export class ProductComponent {
     ngOnInit() {
         this.authService.isLoggedIn$.subscribe((estado) => {
             this.isLoggedIn = estado;
+
+            const storedUser = localStorage.getItem('authUser');
+            if (storedUser) {
+                this.user = JSON.parse(storedUser);
+            }
         });
 
-        this.authService.userRole$.subscribe((estado) => {
-            this.isExpert = estado === 'expert';
+        //Comprobamos si un experto ha iniciado sesion
+        this.expertAuthService.isLoggedIn$.subscribe((estado) => {
+            this.isExpert = estado;
+
+            const storedUser = localStorage.getItem('authUser');
+            if (storedUser) {
+                this.expert = JSON.parse(storedUser);
+            }
         });
 
-        const storedUser = localStorage.getItem('authUser');
-        if (storedUser) {
-            this.user = JSON.parse(storedUser);
-        }
+        
 
         this.productId = Number(this.route.snapshot.paramMap.get('id'));
 
@@ -250,67 +261,88 @@ export class ProductComponent {
     }
 
     openExpertForm() {
-        this.showExpertForm = true;
+        var open = true;
+        this.comments.forEach((comment) => {
+            console.log(comment);
+            if (comment.trabajadorID === this.expert.trabajadorID) {
+                alert("Ya has comentado en este producto. Si quieres cambiar tu valoración editala!");
+                open = false;
+            }
+        })
+        if (open) this.showExpertForm = true;
     }
 
     editExpertForm(comment: any) {
-        this.editandoComentario = comment;
+        this.editandoComentario = true;
+        this.comentarioAEditar = comment;
         this.comentarioEditado = {
-        comment: comment.comentario,
-        estimated_price: comment.precioEstimado
+            comment: comment.comentario,
+            estimated_price: comment.precioEstimado
         };
         this.showExpertForm = true;
     }
 
     closeExpertForm() {
         this.showExpertForm = false;
-        this.editandoComentario = null;
+        this.editandoComentario = false;
         this.comentarioEditado = { comment: '', estimated_price: 0 };
     }
 
-    submitReview() {
+    handleFormSubmit() {
         if (!this.comentarioEditado.comment || this.comentarioEditado.estimated_price <= 0) {
             alert('Debes completar todos los campos requeridos');
-        return;
+            return;
         }
 
+        if (this.editandoComentario) {
+            this.saveEdit()
+        } else {
+            this.submitReview()
+        }
+    }
+
+    submitReview() {
         const productId = Number(this.route.snapshot.paramMap.get('id'));
 
-        const nuevoComentario = {
-        comentario: this.comentarioEditado.comment,
-        precioEstimado: this.comentarioEditado.estimated_price,
-        subastaId: productId,
-        trabajadorId: this.user.usuarioID
+        var nuevoComentario = {
+            comentario: this.comentarioEditado.comment,
+            precioEstimado: this.comentarioEditado.estimated_price,
+            subastaID: productId,
+            trabajadorId: this.expert.trabajadorID
         };
 
         this.commentService.createComment(nuevoComentario).subscribe({
-        next: (res) => {
-            console.log('Comentario creado:', res);
-            this.comments.push(res);
-            this.closeExpertForm();
-        },
-        error: (err) => {
-            console.error('Error al crear comentario:', err);
-        }
+            next: (res) => {
+                console.log('Comentario creado:', res);
+                this.comments.push(res);
+                this.closeExpertForm();
+            },
+            error: (err) => {
+                console.error('Error al crear comentario:', err);
+            }
         });
     }
 
     saveEdit(): void {
         if (!this.editandoComentario) return;
+        const productId = Number(this.route.snapshot.paramMap.get('id'));
 
-        const updatedComentario = {
-        comentario: this.comentarioEditado.comment,
-        precioEstimado: this.comentarioEditado.estimated_price
+        var updatedComentario = {
+            comentario: this.comentarioEditado.comment,
+            precioEstimado: this.comentarioEditado.estimated_price,
+            subastaID: productId,
+            trabajadorId: this.expert.trabajadorID
         };
 
-        this.commentService.editComment(this.editandoComentario.id, updatedComentario).subscribe({
+        this.commentService.editComment(this.comentarioAEditar.comentarioID, updatedComentario).subscribe({
             next: (res) => {
-                const index = this.comments.findIndex(c => c.id === this.editandoComentario.id);
+                const index = this.comments.findIndex(c => c.id === this.comentarioAEditar.comentarioID);
                 if (index !== -1) {
                     this.comments[index] = { ...this.comments[index], ...res };
                 }
                 console.log('Comentario editado:', res);
                 this.closeExpertForm();
+                this.ngOnInit();
             },
             error: (err) => {
                 console.error('Error al editar comentario:', err);
