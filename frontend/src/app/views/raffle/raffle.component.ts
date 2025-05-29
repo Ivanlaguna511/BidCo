@@ -34,6 +34,7 @@ export class RaffleComponent {
     constructor(private authService: AuthService, private expertAuthService: AuthExpertService, private sorteoService: SorteoService) {}
 
     ngOnInit() {
+        var storedUser;
         this.sorteoService.getSorteos().subscribe({
             next: data => this.products = data,
             error: err => console.error('Error al obtener los sorteos: ', err)
@@ -46,9 +47,9 @@ export class RaffleComponent {
         //Comprobamos si un experto ha iniciado sesion
         this.expertAuthService.isLoggedIn$.subscribe((estado) => {
             this.isExpert = estado;
+            if(!estado) storedUser = localStorage.getItem('authUser');
         });
 
-        const storedUser = localStorage.getItem('authUser');
         
         if(storedUser) {
             const user = JSON.parse(storedUser);
