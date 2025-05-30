@@ -270,7 +270,6 @@ export class ProductComponent {
             if(userPriv.privacidadAnonimoPujas === false) {
                 this.productoService.getUsuarioPorId(this.product.ganador).subscribe((user) => {
                     this.ganadorSorteo = user.nombreUsuario;
-                    console.log(user);
                 })
             } else {
                 this.ganadorSorteo = "Anónimo";
