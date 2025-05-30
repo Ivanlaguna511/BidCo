@@ -115,7 +115,7 @@ export class ProductComponent {
             case 'sorteo':
                 this.productoService.getSorteoPorId(this.productId).subscribe((product) => {
                     this.product = product;
-                    this.isRaffle = true
+                    this.isRaffle = true;
                     this.setupCountdown(this.product.fechaFin);
                 });
                 break;
@@ -226,7 +226,7 @@ export class ProductComponent {
             const now = new Date().getTime();
             const distance = endDate - now;
         
-            if (distance < 0) {
+            if (distance <= 0) {
                 this.countdown = "Finalizada";
                 
                 if(!this.product.ganador) {
@@ -248,7 +248,9 @@ export class ProductComponent {
                             break;
                     }
                 }
-                            
+                
+                if(this.product.ganador != null && this.tipo === 'sorteo') this.setGanadorSorteo();
+                
                 clearInterval(interval);
                 return;
             }
@@ -268,6 +270,7 @@ export class ProductComponent {
             if(userPriv.privacidadAnonimoPujas === false) {
                 this.productoService.getUsuarioPorId(this.product.ganador).subscribe((user) => {
                     this.ganadorSorteo = user.nombreUsuario;
+                    console.log(user);
                 })
             } else {
                 this.ganadorSorteo = "Anónimo";
