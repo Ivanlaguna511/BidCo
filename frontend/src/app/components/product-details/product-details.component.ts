@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 
 import { ProductoService, SorteoResponseDto, SubastaResponseDto, UsuarioResponseDto } from '../../services/product.service';
 
 @Component({
   selector: 'app-product-details',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css'
 })

@@ -11,16 +11,20 @@
             Mis Datos
           </a>
         </li>
-        <li *ngIf="!isExpert">
-          <a routerLink="privacidad" routerLinkActive="active">
-            Privacidad
-          </a>
-        </li>
-        <li *ngIf="!isExpert">
-          <a routerLink="estadisticas" routerLinkActive="active">
-            Mis estadísticas
-          </a>
-        </li>
+        @if (!isExpert) {
+          <li>
+            <a routerLink="privacidad" routerLinkActive="active">
+              Privacidad
+            </a>
+          </li>
+        }
+        @if (!isExpert) {
+          <li>
+            <a routerLink="estadisticas" routerLinkActive="active">
+              Mis estadísticas
+            </a>
+          </li>
+        }
       </ul>
     </nav>
   </aside>

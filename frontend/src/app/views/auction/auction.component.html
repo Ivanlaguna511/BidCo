@@ -1,23 +1,27 @@
 <app-header/>
 <div>
-    <div>
-        <app-filter (filterChanged)="handleFilterApplied($event)"></app-filter>
-    </div>
-    <div id="subastas">
-        <div id="top-items">
-            <h1>Subastas Actuales</h1>
-            <div *ngIf="isLoggedIn && !isExpert">
-                <h2>Saldo: {{ saldoUser }}€</h2>
-                <a id="crear-subasta" routerLink="/create-auction">Crear Subasta</a>
-            </div>
+  <div>
+    <app-filter (filterChanged)="handleFilterApplied($event)"></app-filter>
+  </div>
+  <div id="subastas">
+    <div id="top-items">
+      <h1>Subastas Actuales</h1>
+      @if (isLoggedIn && !isExpert) {
+        <div>
+          <h2>Saldo: {{ saldoUser }}€</h2>
+          <a id="crear-subasta" routerLink="/create-auction">Crear Subasta</a>
         </div>
-        <div id="items">
-            <div id="item" *ngFor="let product of products">
-                <a [routerLink]="['/auction/product', product.subastaID]">
-                    <app-product-item [product]="product"></app-product-item>
-                </a>
-            </div>
-        </div>
+      }
     </div>
+    <div id="items">
+      @for (product of products; track product) {
+        <div id="item">
+          <a [routerLink]="['/auction/product', product.subastaID]">
+            <app-product-item [product]="product"></app-product-item>
+          </a>
+        </div>
+      }
+    </div>
+  </div>
 </div>
 <app-footer/>

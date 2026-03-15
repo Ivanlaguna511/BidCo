@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { HttpParams } from '@angular/common/http';
 
 import { HeaderComponent } from '../../components/header/header.component';
@@ -16,12 +16,11 @@ import { SubastaService, Filtro } from '../../services/auction.service';
   standalone: true,
   imports: [
     RouterLink,
-    CommonModule,
     HeaderComponent,
     FilterComponent,
     ProductItemComponent,
     FooterComponent
-  ],
+],
   templateUrl: './my-bids.component.html',
   styleUrls: ['./my-bids.component.css']
 })

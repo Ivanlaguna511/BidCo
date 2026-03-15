@@ -1,74 +1,90 @@
-  <!-- product.component.html -->
-  <app-header></app-header>
-  <div id="cuerpo">
-      <app-product-details></app-product-details>
-      <div >
-          <form id="puja-form" *ngIf="!(isRaffle && isExpert)">
-              <div *ngIf="product">
-                  <h3>{{ isLoggedIn ? isBlindAuction ? 'Subasta a Ciegas' : isRaffle ? 'Tus Puntos:' : countdown == 'Finalizada' ? 'Vendido Por:' : 'Precio Actual:' : 'Inicia Sesión Para Participar'}}</h3>
-                  <h2>{{ isLoggedIn ? isBlindAuction ? null : isRaffle ? user.puntos : product.precioFinal + '€' : ''}}</h2>
-                  <h3 *ngIf="isLoggedIn && candidatoGanadorPuja && !isBlindAuction && !isRaffle && !(countdown == 'Finalizada')">Puja más alta de: {{ candidatoGanadorPuja }}</h3>
-                  <h3 *ngIf="isLoggedIn && countdown == 'Finalizada'">Ganador: {{ isRaffle ? ganadorSorteo : candidatoGanadorPuja }}</h3>
-                  <h4>Tiempo restante: {{ countdown }}</h4>
-                  <input *ngIf="isLoggedIn && !isExpert && !(countdown == 'Finalizada')"
-                      type="number" 
-                      id="cantidad" 
-                      name="cantidad" 
-                      placeholder="{{ isRaffle ? 'Introduce número de puntos' : 'Introduce tu puja' }}"
-                      [(ngModel)]="cantidadPuja"
-                      [min]="isRaffle ? product.puntosNecesarios : product.precioFinal" required>
-              </div>
-
-              <div id="puja-submit" *ngIf="isLoggedIn && !isExpert && !(countdown == 'Finalizada')">
-                  <button (click)="onSubmit()" type="submit">{{ isRaffle ? 'Participar' : 'Pujar' }}</button>
-              </div>
-              <div id="login-btn" *ngIf="!isLoggedIn">
-                  <a routerLink="/login">Iniciar Sesión</a>
-              </div>
-          </form>
-      </div>
+<!-- product.component.html -->
+<app-header></app-header>
+<div id="cuerpo">
+  <app-product-details></app-product-details>
+  <div >
+    @if (!(isRaffle && isExpert)) {
+      <form id="puja-form">
+        @if (product) {
+          <div>
+            <h3>{{ isLoggedIn ? isBlindAuction ? 'Subasta a Ciegas' : isRaffle ? 'Tus Puntos:' : countdown == 'Finalizada' ? 'Vendido Por:' : 'Precio Actual:' : 'Inicia Sesión Para Participar'}}</h3>
+            <h2>{{ isLoggedIn ? isBlindAuction ? null : isRaffle ? user.puntos : product.precioFinal + '€' : ''}}</h2>
+            @if (isLoggedIn && candidatoGanadorPuja && !isBlindAuction && !isRaffle && !(countdown == 'Finalizada')) {
+              <h3>Puja más alta de: {{ candidatoGanadorPuja }}</h3>
+            }
+            @if (isLoggedIn && countdown == 'Finalizada') {
+              <h3>Ganador: {{ isRaffle ? ganadorSorteo : candidatoGanadorPuja }}</h3>
+            }
+            <h4>Tiempo restante: {{ countdown }}</h4>
+            @if (isLoggedIn && !isExpert && !(countdown == 'Finalizada')) {
+              <input
+                type="number"
+                id="cantidad"
+                name="cantidad"
+                placeholder="{{ isRaffle ? 'Introduce número de puntos' : 'Introduce tu puja' }}"
+                [(ngModel)]="cantidadPuja"
+                [min]="isRaffle ? product.puntosNecesarios : product.precioFinal" required>
+            }
+          </div>
+        }
+        @if (isLoggedIn && !isExpert && !(countdown == 'Finalizada')) {
+          <div id="puja-submit">
+            <button (click)="onSubmit()" type="submit">{{ isRaffle ? 'Participar' : 'Pujar' }}</button>
+          </div>
+        }
+        @if (!isLoggedIn) {
+          <div id="login-btn">
+            <a routerLink="/login">Iniciar Sesión</a>
+          </div>
+        }
+      </form>
+    }
   </div>
-  <div id="expertos" *ngIf="!isRaffle">
-      <h1>Valoraciones de expertos</h1>
-      <button *ngIf="isExpert && !editandoComentario && puedeComentar" (click)="openExpertForm()">Añadir Valoración</button>
-    
-      <div id="expertForm" *ngIf="showExpertForm">
+</div>
+@if (!isRaffle) {
+  <div id="expertos">
+    <h1>Valoraciones de expertos</h1>
+    @if (isExpert && !editandoComentario && puedeComentar) {
+      <button (click)="openExpertForm()">Añadir Valoración</button>
+    }
+    @if (showExpertForm) {
+      <div id="expertForm">
         <form (ngSubmit)="handleFormSubmit()">
           <h2>{{ editandoComentario ? 'Editar Valoración' : 'Añadir Valoración' }}</h2>
-    
           <label for="review">Tu valoración:</label>
           <textarea id="review" [(ngModel)]="comentarioEditado.comment" name="reviewText" required></textarea>
-          
           <label for="estimatedPrice">Valor Estimado Del Producto:</label>
-          <input 
-            type="number" 
-            id="estimatedPrice" 
-            [(ngModel)]="comentarioEditado.estimated_price" 
-            name="estimatedPrice" 
-            min="1"  
+          <input
+            type="number"
+            id="estimatedPrice"
+            [(ngModel)]="comentarioEditado.estimated_price"
+            name="estimatedPrice"
+            min="1"
             required
-          >
-          
-          <div>
-            <button type="button" (click)="closeExpertForm()">
-              {{ editandoComentario ? 'Cancelar Edición' : 'Cerrar' }}
-            </button>
-            <button type="submit">
-              {{ editandoComentario ? 'Guardar Cambios' : 'Enviar' }}
-            </button>
-          </div>
-        </form>
-      </div>
-    
+            >
+            <div>
+              <button type="button" (click)="closeExpertForm()">
+                {{ editandoComentario ? 'Cancelar Edición' : 'Cerrar' }}
+              </button>
+              <button type="submit">
+                {{ editandoComentario ? 'Guardar Cambios' : 'Enviar' }}
+              </button>
+            </div>
+          </form>
+        </div>
+      }
       <hr>
-      <div id="expert-comments">
-        <div id="comment" *ngFor="let comment of comments">
-          <app-expert-comments 
-            (editClicked)="editExpertForm(comment)" 
-            [comment]="comment">
-          </app-expert-comments>
+        <div id="expert-comments">
+          @for (comment of comments; track comment) {
+            <div id="comment">
+              <app-expert-comments
+                (editClicked)="editExpertForm(comment)"
+                [comment]="comment">
+              </app-expert-comments>
+            </div>
+          }
         </div>
       </div>
-    </div>
+    }
 
-  <app-footer/>
+    <app-footer/>

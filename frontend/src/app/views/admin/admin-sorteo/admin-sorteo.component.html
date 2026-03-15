@@ -4,68 +4,70 @@
     <div class="form-group">
       <label for="sor-nombre">Nombre</label>
       <input id="sor-nombre"
-             type="text"
-             [(ngModel)]="sorteo.nombreArticulo"
-             name="nombreArticulo"
-             required />
-    </div>
-    <div class="form-group">
-      <label for="sor-desc">Descripción</label>
-      <textarea id="sor-desc"
-                rows="4"
-                [(ngModel)]="sorteo.descripcion"
-                name="descripcion"
-                required></textarea>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label for="sor-inicio">Inicio</label>
-        <input id="sor-inicio"
-               type="date"
-               [(ngModel)]="sorteo.fechaInicio"
-               name="fechaInicio"
-               required />
+        type="text"
+        [(ngModel)]="sorteo.nombreArticulo"
+        name="nombreArticulo"
+        required />
       </div>
       <div class="form-group">
-        <label for="sor-fin">Fin</label>
-        <input id="sor-fin"
-               type="date"
-               [(ngModel)]="sorteo.fechaFin"
-               name="fechaFin"
-               required />
+        <label for="sor-desc">Descripción</label>
+        <textarea id="sor-desc"
+          rows="4"
+          [(ngModel)]="sorteo.descripcion"
+          name="descripcion"
+        required></textarea>
       </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label for="sor-puntos">Puntos</label>
-        <input id="sor-puntos"
-               type="number"
-               [(ngModel)]="sorteo.puntosNecesarios"
-               name="puntosNecesarios"
-               required />
-      </div>
-      <div class="form-group">
-        <label for="sor-img">Imagen</label>
-        <input id="sor-img"
-               type="file"
-               (change)="onFile($event)" />
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="category-section">
-          <label for="categoria">Categoría:</label>
-          <select id="categoria" name="categoria" [(ngModel)]="sorteo.categoria" required>
-              <option value="" disabled selected>Selecciona una categoría</option>
-              <option value="tecnologia">Tecnología</option>
-              <option value="hogar">Hogar</option>
-              <option value="moda">Moda</option>
-              <option value="deportes">Deportes</option>
-              <option value="juguetes">Juguetes</option>
-              <option value="otros">Otros</option>
-          </select>
-      </div>
-    </div>
-    <div *ngIf="message" class="success-message">{{ message }}</div>
-    <button class="btn-primary" type="submit">Crear Sorteo</button>
-  </form>
-</section>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="sor-inicio">Inicio</label>
+          <input id="sor-inicio"
+            type="date"
+            [(ngModel)]="sorteo.fechaInicio"
+            name="fechaInicio"
+            required />
+          </div>
+          <div class="form-group">
+            <label for="sor-fin">Fin</label>
+            <input id="sor-fin"
+              type="date"
+              [(ngModel)]="sorteo.fechaFin"
+              name="fechaFin"
+              required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="sor-puntos">Puntos</label>
+              <input id="sor-puntos"
+                type="number"
+                [(ngModel)]="sorteo.puntosNecesarios"
+                name="puntosNecesarios"
+                required />
+              </div>
+              <div class="form-group">
+                <label for="sor-img">Imagen</label>
+                <input id="sor-img"
+                  type="file"
+                  (change)="onFile($event)" />
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="category-section">
+                  <label for="categoria">Categoría:</label>
+                  <select id="categoria" name="categoria" [(ngModel)]="sorteo.categoria" required>
+                    <option value="" disabled selected>Selecciona una categoría</option>
+                    <option value="tecnologia">Tecnología</option>
+                    <option value="hogar">Hogar</option>
+                    <option value="moda">Moda</option>
+                    <option value="deportes">Deportes</option>
+                    <option value="juguetes">Juguetes</option>
+                    <option value="otros">Otros</option>
+                  </select>
+                </div>
+              </div>
+              @if (message) {
+                <div class="success-message">{{ message }}</div>
+              }
+              <button class="btn-primary" type="submit">Crear Sorteo</button>
+            </form>
+          </section>

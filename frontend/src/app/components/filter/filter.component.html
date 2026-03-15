@@ -12,80 +12,82 @@
           name="minPriceInput"
           [(ngModel)]="minPrice"
           (input)="applyFilter('min')"
-        />
-        <input
-          type="number"
-          placeholder="Máximo"
-          name="maxPriceInput"
-          [(ngModel)]="maxPrice"
-          (input)="applyFilter('max')"
-        />
-      </div>
+          />
+          <input
+            type="number"
+            placeholder="Máximo"
+            name="maxPriceInput"
+            [(ngModel)]="maxPrice"
+            (input)="applyFilter('max')"
+            />
+          </div>
 
-      <!-- Slider de rango dual -->
-      <div class="range-slider">
-        <div class="slider">
-          <div class="track"></div>
-          <!-- Barra que representa el rango seleccionado -->
-          <div
-            class="range"
+          <!-- Slider de rango dual -->
+          <div class="range-slider">
+            <div class="slider">
+              <div class="track"></div>
+              <!-- Barra que representa el rango seleccionado -->
+              <div
+                class="range"
             [ngStyle]="{
               left: ((minPrice - minPossible) / (maxPossible - minPossible)) * 100 + '%',
               width: ((maxPrice - minPrice) / (maxPossible - minPossible)) * 100 + '%'
             }"
-          ></div>
-          <!-- Thumb para el precio mínimo -->
-          <input
-            type="range"
-            name="minRange"
-            class="thumb thumb--left"
-            [min]="minPossible"
-            [max]="maxPossible"
-            [(ngModel)]="minPrice"
-            (input)="applyFilter('min')"
-          />
-          <!-- Thumb para el precio máximo -->
-          <input
-            type="range"
-            name="maxRange"
-            class="thumb thumb--right"
-            [min]="minPossible"
-            [max]="maxPossible"
-            [(ngModel)]="maxPrice"
-            (input)="applyFilter('max')"
-          />
-        </div>
-      </div>
-    </fieldset>
+              ></div>
+              <!-- Thumb para el precio mínimo -->
+              <input
+                type="range"
+                name="minRange"
+                class="thumb thumb--left"
+                [min]="minPossible"
+                [max]="maxPossible"
+                [(ngModel)]="minPrice"
+                (input)="applyFilter('min')"
+                />
+                <!-- Thumb para el precio máximo -->
+                <input
+                  type="range"
+                  name="maxRange"
+                  class="thumb thumb--right"
+                  [min]="minPossible"
+                  [max]="maxPossible"
+                  [(ngModel)]="maxPrice"
+                  (input)="applyFilter('max')"
+                  />
+                </div>
+              </div>
+            </fieldset>
 
-    <!-- Filtro de Categoría -->
-    <fieldset>
-      <legend>Categoría</legend>
-      <div class="category-filter">
-        <div *ngFor="let category of categories" class="checkbox-group">
-          <input
-            type="checkbox"
-            id="{{ category }}"
-            name="category_{{ category }}"
-            [value]="category"
-            (change)="updateCategoryFilter($event)"
-            [checked]="selectedCategories.includes(category)"
-          />
-          <label for="{{ category }}">{{ category }}</label>
-        </div>
-      </div>
-    </fieldset>
+            <!-- Filtro de Categoría -->
+            <fieldset>
+              <legend>Categoría</legend>
+              <div class="category-filter">
+                @for (category of categories; track category) {
+                  <div class="checkbox-group">
+                    <input
+                      type="checkbox"
+                      id="{{ category }}"
+                      name="category_{{ category }}"
+                      [value]="category"
+                      (change)="updateCategoryFilter($event)"
+                      [checked]="selectedCategories.includes(category)"
+                      />
+                      <label for="{{ category }}">{{ category }}</label>
+                    </div>
+                  }
+                </div>
+              </fieldset>
 
-    <!-- Filtro por Fecha Restante -->
-    <fieldset>
-      <legend>Fecha Restante</legend>
-      <div class="date-filter">
-        <select name="dateOrder" [(ngModel)]="dateOrder" (change)="applyFilter()">
-          <option value="">Por Defecto</option>
-          <option value="asc">Ascendente</option>
-          <option value="desc">Descendente</option>
-        </select>
-      </div>
-    </fieldset>
-  </form>
-</div>
+              <!-- Filtro por Fecha Restante -->
+              <fieldset>
+                <legend>Fecha Restante</legend>
+                <div class="date-filter">
+                  <select name="dateOrder" [(ngModel)]="dateOrder" (change)="applyFilter()">
+                    <option value="">Por Defecto</option>
+                    <option value="asc">Ascendente</option>
+                    <option value="desc">Descendente</option>
+                  </select>
+                </div>
+              </fieldset>
+            </form>
+          </div>

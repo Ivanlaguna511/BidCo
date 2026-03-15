@@ -8,53 +8,40 @@ import com.bidco.api_rest.model.Usuario;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.ReportingPolicy; // Importante para limpiar warnings
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface PujaMapper {
-
-
 
     @Mapping(target = "subasta", source = "subastaID", qualifiedByName = "longToSubasta")
     @Mapping(target = "pujador", source = "pujadorId", qualifiedByName = "longToUsuario")
-    @Mapping(target = "importe", source = "importe")
-    @Mapping(target = "fecha", source = "fecha")
-    @Mapping(target = "ganadora", constant = "false") // Por defecto es false
+    @Mapping(target = "ganadora", constant = "false")
     Puja pujaCreateDTOToPuja(PujaCreateDTO dto);
 
-    // Conversión de Long a Subasta
+    @Mapping(source = "puja.pujaID", target = "pujaID")
+    @Mapping(source = "puja.subasta.subastaID", target = "subastaID")
+    @Mapping(source = "puja.pujador", target = "pujadorID", qualifiedByName = "usuarioToLong")
+    PujaResponseDTO pujaToPujaResponseDTO(Puja puja);
+
+    // Métodos de apoyo (Helper methods)
     @Named("longToSubasta")
     default Subasta longToSubasta(Long subastaId) {
-        if (subastaId == null) {
-            return null; // Maneja como sea necesario si es nulo
-        }
+        if (subastaId == null) return null;
         Subasta subasta = new Subasta();
         subasta.setSubastaID(subastaId);
         return subasta;
     }
 
-    // Conversión de Long a Usuario
     @Named("longToUsuario")
     default Usuario longToUsuario(Long usuarioId) {
-        if (usuarioId == null) {
-            return null; // Maneja como sea necesario si es nulo
-        }
+        if (usuarioId == null) return null;
         Usuario usuario = new Usuario();
         usuario.setUsuarioID(usuarioId);
         return usuario;
     }
-    
+
     @Named("usuarioToLong")
-    public static Long usuarioToLong(Usuario usuario) {
-        return usuario != null ? usuario.getUsuarioID() : null;
+    default Long usuarioToLong(Usuario usuario) {
+        return (usuario != null) ? usuario.getUsuarioID() : null;
     }
-
-    @Mapping(source = "puja.pujaID", target = "pujaID")
-    @Mapping(source = "puja.importe", target = "importe")
-    @Mapping(source = "puja.fecha", target = "fecha")
-    @Mapping(source = "puja.ganadora", target = "ganadora")
-    @Mapping(source = "puja.subasta.subastaID", target = "subastaID")
-    @Mapping(source = "puja.pujador", target = "pujadorID", qualifiedByName = "usuarioToLong")
-    PujaResponseDTO pujaToPujaResponseDTO(Puja puja);
-
 }

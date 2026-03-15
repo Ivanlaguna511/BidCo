@@ -1,6 +1,6 @@
 import { Component, HostListener, ElementRef } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 
 import { AuthService } from '../../services/auth.service';
@@ -10,10 +10,9 @@ import { AuthExpertService } from '../../services/auth.expert.service';
   selector: 'app-header',
   standalone: true,
   imports: [
-    CommonModule,
     RouterLink,
     FormsModule
-  ],
+],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })

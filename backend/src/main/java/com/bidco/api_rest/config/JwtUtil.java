@@ -4,8 +4,9 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.security.Keys;
-import java.security.Key;
 import java.util.Date;
+
+import javax.crypto.SecretKey;
 
 public class JwtUtil {
 
@@ -13,7 +14,7 @@ public class JwtUtil {
     private String secret = "TuSecretoMuySeguroQueDebeTenerUnTamañoAdecuadoParaHS512_64bytesMinimo!!!"; 
     private long expirationMillis = 86400000; // 1 día en milisegundos
 
-    private Key getSigningKey() {
+    private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(secret.getBytes());
     }
 
@@ -27,10 +28,10 @@ public class JwtUtil {
     }
 
     public Claims getClaims(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getSigningKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        return Jwts.parser()
+            .verifyWith(getSigningKey()) // .setSigningKey ahora es .verifyWith
+            .build()
+            .parseSignedClaims(token)   // .parseClaimsJws ahora es .parseSignedClaims
+            .getPayload();              // .getBody ahora es .getPayload
+        }
     }
-}

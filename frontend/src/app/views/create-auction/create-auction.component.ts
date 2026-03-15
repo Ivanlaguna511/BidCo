@@ -3,7 +3,7 @@ import { HeaderComponent } from '../../components/header/header.component';
 import { FooterComponent } from "../../components/footer/footer.component";
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 
 import { CreateSubastaService, SubastaCreateDTO } from '../../services/create-auction.service';
 import { AuthService } from '../../services/auth.service';
@@ -14,8 +14,8 @@ import { AuthService } from '../../services/auth.service';
   imports: [
     HeaderComponent,
     FooterComponent,
-    FormsModule,
-    CommonModule],
+    FormsModule
+],
   templateUrl: './create-auction.component.html',
   styleUrls: ['./create-auction.component.css']
 })

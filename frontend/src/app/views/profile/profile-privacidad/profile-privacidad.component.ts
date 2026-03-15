@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService, Privacidad } from '../../../services/user.service';
 import { AuthService } from '../../../services/auth.service';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-profile-privacidad',
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   standalone: true,
   templateUrl: './profile-privacidad.component.html',
   styleUrls: ['./profile-privacidad.component.css']

@@ -1,13 +1,13 @@
 // src/app/admin/admin-expert.component.ts
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { AdminService, ExpertDTO } from '../../../services/admin.service';
 
 @Component({
   selector: 'app-admin-expert',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   templateUrl: './admin-expert.component.html',
   styleUrls: ['./admin-expert.component.css']
 })

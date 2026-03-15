@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { AuthExpertService } from '../../services/auth.expert.service';
 
 @Component({
   selector: 'app-expert-login',
-  imports: [CommonModule, RouterModule, FooterComponent, FormsModule],
+  imports: [RouterModule, FooterComponent, FormsModule],
   templateUrl: './expert-login.component.html',
   styleUrl: './expert-login.component.css'
 })

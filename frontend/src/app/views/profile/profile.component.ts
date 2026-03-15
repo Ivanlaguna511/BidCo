@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { CommonModule } from '@angular/common'; 
+ 
 
 import { FooterComponent } from "../../components/footer/footer.component";
 import { HeaderComponent } from "../../components/header/header.component";
@@ -10,11 +10,10 @@ import { AuthExpertService } from '../../services/auth.expert.service';
   selector: 'app-profile',
   standalone: true,
   imports: [
-    RouterLink, 
-    RouterOutlet, 
-    FooterComponent, 
-    HeaderComponent, 
-    CommonModule
+    RouterLink,
+    RouterOutlet,
+    FooterComponent,
+    HeaderComponent
 ],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']

@@ -1,3 +1,7 @@
+-- Configuración inicial para Aiven Cloud
+USE defaultdb;
+
+-- 1. LIMPIEZA DE TABLAS (Orden inverso de dependencia)
 DROP TABLE IF EXISTS puja_sorteo;
 DROP TABLE IF EXISTS puja;
 DROP TABLE IF EXISTS comentario;
@@ -6,36 +10,37 @@ DROP TABLE IF EXISTS subasta;
 DROP TABLE IF EXISTS trabajador;
 DROP TABLE IF EXISTS usuario;
 
+-- 2. ESTRUCTURA DE TABLAS
 CREATE TABLE usuario (
     usuario_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     nombre_usuario VARCHAR(255) NOT NULL UNIQUE,
     correo_electronico VARCHAR(255) NOT NULL UNIQUE,
-    contraseña VARCHAR(255) NOT NULL,
-    saldo DECIMAL(10,2) NOT NULL,
-    puntos INT NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    saldo DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    puntos INT NOT NULL DEFAULT 0,
     pais VARCHAR(255) NOT NULL,
     ciudad VARCHAR(255) NOT NULL,
     codigo_postal VARCHAR(255) NOT NULL,
     calle VARCHAR(255) NOT NULL,
     numero_piso INT DEFAULT 0,
-    letra_piso VARCHAR(10) DEFAULT ' ',
+    letra_piso VARCHAR(10) DEFAULT '',
     privacidad_anonimo_pujas BOOLEAN DEFAULT FALSE,
     privacidad_estadisticas BOOLEAN DEFAULT TRUE,
     privacidad_perfil_visible BOOLEAN DEFAULT TRUE
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE trabajador (
     trabajador_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     nombre_usuario VARCHAR(255) NOT NULL UNIQUE,
     correo_electronico VARCHAR(255) NOT NULL UNIQUE,
-    contraseña VARCHAR(255) NOT NULL,
-    rol_trabajador BOOLEAN NOT NULL
-);
+    password VARCHAR(255) NOT NULL,
+    rol_trabajador BOOLEAN NOT NULL DEFAULT TRUE -- TRUE=Moderador, FALSE=Admin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE subasta (
     subasta_id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    fecha_inicial DATE NOT NULL,
-    fecha_final DATE NOT NULL,
+    fecha_inicial DATETIME NOT NULL,
+    fecha_final DATETIME NOT NULL,
     precio_inicial DECIMAL(10,2) DEFAULT 0.00,
     precio_final DECIMAL(10,2) DEFAULT 0.00,
     subasta_normal BOOLEAN NOT NULL,
@@ -45,8 +50,9 @@ CREATE TABLE subasta (
     creador_id BIGINT NOT NULL,
     ganador_id BIGINT,
     categoria VARCHAR(255),
-    FOREIGN KEY (creador_id) REFERENCES usuario(usuario_id)
-);
+    FOREIGN KEY (creador_id) REFERENCES usuario(usuario_id),
+    FOREIGN KEY (ganador_id) REFERENCES usuario(usuario_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE puja (
     puja_id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -57,7 +63,7 @@ CREATE TABLE puja (
     subasta_id BIGINT NOT NULL,
     FOREIGN KEY (usuario_id) REFERENCES usuario(usuario_id),
     FOREIGN KEY (subasta_id) REFERENCES subasta(subasta_id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE comentario (
     comentario_id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -68,106 +74,77 @@ CREATE TABLE comentario (
     subasta_id BIGINT NOT NULL,
     FOREIGN KEY (trabajador_id) REFERENCES trabajador(trabajador_id),
     FOREIGN KEY (subasta_id) REFERENCES subasta(subasta_id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE sorteo (
     sorteo_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     nombre_articulo VARCHAR(255) NOT NULL,
     descripcion TEXT NOT NULL,
-    fecha_inicio DATE NOT NULL,
-    fecha_fin DATE NOT NULL,
+    fecha_inicio DATETIME NOT NULL,
+    fecha_fin DATETIME NOT NULL,
     puntos_necesarios INT NOT NULL,
-    puntos_finales INT default 0, 
+    puntos_finales INT DEFAULT 0, 
     trabajador_id BIGINT NOT NULL,
     ganador_id BIGINT,
     imagen VARCHAR(255),
     categoria VARCHAR(255),
-    FOREIGN KEY (trabajador_id) REFERENCES trabajador(trabajador_id)
-);
-
-
+    FOREIGN KEY (trabajador_id) REFERENCES trabajador(trabajador_id),
+    FOREIGN KEY (ganador_id) REFERENCES usuario(usuario_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE puja_sorteo (
     puja_sorteo_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     fecha DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    puntos DECIMAL(10, 2) NOT NULL,
+    puntos INT NOT NULL, 
     usuario_id BIGINT NOT NULL,
     sorteo_id BIGINT NOT NULL,
     FOREIGN KEY (usuario_id) REFERENCES usuario(usuario_id), 
     FOREIGN KEY (sorteo_id) REFERENCES sorteo(sorteo_id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Insertar usuarios
-INSERT INTO usuario (nombre_usuario, correo_electronico, contraseña, saldo, puntos, pais, ciudad, codigo_postal, calle, numero_piso, letra_piso) 
-VALUES 
-('juanperez', 'juan@example.com', 'password123', 100.00, 50000, 'España', 'Madrid', '28001', 'Calle Falsa', 1, 'A'),
-('anagarcia', 'ana@example.com', 'password123', 200.00, 8000, 'España', 'Madrid', '28002', 'Calle Real', 2, 'B');
+-- 3. INSERCIÓN DE DATOS (Usuarios y Trabajadores)
+INSERT INTO usuario (nombre_usuario, correo_electronico, password, saldo, puntos, pais, ciudad, codigo_postal, calle, numero_piso, letra_piso) VALUES 
+('juanperez', 'juan@example.com', 'password123', 1500.00, 50000, 'España', 'Madrid', '28001', 'Calle Falsa', 1, 'A'),
+('anagarcia', 'ana@example.com', 'password123', 2500.00, 12000, 'España', 'Sevilla', '41001', 'Calle Real', 2, 'B'),
+('carlos88', 'carlos@example.com', 'password123', 500.00, 3000, 'España', 'Barcelona', '08001', 'Gran Via', 5, 'C');
 
+INSERT INTO trabajador (nombre_usuario, correo_electronico, password, rol_trabajador) VALUES 
+('admin_master', 'admin@bidco.com', 'adminpassword', FALSE),
+('pedro_mod', 'pedro@bidco.com', 'modpassword', TRUE),
+('jose_experto', 'jose@bidco.com', 'modpassword', TRUE);
 
--- Insertar trabajadores
-INSERT INTO trabajador (nombre_usuario, correo_electronico, contraseña, rol_trabajador)
-VALUES 
-('admin', 'admin@bidco.com', 'adminpassword', FALSE),
-('pedro', 'pedro@bidco.com', 'modpassword', TRUE),
-('jose', 'jose@bidco.com', 'modpassword', TRUE);
+-- 4. CARGA MASIVA DE SUBASTAS (Usando tus imágenes)
+INSERT INTO subasta (fecha_inicial, fecha_final, precio_inicial, precio_final, subasta_normal, nombre_articulo, descripcion, creador_id, imagen, categoria) VALUES 
+('2025-03-01 10:00:00', '2026-10-10 20:00:00', 5500.00, 0.00, TRUE, 'Rolex Submariner Date', 'Reloj de lujo automático, acero Oystersteel. El estándar entre los relojes de buceo.', 1, '2fee93af-888d-4010-8c2e-26915765aae4_rolex.png', 'moda'),
+('2025-03-05 09:00:00', '2026-06-15 21:00:00', 1400.00, 0.00, TRUE, 'MacBook Pro M3 Max', 'La bestia de Apple para profesionales. 32GB RAM, 1TB SSD. Color Negro Espacial.', 2, '31d682b9-101f-4604-839f-f91722441afa_macbookpro.png', 'tecnologia'),
+('2025-03-10 10:00:00', '2026-04-12 18:00:00', 600.00, 0.00, FALSE, 'Drone DJI Mavic 3', 'Cámara Hasselblad, detección de obstáculos omnidireccional y 46 min de vuelo.', 1, '36e46272-da7b-49f9-b260-f316b94500c9_drone.png', 'tecnologia'),
+('2025-03-12 11:00:00', '2026-07-30 22:00:00', 95.00, 0.00, TRUE, 'Bolso Elegante Piel', 'Bolso de mano artesanal fabricado en Ubrique. Piel de vacuno seleccionada.', 2, '74fc5212-dd41-415f-958d-7bcb30753d8d_bolso.jpeg', 'moda'),
+('2025-03-14 08:00:00', '2026-03-25 23:59:00', 250.00, 0.00, FALSE, 'Auriculares Bose QC', 'Cancelación de ruido líder en la industria y comodidad premium para viajes largos.', 1, '871cab67-2ddb-400d-bc9e-ba438b266c0b_auriculares.png', 'tecnologia'),
+('2025-03-15 14:00:00', '2026-11-20 10:00:00', 180.00, 0.00, TRUE, 'Estatua El Pensador', 'Réplica de bronce fundido. Una pieza de arte atemporal para despachos elegantes.', 3, '73c981e9-4e60-419a-b7f0-e4f4bfe5f849_pensador.png', 'hogar'),
+('2025-03-01 12:00:00', '2026-02-15 20:00:00', 45.00, 0.00, TRUE, 'Póster Edición Limitada', 'Arte moderno minimalista impreso en papel galardonado de 300g.', 2, '89754876-efa3-401b-b098-9ef01711db49_poster.png', 'hogar'),
+('2025-03-01 10:00:00', '2026-10-10 20:00:00', 50.00, 0.00, TRUE, 'Reloj de bolsillo Vintage', 'Reloj mecánico de cuerda con grabados clásicos. Estética steampunk.', 1, 'Reloj.jpg', 'moda'),
+('2025-03-05 09:00:00', '2026-06-10 21:00:00', 35.00, 0.00, TRUE, 'Sudadera Premium Azul', 'Algodón orgánico 100%. Corte oversize, máxima comodidad.', 2, 'sudadera_capucha_55_azulmarino_827_1024.jpg', 'moda'),
+('2025-03-01 10:00:00', '2026-09-05 18:00:00', 700.00, 0.00, FALSE, 'Cámara Reflex Pro', 'Sensor Full Frame de 30MP. Incluye objetivo 24-70mm f/2.8.', 1, 'portada-las-mejores-camaras-reflex-2019.jpg', 'tecnologia'),
+('2025-03-10 08:30:00', '2026-08-12 22:00:00', 40.00, 0.00, FALSE, 'Flexo de Diseño Cádiz', 'Lámpara de escritorio ajustable. Estilo industrial acabado en negro mate.', 2, 'flexo-cadiz.jpg', 'hogar'),
+('2025-03-15 11:00:00', '2026-09-12 15:00:00', 55.00, 0.00, TRUE, 'Mochila Antirrobo Viaje', 'Cremalleras ocultas y puerto USB de carga. Material repelente al agua.', 3, 'f1b3eac6-4d43-4f6f-9109-8304d187b43a_mochila antirrobo.png', 'moda');
 
+-- 5. CARGA DE SORTEOS (Usando tus imágenes)
+INSERT INTO sorteo (nombre_articulo, descripcion, fecha_inicio, fecha_fin, puntos_necesarios, trabajador_id, imagen, categoria) VALUES
+('LEGO McLaren F1 Team', 'Modelo técnico detallado con motor V6 de pistones móviles. 1432 piezas.', '2025-03-01 00:00:00', '2026-06-15 23:59:00', 3500, 1, '77251_boxprod_v39_en-gb.png', 'juguetes'),
+('Balón Oficial LaLiga', 'El mismo balón que golpean las estrellas. Sello FIFA Quality Pro.', '2025-03-01 00:00:00', '2026-06-01 20:00:00', 1500, 2, '5d1d0bb1-6f25-4a11-963f-59308e7ea062_Balon LaLiga.png', 'deportes'),
+('Mountain Bike Carbono', 'Cuadro ultraligero, frenos de disco hidráulicos y cambio de 12 velocidades.', '2025-03-10 00:00:00', '2026-08-30 20:00:00', 5000, 2, 'a9a19784-fda4-4fd9-aa7f-738cf7d388c5_mountain bike.png', 'deportes'),
+('Smartbox Mil Noches', 'Cena gourmet y estancia en hoteles de 5 estrellas para dos personas.', '2025-03-15 00:00:00', '2026-04-10 12:00:00', 2500, 1, '1748506473406_smartbox.png', 'ocio'),
+('Tarjeta Regalo Amazon 100€', 'Canjeable por millones de productos en la tienda Amazon.', '2025-03-01 00:00:00', '2026-12-31 23:59:59', 1000, 1, '1748513056567_tarjeta amazon.png', 'ocio'),
+('Samsung Galaxy S24 Ultra', 'Pantalla Dynamic AMOLED 2X, cámara de 200MP y S-Pen integrado.', '2025-03-10 00:00:00', '2026-07-15 23:59:00', 4500, 1, 'movil.jpg', 'tecnologia'),
+('Smart TV OLED 55"', 'Negros perfectos y contraste infinito. Procesador de imagen IA.', '2025-03-05 00:00:00', '2026-05-15 23:59:00', 3800, 1, 'tele.jpg', 'tecnologia');
 
--- Insertar subastas
-INSERT INTO subasta (fecha_inicial, fecha_final, precio_inicial, precio_final, subasta_normal, nombre_articulo, descripcion, creador_id, imagen, categoria) 
-VALUES 
-('2023-05-01', '2025-10-10', 50.00, 70.00, TRUE, 'Reloj de bolsillo', 'Elegante y atemporal, este reloj de bolsillo combina artesanía clásica con precisión moderna. 
-                    Su diseño vintage, con una fina cadena y detalles grabados, lo convierte en un accesorio 
-                    sofisticado para cualquier ocasión.', 1, 'Reloj.jpg', 'moda'),  -- Creador es 'Juan Pérez'
-('2025-04-01', '2025-06-10', 20.00, 30.00, TRUE, 'Sudadera', 'Disfruta del equilibrio perfecto entre comodidad y estilo con esta sudadera de diseño moderno. 
-                    Confeccionada con materiales suaves y transpirables, ofrece un ajuste cómodo y versátil para cualquier ocasión. 
-                    Ideal para los días fríos, su interior afelpado te mantendrá abrigado sin perder el estilo.', 2, 'sudadera_capucha_55_azulmarino_827_1024.jpg', 'moda'),  -- Creador es 'Ana García'
-('2023-05-01', '2025-09-05', 70.00, 100.00, FALSE, 'Camara de fotos', 'Captura cada momento con precisión y claridad con esta cámara de fotos de alta resolución. 
-                    Equipada con tecnología avanzada, ofrece imágenes nítidas, colores vibrantes y un enfoque rápido 
-                    para no perder ningún detalle. Su diseño ergonómico y ligero la hace perfecta para llevar a cualquier aventura.', 1, 'portada-las-mejores-camaras-reflex-2019.jpg', 'tecnologia'),  -- Creador es 'Juan Pérez'
-('2025-04-01', '2025-08-12', 50.00, 55.00, FALSE, 'Flexo', 'Un flexo moderno y funcional, ideal para iluminar tu espacio de trabajo o estudio. 
-                    Su diseño ajustable permite dirigir la luz con precisión, mientras que su estructura resistente y 
-                    elegante se adapta a cualquier entorno. Perfecto para leer, escribir o trabajar con comodidad.', 2, 'flexo-cadiz.jpg', 'hogar');  -- Creador es 'Ana García'
+-- 6. PUJAS Y COMENTARIOS INICIALES
+INSERT INTO puja (fecha, importe, ganadora, usuario_id, subasta_id) VALUES 
+(CURRENT_TIMESTAMP, 5600.00, FALSE, 2, 1),
+(CURRENT_TIMESTAMP, 50.00, FALSE, 1, 12),
+(CURRENT_TIMESTAMP, 1450.00, FALSE, 3, 2);
 
-
--- Insertar pujas
-INSERT INTO puja (fecha, importe, ganadora, usuario_id, subasta_id) 
-VALUES 
-('2025-05-02', 70.00, FALSE, 2, 1),  -- Puja de 'Ana García' en la subasta 1 (Reloj)
-('2025-05-03', 30.00, FALSE, 1, 2),  -- Puja de 'Juan Pérez' en la subasta 2 (Sudadera)
-('2025-05-04', 100.00, FALSE, 2, 3),  -- Puja de 'Ana García' en la subasta 3 (Camara)
-('2025-05-03', 55.00, FALSE, 1, 4);  -- Puja de 'Juan Pérez' en la subasta 4 (Flexo)
-
--- Insertar un sorteo
-INSERT INTO sorteo (nombre_articulo, descripcion, fecha_inicio, fecha_fin, puntos_necesarios, trabajador_id, imagen, categoria)
-VALUES
-('LEGO McLaren F1', 'Revive la emoción de la Fórmula 1 con este increíble set de LEGO. Diseñado con gran detalle, este modelo 
-                    captura la esencia de un monoplaza de carreras, con neumáticos realistas, alerones aerodinámicos y un diseño fiel a 
-                    la competición. Perfecto para fans del automovilismo y constructores apasionados, este set ofrece una experiencia de ensamblaje 
-                    envolvente y un resultado espectacular para exhibir. ¡Siente la velocidad y la adrenalina en cada pieza!', '2025-04-01', '2025-06-15', 3500,  
-                    1, '77251_boxprod_v39_en-gb.png', 'juguetes'),
-('Televisor 4K', 'Un televisor de alta definición 4K de 50 pulgadas', '2025-06-01', '2024-05-15', 500,  1, 'tele.jpg', 'tecnologia'),
-('Smartphone', 'Smartphone de última tecnología con pantalla AMOLED', '2025-07-01', '2025-07-15', 200,  1, 'movil.jpg', 'tecnologia');
-
-
-
-
-INSERT INTO puja_sorteo (fecha, puntos, usuario_id, sorteo_id)
-VALUES
-('2024-04-10', 4100, 1, 1),  -- Ejemplo de una puja en el sorteo con ID 1, realizada por el usuario con ID 1, por 4100 puntos
-('2024-04-11', 3500, 2, 1),  -- Ejemplo de una puja en el sorteo con ID 1, realizada por el usuario con ID 2, por 3500 puntos
-('2025-04-12', 500, 2, 2),  -- Ejemplo de una puja en el sorteo con ID 2, realizada por el usuario con ID 2, por 500 puntos
-('2025-04-13', 550, 1, 2),  -- Ejemplo de una puja en el sorteo con ID 2, realizada por el usuario con ID 1, por 550 puntos
-('2025-04-14', 300, 2, 3);  -- Ejemplo de una puja en el sorteo con ID 3, realizada por el usuario con ID 2, por 300 puntos
-
-
-
-INSERT INTO comentario (comentario, precio_estimado, trabajador_id, subasta_id) 
-VALUES 
-('Este es un comentario sobre la subasta 2', 30,  3, 2),
-('Excelente subasta, muy recomendable', 50,  3, 1),
-('La subasta fue muy interesante', 25 , 2, 2),
-('Este comentario tiene detalles importantes sobre la subasta 4',60, 2, 1);
-
-
-
-
+INSERT INTO comentario (comentario, precio_estimado, trabajador_id, subasta_id) VALUES 
+('Autenticidad verificada. Reloj en estado de colección.', 5800.00, 3, 1),
+('Batería al 100% de salud. Sin marcas de uso.', 1300.00, 2, 2),
+('Lente sin hongos ni arañazos. Enfoque calibrado.', 680.00, 3, 10);

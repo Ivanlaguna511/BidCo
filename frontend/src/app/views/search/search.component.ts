@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink, ActivatedRoute } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { HttpParams } from '@angular/common/http';
 
 import { map, distinctUntilChanged, tap } from 'rxjs/operators';
@@ -20,7 +20,6 @@ import { AuthExpertService } from '../../services/auth.expert.service';
   standalone: true,
   imports: [
     RouterLink,
-    CommonModule,
     HeaderComponent,
     FilterComponent,
     ProductItemComponent,

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { AdminService, SorteoDTO } from '../../../services/admin.service';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-sorteo',
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   standalone: true,
   templateUrl: './admin-sorteo.component.html',
   styleUrl: './admin-sorteo.component.css'

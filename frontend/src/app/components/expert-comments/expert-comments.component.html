@@ -1,12 +1,15 @@
 <!-- expert-comments.component.html -->
 <div>
-    <p *ngIf="expert"><strong>{{ expert.nombreUsuario }} (Experto) </strong></p>
-    <p>{{ comment.comentario }}</p>
-    <p><em>Valor estimado: {{ comment.precioEstimado }}€</em></p>
-    <button 
-      (click)="onEdit()" 
-      *ngIf="isExpert && expertLogged.trabajadorID === comment.trabajadorID">
+  @if (expert) {
+    <p><strong>{{ expert.nombreUsuario }} (Experto) </strong></p>
+  }
+  <p>{{ comment.comentario }}</p>
+  <p><em>Valor estimado: {{ comment.precioEstimado }}€</em></p>
+  @if (isExpert && expertLogged.trabajadorID === comment.trabajadorID) {
+    <button
+      (click)="onEdit()"
+      >
       Editar
     </button>
-  </div>
-  
+  }
+</div>

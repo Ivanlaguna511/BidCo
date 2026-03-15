@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink, ActivatedRoute } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { HttpParams } from '@angular/common/http';
 
 import { HeaderComponent } from '../../components/header/header.component';
@@ -18,7 +18,6 @@ import { AuthExpertService } from '../../services/auth.expert.service';
   standalone: true,
   imports: [
     RouterLink,
-    CommonModule,
     HeaderComponent,
     FilterComponent,
     ProductItemComponent,

@@ -1,23 +1,27 @@
-<div id="producto" *ngIf="productoSubasta && (tipo === 'subasta' || tipo === 'ciega')">
+@if (productoSubasta && (tipo === 'subasta' || tipo === 'ciega')) {
+  <div id="producto">
     <div><h1>{{ productoSubasta.nombreArticulo }}</h1></div>
     <div id="img_detalles">
-        <div><img [src]="'http://localhost:8080/uploads/' + productoSubasta.imagen" alt="{{ productoSubasta.nombreArticulo }}"></div>
-        <div id="detalles">
-            <div>{{ 'Precio Base: ' + productoSubasta.precioInicial + '€' }}</div>
-            <div>{{ productoSubasta.descripcion }}</div>
-            <div>Creado por: {{ nombreUsuario }}</div>
-        </div>
+      <div><img [src]="'http://localhost:8080/uploads/' + productoSubasta.imagen" alt="{{ productoSubasta.nombreArticulo }}"></div>
+      <div id="detalles">
+        <div>{{ 'Precio Base: ' + productoSubasta.precioInicial + '€' }}</div>
+        <div>{{ productoSubasta.descripcion }}</div>
+        <div>Creado por: {{ nombreUsuario }}</div>
+      </div>
     </div>
-</div>
+  </div>
+}
 
-<div id="producto" *ngIf="productoSorteo && tipo === 'sorteo'">
+@if (productoSorteo && tipo === 'sorteo') {
+  <div id="producto">
     <div><h1>{{ productoSorteo.nombreArticulo }}</h1></div>
     <div id="img_detalles">
-        <div><img [src]="'http://localhost:8080/uploads/' + productoSorteo.imagen" alt="{{ productoSorteo.nombreArticulo }}"></div>
-        <div id="detalles">
-            <div>{{ 'Puntos para participar: ' + productoSorteo.puntosNecesarios + ' puntos' }}</div>
-            <div>{{ productoSorteo.descripcion }}</div>
-            <div>Creado por: BidCo</div>
-        </div>
+      <div><img [src]="'http://localhost:8080/uploads/' + productoSorteo.imagen" alt="{{ productoSorteo.nombreArticulo }}"></div>
+      <div id="detalles">
+        <div>{{ 'Puntos para participar: ' + productoSorteo.puntosNecesarios + ' puntos' }}</div>
+        <div>{{ productoSorteo.descripcion }}</div>
+        <div>Creado por: BidCo</div>
+      </div>
     </div>
-</div>
+  </div>
+}
