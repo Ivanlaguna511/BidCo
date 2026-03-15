@@ -1,36 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core'; // Añadido OnInit
 import { ActivatedRoute } from '@angular/router';
-
-
-import { ProductoService, SorteoResponseDto, SubastaResponseDto, UsuarioResponseDto } from '../../services/product.service';
+import { environment } from '../../../environments/environment'; // IMPORTANTE: Verifica que la ruta sea correcta
+import { ProductoService, SorteoResponseDto, SubastaResponseDto } from '../../services/product.service';
 
 @Component({
   selector: 'app-product-details',
+  standalone: true, // Asegúrate de si es standalone o no según tu proyecto
   imports: [],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css'
 })
-export class ProductDetailsComponent {
+export class ProductDetailsComponent implements OnInit {
     productoSubasta!: SubastaResponseDto;
     productoSorteo!: SorteoResponseDto;
     nombreUsuario = "";
     tipo = "";
     
+    // Esta variable detecta automáticamente si usar Render o Localhost
+    readonly uploadsUrl = environment.apiUrl.replace('/api', '') + '/uploads/';
+
     constructor(private route: ActivatedRoute, private productoService: ProductoService) {}
 
     ngOnInit() {
-        //Obtener el id de la URL
         const productId = Number(this.route.snapshot.paramMap.get('id'));
-        
-        //Determinar si el producto es de una subasta normal, a ciegas o de un sorteo
         this.tipo = this.route.snapshot.data['tipo'];
 
-        //obtener el producto correspondiente
         switch (this.tipo) {
             case 'subasta':
                 this.productoService.getSubastaPorId(productId).subscribe((product) => {
                     this.productoSubasta = product;
-                    
                     this.productoService.obtenerPrivacidad(this.productoSubasta.creadorId).subscribe((userPriv) => {
                         if(userPriv.privacidadAnonimoPujas === false) {
                             this.productoService.getUsuarioPorId(this.productoSubasta.creadorId).subscribe((user) => {
@@ -46,12 +44,7 @@ export class ProductDetailsComponent {
             case 'sorteo':
                 this.productoService.getSorteoPorId(productId).subscribe((product) => {
                     this.productoSorteo = product;
-                    console.log(this.productoSorteo);
                 });
-                break;
-        
-            default:
-                console.error('Tipo de producto no válido');
                 break;
         }
     }

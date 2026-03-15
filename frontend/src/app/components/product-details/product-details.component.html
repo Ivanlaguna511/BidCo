@@ -2,7 +2,7 @@
   <div id="producto">
     <div><h1>{{ productoSubasta.nombreArticulo }}</h1></div>
     <div id="img_detalles">
-      <div><img [src]="'http://localhost:8080/uploads/' + productoSubasta.imagen" alt="{{ productoSubasta.nombreArticulo }}"></div>
+      <div><img [src]="uploadsUrl + productoSubasta.imagen" alt="{{ productoSubasta.nombreArticulo }}"></div>
       <div id="detalles">
         <div>{{ 'Precio Base: ' + productoSubasta.precioInicial + '€' }}</div>
         <div>{{ productoSubasta.descripcion }}</div>
@@ -16,7 +16,7 @@
   <div id="producto">
     <div><h1>{{ productoSorteo.nombreArticulo }}</h1></div>
     <div id="img_detalles">
-      <div><img [src]="'http://localhost:8080/uploads/' + productoSorteo.imagen" alt="{{ productoSorteo.nombreArticulo }}"></div>
+      <div><img [src]="uploadsUrl + productoSorteo.imagen" alt="{{ productoSorteo.nombreArticulo }}"></div>
       <div id="detalles">
         <div>{{ 'Puntos para participar: ' + productoSorteo.puntosNecesarios + ' puntos' }}</div>
         <div>{{ productoSorteo.descripcion }}</div>

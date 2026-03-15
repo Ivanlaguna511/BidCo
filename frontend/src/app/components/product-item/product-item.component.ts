@@ -1,19 +1,23 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { environment } from '../../../environments/environment'; // Añade la importación
 
 @Component({
   selector: 'app-product-item',
+  standalone: true,
   imports: [],
   templateUrl: './product-item.component.html',
   styleUrl: './product-item.component.css'
 })
-export class ProductItemComponent {
+export class ProductItemComponent implements OnInit {
     @Input() product: any;
     isBlindAuction: boolean = false;
     isRaffle: boolean = false;
     countdown: string = '';
 
+    // Añadimos la variable para la ruta de imágenes
+    readonly uploadsUrl = environment.apiUrl.replace('/api', '') + '/uploads/';
+
     ngOnInit() {
-        //Determinar si el producto es de una subasta normal, a ciegas o de un sorteo
         if (this.product) {
             const esSubasta = this.product.hasOwnProperty('subastaNormal');
             if (esSubasta) {

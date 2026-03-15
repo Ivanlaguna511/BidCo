@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface SubastaCreateDTO {
   fechaInicial: string;
@@ -28,7 +29,8 @@ export interface SubastaResponseDTO {
   providedIn: 'root'
 })
 export class CreateSubastaService {
-  private apiUrl = 'http://localhost:8080/api/subastas';
+  // Cambiamos la URL fija por la dinámica
+  private apiUrl = `${environment.apiUrl}/subastas`;
 
   constructor(private http: HttpClient) {}
 
