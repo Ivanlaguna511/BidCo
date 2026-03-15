@@ -1,7 +1,11 @@
-# Etapa 1: Construcción (Build) con Java 25 y Maven
+# Etapa 1: Construcción (Build)
 FROM eclipse-temurin:25-jdk-alpine AS build
 WORKDIR /app
 COPY . .
+
+# --- ESTA ES LA LÍNEA MÁGICA ---
+RUN chmod +x mvnw
+
 RUN ./mvnw clean install -DskipTests
 
 # Etapa 2: Ejecución (Runtime)
