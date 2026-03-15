@@ -14,6 +14,7 @@ import { ExpertService } from '../../services/expert.service';
 export class ExpertCommentsComponent {
     @Input() comment:any;
     expert: any;
+    expertLogged: any;
     isExpert = false;
     @Output() editClicked = new EventEmitter<any>();
 
@@ -23,10 +24,15 @@ export class ExpertCommentsComponent {
         //Comprobamos si un experto ha iniciado sesion
         this.expertAuthService.isLoggedIn$.subscribe((estado) => {
             this.isExpert = estado;
+            const storedUser = localStorage.getItem('authExpert');
+            if (storedUser) {
+                this.expertLogged = JSON.parse(storedUser);
+            }
         });
 
         this.expertService.getExpertoById(this.comment.trabajadorID).subscribe({
             next: (data) => {
+                console.log(data)
                 this.expert = data
             }
         })

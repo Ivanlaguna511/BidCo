@@ -5,7 +5,7 @@
     <p><em>Valor estimado: {{ comment.precioEstimado }}€</em></p>
     <button 
       (click)="onEdit()" 
-      *ngIf="isExpert && expert.trabajadorID === comment.trabajadorID">
+      *ngIf="isExpert && expertLogged.trabajadorID === comment.trabajadorID">
       Editar
     </button>
   </div>
