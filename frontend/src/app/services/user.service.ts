@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface UsuarioResponse {
   usuarioID: number;
@@ -60,7 +61,7 @@ export interface Stats {
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl: string = 'http://localhost:8080/api/usuarios';
+  private apiUrl: string = `${environment.apiUrl}/usuarios`;
 
   constructor(private http: HttpClient) {}
 
@@ -120,6 +121,6 @@ export class UserService {
   }
 
   recargarSaldo(usuarioID: number, cantidad: number): Observable<number> {
-    return this.http.patch<number>(`/api/usuarios/${usuarioID}/recargar-saldo`, { cantidad });
+    return this.http.patch<number>(`${environment.apiUrl}/usuarios/${usuarioID}/recargar-saldo`, { cantidad });
   }
 }

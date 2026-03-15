@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserService } from './user.service';
 import { ExpertoResponse, ExpertService } from './expert.service';
 import { jwtDecode } from 'jwt-decode';
+import { environment } from '../../environments/environment';
 
 export interface UsuarioResponse {
   usuarioID: number;
@@ -34,7 +35,7 @@ export class AuthService {
   public currentUser$ = this.currentUser.asObservable();
   public userRole$ = this.userRole.asObservable();
 
-  private userApiUrl: string = 'http://localhost:8080/api/usuarios';
+  private userApiUrl: string = `${environment.apiUrl}/usuarios`;
 
   constructor(private http: HttpClient, private userService: UserService, private expertService: ExpertService) {
     const token = localStorage.getItem('authToken');

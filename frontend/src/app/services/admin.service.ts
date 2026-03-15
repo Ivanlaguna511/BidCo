@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 export interface AdminLoginDTO {
   username: string;
@@ -29,7 +30,7 @@ export interface ExpertDTO {
 
 @Injectable({ providedIn: 'root' })
 export class AdminService {
-  private api = 'http://localhost:8080/api/admin';
+  private api = `${environment.apiUrl}/admin`;
 
   constructor(private http: HttpClient) {}
 
@@ -64,11 +65,9 @@ export class AdminService {
 
   createExpert(dto: ExpertDTO): Observable<void> {
     return this.http.post<void>(
-      `/api/trabajadores`,
+      `${environment.apiUrl}/trabajadores`, // Corregido: antes era relativo
       dto,
       { withCredentials: true }
-    ).pipe(
-      catchError(err => throwError(() => new Error(err.error?.message || 'Error registrando experto')))
     );
   }
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface SorteoResponseDto {
     sorteoID: number;
@@ -23,7 +24,7 @@ export interface Filtro {
     providedIn: 'root'
 })
 export class SorteoService {
-    private apiUrl = 'http://localhost:8080/api/sorteos';
+    private apiUrl = `${environment.apiUrl}/sorteos`;
 
     constructor(private http: HttpClient) {}
 

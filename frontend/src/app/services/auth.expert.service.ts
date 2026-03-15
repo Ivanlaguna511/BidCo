@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserService } from './user.service';
 import { ExpertoResponse, ExpertService } from './expert.service';
 import { jwtDecode } from 'jwt-decode';
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
@@ -20,7 +21,7 @@ export class AuthExpertService {
   public currentUser$ = this.currentUser.asObservable();
   public userRole$ = this.userRole.asObservable();
 
-  private expertApiUrl: string = 'http://localhost:8080/api/trabajadores';
+  private expertApiUrl: string = `${environment.apiUrl}/trabajadores`;
 
   constructor(private http: HttpClient, private userService: UserService, private expertService: ExpertService) {
     const token = localStorage.getItem('authTokenExpert');

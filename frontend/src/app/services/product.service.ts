@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface SubastaResponseDto {
     subastaID: number;
@@ -69,11 +70,11 @@ export interface PujaSorteoResponseDTO {
     providedIn: 'root'
 })
 export class ProductoService {
-    private subastaUrl = 'http://localhost:8080/api/subastas';
-    private pujaSubastaUrl = 'http://localhost:8080/api/pujas';
-    private sorteoUrl = 'http://localhost:8080/api/sorteos';
-    private pujaSorteoUrl = 'http://localhost:8080/api/pujas-sorteo';
-    private usuarioUrl = 'http://localhost:8080/api/usuarios';
+    private subastaUrl = `${environment.apiUrl}/subastas`;
+    private pujaSubastaUrl = `${environment.apiUrl}/pujas`;
+    private sorteoUrl = `${environment.apiUrl}/sorteos`;
+    private pujaSorteoUrl = `${environment.apiUrl}/pujas-sorteo`;
+    private usuarioUrl = `${environment.apiUrl}/usuarios`;
 
     constructor(private http: HttpClient) {}
 
