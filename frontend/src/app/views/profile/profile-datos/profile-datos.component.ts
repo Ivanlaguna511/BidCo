@@ -17,7 +17,7 @@ export class ProfileDatosComponent implements OnInit {
     usuarioID: 0,
     nombreUsuario: '',
     correoElectronico: '',
-    contraseña: '',
+    contrasena: '',
     ciudad: '',
     codigoPostal: '',
     calle: '',
@@ -86,7 +86,7 @@ export class ProfileDatosComponent implements OnInit {
       pais: this.user.pais,
       saldo: this.user.saldo,
       puntos: this.user.puntos,
-      contraseña: this.user.contraseña // Mantenemos la contraseña actual
+      contrasena: this.user.contrasena // Mantenemos la contraseña actual
     };
   
     this.userService.updateUser(this.user.usuarioID, updatedData).subscribe({
