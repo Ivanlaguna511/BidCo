@@ -107,11 +107,11 @@ public class UsuarioServiceImpl implements UsuarioService {
         System.out.println("====== DEBUG LOGIN ======");
         System.out.println("Identificador en JSON: [" + loginDTO.getIdentificador() + "]");
         System.out.println("Contraseña en JSON: [" + loginDTO.getContrasena() + "]");
-        System.out.println("Contraseña en Base de Datos: [" + usuario.getContraseña() + "]");
+        System.out.println("Contraseña en Base de Datos: [" + usuario.getContrasena() + "]");
         System.out.println("=========================");
         // -----------------------------------
 
-        if (!usuario.getContraseña().equals(loginDTO.getContrasena())) {
+        if (!usuario.getContrasena().equals(loginDTO.getContrasena())) {
             throw new IllegalArgumentException("Credenciales incorrectas");
         }
         
@@ -123,7 +123,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
         
         // Verificar contraseña actual (si usas hashing, aplica aquí)
-        if (!usuario.getContraseña().equals(currentPassword)) {
+        if (!usuario.getContrasena().equals(currentPassword)) {
             throw new IllegalArgumentException("Contraseña actual incorrecta");
         }
         
@@ -132,7 +132,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new IllegalArgumentException("La nueva contraseña debe tener al menos 6 caracteres");
         }
         
-        usuario.setContraseña(newPassword);
+        usuario.setContrasena(newPassword);
         usuarioRepository.save(usuario);
     }
 

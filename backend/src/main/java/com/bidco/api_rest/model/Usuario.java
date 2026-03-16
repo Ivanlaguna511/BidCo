@@ -18,8 +18,8 @@ public class Usuario {
     private String nombreUsuario;
     @Column(unique = true,nullable = false,name = "correo_electronico")
     private String correoElectronico;
-    @Column(nullable = false)
-    private String contraseña;
+    @Column(name = "password", nullable = false)
+    private String contrasena;
     @Column(nullable = false)
     private BigDecimal saldo;
     @Column(nullable = false)
@@ -57,12 +57,12 @@ public class Usuario {
     private List<Subasta> subastas;
 
     public Usuario(Long usuarioID, String nombreUsuario,
-                   String correoElectronico, String contraseña, BigDecimal saldo, int puntos, String pais,
+                   String correoElectronico, String contrasena, BigDecimal saldo, int puntos, String pais,
                    String ciudad, String codigoPostal, String calle, int numeroPiso, String letraPiso) {
         this.usuarioID = usuarioID;
         this.nombreUsuario = nombreUsuario;
         this.correoElectronico = correoElectronico;
-        this.contraseña = contraseña;
+        this.contrasena = contrasena;
         this.saldo = saldo;
         this.puntos = puntos;
         this.pais = pais;
@@ -92,8 +92,8 @@ public class Usuario {
         return correoElectronico;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
 
     public BigDecimal getSaldo() {
@@ -144,8 +144,8 @@ public class Usuario {
         this.correoElectronico = correoElectronico;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     public void setSaldo(BigDecimal saldo) {

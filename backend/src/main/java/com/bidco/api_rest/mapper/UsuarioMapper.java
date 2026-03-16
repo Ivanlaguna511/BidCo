@@ -23,7 +23,7 @@ public interface UsuarioMapper {
 
     @Mapping(target = "nombreUsuario", source = "nombreUsuario")
     @Mapping(target = "correoElectronico", source = "correoElectronico")
-    @Mapping(target = "contraseña", source = "contraseña")
+    @Mapping(target = "contrasena", source = "contraseña")
     @Mapping(target = "saldo", source = "saldo")
     @Mapping(target = "puntos", source = "puntos")
     @Mapping(target = "pais", source = "pais")
