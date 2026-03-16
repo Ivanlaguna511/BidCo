@@ -5,7 +5,7 @@
     <strong>Plataforma web Full-Stack diseñada para gestionar subastas (normales y a ciegas) y sorteos.</strong>
     <br />
     <br />
-    <a href="https://bid-p0qnlyqea-ivanlaguna511s-projects.vercel.app"><strong>Ver demostración en vivo »</strong></a>
+    <a href="https://bid-co.vercel.app/auction"><strong>Ver demostración en vivo »</strong></a>
     <br />
     <br />
   </p>
