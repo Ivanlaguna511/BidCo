@@ -15,9 +15,6 @@ export class ProductDetailsComponent implements OnInit {
     productoSorteo!: SorteoResponseDto;
     nombreUsuario = "";
     tipo = "";
-    
-    // Esta variable detecta automáticamente si usar Render o Localhost
-    readonly uploadsUrl = environment.apiUrl.replace('/api', '') + '/uploads/';
 
     constructor(private route: ActivatedRoute, private productoService: ProductoService) {}
 

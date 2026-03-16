@@ -14,9 +14,6 @@ export class ProductItemComponent implements OnInit {
     isRaffle: boolean = false;
     countdown: string = '';
 
-    // Añadimos la variable para la ruta de imágenes
-    readonly uploadsUrl = environment.apiUrl.replace('/api', '') + '/uploads/';
-
     ngOnInit() {
         if (this.product) {
             const esSubasta = this.product.hasOwnProperty('subastaNormal');

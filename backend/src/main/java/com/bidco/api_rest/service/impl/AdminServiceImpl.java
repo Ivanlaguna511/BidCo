@@ -7,28 +7,29 @@ import com.bidco.api_rest.model.Trabajador;
 import com.bidco.api_rest.repository.SorteoRepository;
 import com.bidco.api_rest.repository.TrabajadorRepository;
 import com.bidco.api_rest.service.contract.AdminService;
+import com.bidco.api_rest.service.contract.CloudinaryService;
+
 import jakarta.servlet.http.HttpSession;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 @Service
 public class AdminServiceImpl implements AdminService {
 
     private final TrabajadorRepository trabajadorRepo;
-    private final SorteoRepository    sorteoRepo;
+    private final SorteoRepository sorteoRepo;
+    private final CloudinaryService cloudinaryService; // Nueva dependencia
 
+    // Actualizamos el constructor para inyectar CloudinaryService
     public AdminServiceImpl(
         TrabajadorRepository trabajadorRepo,
-        SorteoRepository sorteoRepo
+        SorteoRepository sorteoRepo,
+        CloudinaryService cloudinaryService
     ) {
         this.trabajadorRepo = trabajadorRepo;
-        this.sorteoRepo     = sorteoRepo;
+        this.sorteoRepo = sorteoRepo;
+        this.cloudinaryService = cloudinaryService;
     }
 
     @Override
@@ -53,7 +54,6 @@ public class AdminServiceImpl implements AdminService {
             throw new IllegalArgumentException("No autenticado como admin");
         }
 
-        // Validar fechas
         if (dto.getFechaInicio().isAfter(dto.getFechaFin())) {
             throw new IllegalArgumentException("Fecha inicio debe ser anterior a fin");
         }
@@ -65,27 +65,20 @@ public class AdminServiceImpl implements AdminService {
         sorteo.setFechaFin(dto.getFechaFin());
         sorteo.setPuntosNecesarios(dto.getPuntosNecesarios());
         sorteo.setPuntosFinales(0);
-        System.out.println("\n\n\n\n\n\nCategoría: " + dto.getCategoria() + "\n\n\n");
         sorteo.setCategoria(dto.getCategoria());
 
-        // Relación ManyToOne
         Trabajador creador = new Trabajador();
         creador.setTrabajadorID(adminId);
         sorteo.setCreador(creador);
 
-        // Guardar imagen en disco
         MultipartFile img = dto.getImagen();
         if (img != null && !img.isEmpty()) {
             try {
-                // Igual que en SubastaServiceImpl: carpeta "uploads" dentro de tu working dir
-                Path folder = Paths.get(System.getProperty("user.dir"), "uploads");
-                Files.createDirectories(folder);
-                String filename = System.currentTimeMillis() + "_" + img.getOriginalFilename();
-                Path filePath = folder.resolve(filename);
-                img.transferTo(filePath.toFile());
-                sorteo.setImagen(filename);
-            } catch (IOException e) {
-                throw new RuntimeException("Error al guardar la imagen", e);
+                // Subimos a la nube y guardamos la URL de retorno
+                String urlImagen = cloudinaryService.uploadFile(img);
+                sorteo.setImagen(urlImagen);
+            } catch (Exception e) {
+                throw new RuntimeException("Error al subir la imagen del sorteo a Cloudinary", e);
             }
         }
 

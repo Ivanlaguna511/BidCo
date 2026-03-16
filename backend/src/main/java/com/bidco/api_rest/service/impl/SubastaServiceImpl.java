@@ -1,9 +1,7 @@
 package com.bidco.api_rest.service.impl;
 
-import com.bidco.api_rest.dto.puja.PujaResponseDTO;
 import com.bidco.api_rest.dto.subasta.SubastaCreateDTO;
 import com.bidco.api_rest.dto.subasta.SubastaResponseDTO;
-import com.bidco.api_rest.dto.usuario.UsuarioResponseDTO;
 import com.bidco.api_rest.dto.FiltroDTO;
 import com.bidco.api_rest.mapper.PujaMapper;
 import com.bidco.api_rest.mapper.SubastaMapper;
@@ -14,22 +12,16 @@ import com.bidco.api_rest.model.Usuario;
 import com.bidco.api_rest.repository.PujaRepository;
 import com.bidco.api_rest.repository.SubastaRepository;
 import com.bidco.api_rest.repository.UsuarioRepository;
+import com.bidco.api_rest.service.contract.CloudinaryService;
 import com.bidco.api_rest.service.contract.SubastaService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.util.Optional;
-import java.util.UUID;
 import java.util.List;
-
 
 @Service
 public class SubastaServiceImpl implements SubastaService {
@@ -41,6 +33,9 @@ public class SubastaServiceImpl implements SubastaService {
     private final UsuarioRepository usuarioRepository;
     private final PujaRepository pujaRepository;
     private final PujaMapper pujaMapper;
+
+    @Autowired
+    private CloudinaryService cloudinaryService;
 
     public SubastaServiceImpl(SubastaRepository subastaRepository, SubastaMapper subastaMapper, UsuarioMapper usuarioMapper, 
                 UsuarioRepository userRepository, UsuarioRepository usuarioRepository, PujaRepository pujaRepository, PujaMapper pujaMapper) {
@@ -55,7 +50,7 @@ public class SubastaServiceImpl implements SubastaService {
 
     @Override
     public SubastaResponseDTO crearSubasta(SubastaCreateDTO subastaCreateDTO, MultipartFile imagen) {
-        if(subastaCreateDTO==null){
+        if(subastaCreateDTO == null){
             throw new IllegalArgumentException("La subasta no puede ser nula");
         }
 
@@ -69,19 +64,20 @@ public class SubastaServiceImpl implements SubastaService {
 
         if(imagen != null && !imagen.isEmpty()) {
             try {
-                String nombreArchivo = UUID.randomUUID() + "_" + imagen.getOriginalFilename();
-                Path rutaImagen = Paths.get(System.getProperty("user.dir")).resolve("uploads").resolve(nombreArchivo);
-                Files.createDirectories(rutaImagen.getParent());
-                imagen.transferTo(rutaImagen.toFile());
-                subasta.setImagen(nombreArchivo);
+                // 1. Subimos la imagen a Cloudinary y obtenemos la URL definitiva
+                String urlImagenNube = cloudinaryService.uploadFile(imagen);
                 
-            } catch (IOException e) {
-                throw new RuntimeException("Error al guardar la imagen ", e);
+                // 2. Guardamos esa URL en nuestra base de datos
+                subasta.setImagen(urlImagenNube);
+                
+            } catch (Exception e) {
+                throw new RuntimeException("Error al subir la imagen a la nube", e);
             }
         }
 
         subastaRepository.save(subasta);
         usuarioRepository.save(user);
+        
         return subastaMapper.subastaToSubastaResponseDTO(subasta);
     }
 

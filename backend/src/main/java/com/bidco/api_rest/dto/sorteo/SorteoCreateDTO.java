@@ -4,6 +4,8 @@ import com.bidco.api_rest.model.Trabajador;
 
 import java.time.LocalDate;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.time.LocalDate;
 
 public class SorteoCreateDTO {
@@ -14,13 +16,13 @@ public class SorteoCreateDTO {
     private LocalDate fechaFin;
     private int puntosNecesarios;
     private Long creadorId;
-    private String imagen;
     private String categoria;
     private Long ganador;
+    private MultipartFile imagen;
 
     // Constructor
     public SorteoCreateDTO(String nombreArticulo, String descripcion, LocalDate fechaInicio, LocalDate fechaFin,
-                           int puntosNecesarios, Long creadorId, String imagen, String categoria,
+                           int puntosNecesarios, Long creadorId, MultipartFile imagen, String categoria,
                             Long ganador) {
         this.nombreArticulo = nombreArticulo;
         this.descripcion = descripcion;
@@ -82,12 +84,12 @@ public class SorteoCreateDTO {
         this.creadorId = creadorId;
     }
 
-    public String getImagen() {
-        return imagen;
+    public MultipartFile getImagen() { 
+        return imagen; 
     }
-
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
+    
+    public void setImagen(MultipartFile imagen) { 
+        this.imagen = imagen; 
     }
 
     public String getCategoria() {

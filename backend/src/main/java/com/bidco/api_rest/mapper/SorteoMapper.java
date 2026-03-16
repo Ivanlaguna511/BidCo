@@ -13,22 +13,22 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring")
 public interface SorteoMapper {
 
-    // Convertir SorteoCreateDTO a Sorteo
+// 1. Convertir SorteoCreateDTO a Sorteo
     @Mapping(target = "creador", source = "creadorId", qualifiedByName = "longToTrabajador")
     @Mapping(source = "fechaInicio", target = "fechaInicio")
     @Mapping(source = "fechaFin", target = "fechaFin")
     @Mapping(source = "descripcion", target = "descripcion")
-    @Mapping(source = "puntosNecesarios",target = "puntosNecesarios")
+    @Mapping(source = "puntosNecesarios", target = "puntosNecesarios")
     @Mapping(source = "nombreArticulo", target = "nombreArticulo")
-    @Mapping(source = "imagen", target = "imagen")
+    @Mapping(target = "imagen", ignore = true) 
     Sorteo sorteoCreateDTOToSorteo(SorteoCreateDTO dto);
 
-    // Convertir Sorteo a SorteoResponseDTO
+    // 2. Convertir Sorteo a SorteoResponseDTO
     @Mapping(source = "sorteoID", target = "sorteoID")
     @Mapping(source = "fechaInicio", target = "fechaInicio")
     @Mapping(source = "fechaFin", target = "fechaFin")
     @Mapping(source = "descripcion", target = "descripcion")
-    @Mapping(source = "puntosNecesarios",target = "puntosNecesarios")
+    @Mapping(source = "puntosNecesarios", target = "puntosNecesarios")
     @Mapping(source = "nombreArticulo", target = "nombreArticulo")
     @Mapping(source = "puntosFinales", target = "puntosFinales")
     @Mapping(source = "imagen", target = "imagen")
