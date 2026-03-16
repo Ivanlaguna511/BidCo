@@ -25,17 +25,6 @@
   </p>
 </div>
 
-<details>
-  <summary>Tabla de Contenidos</summary>
-  <ol>
-    <li><a href="#-sobre-el-proyecto">Sobre el Proyecto</a></li>
-    <li><a href="#-tecnologías-utilizadas">Tecnologías Utilizadas</a></li>
-    <li><a href="#-requisitos-previos">Requisitos Previos</a></li>
-    <li><a href="#-instalación-y-ejecución-local">Instalación y Ejecución Local</a></li>
-    <li><a href="#-capturas-de-pantalla">Capturas de Pantalla</a></li>
-  </ol>
-</details>
-
 ---
 
 ## Sobre el Proyecto
@@ -78,7 +67,7 @@ Para levantar este proyecto desde cero en tu máquina local, asegúrate de tener
 
 ---
 
-## 🛠 Instalación y Ejecución Local
+## Instalación y Ejecución Local
 
 Sigue estos pasos en orden para asegurar la correcta conexión entre el cliente y el servidor.
 
