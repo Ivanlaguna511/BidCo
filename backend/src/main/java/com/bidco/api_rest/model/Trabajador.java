@@ -22,7 +22,7 @@ public class Trabajador {
     private String correoElectronico;
 
     @Column(nullable = false)
-    private String contraseña;
+    private String password;
 
     @Column(name = "rol_trabajador",nullable = false)
     private boolean experto;
@@ -37,7 +37,7 @@ public class Trabajador {
         this.trabajadorID = trabajadorID;
         this.nombreUsuario = nombreUsuario;
         this.correoElectronico = correoElectronico;
-        this.contraseña = contraseña;
+        this.password = contraseña;
         this.experto=experto;
         this.comentarios = new ArrayList<>();
         this.sorteos = new ArrayList<>();
@@ -56,7 +56,7 @@ public class Trabajador {
     }
 
     public String getContraseña() {
-        return contraseña;
+        return password;
     }
 
     public String getCorreoElectronico() {
@@ -81,7 +81,7 @@ public class Trabajador {
     }
 
     public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+        this.password = contraseña;
     }
 
     public void setExperto(boolean experto) {
