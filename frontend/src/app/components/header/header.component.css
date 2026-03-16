@@ -1,283 +1,276 @@
-/* Contenedor del logo y el nombre */
+/* --- VARIABLES GLOBALES (Google Material Style) --- */
+:host {
+  --primary-color: #0d0063;
+  --primary-hover: #15009e;
+  --bg-color: #ffffff;
+  --search-bg: #f1f3f4;
+  --search-hover: #e8eaed;
+  --text-main: #202124;
+  --text-muted: #5f6368;
+  --border-color: #dadce0;
+  --shadow-sm: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+  --shadow-dropdown: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --font-family: 'Montserrat', sans-serif;
+}
+
+/* --- CONTENEDOR PRINCIPAL --- */
+.main-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 24px;
+  border-bottom: 1px solid var(--border-color);
+  font-family: var(--font-family);
+  gap: 20px;
+}
+
+/* --- SECCIONES FLEX --- */
+.header-left, .header-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-shrink: 0;
+}
+
+.header-center {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  max-width: 720px;
+}
+
+/* --- BRAND (Logo y Título) --- */
 .header-brand {
   display: flex;
   align-items: center;
-  gap: 10px; /* Espacio entre el logo y el nombre */
+  gap: 12px;
 }
 
-.header-brand .logo-link img {
-  max-height: 80px; /* Ajusta este valor según el tamaño deseado */
-  height: auto;
-  width: auto;
-  max-width: none; /* Evita que se aplique la regla global de max-width */
-  object-fit: contain;
-}
-
-
-/* Estilo para el enlace del logo */
-.logo-link {
-  display: inline-block;
-  text-decoration: none;
-}
-
-/* Ajusta la imagen del logo para que su área sea la real */
 .logo-link img {
-  height: 60px; /* Ajusta la altura según lo necesites */
+  height: 40px; /* Tamaño más moderno y sutil */
   width: auto;
-  display: block;
+  object-fit: contain;
+  transition: opacity 0.2s;
 }
 
-/* Estilo para el enlace del nombre */
+.logo-link:hover img {
+  opacity: 0.8;
+}
+
 .name-link {
-  display: inline-block;
   text-decoration: none;
-  color: #0d0063;
-  font-family: 'Montserrat', sans-serif;
 }
 
+.brand-text {
+  color: var(--primary-color);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
 
-/* Enlace que envuelve el logo y el nombre */
-.header-link {
+/* --- BARRA DE BÚSQUEDA (Estilo Google) --- */
+#search-bar {
   display: flex;
   align-items: center;
-  text-decoration: none; /* Quita el subrayado del enlace */
-  color: inherit; /* Mantiene el color del texto original */
+  width: 100%;
+  background-color: var(--search-bg);
+  border: 1px solid transparent;
+  border-radius: 24px;
+  padding: 0 16px;
+  height: 48px;
+  transition: background-color 0.2s, box-shadow 0.2s, border-color 0.2s;
 }
 
-/* Resto de estilos del header */
-header {
-  background-color: #ffffff;
-  display: flex;
-  align-items: center; /* Centra verticalmente */
-  justify-content: flex-start; /* Alinea los elementos a la izquierda */
-  gap: 20px; /* Espacio entre los elementos */
-  padding: 10px 20px;
+#search-bar:hover {
+  background-color: var(--search-hover);
+  box-shadow: 0 1px 1px rgba(0,0,0,0.1);
 }
 
-/* Ajustes de Logo */
-#Logo {
-  margin-left: 2%;
-  padding-top: 0.5%;
-  height: auto; /* Ajusta la altura del logo */
-  width: 40%; /* Permite que la imagen mantenga su tamaño original */
+#search-bar:focus-within {
+  background-color: var(--bg-color);
+  box-shadow: var(--shadow-sm);
+  border-color: transparent;
 }
 
-/* Ajustes de BidCo */
-#BidCo {
-  color: #0d0063;
-  font-family: 'Montserrat', sans-serif;
-}
-
-/* Contenedor desplegable */
-#desplegable {
-    display: flex;
-    align-items: center;
-    background-color: #ffffff;
-    padding: 10px;
-    border-radius: 4px;
-    margin: auto;
-}
-
-/* Estilo de los enlaces dentro del desplegable */
-#desplegable a {
-    color: #333;
-}
-
-/* Estilos del dropdown */
-.dropdown {
-    position: relative;
-    cursor: pointer;
-}
-
-.dropbtn {
-    font-weight: bold;
-    font-size: 50%;
-    padding: 10px 20px;
-    color: rgb(0, 0, 0);
-    border: none;
-}
-
-.dropdown-content {
-    font-weight: bold;
-    display: none;
-    position: absolute;
-    top: 110%;
-    left: 0;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    overflow: hidden;
-}
-
-.dropdown-content a {
-    display: block;
-    padding: 12px 16px;
-    color: #333;
-    text-decoration: none;
-}
-
-.dropdown-content a:hover {
-    background-color: #f1f1f1;
-}
-
-.dropdown-content div {
-    display: block;
-    padding: 12px 16px;
-    color: #333;
-    text-decoration: none;
-}
-
-.dropdown-content div:hover {
-    background-color: #f1f1f1;
-}
-
-.show {
-    display: block;
-}
-
-/* Ajustes globales para imágenes */
-img {
-    max-height: 15%;
-}
-
-/* Barra de búsqueda */
-#search-bar {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    max-width: 600px;
-    margin-right: 5%;
-    padding: 10px;
-    border: 1px solid #dfe1e5;
-    border-radius: 24px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 6px;
-    background-color: #fff;
-    margin: auto;
+.search-icon {
+  fill: var(--text-muted);
+  margin-right: 12px;
 }
 
 #search-bar input {
-    flex-grow: 1;
-    border: none;
-    outline: none;
-    font-size: 16px;
-    padding: 0 10px;
-}
-
-#search-bar button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    outline: none;
-    padding: 0 10px;
-}
-
-#search-bar svg {
-    fill: #0d0063;
+  flex-grow: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 16px;
+  color: var(--text-main);
+  font-family: inherit;
 }
 
 #search-bar input::placeholder {
-    color: #dfe1e5;
-}
-/* Botón de inicio de sesión con Google */
-.google-login-btn {
-  display: inline-flex;
-  align-items: center;
-  padding: 10px 20px;
-  margin: 10px;
-  color: #fff;
-  background-color: #0d0063;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  text-decoration: none;
-  font-family: Arial, sans-serif;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  transition: background-color 0.3s ease;
-  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+  color: var(--text-muted);
 }
 
-.google-login-btn:hover {
-  background-color: #0d0063;
-}
-
-.google-login-btn:active {
-  background-color: #0d0063;
-}
-
-.google-login-btn:focus {
-  outline: none;
-  box-shadow: 0 0 3pt 2pt #c6dafc;
-}
-
-/* Contenedor desplegable */
-#user-menu {
+/* --- BOTONES Y DROPDOWNS --- */
+.dropdown-wrapper {
   display: flex;
   align-items: center;
-  background-color: #ffffff;
-  padding: 10px;
-  border-radius: 4px;
-  margin: auto;
 }
 
-/* Estilo de los enlaces dentro del desplegable */
-#user-menu a {
-  color: #333;
-}
-
-/* Estilos del dropdown */
-.user-dropdown {
+.dropdown, .user-dropdown {
   position: relative;
   cursor: pointer;
 }
 
-.userbtn {
-  font-weight: bold;
-  font-size: 50%;
-  padding: 10px 20px;
-  color: rgb(0, 0, 0);
+.dropbtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-muted);
+  background: transparent;
   border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+  font-family: inherit;
+}
+
+.dropbtn:hover {
+  background-color: var(--search-bg);
+  color: var(--text-main);
+}
+
+.dropbtn svg {
+  fill: currentColor;
+}
+
+/* Contenido del Dropdown animado */
+.dropdown-content {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 0;
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  min-width: 200px;
+  box-shadow: var(--shadow-dropdown);
+  z-index: 10;
+  padding: 8px 0;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
 }
 
 .user-dropdown-content {
-  font-weight: bold;
-  display: none;
-  position: absolute;
-  top: 110%;
-  left: 0;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  overflow: hidden;
+  left: auto;
+  right: 0; /* Despliega hacia la izquierda para que no se salga de la pantalla */
 }
 
-.user-dropdown-content a {
+/* Clase que activa TypeScript */
+.dropdown-content.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-header {
+  padding: 8px 16px;
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+}
+
+.dropdown-content a {
   display: block;
-  padding: 12px 16px;
-  color: #333;
+  padding: 10px 16px;
+  color: var(--text-main);
   text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s;
 }
 
-.user-dropdown-content a:hover {
-  background-color: #f1f1f1;
+.dropdown-content a:hover {
+  background-color: var(--search-bg);
 }
 
-.show {
-  display: block;
+.divider {
+  height: 1px;
+  background-color: var(--border-color);
+  margin: 8px 0;
 }
 
+.logout-link {
+  color: #d93025 !important; /* Rojo elegante para cerrar sesión */
+}
+
+/* --- BOTÓN DE LOGIN --- */
+.google-login-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 24px;
+  height: 40px;
+  color: #fff;
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 20px; /* Estilo píldora moderno */
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  font-family: inherit;
+  transition: background-color 0.2s, box-shadow 0.2s, transform 0.1s;
+}
+
+.google-login-btn:hover {
+  background-color: var(--primary-hover);
+  box-shadow: 0 1px 3px 1px rgba(0,0,0,0.15);
+}
+
+.google-login-btn:active {
+  transform: scale(0.98);
+}
+
+/* --- PERFIL DE USUARIO --- */
 .profile-pic {
-  width: 50px; /* Tamaño base */
-  height: 50px;
-  min-width: 40px; /* Límites para móvil */
-  min-height: 40px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  cursor: pointer;
-  object-fit: cover; /* Evita distorsión */
-  margin: auto; /* Empuja a la derecha */
+  object-fit: cover;
+  border: 2px solid transparent;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.profile-pic:hover {
+  box-shadow: 0 0 0 4px var(--search-bg);
+}
+
+.expert-border {
+  border-color: #fbbc04; /* Borde dorado/amarillo estilo Google para cuentas premium/expertas */
+}
+
+/* --- RESPONSIVO BÁSICO --- */
+@media (max-width: 768px) {
+  .brand-text, .dropbtn {
+    display: none; /* Oculta texto en móviles, deja solo iconos/logo */
+  }
+  
+  .main-header {
+    padding: 8px 12px;
+    gap: 12px;
+  }
+  
+  #search-bar {
+    padding: 0 12px;
+  }
 }

@@ -1,27 +1,20 @@
-<header>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
-    rel="stylesheet"
-    />
-
-    <!-- Contenedor para el logo y el nombre -->
+<header class="main-header">
+  <div class="header-left">
     <div class="header-brand">
-      <!-- Logo clickeable -->
       <a routerLink="/auction" class="logo-link">
         <img src="Logo BidCo Recortado.jpg" alt="Logo BidCo" />
       </a>
-      <!-- Nombre clickeable -->
       <a routerLink="/auction" class="name-link">
-        <h1>BidCo</h1>
+        <span class="brand-text">BidCo</span>
       </a>
     </div>
 
-    <!-- DESPLEGABLE DE SECCIONES -->
-    <div id="desplegable">
+    <div class="dropdown-wrapper">
       <div class="dropdown" (click)="toggleDropdown($event)">
-        <span class="dropbtn">
-          <h1>Secciones ☰</h1>
-        </span>
+        <button class="dropbtn">
+          Secciones
+          <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M480-360 280-560h400L480-360Z"/></svg>
+        </button>
         <div class="dropdown-content" [class.show]="isDropdownOpen">
           <a routerLink="/auction">Subastas</a>
           <a routerLink="/blind-auctions">Subastas a Ciegas</a>
@@ -29,68 +22,50 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- BARRA DE BÚSQUEDA -->
+  <div class="header-center">
     <div id="search-bar">
+      <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24">
+        <path d="M796 936 536 676q-29 25-64.5 37.5T400 726q-100 0-170-70t-70-170q0-100 70-170t170-70q100 0 170 70t70 170q0 35-12.5 70.5T637 611l260 260-101 65ZM400 666q67 0 113.5-46.5T560 506q0-67-46.5-113.5T400 346q-67 0-113.5 46.5T240 506q0 67 46.5 113.5T400 666Z"/>
+      </svg>
       <input type="text" placeholder="Buscar en BidCo..." [(ngModel)]="searchTerm" (keyup.enter)="onSearch()"/>
-      <button type="button" (click)="onSearch()">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="24"
-          viewBox="0 96 960 960"
-          width="24"
-          >
-          <path
-            d="M796 936 536 676q-29 25-64.5 37.5T400 726q-100 0-170-70t-70-170q0-100 70-170t170-70q100 0 170 70t70 170q0 35-12.5 70.5T637 611l260 260-101 65ZM400 666q67 0 113.5-46.5T560 506q0-67-46.5-113.5T400 346q-67 0-113.5 46.5T240 506q0 67 46.5 113.5T400 666Z"
-            />
-          </svg>
-        </button>
-      </div>
+    </div>
+  </div>
 
-      <!-- SI NO ESTÁ LOGUEADO: Botón de Iniciar Sesión -->
-      @if (!isLoggedIn) {
-        <div id="login-btn">
-          <a routerLink="/login" class="google-login-btn">Iniciar Sesión</a>
-        </div>
-      }
+  <div class="header-right">
+    @if (!isLoggedIn) {
+      <a routerLink="/login" class="google-login-btn">Iniciar Sesión</a>
+    }
 
-      <!-- SI ESTÁ LOGUEADO Y NO ES EXPERTO: Menú de usuario con foto -->
-      @if (isLoggedIn && !isExpert) {
-        <div id="user-menu">
-          <div class="user-dropdown" (click)="toggleUserMenu($event)">
-            <span class="userbtn">
-              <img
-                class="profile-pic"
-                src="default-avatar.png"
-                alt="Foto de perfil"
-                />
-              </span>
-              <div class="user-dropdown-content" [class.show]="isUserMenuOpen">
-                <a routerLink="/my-bids">Mis Pujas</a>
-                <a routerLink="/my-auctions">Mis Subastas</a>
-                <a routerLink="/profile">Mi Perfil</a>
-                <a (click)="logout()">Cerrar Sesión</a>
-              </div>
-            </div>
+    @if (isLoggedIn && !isExpert) {
+      <div class="user-menu">
+        <div class="user-dropdown" (click)="toggleUserMenu($event)">
+          <img class="profile-pic" src="default-avatar.png" alt="Foto de perfil" />
+          <div class="dropdown-content user-dropdown-content" [class.show]="isUserMenuOpen">
+            <div class="dropdown-header">Mi Cuenta</div>
+            <a routerLink="/my-bids">Mis Pujas</a>
+            <a routerLink="/my-auctions">Mis Subastas</a>
+            <a routerLink="/profile">Mi Perfil</a>
+            <div class="divider"></div>
+            <a class="logout-link" (click)="logout()">Cerrar Sesión</a>
           </div>
-        }
+        </div>
+      </div>
+    }
 
-        <!-- SI ESTÁ LOGUEADO Y ES EXPERTO: Menú de experto con foto -->
-        @if (isLoggedIn && isExpert) {
-          <div id="user-menu">
-            <div class="user-dropdown" (click)="toggleUserMenu($event)">
-              <span class="userbtn">
-                <img
-                  class="profile-pic"
-                  src="expert-avatar.png"
-                  alt="Foto de perfil"
-                  />
-                </span>
-                <div class="user-dropdown-content" [class.show]="isUserMenuOpen">
-                  <a routerLink="/profile">Mi Perfil</a>
-                  <a (click)="logout()">Cerrar Sesión</a>
-                </div>
-              </div>
-            </div>
-          }
-        </header>
+    @if (isLoggedIn && isExpert) {
+      <div class="user-menu">
+        <div class="user-dropdown" (click)="toggleUserMenu($event)">
+          <img class="profile-pic expert-border" src="expert-avatar.png" alt="Foto de perfil experto" />
+          <div class="dropdown-content user-dropdown-content" [class.show]="isUserMenuOpen">
+            <div class="dropdown-header">Panel Experto</div>
+            <a routerLink="/profile">Mi Perfil</a>
+            <div class="divider"></div>
+            <a class="logout-link" (click)="logout()">Cerrar Sesión</a>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</header>

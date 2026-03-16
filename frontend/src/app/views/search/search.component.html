@@ -1,34 +1,52 @@
-<app-header/>
-<div>
-  <div>
+<app-header></app-header>
+
+<main class="search-layout">
+  <aside class="sidebar">
     <app-filter (filterChanged)="handleFilterApplied($event)"></app-filter>
-  </div>
-  <div id="subastas">
-    <div id="top-items">
-      <h1>Resultados De La Busqueda</h1>
+  </aside>
+
+  <section class="results-content">
+    <header class="results-header">
+      <div class="header-info">
+        <h1>Resultados de búsqueda</h1>
+        <p class="search-term" @if(searchTerm){> Buscando: "{{searchTerm}}" "&#125;"</p>
+      </div>
+
       @if (isLoggedIn && !isExpert) {
-        <div>
-          <h2>Saldo: {{ saldoUser }}€</h2>
-          <a id="crear-subasta" routerLink="/create-auction">Crear Subasta</a>
+        <div class="user-stats">
+          <div class="balance-card">
+            <span class="label">Tu Saldo</span>
+            <span class="value">{{ saldoUser }}€</span>
+          </div>
+          <a class="btn-create" routerLink="/create-auction">+ Crear Subasta</a>
         </div>
       }
-    </div>
-    @if (!cargaDeProductos && products.length > 0) {
-      <div id="items">
-        @for (product of products; track product) {
-          <div id="item">
-            <a [routerLink]="['/search/product', product.subastaID]">
-              <app-product-item [product]="product"></app-product-item>
-            </a>
-          </div>
-        }
+    </header>
+
+    @if (cargaDeProductos) {
+      <div class="loader-container">
+        <div class="spinner"></div>
       </div>
+    } @else {
+      @if (products.length > 0) {
+        <div class="products-grid">
+          @for (product of products; track product.subastaID) {
+            <article class="product-card">
+              <a [routerLink]="['/search/product', product.subastaID]">
+                <app-product-item [product]="product"></app-product-item>
+              </a>
+            </article>
+          }
+        </div>
+      } @else {
+        <div class="empty-state">
+          <img src="assets/no-results.svg" alt="No hay resultados" />
+          <h3>No encontramos lo que buscas</h3>
+          <p>Prueba a ajustar los filtros o a usar términos más generales.</p>
+        </div>
+      }
     }
-    @if (!cargaDeProductos && noCoincidencias) {
-      <div id="noItems">
-        <h3>No se han encontrado las subastas pedidas</h3>
-      </div>
-    }
-  </div>
-</div>
-<app-footer/>
+  </section>
+</main>
+
+<app-footer></app-footer>

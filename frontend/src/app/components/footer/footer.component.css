@@ -1,0 +1,59 @@
+.mini-footer {
+  /* Fondo con tu azul principal */
+  background-color: #0d0063; 
+  /* Línea superior con el azul clarito para rematar */
+  border-top: 2px solid #c6dafc; 
+  padding: 16px 24px;
+  font-family: 'Montserrat', sans-serif;
+  margin-top: auto;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  /* El texto normal en blanco para que lea perfecto sobre el azul oscuro */
+  color: #ffffff; 
+}
+
+.footer-content p {
+  margin: 0;
+  font-weight: 500;
+}
+
+.footer-links {
+  display: flex;
+  gap: 20px;
+}
+
+.footer-links a {
+  /* Los enlaces en tu azul claro para que llamen a hacer clic */
+  color: #c6dafc;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 4px;
+  transition: background-color 0.2s, color 0.2s, transform 0.1s;
+}
+
+/* Efecto hover: Se invierten los colores (fondo claro, texto oscuro) */
+.footer-links a:hover {
+  background-color: #c6dafc; 
+  color: #0d0063;
+}
+
+.footer-links a:active {
+  transform: scale(0.95);
+}
+
+/* Modo móvil: se apila todo al centro */
+@media (max-width: 600px) {
+  .footer-content {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+}
