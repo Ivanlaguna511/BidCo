@@ -10,9 +10,9 @@ public class LoginDTO {
     @Size(min = 1, max = 100, message = "El identificador debe tener entre 1 y 100 caracteres")
     private String identificador; // Puede ser correo o nombre de usuario
 
-    @NotNull(message = "La contraseña es obligatoria")
-    @Size(min = 6, max = 100, message = "La contraseña debe tener entre 6 y 100 caracteres")
-    private String contraseña;
+    @NotNull(message = "La contrasena es obligatoria")
+    @Size(min = 6, max = 100, message = "La contrasena debe tener entre 6 y 100 caracteres")
+    private String contrasena;
 
     // Getters y setters
     public String getIdentificador() {
@@ -23,11 +23,11 @@ public class LoginDTO {
         this.identificador = identificador;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 }

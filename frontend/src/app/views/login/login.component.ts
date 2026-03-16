@@ -25,7 +25,7 @@ export class LoginComponent {
   login() {
     const loginData = {
       identificador: this.email,
-      contraseña: this.password
+      contrasena: this.password
     };
 
     this.auth.loginUser(loginData).subscribe({

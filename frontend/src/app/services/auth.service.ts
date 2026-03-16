@@ -11,7 +11,7 @@ export interface UsuarioResponse {
   usuarioID: number;
   nombreUsuario: string;
   correoElectronico: string;
-  contraseña?: string;
+  contrasena?: string;
   ciudad: string;
   codigoPostal: string;
   calle: string;
@@ -60,7 +60,7 @@ export class AuthService {
   }
 
   // Método para hacer login; se espera que el backend retorne { token: string }
-  loginUser(loginData: { identificador: string; contraseña: string }) {
+  loginUser(loginData: { identificador: string; contrasena: string }) {
     return this.http.post<{ token: string }>(
       `${this.userApiUrl}/login`,
       loginData,
