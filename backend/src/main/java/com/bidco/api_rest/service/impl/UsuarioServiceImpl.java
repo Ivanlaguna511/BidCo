@@ -105,7 +105,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
         Usuario usuario = usuarioOpt.get();
         // Validar la contraseña (en producción, utiliza hashing)
-        if (!usuario.getContraseña().equals(loginDTO.getContrasena())) {
+        if (!usuario.getContraseña().trim().equals(loginDTO.getContrasena().trim())) {
             throw new IllegalArgumentException("Credenciales incorrectas");
         }
         // Generar el token JWT usando el ID del usuario (se guarda en el claim "sub")
