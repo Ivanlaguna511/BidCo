@@ -71,7 +71,7 @@ export class RegisterComponent {
         
         const loginData = {
           identificador: this.email,
-          contraseña: this.password
+          contrasena: this.password
         };
     
         this.authService.loginUser(loginData).subscribe({
