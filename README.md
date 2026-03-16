@@ -52,13 +52,13 @@ Este proyecto fue creado para la asignatura Servicios y Sistemas Web, asignatura
 
 ## Tecnologías Utilizadas
 
-### Frontend (Vercel)
+### Frontend
 - **Framework:** Angular 21+ *(Standalone Components, `@if`/`@for` control flow)*
 - **Lenguaje:** TypeScript
 - **Estilos:** CSS3 Puro
 - **Entornos:** Gestión dinámica mediante `environment.ts` (Producción) y `environment.development.ts` (Local).
 
-### Backend (Render)
+### Backend
 - **Framework:** Java Spring Boot 3+ (Java 25+)
 - **Build Tool:** Maven
 - **Base de Datos:** PostgreSQL *(Alojada en la nube mediante **Aiven**)*
