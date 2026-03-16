@@ -8,11 +8,6 @@
     <a href="https://bid-p0qnlyqea-ivanlaguna511s-projects.vercel.app"><strong>Ver demostración en vivo »</strong></a>
     <br />
     <br />
-    <a href="#-instalación-y-ejecución-local">Instalación</a>
-    ·
-    <a href="#-reportar-un-bug">Reportar un Bug</a>
-    ·
-    <a href="#-tecnologías-utilizadas">Ver Tecnologías</a>
   </p>
 
   <p align="center">
