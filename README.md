@@ -1,44 +1,91 @@
-# BidCo - Plataforma de Subastas y Sorteos
+<div align="center">
+  <h1 align="center">BidCo</h1>
 
-BidCo es una aplicación web Full-Stack diseñada para gestionar subastas (normales y a ciegas) y sorteos. El proyecto está estructurado con una arquitectura cliente-servidor, separando un frontend moderno basado en componentes y un backend robusto que gestiona la lógica de negocio, la seguridad (CORS) y el almacenamiento de archivos.
+  <p align="center">
+    <strong>Plataforma web Full-Stack diseñada para gestionar subastas (normales y a ciegas) y sorteos.</strong>
+    <br />
+    <br />
+    <a href="https://bid-co.vercel.app/auction"><strong>Ver demostración en vivo »</strong></a>
+    <br />
+    <br />
+    <a href="#-instalación-y-ejecución-local">Instalación</a>
+    ·
+    <a href="#-reportar-un-bug">Reportar un Bug</a>
+    ·
+    <a href="#-tecnologías-utilizadas">Ver Tecnologías</a>
+  </p>
 
-**[Ver demostración en vivo](https://bid-co.vercel.app/auction)**
+  <p align="center">
+    <img src="https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white" alt="Angular" />
+    <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+    <img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white" alt="Spring Boot" />
+    <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" />
+    <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" />
+    <img src="https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white" alt="Render" />
+  </p>
+</div>
+
+<details>
+  <summary>Tabla de Contenidos</summary>
+  <ol>
+    <li><a href="#-sobre-el-proyecto">Sobre el Proyecto</a></li>
+    <li><a href="#-tecnologías-utilizadas">Tecnologías Utilizadas</a></li>
+    <li><a href="#-requisitos-previos">Requisitos Previos</a></li>
+    <li><a href="#-instalación-y-ejecución-local">Instalación y Ejecución Local</a></li>
+    <li><a href="#-capturas-de-pantalla">Capturas de Pantalla</a></li>
+  </ol>
+</details>
+
+---
+
+## Sobre el Proyecto
+
+Este proyecto fue creado para la asignatura Servicios y Sistemas Web, asignatura perteneciente al segundo cuatrimestre del tercer curso. BidCo es una aplicación moderna estructurada con una arquitectura cliente-servidor. Su objetivo es ofrecer una experiencia fluida y segura en la participación de subastas y sorteos, separando un frontend basado en componentes de un backend robusto.
+
+**Características principales:**
+- Gestión de subastas tradicionales y a ciegas.
+- Sistema integrado de sorteos.
+- Almacenamiento seguro de archivos e imágenes.
+- Lógica de negocio protegida con políticas CORS estrictas.
 
 ---
 
 ## Tecnologías Utilizadas
 
-### Frontend (Desplegado en Vercel)
-* **Framework:** Angular 21+ (Uso de Standalone Components y `@if`/`@for` control flow).
-* **Lenguaje:** TypeScript.
-* **Estilos:** CSS3 puro.
-* **Gestión de Entornos:** Configuración dinámica de URLs de API mediante `environment.ts` (producción) y `environment.development.ts` (local).
+### Frontend (Vercel)
+- **Framework:** Angular 21+ *(Standalone Components, `@if`/`@for` control flow)*
+- **Lenguaje:** TypeScript
+- **Estilos:** CSS3 Puro
+- **Entornos:** Gestión dinámica mediante `environment.ts` (Producción) y `environment.development.ts` (Local).
 
-### Backend (Desplegado en Render)
-* **Framework:** Java Spring Boot 3+ (Java 25+).
-* **Gestor de dependencias:** Maven.
-* **Base de Datos:** PostgreSQL (Alojada en la nube mediante **Aiven**).
-* **Archivos:** Gestión de imágenes subidas por el usuario en sistema de archivos local (`/uploads`) mapeado a través de `ResourceHandlerRegistry`.
+### Backend (Render)
+- **Framework:** Java Spring Boot 3+ (Java 25+)
+- **Build Tool:** Maven
+- **Base de Datos:** PostgreSQL *(Alojada en la nube mediante **Aiven**)*
+- **Gestión de Archivos:** Sistema local (`/uploads`) mapeado a través de `ResourceHandlerRegistry`.
 
 ---
 
 ## Requisitos Previos
 
-Para levantar este proyecto desde cero en tu máquina local, necesitarás tener instalado:
-* **Node.js** y **npm** (para el Frontend).
-* **Angular CLI** (`npm install -g @angular/cli`).
-* **Java Development Kit (JDK) 25** o superior.
-* **Maven** (para compilar el Backend).
-* **Git**.
+Para levantar este proyecto desde cero en tu máquina local, asegúrate de tener instalado:
+
+* [Node.js y npm](https://nodejs.org/)
+* [Angular CLI](https://angular.io/cli) (`npm install -g @angular/cli`)
+* [Java Development Kit (JDK) 25+](https://jdk.java.net/)
+* [Maven](https://maven.apache.org/)
+* [Git](https://git-scm.com/)
 
 ---
 
-## Instalación y Ejecución Local (Paso a Paso)
+## 🛠 Instalación y Ejecución Local
 
-Sigue estos pasos en orden para no tener problemas de conexión entre el cliente y el servidor.
+Sigue estos pasos en orden para asegurar la correcta conexión entre el cliente y el servidor.
 
 ### 1. Clonar el repositorio
+
 Abre tu terminal y ejecuta:
+
 ```bash
 git clone [https://github.com/Ivanlaguna511/BidCo.git](https://github.com/Ivanlaguna511/BidCo.git)
 cd BidCo
