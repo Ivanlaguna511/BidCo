@@ -2,7 +2,7 @@
 
 BidCo es una aplicación web Full-Stack diseñada para gestionar subastas (normales y a ciegas) y sorteos. El proyecto está estructurado con una arquitectura cliente-servidor, separando un frontend moderno basado en componentes y un backend robusto que gestiona la lógica de negocio, la seguridad (CORS) y el almacenamiento de archivos.
 
-**[Ver demostración en vivo](https://vercel.com/ivanlaguna511s-projects/bid-co)**
+**[Ver demostración en vivo](https://bid-co.vercel.app/auction)**
 
 ---
 
