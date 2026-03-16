@@ -63,7 +63,8 @@ export class AuthService {
   loginUser(loginData: { identificador: string; contraseña: string }) {
     return this.http.post<{ token: string }>(
       `${this.userApiUrl}/login`,
-      loginData
+      loginData,
+      { withCredentials: true } 
     );
   }
 
