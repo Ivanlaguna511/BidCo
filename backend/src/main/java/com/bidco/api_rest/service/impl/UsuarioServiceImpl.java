@@ -94,9 +94,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public String login(LoginDTO loginDTO) {
-        // Buscar usuario por nombre de usuario
         Optional<Usuario> usuarioOpt = usuarioRepository.findByNombreUsuario(loginDTO.getIdentificador());
-        // Si no encuentra, se puede buscar por correo electrónico (asegúrate de tener el método en el repositorio)
         if (!usuarioOpt.isPresent()) {
             usuarioOpt = usuarioRepository.findByCorreoElectronico(loginDTO.getIdentificador());
         }
@@ -104,11 +102,19 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new EntityNotFoundException("Credenciales incorrectas");
         }
         Usuario usuario = usuarioOpt.get();
-        // Validar la contraseña (en producción, utiliza hashing)
-        if (!usuario.getContraseña().trim().equals(loginDTO.getContrasena().trim())) {
+
+        // --- CÓDIGO CHIVATO DE DEBUGGING ---
+        System.out.println("====== DEBUG LOGIN ======");
+        System.out.println("Identificador en JSON: [" + loginDTO.getIdentificador() + "]");
+        System.out.println("Contraseña en JSON: [" + loginDTO.getContrasena() + "]");
+        System.out.println("Contraseña en Base de Datos: [" + usuario.getContraseña() + "]");
+        System.out.println("=========================");
+        // -----------------------------------
+
+        if (!usuario.getContraseña().equals(loginDTO.getContrasena())) {
             throw new IllegalArgumentException("Credenciales incorrectas");
         }
-        // Generar el token JWT usando el ID del usuario (se guarda en el claim "sub")
+        
         return jwtUtil.generateToken(usuario.getUsuarioID().toString());
     }
 
