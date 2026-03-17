@@ -68,7 +68,8 @@
 /* Grid de Productos - Responsivo total */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  /* Antes tenías 220px. Al subirlo a 280px, las tarjetas se hacen más anchas y proporcionadas */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 24px;
 }
 
