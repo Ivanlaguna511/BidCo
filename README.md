@@ -1,119 +1,59 @@
 <div align="center">
-  <h1 align="center">BidCo</h1>
+  <h1 align="center">BidCo (Versión Original - Local)</h1>
 
   <p align="center">
-    <strong>Plataforma web Full-Stack diseñada para gestionar subastas (normales y a ciegas) y sorteos.</strong>
+    <strong>Plataforma web Full-Stack para gestión de subastas y sorteos (Proyecto Universitario).</strong>
     <br />
     <br />
-    <a href="https://bid-co.vercel.app/auction"><strong>Ver demostración en vivo »</strong></a>
+    ⚠️ <strong>Nota:</strong> Esta es la rama original de entrega. Para ver la versión mejorada, optimizada y alojada en la nube, cambia a la rama <a href="https://github.com/TU_USUARIO/BidCo/tree/deploy"><strong>deploy</strong></a>.
     <br />
     <br />
-  </p>
-
-  <p align="center">
-    <img src="https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white" alt="Angular" />
-    <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
-    <img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white" alt="Spring Boot" />
-    <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" />
-    <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" />
-    <img src="https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white" alt="Render" />
-    <img src="https://img.shields.io/badge/Aiven-FF4F00?style=for-the-badge&logo=aiven&logoColor=white" alt="Aiven" />
-    <img src="https://img.shields.io/badge/Cloudinary-3448C5?style=for-the-badge&logo=cloudinary&logoColor=white" alt="Cloudinary" />
   </p>
 </div>
 
 ---
 
-## Sobre el Proyecto
+## 🎓 Sobre el Proyecto
 
-Este proyecto fue creado para la asignatura Servicios y Sistemas Web, asignatura perteneciente al segundo cuatrimestre del tercer curso. BidCo es una aplicación moderna estructurada con una arquitectura cliente-servidor. Su objetivo es ofrecer una experiencia fluida y segura en la participación de subastas y sorteos, separando un frontend basado en componentes de un backend robusto. El branch master es el original que desarrollamos y entregamos durante la asignatura, el branch deploy es el que hemos ido mejorando y actualizando y está completamente alojado en la nube.
+Este proyecto fue creado para la asignatura **Servicios y Sistemas Web** (2º cuatrimestre, 3º curso). BidCo es una aplicación con arquitectura cliente-servidor diseñada para gestionar subastas tradicionales, subastas a ciegas y sorteos.
 
-**Características principales:**
-- Gestión de subastas tradicionales y a ciegas.
-- Sistema integrado de sorteos.
-- Almacenamiento seguro de archivos e imágenes.
-- Lógica de negocio protegida con políticas CORS estrictas.
+Esta rama (`master`) contiene el código original evaluado durante el curso, diseñado para ejecutarse estrictamente en un entorno local (**localhost**) utilizando **MySQL** como base de datos.
 
----
+## 🛠 Tecnologías Utilizadas (Entorno Local)
 
-## Tecnologías Utilizadas
-
-### Frontend
-- **Framework:** Angular 21+ *(Standalone Components, `@if`/`@for` control flow)*
-- **Lenguaje:** TypeScript
-- **Estilos:** CSS3 Puro
-- **Entornos:** Gestión dinámica mediante `environment.ts` (Producción) y `environment.development.ts` (Local).
-
-### Backend
-- **Framework:** Java Spring Boot 3+ (Java 25+)
-- **Build Tool:** Maven
-- **Base de Datos:** PostgreSQL *(Alojada en la nube mediante **Aiven**)*
-- **Gestión de Archivos:** Sistema local (`/uploads`) mapeado a través de `ResourceHandlerRegistry`.
+* **Frontend:** Angular 19+, TypeScript, CSS3.
+* **Backend:** Java Spring Boot 3+, Maven.
+* **Base de Datos:** MySQL (Servidor Local).
 
 ---
 
-## Requisitos Previos
+## 🚀 Guía de Instalación Rápida
 
-Para levantar este proyecto desde cero en tu máquina local, asegúrate de tener instalado:
+Para probar esta versión antigua en tu máquina:
 
-* [Node.js y npm](https://nodejs.org/)
-* [Angular CLI](https://angular.io/cli) (`npm install -g @angular/cli`)
-* [Java Development Kit (JDK) 25+](https://jdk.java.net/)
-* [Maven](https://maven.apache.org/)
-* [Git](https://git-scm.com/)
+1. **Clonar el repositorio:**
+   ```bash
+   git clone [https://github.com/Ivanlaguna511/BidCo.git](https://github.com/Ivanlaguna511/BidCo.git)
+   cd BidCo
+   ```
 
----
+2. **Base de Datos (MySQL):**
+   * Abre MySQL Workbench.
+   * Ejecuta el script SQL que se encuentra detallado en el `README.md` de la carpeta `/backend` para generar las tablas y datos de prueba.
 
-## Instalación y Ejecución Local
+3. **Backend (Spring Boot):**
+   ```bash
+   cd backend
+   mvn clean install
+   mvn spring-boot:run
+   ```
+   *(El servidor arrancará en el puerto 8080).*
 
-Sigue estos pasos en orden para asegurar la correcta conexión entre el cliente y el servidor.
-
-### 1. Clonar el repositorio
-
-Abre tu terminal y ejecuta:
-
-```bash
-git clone [https://github.com/Ivanlaguna511/BidCo.git](https://github.com/Ivanlaguna511/BidCo.git)
-cd BidCo
-```
-### 2. Configurar y Levantar el Backend (Spring Boot)
-El servidor debe estar corriendo antes que el frontend para que la base de datos y las APIs estén disponibles.
-Navega a la carpeta del backend
-```bash
-cd backend
-```
-Abre el archivo de propiedades de Spring Boot (src/main/resources/application.properties).
-Asegúrate de que las credenciales apuntan a tu base de datos:
-
-```bash
-Properties
-spring.datasource.url=jdbc:postgresql://[URL-DE-AIVEN]
-spring.datasource.username=[TU-USUARIO]
-spring.datasource.password=[TU-CONTRASEÑA]
-Instala las dependencias y compila el proyecto con Maven:
-```
-
-```bash
-mvn clean install
-mvn spring-boot:run
-```
-
-Nota: El backend arrancará en http://localhost:8080. El sistema creará automáticamente la carpeta uploads/ en la raíz si no existe para almacenar las imágenes de los productos.
-
-### 3. Configurar y Levantar el Frontend (Angular)
-Abre otra pestaña en tu terminal (deja el backend corriendo en la primera) y haz lo siguiente:
-
-Navega a la carpeta del frontend:
-
-```bash
-cd frontend
-```
-Instala todas las dependencias del package.json:
-```bash
-npm install
-```
-Arranca el servidor de desarrollo de Angular:
-```bash
-ng serve
-```
-Abre tu navegador y entra en http://localhost:4200. ¡La aplicación ya está funcionando en local conectada a tu backend!
+4. **Frontend (Angular):**
+   Abre una nueva terminal:
+   ```bash
+   cd frontend
+   npm install
+   ng serve
+   ```
+   *(Abre `http://localhost:4200` en tu navegador).*
