@@ -1,25 +1,155 @@
-div {
-    border-left: 4px solid #007bff;
-    padding: 8px;
-    margin: 10px 0;
-    background: #f8f9fa;
-    border-radius: 4px;
-    max-width: 90%;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+/* --- TARJETA PRINCIPAL --- */
+.expert-comment-card {
+  background: #ffffff;
+  border: 1px solid #e8eaed; /* Borde sutil */
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin: 16px 0;
+  box-shadow: 0 2px 8px rgba(13, 0, 99, 0.04);
+  font-family: 'Montserrat', sans-serif;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  max-width: 800px; /* Evita que ocupe de lado a lado en pantallas gigantes */
 }
 
-div button{
-    background-color: #0d0063;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: large;
-    margin-top: 0.5%;
-    max-width: 15%;
+/* La franja de tu color corporativo a la izquierda */
+.expert-comment-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #0d0063;
+  border-radius: 12px 0 0 12px;
 }
 
-div button:hover {
-    background-color: #09004b;
+.expert-comment-card:hover {
+  box-shadow: 0 6px 16px rgba(13, 0, 99, 0.08);
+  transform: translateY(-2px); /* Se levanta un poquito */
+}
+
+/* --- CABECERA --- */
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.expert-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap; /* Por si están en móvil */
+}
+
+/* Avatar circular */
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: #f1f3f4;
+  border-radius: 50%;
+  color: #5f6368;
+}
+
+.expert-name {
+  font-weight: 700;
+  color: #202124;
+  font-size: 1rem;
+}
+
+/* Etiqueta verde estilo Trustpilot/Google Verified */
+.expert-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #e6f4ea; 
+  color: #137333;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+/* --- BOTÓN DE EDITAR --- */
+.btn-edit {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  color: #5f6368;
+  border: 1px solid #dadce0;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.btn-edit:hover {
+  background: #f8f9fa;
+  color: #0d0063; /* Se ilumina con tu color */
+  border-color: #0d0063;
+}
+
+.btn-edit:active {
+  transform: scale(0.95);
+}
+
+/* --- CUERPO DEL COMENTARIO --- */
+.comment-body p {
+  margin: 0 0 20px 0;
+  color: #3c4043;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* --- VALOR ESTIMADO (El bloque destacado) --- */
+.comment-footer {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.estimation-badge {
+  display: inline-flex;
+  align-items: center;
+  background: #f8f9fa;
+  border: 1px solid #e8eaed;
+  border-radius: 8px;
+  padding: 8px 16px;
+  gap: 16px;
+}
+
+.estimation-label {
+  font-size: 0.75rem;
+  color: #5f6368;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+}
+
+.estimation-value {
+  font-size: 1.25rem;
+  color: #0d0063; /* Tu color azul dándole peso al precio */
+  font-weight: 800;
+}
+
+/* Modo móvil */
+@media (max-width: 500px) {
+  .comment-header {
+    flex-direction: column;
+  }
+  .btn-edit {
+    align-self: flex-start;
+  }
 }

@@ -1,33 +1,71 @@
 @if (productoSubasta && (tipo === 'subasta' || tipo === 'ciega')) {
-  <div id="producto">
-    <div><h1>{{ productoSubasta.nombreArticulo }}</h1></div>
-    <div id="img_detalles">
-      <div>
-        <img [src]="productoSubasta.imagen" alt="{{ productoSubasta.nombreArticulo }}">
+  <article class="product-layout">
+    
+    <div class="product-gallery">
+      <span class="badge badge-auction">
+        @if(tipo === 'ciega') { Subasta a Ciegas } @else { Subasta Activa }
+      </span>
+      <img class="product-image" [src]="productoSubasta.imagen" [alt]="productoSubasta.nombreArticulo">
+    </div>
+
+    <div class="product-info">
+      <h1 class="product-title">{{ productoSubasta.nombreArticulo }}</h1>
+      
+      <div class="price-box">
+        <span class="price-label">Precio Base</span>
+        <span class="price-value">{{ productoSubasta.precioInicial }}€</span>
       </div>
-      <div id="detalles">
-        <div>{{ 'Precio Base: ' + productoSubasta.precioInicial + '€' }}</div>
-        <div>{{ productoSubasta.descripcion }}</div>
-        <div>Creado por: {{ nombreUsuario }}</div>
+
+      <div class="product-description">
+        <h3>Acerca de este artículo</h3>
+        <p>{{ productoSubasta.descripcion }}</p>
+      </div>
+
+      <div class="product-creator">
+        <div class="creator-avatar">
+          <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20" fill="currentColor"><path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Z"/></svg>
+        </div>
+        <div class="creator-details">
+          <span class="creator-label">Vendedor / Creador</span>
+          <span class="creator-name">{{ nombreUsuario }}</span>
+        </div>
       </div>
     </div>
-  </div>
+
+  </article>
 }
 
-
-
 @if (productoSorteo && tipo === 'sorteo') {
-  <div id="producto">
-    <div><h1>{{ productoSorteo.nombreArticulo }}</h1></div>
-    <div id="img_detalles">
-      <div>
-        <img [src]="productoSorteo.imagen" alt="{{ productoSorteo.nombreArticulo }}">
+  <article class="product-layout">
+    
+    <div class="product-gallery">
+      <span class="badge badge-raffle">Sorteo Exclusivo</span>
+      <img class="product-image" [src]="productoSorteo.imagen" [alt]="productoSorteo.nombreArticulo">
+    </div>
+
+    <div class="product-info">
+      <h1 class="product-title">{{ productoSorteo.nombreArticulo }}</h1>
+      
+      <div class="price-box box-raffle">
+        <span class="price-label">Ticket de participación</span>
+        <span class="price-value">{{ productoSorteo.puntosNecesarios }} <span class="points-text">puntos</span></span>
       </div>
-      <div id="detalles">
-        <div>{{ 'Puntos para participar: ' + productoSorteo.puntosNecesarios + ' puntos' }}</div>
-        <div>{{ productoSorteo.descripcion }}</div>
-        <div>Creado por: BidCo</div>
+
+      <div class="product-description">
+        <h3>Acerca de este sorteo</h3>
+        <p>{{ productoSorteo.descripcion }}</p>
+      </div>
+
+      <div class="product-creator">
+        <div class="creator-avatar avatar-bidco">
+          <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20" fill="currentColor"><path d="M840-680v360q0 33-23.5 56.5T760-240H200q-33 0-56.5-23.5T120-320v-360q0-33 23.5-56.5T200-760h560q33 0 56.5 23.5T840-680Zm-80 0H200v360h560v-360Zm-280 60L320-460l160 160 160-160-160-160Z"/></svg>
+        </div>
+        <div class="creator-details">
+          <span class="creator-label">Organizador oficial</span>
+          <span class="creator-name">BidCo</span>
+        </div>
       </div>
     </div>
-  </div>
+
+  </article>
 }

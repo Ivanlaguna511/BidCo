@@ -1,34 +1,193 @@
-#producto {
-    display: flex;
-    flex-direction: column; /* Organiza en columna primero */
+/* --- CONTENEDOR PRINCIPAL (GRID) --- */
+.product-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
+  gap: 48px; /* Espacio generoso entre foto y texto */
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 24px;
+  font-family: 'Montserrat', sans-serif;
+  color: #202124;
 }
 
-/* Estilo del nombre */
-#producto h1 {
-    font-size: 200%;
-    margin-bottom: 10px;
+/* --- COLUMNA 1: GALERÍA E IMAGEN --- */
+.product-gallery {
+  position: relative;
+  background-color: #f8f9fa; /* Fondo gris claro estilo Apple */
+  border: 1px solid #e8eaed;
+  border-radius: 20px;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1; /* Hace que la caja sea un cuadrado perfecto siempre */
 }
 
-/* Imagen del producto */
-#producto img {
-    max-width: 400px;
-    min-width: 400px; /* Tamaño fijo para la imagen */
-    height: auto;
-    border-radius: 8px;
-    margin-right: 15px; /* Espaciado a la derecha de la imagen */
+.product-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  /* El mix-blend-mode quita fondos blancos feos de las fotos (Magia CSS) */
+  mix-blend-mode: multiply; 
+  transition: transform 0.3s ease;
 }
 
-/* Contenedor de los detalles */
-#img_detalles {
-    display: flex;
-    flex-direction: row;
+.product-image:hover {
+  transform: scale(1.05); /* Efecto zoom muy sutil */
 }
 
-#detalles {
-    font-size: 120%;
-    margin-left: 5%;
+/* Etiquetas (Badges) flotantes sobre la foto */
+.badge {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  z-index: 2;
 }
 
-#detalles div{
-    margin-bottom: 5%;
+.badge-auction { background-color: #0d0063; color: white; }
+.badge-raffle { background-color: #fbbc04; color: #0d0063; } /* Amarillo Google */
+
+/* --- COLUMNA 2: DETALLES --- */
+.product-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra el texto verticalmente respecto a la foto */
+}
+
+.product-title {
+  font-size: clamp(1.8rem, 3vw, 2.8rem); /* Texto elástico: grande en PC, adaptado en móvil */
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0 0 24px 0;
+  color: #0d0063;
+  letter-spacing: -1px;
+}
+
+/* CAJA DE PRECIO / PUNTOS DESTACADA */
+.price-box {
+  background-color: #ffffff;
+  border: 1px solid #dadce0;
+  border-left: 6px solid #0d0063; /* Franja azul a la izquierda */
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 32px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.box-raffle {
+  border-left-color: #fbbc04; /* Franja amarilla para sorteos */
+}
+
+.price-label {
+  font-size: 0.9rem;
+  color: #5f6368;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.price-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #0d0063;
+  line-height: 1;
+}
+
+.points-text {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #5f6368;
+}
+
+/* DESCRIPCIÓN */
+.product-description {
+  margin-bottom: 32px;
+}
+
+.product-description h3 {
+  font-size: 1.1rem;
+  color: #202124;
+  margin: 0 0 12px 0;
+  border-bottom: 2px solid #f8f9fa;
+  padding-bottom: 8px;
+}
+
+.product-description p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #3c4043;
+  margin: 0;
+}
+
+/* CREADOR / VENDEDOR */
+.product-creator {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background-color: #f8f9fa;
+  padding: 16px;
+  border-radius: 12px;
+}
+
+.creator-avatar {
+  width: 48px;
+  height: 48px;
+  background-color: #c6dafc; /* Tu azul clarito */
+  color: #0d0063;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-bidco {
+  background-color: #0d0063;
+  color: white;
+}
+
+.creator-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.creator-label {
+  font-size: 0.75rem;
+  color: #5f6368;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.creator-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #202124;
+}
+
+/* --- MODO MÓVIL (Auto-apilable) --- */
+@media (max-width: 900px) {
+  .product-layout {
+    grid-template-columns: 1fr; /* Pasa de 2 columnas a 1 columna */
+    gap: 24px;
+    margin: 20px auto;
+  }
+
+  .product-gallery {
+    padding: 20px;
+    aspect-ratio: auto; /* Permite que la imagen tome su forma en móvil */
+  }
+
+  .price-value {
+    font-size: 2rem;
+  }
 }

@@ -1,30 +1,42 @@
+/* =========================================
+   FILTRO PREMIUM (AUTO-ESCALABLE SIN SCROLL)
+   ========================================= */
+
 .filter-container {
   position: fixed;
-  top: 20%;
-  width: 18%;
-  height: auto;
-  background-color: #fff;
-  border-right: 1px solid #e0e0e0;
-  padding: 20px;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
-  overflow-y: auto;
-  font-family: 'Roboto', sans-serif;
+  top: 12vh; /* Se ajusta a la altura de la pantalla */
+  left: 0;
+  width: 18%; 
+  height: 85vh; /* Ocupa el 85% de la pantalla, dejando margen abajo */
+  background-color: #ffffff;
+  border-right: 1px solid #e8eaed; 
+  padding: 3vh 1.5vw; /* Padding proporcional */
+  overflow: hidden;
+  font-family: 'Montserrat', sans-serif;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
+/* --- CABECERA --- */
 .filter-container h2 {
-  margin-bottom: 20px;
-  font-size: 1.5em;
-  color: #000;
-  border-bottom: 1px solid #e0e0e0;
-  padding-bottom: 10px;
+  margin: 0 0 2vh 0; /* Margen proporcional */
+  font-size: clamp(1.1rem, 1.5vw, 1.4rem); /* La fuente se hace pequeña si la pantalla es enana */
+  font-weight: 700;
+  color: #0d0063; 
+  border-bottom: 2px solid #f8f9fa;
+  padding-bottom: 1.5vh;
+  flex-shrink: 0; /* Evita que el título se aplaste */
 }
 
 .filter-container form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 3vh; /* El espacio entre bloques se encoge mágicamente */
+  height: 100%;
 }
 
+/* --- FIELDSETS Y LEYENDAS --- */
 .filter-container fieldset {
   border: none;
   padding: 0;
@@ -32,135 +44,176 @@
 }
 
 .filter-container legend {
-  font-size: 1.1em;
-  margin-bottom: 10px;
-  color: #000;
-  font-weight: 600;
+  font-size: clamp(0.75rem, 1vw, 0.85rem);
+  margin-bottom: 1.5vh;
+  color: #202124; 
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* --- INPUTS DE PRECIO Y SELECT --- */
+.price-filter {
+  display: flex;
+  gap: 0.8vw;
 }
 
 .filter-container input[type="number"],
 .filter-container select {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  transition: border-color 0.3s;
+  padding: 1.2vh 0.8vw; /* Padding elástico */
+  border: 1px solid #dadce0;
+  border-radius: 6px;
+  font-size: clamp(0.85rem, 1vw, 0.95rem);
+  color: #202124;
+  background-color: #ffffff;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  font-family: inherit;
 }
 
 .filter-container input[type="number"]:focus,
 .filter-container select:focus {
   border-color: #0d0063;
+  box-shadow: 0 0 0 2px rgba(13, 0, 99, 0.15); 
   outline: none;
 }
 
-/* Estilos para navegadores basados en WebKit */
-input[type="range"]::-webkit-slider-thumb {
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
-  width: 20px; /* Ancho de la bola */
-  height: 20px; /* Alto de la bola */
-  margin-top: 3%; /* Ajuste vertical */
-  cursor: pointer;
-  border-radius: 50%; /* Forma circular */
+  margin: 0;
 }
 
-.price-filter {
-  display: flex;
-  gap: 10px;
-}
-
-.price-filter input {
-  flex: 1;
-}
-
-/* Range slider styles */
+/* --- EL SLIDER DE PRECIO (FIJADO EN PX PARA NO DESCUADRAR) --- */
 .range-slider {
   position: relative;
   width: 100%;
-  height: 40px;
-  margin-top: 7%;
+  height: 30px; 
+  margin-top: 1.5vh;
 }
 
 .slider {
   position: relative;
   width: 100%;
-  height: 6px;
-  background: #ddd;
+  height: 6px; 
+  background: #e8eaed;
   border-radius: 3px;
-}
-
-.slider .track {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: #ddd;
-  border-radius: 3px;
+  top: 12px; 
 }
 
 .slider .range {
   position: absolute;
+  top: 0;
   height: 100%;
   background: #0d0063;
   border-radius: 3px;
 }
 
-/* Ocultamos el slider nativo y estilizamos los thumbs */
 input[type="range"].thumb {
   position: absolute;
+  top: 12px; 
+  left: 0;
   width: 100%;
-  height: 0;
+  height: 6px; 
   pointer-events: none;
   background: transparent;
+  -webkit-appearance: none;
+  margin: 0;
+  outline: none;
 }
 
 input[type="range"].thumb::-webkit-slider-thumb {
   pointer-events: all;
   -webkit-appearance: none;
-  height: 20px;
   width: 20px;
+  height: 20px;
   border-radius: 50%;
-  background: #0d0063;
+  background: #ffffff;
+  border: 2px solid #0d0063;
+  margin-top: -23px; 
   cursor: pointer;
-  border: none;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  transition: transform 0.1s;
+}
+
+input[type="range"].thumb::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
 }
 
 input[type="range"].thumb::-moz-range-thumb {
   pointer-events: all;
-  height: 20px;
-  width: 20px;
+  width: 16px; 
+  height: 16px;
   border-radius: 50%;
-  background: #0d0063;
+  background: #ffffff;
+  border: 2px solid #0d0063;
   cursor: pointer;
-  border: none;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
 }
 
-/* Opcional: para separar visualmente los thumbs (en caso de superposición) */
-.thumb--left {
-  z-index: 3;
-}
-.thumb--right {
-  z-index: 2;
+.thumb--left { z-index: 3; }
+.thumb--right { z-index: 2; }
+
+/* --- CHECKBOXES PERSONALIZADOS --- */
+.category-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5vh; /* Se encogen si no hay espacio */
 }
 
-/* Categoría y fecha */
-.category-filter .checkbox-group {
+.checkbox-group {
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
-}
-
-.category-filter .checkbox-group input[type="checkbox"] {
-  margin: 0 8px 0 0;
-  width: 18px;
-  height: 18px;
-  accent-color: #0d0063;
-}
-
-.category-filter .checkbox-group label {
   cursor: pointer;
-  font-size: 0.95em;
-  color: #000;
 }
 
+.checkbox-group input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px; /* Tamaño fijo para que no se deforme el cuadrado */
+  height: 20px;
+  border: 2px solid #dadce0;
+  border-radius: 4px;
+  margin-right: 0.8vw;
+  margin-left: 0;
+  margin-top: 0;
+  cursor: pointer;
+  position: relative;
+  background-color: #fff;
+  transition: all 0.2s ease;
+  flex-shrink: 0; 
+}
+
+.checkbox-group input[type="checkbox"]:checked {
+  background-color: #0d0063;
+  border-color: #0d0063;
+}
+
+.checkbox-group input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 1px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.checkbox-group label {
+  cursor: pointer;
+  font-size: clamp(0.85rem, 1vw, 0.95rem); /* Texto elástico */
+  color: #3c4043;
+  user-select: none;
+}
+
+.checkbox-group:hover input[type="checkbox"]:not(:checked) {
+  border-color: #0d0063; 
+}
+
+/* --- SELECT DE FECHA --- */
 .date-filter select {
-  padding: 10px;
+  cursor: pointer;
 }
