@@ -13,13 +13,13 @@
 
 ---
 
-## 🎓 Sobre el Proyecto
+## Sobre el Proyecto
 
 Este proyecto fue creado para la asignatura **Servicios y Sistemas Web** (2º cuatrimestre, 3º curso). BidCo es una aplicación con arquitectura cliente-servidor diseñada para gestionar subastas tradicionales, subastas a ciegas y sorteos.
 
 Esta rama (`master`) contiene el código original evaluado durante el curso, diseñado para ejecutarse estrictamente en un entorno local (**localhost**) utilizando **MySQL** como base de datos.
 
-## 🛠 Tecnologías Utilizadas (Entorno Local)
+## Tecnologías Utilizadas (Entorno Local)
 
 * **Frontend:** Angular 19+, TypeScript, CSS3.
 * **Backend:** Java Spring Boot 3+, Maven.
@@ -27,7 +27,7 @@ Esta rama (`master`) contiene el código original evaluado durante el curso, dis
 
 ---
 
-## 🚀 Guía de Instalación Rápida
+## Guía de Instalación Rápida
 
 Para probar esta versión antigua en tu máquina:
 
