@@ -1,32 +1,40 @@
-# BidCo Frontend (Versión Local)
+# BidCo Frontend Client (Local Version)
 
-Este proyecto fue generado con [Angular CLI](https://github.com/angular/angular-cli) versión 19.2.1. Representa la interfaz de usuario original del proyecto universitario BidCo.
+Aplicación cliente (SPA) para la plataforma BidCo. Desarrollada con Angular, proporciona la interfaz de usuario original diseñada para participar en subastas y sorteos.
 
-## Servidor de Desarrollo
+## Stack Tecnológico
 
-Para levantar la interfaz en tu máquina local:
+* **Framework:** Angular 19+ (Standalone Components)
+* **Lenguaje:** TypeScript
+* **Estilos:** CSS3 Puro
+* **Gestor de paquetes:** npm
 
+## Requisitos Previos
+
+* Node.js (v18 o superior).
+* Angular CLI instalado globalmente. Si no lo tienes, instálalo con:
+```bash
+npm install -g @angular/cli
+```
+* El servidor Backend de BidCo debe estar ejecutándose en `http://localhost:8080`.
+
+## Instalación y Ejecución
+
+1. Navega al directorio del frontend:
+```bash
+cd frontend
+```
+
+2. Instala las dependencias del proyecto:
 ```bash
 npm install
+```
+
+3. Arranca el servidor de desarrollo:
+```bash
 ng serve
 ```
 
-Una vez que el servidor esté funcionando, abre tu navegador y entra en `http://localhost:4200/`. La aplicación se recargará automáticamente si modificas algún archivo fuente. 
-*Asegúrate de tener el backend corriendo en el puerto `8080` para que las peticiones a la API funcionen.*
+4. Abre tu navegador y navega a `http://localhost:4200/`.
 
-## Generación de Código
-
-Angular CLI incluye herramientas para generar estructuras de código. Para crear un nuevo componente:
-
-```bash
-ng generate component nombre-componente
-```
-
-## Construcción (Build)
-
-Para compilar el proyecto y prepararlo para producción:
-
-```bash
-ng build
-```
-Los archivos compilados se guardarán en el directorio `dist/`.
+La aplicación se conectará automáticamente al backend local y se recargará si modificas algún archivo del código fuente.
