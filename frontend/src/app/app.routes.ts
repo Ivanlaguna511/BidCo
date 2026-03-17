@@ -20,6 +20,7 @@ import { AdminSorteoComponent } from './views/admin/admin-sorteo/admin-sorteo.co
 import { AdminExpertComponent } from './views/admin/admin-expert/admin-expert.component';
 import { SearchComponent } from './views/search/search.component';
 import { ExpertLoginComponent } from './views/expert-login/expert-login.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/auction', pathMatch: 'full' },
@@ -38,6 +39,7 @@ export const routes: Routes = [
   { path: 'search', component: SearchComponent },
   { path: 'search/product/:id', component: ProductComponent, data: { tipo: 'subasta' } },
   { path: 'admin/login', component: AdminLoginComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
   {
     path: 'admin',
     component: AdminDashboardComponent,

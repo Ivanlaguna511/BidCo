@@ -1,11 +1,11 @@
 /* --- ESTRUCTURA PRINCIPAL --- */
 .auth-page-background {
-  background-color: #f8f9fa; /* Fondo gris claro premium */
-  min-height: 85vh;
+  background-color: #f8f9fa;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px 24px;
+  padding: 60px 24px;
   font-family: 'Montserrat', sans-serif;
   color: #202124;
 }
@@ -14,12 +14,41 @@
 .auth-card {
   background-color: #ffffff;
   width: 100%;
-  max-width: 450px; /* Más estrecha que el registro para mantener proporciones */
-  padding: 48px 40px;
-  border-radius: 16px;
+  max-width: 480px; /* Aumentado de 450px para menos compresión */
+  padding: 40px 48px;
+  border-radius: 20px;
   border: 1px solid #e8eaed;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
   box-sizing: border-box;
+}
+
+/* --- PESTAÑAS (TABS) --- */
+.auth-tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+  border-bottom: 1px solid #eee;
+}
+
+.auth-tab {
+  padding: 12px 20px;
+  text-decoration: none;
+  color: #5f6368;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.auth-tab.active {
+  color: #0d0063;
+  border-bottom-color: #0d0063;
+}
+
+.auth-tab:hover:not(.active) {
+  color: #202124;
+  background-color: #f8f9fa;
 }
 
 /* --- CABECERA --- */
@@ -29,22 +58,16 @@
 }
 
 .brand-title {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   font-weight: 800;
   color: #0d0063;
-  margin: 0 0 12px 0;
-  letter-spacing: -1px;
-}
-
-.auth-header h2 {
-  font-size: 1.4rem;
-  color: #202124;
-  margin: 0 0 8px 0;
+  margin: 0 0 10px 0;
+  letter-spacing: -1.5px;
 }
 
 .auth-header p {
   color: #5f6368;
-  font-size: 0.95rem;
+  font-size: 1rem;
   margin: 0;
 }
 
@@ -56,186 +79,135 @@
   background-color: #fce8e6;
   border: 1px solid #f28b82;
   color: #c5221f;
-  padding: 12px 16px;
-  border-radius: 8px;
+  padding: 14px;
+  border-radius: 10px;
   margin-bottom: 24px;
   font-size: 0.9rem;
   font-weight: 600;
 }
 
-.alert-error svg {
-  flex-shrink: 0;
-}
-
-/* --- FORMULARIO E INPUTS --- */
+/* --- FORMULARIO --- */
 .auth-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px; /* Aumentado para que respire más */
 }
 
 .input-group {
   display: flex;
   flex-direction: column;
+  gap: 8px;
 }
 
 .input-group label {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: #5f6368;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-bottom: 8px;
 }
 
 .input-group input {
-  padding: 14px 16px;
+  padding: 14px 18px;
   font-size: 1rem;
-  font-family: inherit;
-  color: #202124;
-  background-color: #ffffff;
   border: 1px solid #dadce0;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-  box-sizing: border-box;
-}
-
-.input-group input::placeholder {
-  color: #9aa0a6;
-}
-
-/* Efecto Focus de Google (Aro azul) */
-.input-group input:focus {
-  border-color: #0d0063;
-  box-shadow: 0 0 0 2px rgba(13, 0, 99, 0.15);
-  outline: none;
-}
-
-/* --- OPCIONES (Checkbox y Olvidé contraseña) --- */
-.form-options {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 4px;
-  margin-bottom: 8px;
-}
-
-/* Checkbox Personalizado */
-.checkbox-group {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-.checkbox-group input[type="checkbox"] {
-  display: none; /* Escondemos el feo por defecto */
-}
-
-.custom-checkbox {
-  width: 18px;
-  height: 18px;
-  border: 2px solid #dadce0;
-  border-radius: 4px;
-  margin-right: 8px;
-  position: relative;
+  border-radius: 12px;
   transition: all 0.2s ease;
   background-color: #fff;
 }
 
-.checkbox-group input[type="checkbox"]:checked + .custom-checkbox {
+.input-group input:focus {
+  border-color: #0d0063;
+  box-shadow: 0 0 0 4px rgba(13, 0, 99, 0.08);
+  outline: none;
+}
+
+/* --- OPCIONES (SOLUCIÓN A LO ESTAR "MUY JUNTO") --- */
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 4px 0;
+  gap: 10px; /* Evita que choquen en pantallas pequeñas */
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-group input { display: none; }
+
+.custom-checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #dadce0;
+  border-radius: 6px;
+  margin-right: 10px;
+  position: relative;
+  transition: 0.2s;
+}
+
+.checkbox-group input:checked + .custom-checkbox {
   background-color: #0d0063;
   border-color: #0d0063;
 }
 
-/* El Tick Blanco del Checkbox */
-.checkbox-group input[type="checkbox"]:checked + .custom-checkbox::after {
+.custom-checkbox::after {
   content: "";
   position: absolute;
-  left: 5px;
-  top: 1px;
-  width: 4px;
-  height: 9px;
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
   border: solid white;
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
+  display: none;
 }
 
-.checkbox-label {
-  font-size: 0.9rem;
-  color: #3c4043;
-  user-select: none;
-}
+.checkbox-group input:checked + .custom-checkbox::after { display: block; }
 
 .forgot-link {
   font-size: 0.85rem;
   color: #0d0063;
   font-weight: 600;
   text-decoration: none;
-  transition: color 0.2s;
 }
 
-.forgot-link:hover {
-  text-decoration: underline;
-}
+.forgot-link:hover { text-decoration: underline; }
 
-/* --- BOTÓN PRINCIPAL --- */
+/* --- BOTÓN --- */
 .btn-primary {
   width: 100%;
   background-color: #0d0063;
   color: #ffffff;
   padding: 16px;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   font-weight: 700;
   border: none;
-  border-radius: 24px; /* Botón Píldora */
+  border-radius: 14px;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(13, 0, 99, 0.15);
-  font-family: inherit;
+  transition: all 0.3s ease;
+  margin-top: 10px;
 }
 
 .btn-primary:hover {
   background-color: #15009e;
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(13, 0, 99, 0.25);
-}
-
-.btn-primary:active {
-  transform: translateY(0);
-}
-
-/* --- FOOTER DEL LOGIN --- */
-.auth-footer {
-  text-align: center;
-  margin-top: 32px;
-  padding-top: 24px;
-  border-top: 1px solid #e8eaed;
-}
-
-.auth-footer p {
-  font-size: 0.95rem;
-  color: #5f6368;
-  margin: 0;
-}
-
-.auth-footer a {
-  color: #0d0063;
-  font-weight: 700;
-  text-decoration: none;
-  margin-left: 4px;
-}
-
-.auth-footer a:hover {
-  text-decoration: underline;
+  box-shadow: 0 8px 20px rgba(13, 0, 99, 0.2);
 }
 
 /* --- RESPONSIVO --- */
 @media (max-width: 600px) {
-  .auth-page-background {
-    padding: 20px 16px;
-  }
   .auth-card {
-    padding: 32px 24px;
-    border-radius: 12px;
+    padding: 30px 24px;
+  }
+  .form-options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
   }
 }
