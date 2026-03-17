@@ -1,8 +1,8 @@
-# ⚙️ BidCo Backend Server (Local Version)
+# BidCo Backend Server (Local Version)
 
 API RESTful desarrollada en Java y Spring Boot que gestiona la lógica de negocio de la plataforma BidCo. Esta versión original está diseñada para ejecutarse en entornos de desarrollo locales.
 
-## 🛠️ Stack Tecnológico
+## Stack Tecnológico
 
 * **Framework:** Spring Boot 3.4.4
 * **Lenguaje:** Java 17
@@ -11,13 +11,13 @@ API RESTful desarrollada en Java y Spring Boot que gestiona la lógica de negoci
 * **Autenticación:** JWT (JSON Web Tokens)
 * **Mapeo de Entidades:** MapStruct (1.5.5.Final)
 
-## 📋 Requisitos Previos
+## Requisitos Previos
 
 * JDK 17 instalado.
 * Maven 3.6+ instalado.
 * Servidor MySQL ejecutándose en el puerto `3306`.
 
-## 🗄️ Configuración de Base de Datos
+## Configuración de Base de Datos
 
 1. Asegúrate de tener tu servidor MySQL encendido.
 2. Ejecuta tu script de inicialización SQL en tu servidor MySQL (puedes usar MySQL Workbench) para generar el esquema y los datos de prueba.
@@ -29,7 +29,7 @@ spring.datasource.username=tu_usuario
 spring.datasource.password=tu_contraseña
 ```
 
-## 🚀 Instalación y Ejecución
+## Instalación y Ejecución
 
 1. Navega al directorio del backend:
 ```bash
