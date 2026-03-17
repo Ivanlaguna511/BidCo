@@ -1,8 +1,9 @@
 <header class="main-header">
+  
   <div class="header-left">
     <div class="header-brand">
-      <a routerLink="/auction" class="logo-link">
-        <img src="Logo BidCo Recortado.jpg" alt="Logo BidCo" />
+      <a routerLink="/auction" class="logo-link" aria-label="Inicio">
+        <img src="Logo BidCo Recortado.jpg" alt="Logo BidCo" class="brand-logo" />
       </a>
       <a routerLink="/auction" class="name-link">
         <span class="brand-text">BidCo</span>
@@ -16,9 +17,9 @@
           <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M480-360 280-560h400L480-360Z"/></svg>
         </button>
         <div class="dropdown-content" [class.show]="isDropdownOpen">
-          <a routerLink="/auction">Subastas</a>
+          <a routerLink="/auction">Subastas Activas</a>
           <a routerLink="/blind-auctions">Subastas a Ciegas</a>
-          <a routerLink="/raffle">Sorteos</a>
+          <a routerLink="/raffle">Sorteos Exclusivos</a>
         </div>
       </div>
     </div>
@@ -26,27 +27,30 @@
 
   <div class="header-center">
     <div id="search-bar">
-      <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24">
-        <path d="M796 936 536 676q-29 25-64.5 37.5T400 726q-100 0-170-70t-70-170q0-100 70-170t170-70q100 0 170 70t70 170q0 35-12.5 70.5T637 611l260 260-101 65ZM400 666q67 0 113.5-46.5T560 506q0-67-46.5-113.5T400 346q-67 0-113.5 46.5T240 506q0 67 46.5 113.5T400 666Z"/>
-      </svg>
-      <input type="text" placeholder="Buscar en BidCo..." [(ngModel)]="searchTerm" (keyup.enter)="onSearch()"/>
+      <div class="search-icon-wrapper">
+        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20">
+          <path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/>
+        </svg>
+      </div>
+      <input type="text" placeholder="Buscar artículos, categorías o marcas..." [(ngModel)]="searchTerm" (keyup.enter)="onSearch()"/>
     </div>
   </div>
 
   <div class="header-right">
+    
     @if (!isLoggedIn) {
-      <a routerLink="/login" class="google-login-btn">Iniciar Sesión</a>
+      <a routerLink="/login" class="btn-login">Iniciar Sesión</a>
     }
 
     @if (isLoggedIn && !isExpert) {
       <div class="user-menu">
         <div class="user-dropdown" (click)="toggleUserMenu($event)">
-          <img class="profile-pic" src="default-avatar.png" alt="Foto de perfil" />
+          <img class="profile-pic" src="default-avatar.png" alt="Mi perfil" />
           <div class="dropdown-content user-dropdown-content" [class.show]="isUserMenuOpen">
             <div class="dropdown-header">Mi Cuenta</div>
             <a routerLink="/my-bids">Mis Pujas</a>
             <a routerLink="/my-auctions">Mis Subastas</a>
-            <a routerLink="/profile">Mi Perfil</a>
+            <a routerLink="/profile">Configuración</a>
             <div class="divider"></div>
             <a class="logout-link" (click)="logout()">Cerrar Sesión</a>
           </div>
@@ -57,10 +61,10 @@
     @if (isLoggedIn && isExpert) {
       <div class="user-menu">
         <div class="user-dropdown" (click)="toggleUserMenu($event)">
-          <img class="profile-pic expert-border" src="expert-avatar.png" alt="Foto de perfil experto" />
+          <img class="profile-pic expert-border" src="expert-avatar.png" alt="Perfil experto" />
           <div class="dropdown-content user-dropdown-content" [class.show]="isUserMenuOpen">
-            <div class="dropdown-header">Panel Experto</div>
-            <a routerLink="/profile">Mi Perfil</a>
+            <div class="dropdown-header expert-header">Panel de Experto</div>
+            <a routerLink="/profile">Configuración Interna</a>
             <div class="divider"></div>
             <a class="logout-link" (click)="logout()">Cerrar Sesión</a>
           </div>
@@ -68,4 +72,5 @@
       </div>
     }
   </div>
+
 </header>

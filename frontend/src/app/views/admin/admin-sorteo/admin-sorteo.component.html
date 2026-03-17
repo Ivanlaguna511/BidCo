@@ -1,73 +1,62 @@
-<section class="form-container">
-  <h3 class="form-title">Nuevo Sorteo</h3>
-  <form class="form" (ngSubmit)="submit()" enctype="multipart/form-data">
-    <div class="form-group">
-      <label for="sor-nombre">Nombre</label>
-      <input id="sor-nombre"
-        type="text"
-        [(ngModel)]="sorteo.nombreArticulo"
-        name="nombreArticulo"
-        required />
+<section class="admin-form-card wide-card">
+  <div class="card-header">
+    <h3 class="form-title">Configurar Nuevo Sorteo</h3>
+    <p>Rellena los detalles para lanzar un sorteo oficial de BidCo.</p>
+  </div>
+
+  <form class="form-body" (ngSubmit)="submit()" enctype="multipart/form-data">
+    
+    <div class="form-row">
+      <div class="input-group span-2">
+        <label for="sor-nombre">Nombre del Artículo</label>
+        <input id="sor-nombre" type="text" [(ngModel)]="sorteo.nombreArticulo" name="nombreArticulo" required />
       </div>
-      <div class="form-group">
-        <label for="sor-desc">Descripción</label>
-        <textarea id="sor-desc"
-          rows="4"
-          [(ngModel)]="sorteo.descripcion"
-          name="descripcion"
-        required></textarea>
+    </div>
+
+    <div class="input-group">
+      <label for="sor-desc">Descripción Completa</label>
+      <textarea id="sor-desc" rows="4" [(ngModel)]="sorteo.descripcion" name="descripcion" required></textarea>
+    </div>
+
+    <div class="form-grid">
+      <div class="input-group">
+        <label for="sor-inicio">Fecha de Inicio</label>
+        <input id="sor-inicio" type="date" [(ngModel)]="sorteo.fechaInicio" name="fechaInicio" required />
       </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="sor-inicio">Inicio</label>
-          <input id="sor-inicio"
-            type="date"
-            [(ngModel)]="sorteo.fechaInicio"
-            name="fechaInicio"
-            required />
-          </div>
-          <div class="form-group">
-            <label for="sor-fin">Fin</label>
-            <input id="sor-fin"
-              type="date"
-              [(ngModel)]="sorteo.fechaFin"
-              name="fechaFin"
-              required />
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="sor-puntos">Puntos</label>
-              <input id="sor-puntos"
-                type="number"
-                [(ngModel)]="sorteo.puntosNecesarios"
-                name="puntosNecesarios"
-                required />
-              </div>
-              <div class="form-group">
-                <label for="sor-img">Imagen</label>
-                <input id="sor-img"
-                  type="file"
-                  (change)="onFile($event)" />
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="category-section">
-                  <label for="categoria">Categoría:</label>
-                  <select id="categoria" name="categoria" [(ngModel)]="sorteo.categoria" required>
-                    <option value="" disabled selected>Selecciona una categoría</option>
-                    <option value="tecnologia">Tecnología</option>
-                    <option value="hogar">Hogar</option>
-                    <option value="moda">Moda</option>
-                    <option value="deportes">Deportes</option>
-                    <option value="juguetes">Juguetes</option>
-                    <option value="otros">Otros</option>
-                  </select>
-                </div>
-              </div>
-              @if (message) {
-                <div class="success-message">{{ message }}</div>
-              }
-              <button class="btn-primary" type="submit">Crear Sorteo</button>
-            </form>
-          </section>
+      <div class="input-group">
+        <label for="sor-fin">Fecha de Fin</label>
+        <input id="sor-fin" type="date" [(ngModel)]="sorteo.fechaFin" name="fechaFin" required />
+      </div>
+    </div>
+
+    <div class="form-grid">
+      <div class="input-group">
+        <label for="sor-puntos">Coste en Puntos</label>
+        <input id="sor-puntos" type="number" [(ngModel)]="sorteo.puntosNecesarios" name="puntosNecesarios" required />
+      </div>
+      <div class="input-group">
+        <label for="categoria">Categoría</label>
+        <select id="categoria" name="categoria" [(ngModel)]="sorteo.categoria" required>
+          <option value="" disabled selected>Selecciona una categoría...</option>
+          <option value="tecnologia">Tecnología</option>
+          <option value="hogar">Hogar</option>
+          <option value="moda">Moda</option>
+          <option value="deportes">Deportes</option>
+          <option value="juguetes">Juguetes</option>
+          <option value="otros">Otros</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="sor-img">Imagen del Producto</label>
+      <input id="sor-img" type="file" (change)="onFile($event)" class="file-input" />
+    </div>
+
+    @if (message) { <div class="alert-success">{{ message }}</div> }
+
+    <div class="form-actions">
+      <button class="btn-admin" type="submit">Publicar Sorteo</button>
+    </div>
+  </form>
+</section>

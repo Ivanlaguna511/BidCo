@@ -1,39 +1,101 @@
-#subastas {
-    margin-left: 20%;
-    padding-top: 2%;
+/* --- ESTRUCTURA PRINCIPAL --- */
+.page-layout {
+  display: flex;
+  min-height: 85vh;
+  background-color: #f8f9fa; /* Fondo premium para destacar las tarjetas */
 }
 
-#top-items {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+/* Espacio exacto para que el filtro fijo (18%) no pise el contenido */
+.main-content {
+  margin-left: 18%; 
+  width: 82%; 
+  padding: 40px;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
 }
 
-#crear-subasta {
-    margin-right: 5%;
-    text-decoration: none;
-    padding: 10px 15px;
-    background-color: #0d0063;
-    color: white;
-    border-radius: 5px;
+/* --- CABECERA --- */
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end; 
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid #e8eaed;
 }
 
-#items {
-    margin-top: 3%;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    flex-shrink: 0;
-    
+.header-titles h1 {
+  font-size: clamp(2rem, 3vw, 2.5rem);
+  color: #0d0063;
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: -0.5px;
 }
 
-#item {
-    max-width: 15%;
-    margin-right: 5%;
-    margin-bottom: 2%;
+/* --- ACCIONES DEL USUARIO --- */
+.user-actions {
+  display: flex;
+  align-items: center;
 }
 
-#item a {
-    text-decoration: none;
-    color: inherit;
+/* Botón Crear Subasta (Estilo Píldora Premium) */
+.btn-primary {
+  background-color: #0d0063;
+  color: #ffffff;
+  padding: 12px 24px;
+  border-radius: 24px; 
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(13, 0, 99, 0.15);
+}
+
+.btn-primary:hover {
+  background-color: #15009e;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(13, 0, 99, 0.25);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* --- CUADRÍCULA DE PRODUCTOS --- */
+.products-grid {
+  display: grid;
+  /* Ancho mínimo 280px. Evita que las tarjetas se deformen o alarguen */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 32px; 
+}
+
+.product-wrapper {
+  display: block;
+}
+
+.product-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%; /* Sincroniza las alturas de toda la fila */
+}
+
+/* --- RESPONSIVE (MÓVILES Y TABLETS) --- */
+@media (max-width: 1024px) {
+  .main-content {
+    margin-left: 0; 
+    width: 100%;
+    padding: 24px;
+  }
+  
+  .content-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+  
+  .user-actions {
+    width: 100%;
+    justify-content: flex-end; /* En móvil, el botón se empuja a la derecha */
+  }
 }

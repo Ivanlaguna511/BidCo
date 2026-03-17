@@ -1,52 +1,61 @@
 <app-header></app-header>
 
-<main class="search-layout">
-  <aside class="sidebar">
-    <app-filter (filterChanged)="handleFilterApplied($event)"></app-filter>
-  </aside>
+<div class="page-layout">
+  <app-filter (filterChanged)="handleFilterApplied($event)"></app-filter>
 
-  <section class="results-content">
-    <header class="results-header">
-      <div class="header-info">
+  <main class="main-content">
+    
+    <header class="content-header">
+      <div class="header-titles">
         <h1>Resultados de búsqueda</h1>
-        <p class="search-term" @if(searchTerm){> Buscando: "{{searchTerm}}" "&#125;"</p>
+        @if (searchTerm) {
+          <p class="subtitle">Mostrando resultados para: <strong>"{{ searchTerm }}"</strong></p>
+        } @else {
+          <p class="subtitle">Explora todo nuestro catálogo</p>
+        }
       </div>
 
       @if (isLoggedIn && !isExpert) {
-        <div class="user-stats">
-          <div class="balance-card">
-            <span class="label">Tu Saldo</span>
-            <span class="value">{{ saldoUser }}€</span>
+        <div class="user-actions">
+          <div class="balance-badge">
+            <span class="balance-label">Tu Saldo</span>
+            <span class="balance-value">{{ saldoUser }}€</span>
           </div>
-          <a class="btn-create" routerLink="/create-auction">+ Crear Subasta</a>
+          <a class="btn-primary" routerLink="/create-auction">+ Crear Subasta</a>
         </div>
       }
     </header>
 
     @if (cargaDeProductos) {
       <div class="loader-container">
-        <div class="spinner"></div>
+        <span class="spinner"></span>
+        <p>Buscando las mejores coincidencias...</p>
       </div>
     } @else {
+      
       @if (products.length > 0) {
-        <div class="products-grid">
+        <section class="products-grid">
           @for (product of products; track product.subastaID) {
-            <article class="product-card">
-              <a [routerLink]="['/search/product', product.subastaID]">
+            <article class="product-wrapper">
+              <a [routerLink]="[product.subastaNormal ? '/auction/product' : '/blind-auctions/product', product.subastaID]" class="product-link">
                 <app-product-item [product]="product"></app-product-item>
               </a>
             </article>
           }
-        </div>
-      } @else {
+        </section>
+      } 
+      
+      @else {
         <div class="empty-state">
-          <img src="assets/no-results.svg" alt="No hay resultados" />
+          <svg xmlns="http://www.w3.org/2000/svg" height="80" viewBox="0 -960 960 960" width="80" fill="#dadce0"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
           <h3>No encontramos lo que buscas</h3>
-          <p>Prueba a ajustar los filtros o a usar términos más generales.</p>
+          <p>Prueba a ajustar los filtros o utiliza términos más generales.</p>
         </div>
       }
+      
     }
-  </section>
-</main>
+
+  </main>
+</div>
 
 <app-footer></app-footer>

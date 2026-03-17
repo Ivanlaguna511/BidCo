@@ -1,118 +1,54 @@
-/* Estructura de formularios */
-.form-container {
-  position: relative;
-  padding-bottom: 20px; /* Espacio para el botón */
+.settings-header { margin-bottom: 24px; }
+.settings-header h2 { font-size: 1.8rem; color: #202124; margin: 0 0 8px 0; }
+.settings-header p { color: #5f6368; margin: 0; }
+
+.settings-card {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e8eaed;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  padding: 32px;
+  margin-bottom: 24px;
 }
 
-.form-group {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
-  gap: 1rem;
+.settings-card h3 {
+  font-size: 1.2rem;
+  color: #0d0063;
+  margin: 0 0 24px 0;
+  border-bottom: 1px solid #f1f3f4;
+  padding-bottom: 12px;
 }
 
-.form-group label {
-  width: 200px;
-  font-weight: 600;
-}
+.settings-form { display: flex; flex-direction: column; gap: 20px; }
 
-.form-group input {
-  flex: 1;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.address-grid { grid-template-columns: 2fr 1fr 1fr; }
+.span-2 { grid-column: span 1; } /* En PC ocupa lo normal, en móvil adaptamos */
 
-/* Botón de Guardar Cambios */
-.btn-save {
-  display: block;
-  margin-top: 20px;
-  margin-left: auto; /* Alinea a la derecha */
-  padding: 10px 15px;
-  background-color: #28a745;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-  border-radius: 4px;
-  font-weight: 500;
+.input-group { display: flex; flex-direction: column; gap: 6px; }
+.input-group label { font-size: 0.85rem; font-weight: 700; color: #5f6368; text-transform: uppercase; }
+.input-group input {
+  padding: 12px; border: 1px solid #dadce0; border-radius: 8px; font-size: 1rem; color: #202124; transition: all 0.2s; box-sizing: border-box;
 }
+.input-group input:focus { border-color: #0d0063; outline: none; box-shadow: 0 0 0 2px rgba(13, 0, 99, 0.1); }
 
-.btn-save:hover {
-  background-color: #218838;
-}
+/* Billetera */
+.wallet-card { display: flex; justify-content: space-between; align-items: center; background-color: #f8f9fa; border: 2px solid #e8eaed; }
+.wallet-info h3 { border: none; margin-bottom: 8px; }
+.balance-label { display: block; font-size: 0.85rem; color: #5f6368; text-transform: uppercase; font-weight: 700; }
+.balance-amount { font-size: 2.5rem; font-weight: 800; color: #0d0063; line-height: 1; }
+.recharge-form { display: flex; align-items: flex-end; gap: 16px; }
 
-h2 {
-  text-align: center;
-  margin-bottom: 3%;
-}
+/* Botones y Mensajes */
+.form-actions { display: flex; justify-content: flex-end; align-items: center; gap: 16px; margin-top: 16px; }
+.btn-primary { background: #0d0063; color: white; padding: 12px 24px; border: none; border-radius: 24px; font-weight: 700; cursor: pointer; transition: all 0.2s; white-space: nowrap;}
+.btn-primary:hover { background: #15009e; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(13,0,99,0.2); }
+.msg-success { color: #137333; font-size: 0.9rem; font-weight: 600; }
+.msg-error { color: #c5221f; font-size: 0.9rem; font-weight: 600; }
+.center-msg { text-align: right; display: block; margin-top: 8px;}
 
-h3 {
-  margin-top: 7.5%;
-  margin-bottom: 3%;
-}
-
-/* Mensajes */
-.update-message {
-  color: #155724;
-  background-color: #d4edda;
-  padding: 10px;
-  border-radius: 4px;
-  margin-bottom: 15px;
-}
-
-.error-message {
-  color: #721c24;
-  background-color: #f8d7da;
-  padding: 10px;
-  border-radius: 4px;
-  margin-bottom: 15px;
-}
-
-.saldo-section {
-  margin-top: 30px;
-  padding: 20px;
-  background: #f8f9fa;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  max-width: 400px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.saldo-actual {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 1.2em;
-  margin-bottom: 15px;
-}
-
-.saldo-cantidad {
-  font-weight: bold;
-  color: #28a745;
-}
-
-.btn-recharge {
-  background-color: #0d0063;
-  color: #fff;
-  border: none;
-  padding: 8px 18px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: 500;
-  margin-top: 10px;
-  display: block;
-  margin-left: auto; 
-}
-
-.btn-recharge:hover {
-  background-color: #0056b3;
-}
-
-.recarga-message {
-  margin-top: 10px;
-  color: #28a745;
-  font-weight: 500;
-  text-align: center;
+@media (max-width: 768px) {
+  .form-grid, .address-grid { grid-template-columns: 1fr; }
+  .wallet-card { flex-direction: column; align-items: flex-start; gap: 24px; }
+  .recharge-form { flex-direction: column; align-items: stretch; }
 }

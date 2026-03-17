@@ -1,126 +1,110 @@
-<h2>Mis Datos</h2>
+<div class="settings-header">
+  <h2>Información Personal</h2>
+  <p>Gestiona tus datos, seguridad y saldo desde aquí.</p>
+</div>
 
-
-
-<div class="form-container">
-  <form (ngSubmit)="saveChanges()">
-    <!-- Campos editables -->
-    <div class="form-group">
-      <label for="nombreUsuario">Nombre de usuario</label>
-      <input type="text" id="nombreUsuario" [(ngModel)]="user.nombreUsuario" name="nombreUsuario" required />
+<section class="settings-card">
+  <h3>Datos Básicos</h3>
+  <form (ngSubmit)="saveChanges()" class="settings-form">
+    
+    <div class="form-grid">
+      <div class="input-group">
+        <label for="nombreUsuario">Nombre de usuario</label>
+        <input type="text" id="nombreUsuario" [(ngModel)]="user.nombreUsuario" name="nombreUsuario" required />
+      </div>
+      <div class="input-group">
+        <label for="correoElectronico">Correo electrónico</label>
+        <input type="email" id="correoElectronico" [(ngModel)]="user.correoElectronico" name="correoElectronico" required />
+      </div>
     </div>
 
-    <div class="form-group">
-      <label for="correoElectronico">Correo</label>
-      <input type="email" id="correoElectronico" [(ngModel)]="user.correoElectronico" name="correoElectronico" required />
-    </div>
-
     @if (!isExpert) {
-      <div class="form-group">
-        <label for="ciudad">Ciudad</label>
-        <input type="text" id="ciudad" [(ngModel)]="user.ciudad" name="ciudad" required />
+      <div class="form-grid">
+        <div class="input-group">
+          <label for="ciudad">Ciudad</label>
+          <input type="text" id="ciudad" [(ngModel)]="user.ciudad" name="ciudad" required />
+        </div>
+        <div class="input-group">
+          <label for="codigoPostal">Código Postal</label>
+          <input type="text" id="codigoPostal" [(ngModel)]="user.codigoPostal" name="codigoPostal" required />
+        </div>
       </div>
-    }
 
-    @if (!isExpert) {
-      <div class="form-group">
-        <label for="codigoPostal">Código Postal</label>
-        <input type="text" id="codigoPostal" [(ngModel)]="user.codigoPostal" name="codigoPostal" required />
+      <div class="form-grid address-grid">
+        <div class="input-group span-2">
+          <label for="calle">Calle</label>
+          <input type="text" id="calle" [(ngModel)]="user.calle" name="calle" required />
+        </div>
+        <div class="input-group">
+          <label for="numeroPiso">Número</label>
+          <input type="number" id="numeroPiso" [(ngModel)]="user.numeroPiso" name="numeroPiso" required />
+        </div>
+        <div class="input-group">
+          <label for="letraPiso">Letra (Opcional)</label>
+          <input type="text" id="letraPiso" [(ngModel)]="user.letraPiso" name="letraPiso" />
+        </div>
       </div>
-    }
 
-    @if (!isExpert) {
-      <div class="form-group">
-        <label for="calle">Calle</label>
-        <input type="text" id="calle" [(ngModel)]="user.calle" name="calle" required />
-      </div>
-    }
-
-    @if (!isExpert) {
-      <div class="form-group">
-        <label for="numeroPiso">Número</label>
-        <input type="number" id="numeroPiso" [(ngModel)]="user.numeroPiso" name="numeroPiso" required />
-      </div>
-    }
-
-    @if (!isExpert) {
-      <div class="form-group">
-        <label for="letraPiso">Letra</label>
-        <input type="text" id="letraPiso" [(ngModel)]="user.letraPiso" name="letraPiso" />
-      </div>
-    }
-
-    <!-- Campos ocultos para datos no editables pero requeridos -->
-    @if (!isExpert) {
       <input type="hidden" [(ngModel)]="user.pais" name="pais" />
-    }
-    @if (!isExpert) {
       <input type="hidden" [(ngModel)]="user.saldo" name="saldo" />
-    }
-    @if (!isExpert) {
       <input type="hidden" [(ngModel)]="user.puntos" name="puntos" />
     }
 
-    @if (!isExpert) {
-      <button type="submit" class="btn-save">Guardar Cambios</button>
-    }
-
-    @if (updateMessage) {
-      <div class="update-message">{{ updateMessage }}</div>
-    }
-    @if (errorMessage) {
-      <div class="error-message">{{ errorMessage }}</div>
-    }
-  </form>
-
-  <!-- Sección de cambio de contraseña -->
-  @if (!isExpert) {
-    <h3>Cambiar Contraseña</h3>
-  }
-  @if (!isExpert) {
-    <form (ngSubmit)="updatePassword()">
-      <div class="form-group">
-        <label for="currentPassword">Contraseña actual</label>
-        <input type="password" id="currentPassword" [(ngModel)]="currentPassword" name="currentPassword" required />
-      </div>
-      <div class="form-group">
-        <label for="newPassword">Nueva contraseña</label>
-        <input type="password" id="newPassword" [(ngModel)]="newPassword" name="newPassword" required />
-      </div>
-      <div class="form-group">
-        <label for="confirmPassword">Confirmar contraseña</label>
-        <input type="password" id="confirmPassword" [(ngModel)]="confirmPassword" name="confirmPassword" required />
-      </div>
-      <button type="submit" class="btn-save">Cambiar Contraseña</button>
-      @if (updatePasswdMessage) {
-        <div class="update-message">{{ updatePasswdMessage }}</div>
-      }
-      @if (errorPasswdMessage) {
-        <div class="error-message">{{ errorPasswdMessage }}</div>
-      }
-    </form>
-  }
-
-  <!-- Recarga de saldo -->
-  @if (!isExpert) {
-    <h3>Recargar Saldo</h3>
-  }
-  @if (!isExpert) {
-    <div class="saldo-section">
-      <div class="saldo-actual">
-        <span>Saldo actual:</span>
-        <span class="saldo-cantidad">{{ user.saldo | currency:'EUR':'symbol' }}</span>
-      </div>
-      <form (ngSubmit)="recargarSaldo()">
-        <div class="form-group">
-          <label for="cantidadRecarga">Cantidad a recargar</label>
-          <input type="number" id="cantidadRecarga" [(ngModel)]="cantidadRecarga" name="cantidadRecarga" min="1" required />
-        </div>
-        <button type="submit" class="btn-recharge">Recargar</button>
-      </form>
-      @if (recargaMessage) {
-        <div class="recarga-message">{{ recargaMessage }}</div>
-      }
+    <div class="form-actions">
+      @if (updateMessage) { <span class="msg-success">{{ updateMessage }}</span> }
+      @if (errorMessage) { <span class="msg-error">{{ errorMessage }}</span> }
+      @if (!isExpert) { <button type="submit" class="btn-primary">Guardar Cambios</button> }
     </div>
-  }
-</div>
+  </form>
+</section>
+
+@if (!isExpert) {
+  <section class="settings-card">
+    <h3>Seguridad y Contraseña</h3>
+    <form (ngSubmit)="updatePassword()" class="settings-form">
+      <div class="form-grid">
+        <div class="input-group">
+          <label for="currentPassword">Contraseña actual</label>
+          <input type="password" id="currentPassword" [(ngModel)]="currentPassword" name="currentPassword" required />
+        </div>
+        <div class="input-group">
+          <label for="newPassword">Nueva contraseña</label>
+          <input type="password" id="newPassword" [(ngModel)]="newPassword" name="newPassword" required />
+        </div>
+        <div class="input-group">
+          <label for="confirmPassword">Confirmar nueva contraseña</label>
+          <input type="password" id="confirmPassword" [(ngModel)]="confirmPassword" name="confirmPassword" required />
+        </div>
+      </div>
+      
+      <div class="form-actions">
+        @if (updatePasswdMessage) { <span class="msg-success">{{ updatePasswdMessage }}</span> }
+        @if (errorPasswdMessage) { <span class="msg-error">{{ errorPasswdMessage }}</span> }
+        <button type="submit" class="btn-primary">Cambiar Contraseña</button>
+      </div>
+    </form>
+  </section>
+}
+
+@if (!isExpert) {
+  <section class="settings-card wallet-card">
+    <div class="wallet-info">
+      <h3>Mi Billetera</h3>
+      <div class="balance-display">
+        <span class="balance-label">Saldo Disponible</span>
+        <span class="balance-amount">{{ user.saldo | currency:'EUR':'symbol' }}</span>
+      </div>
+    </div>
+    
+    <div class="wallet-action">
+      <form (ngSubmit)="recargarSaldo()" class="recharge-form">
+        <div class="input-group">
+          <label for="cantidadRecarga">Añadir fondos (€)</label>
+          <input type="number" id="cantidadRecarga" [(ngModel)]="cantidadRecarga" name="cantidadRecarga" min="1" placeholder="Ej: 50" required />
+        </div>
+        <button type="submit" class="btn-primary btn-recharge">+ Recargar</button>
+      </form>
+      @if (recargaMessage) { <div class="msg-success center-msg">{{ recargaMessage }}</div> }
+    </div>
+  </section>
+}

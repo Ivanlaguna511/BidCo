@@ -1,31 +1,33 @@
-<h2>Mis Estadísticas</h2>
+<div class="settings-header">
+  <h2>Tus Estadísticas</h2>
+  <p>Resumen de tu actividad y rendimiento en la plataforma.</p>
+</div>
 
-<div class="stats-container">
-  <ul class="stats-list">
-    <li>
-      <span class="stat-label">Pujas en las que has participado:</span>
+<div class="stats-dashboard">
+  <div class="stats-grid">
+    <div class="stat-widget">
+      <span class="stat-title">Pujas Participadas</span>
       <span class="stat-value">{{ participatedBids }}</span>
-    </li>
-    <li>
-      <span class="stat-label">Pujas en las que has ganado:</span>
+    </div>
+    <div class="stat-widget win">
+      <span class="stat-title">Pujas Ganadas</span>
       <span class="stat-value">{{ wonBids }}</span>
-    </li>
-    <li>
-      <span class="stat-label">Subastas que has creado:</span>
+    </div>
+    <div class="stat-widget">
+      <span class="stat-title">Subastas Creadas</span>
       <span class="stat-value">{{ createdBids }}</span>
-    </li>
-    <li>
-      <span class="stat-label">Sorteos en los que has participado:</span>
+    </div>
+    <div class="stat-widget">
+      <span class="stat-title">Sorteos Participados</span>
       <span class="stat-value">{{ participatedDraws }}</span>
-    </li>
-    <li>
-      <span class="stat-label">Sorteos en los que has ganado:</span>
+    </div>
+    <div class="stat-widget win">
+      <span class="stat-title">Sorteos Ganados</span>
       <span class="stat-value">{{ wonDraws }}</span>
-    </li>
-  </ul>
+    </div>
+  </div>
 
-  <!-- Contenedor del gráfico de barras generado dinámicamente -->
-  <div class="chart-container">
+  <div class="chart-card">
     <canvas id="barChart"></canvas>
   </div>
 </div>

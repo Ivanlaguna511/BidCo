@@ -1,22 +1,31 @@
-<app-header/>
-<div>
-  <div>
-    <app-filter (filterChanged)="handleFilterApplied($event)"></app-filter>
-  </div>
-  <div id="subastas">
-    <div id="top-items">
-      <h1>Tus Subastas</h1>
-      <a id="crear-subasta" routerLink="/create-auction">Crear Subasta</a>
-    </div>
-    <div id="items">
-      @for (product of products; track product) {
-        <div id="item">
-          <a [routerLink]="[product.subastaNormal ? '/auction/product' : '/blind-auctions/product', product.subastaID]">
+<app-header></app-header>
+
+<div class="page-layout">
+  <app-filter (filterChanged)="handleFilterApplied($event)"></app-filter>
+
+  <main class="main-content">
+    
+    <header class="content-header">
+      <div class="header-titles">
+        <h1>Tus Subastas</h1>
+      </div>
+
+      <div class="user-actions">
+        <a class="btn-primary" routerLink="/create-auction">+ Crear Subasta</a>
+      </div>
+    </header>
+
+    <section class="products-grid">
+      @for (product of products; track product.subastaID) {
+        <article class="product-wrapper">
+          <a [routerLink]="[product.subastaNormal ? '/auction/product' : '/blind-auctions/product', product.subastaID]" class="product-link">
             <app-product-item [product]="product"></app-product-item>
           </a>
-        </div>
+        </article>
       }
-    </div>
-  </div>
+    </section>
+
+  </main>
 </div>
-<app-footer/>
+
+<app-footer></app-footer>

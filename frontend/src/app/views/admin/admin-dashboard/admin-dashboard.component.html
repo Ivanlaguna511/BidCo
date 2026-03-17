@@ -1,12 +1,17 @@
-<main class="dashboard-container">
-  <h2 class="dashboard-title">Panel de Administración</h2>
-  <div class="dashboard-actions">
-    <button class="btn-secondary" (click)="goToSorteo()">Añadir Sorteo</button>
-    <button class="btn-secondary" (click)="goToExpertos()">Registrar Expertos</button>
-    <button class="btn-secondary" (click)="cerrarSesion()">Cerrar Sesión</button>
-  </div>
-  <section class="dashboard-content">
+<div class="admin-layout">
+  <header class="admin-topbar">
+    <div class="admin-title">
+      <h2>Panel de Administración</h2>
+    </div>
+    <nav class="admin-actions">
+      <button class="btn-nav" (click)="goToSorteo()">+ Añadir Sorteo</button>
+      <button class="btn-nav" (click)="goToExpertos()">Registrar Expertos</button>
+      <button class="btn-nav btn-danger" (click)="cerrarSesion()">Cerrar Sesión</button>
+    </nav>
+  </header>
+  
+  <main class="admin-content">
     <router-outlet></router-outlet>
-  </section>
-</main>
+  </main>
+</div>
 <app-footer></app-footer>

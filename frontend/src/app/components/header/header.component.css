@@ -1,15 +1,16 @@
-/* --- VARIABLES GLOBALES (Google Material Style) --- */
+/* --- VARIABLES GLOBALES (Google Material 3) --- */
 :host {
   --primary-color: #0d0063;
   --primary-hover: #15009e;
-  --bg-color: #ffffff;
+  /* El fondo es blanco al 90% para permitir el efecto cristal */
+  --bg-color: rgba(255, 255, 255, 0.92); 
   --search-bg: #f1f3f4;
   --search-hover: #e8eaed;
   --text-main: #202124;
   --text-muted: #5f6368;
   --border-color: #dadce0;
   --shadow-sm: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
-  --shadow-dropdown: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-dropdown: 0 8px 16px rgba(0, 0, 0, 0.1);
   --font-family: 'Montserrat', sans-serif;
 }
 
@@ -19,20 +20,29 @@
   top: 0;
   z-index: 1000;
   background-color: var(--bg-color);
+  backdrop-filter: blur(8px); /* MAGIA: Desenfoca lo que queda por debajo al hacer scroll */
+  -webkit-backdrop-filter: blur(8px); /* Soporte para Safari */
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 24px;
+  padding: 12px 24px; /* Un poco más alto para respirar */
   border-bottom: 1px solid var(--border-color);
   font-family: var(--font-family);
-  gap: 20px;
+  gap: 24px;
 }
 
 /* --- SECCIONES FLEX --- */
-.header-left, .header-right {
+.header-left {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 32px; /* Más espacio entre logo y menús */
+  flex-shrink: 0;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
   flex-shrink: 0;
 }
 
@@ -40,25 +50,31 @@
   flex-grow: 1;
   display: flex;
   justify-content: center;
-  max-width: 720px;
+  max-width: 680px; /* Ancho máximo de la barra de búsqueda */
 }
 
-/* --- BRAND (Logo y Título) --- */
+/* --- BRAND (Logo y Título Modernizados) --- */
 .header-brand {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.logo-link img {
-  height: 40px; /* Tamaño más moderno y sutil */
-  width: auto;
-  object-fit: contain;
-  transition: opacity 0.2s;
+.logo-link {
+  display: flex;
+  align-items: center;
 }
 
-.logo-link:hover img {
-  opacity: 0.8;
+.brand-logo {
+  height: 38px;
+  width: 38px;
+  object-fit: contain;
+  border-radius: 8px; /* Le quita ese aspecto de "imagen pegada" */
+  transition: transform 0.2s ease;
+}
+
+.logo-link:hover .brand-logo {
+  transform: scale(1.05) rotate(-3deg); /* Interacción juguetona al pasar el ratón */
 }
 
 .name-link {
@@ -67,12 +83,13 @@
 
 .brand-text {
   color: var(--primary-color);
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: -0.5px;
+  font-size: 24px;
+  font-weight: 800; /* Extra negrita para darle peso de marca */
+  letter-spacing: -1px; /* Letras más juntas = diseño moderno */
+  line-height: 1;
 }
 
-/* --- BARRA DE BÚSQUEDA (Estilo Google) --- */
+/* --- BARRA DE BÚSQUEDA (Estilo Google Drive) --- */
 #search-bar {
   display: flex;
   align-items: center;
@@ -80,25 +97,31 @@
   background-color: var(--search-bg);
   border: 1px solid transparent;
   border-radius: 24px;
-  padding: 0 16px;
+  padding: 0 8px 0 16px;
   height: 48px;
-  transition: background-color 0.2s, box-shadow 0.2s, border-color 0.2s;
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
 }
 
 #search-bar:hover {
   background-color: var(--search-hover);
-  box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
 #search-bar:focus-within {
-  background-color: var(--bg-color);
+  background-color: #ffffff;
   box-shadow: var(--shadow-sm);
   border-color: transparent;
 }
 
+.search-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+}
+
 .search-icon {
   fill: var(--text-muted);
-  margin-right: 12px;
 }
 
 #search-bar input {
@@ -106,9 +129,10 @@
   border: none;
   background: transparent;
   outline: none;
-  font-size: 16px;
+  font-size: 1rem;
   color: var(--text-main);
   font-family: inherit;
+  width: 100%;
 }
 
 #search-bar input::placeholder {
@@ -116,29 +140,22 @@
 }
 
 /* --- BOTONES Y DROPDOWNS --- */
-.dropdown-wrapper {
-  display: flex;
-  align-items: center;
-}
-
-.dropdown, .user-dropdown {
-  position: relative;
-  cursor: pointer;
-}
+.dropdown-wrapper { display: flex; align-items: center; }
+.dropdown, .user-dropdown { position: relative; cursor: pointer; }
 
 .dropbtn {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 0.95rem;
   color: var(--text-muted);
   background: transparent;
   border: none;
-  padding: 8px 12px;
-  border-radius: 4px;
+  padding: 8px 16px;
+  border-radius: 20px; /* Más redondeado */
   cursor: pointer;
-  transition: background-color 0.2s, color 0.2s;
+  transition: all 0.2s ease;
   font-family: inherit;
 }
 
@@ -147,22 +164,20 @@
   color: var(--text-main);
 }
 
-.dropbtn svg {
-  fill: currentColor;
-}
+.dropbtn svg { fill: currentColor; }
 
 /* Contenido del Dropdown animado */
 .dropdown-content {
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-10px);
+  transform: translateY(10px); /* Viene desde abajo sutilmente */
   position: absolute;
-  top: calc(100% + 12px);
+  top: calc(100% + 16px); /* Separación limpia */
   left: 0;
-  background-color: var(--bg-color);
+  background-color: #ffffff;
   border: 1px solid var(--border-color);
-  border-radius: 8px;
-  min-width: 200px;
+  border-radius: 12px; /* Esquinas más suaves */
+  min-width: 220px;
   box-shadow: var(--shadow-dropdown);
   z-index: 10;
   padding: 8px 0;
@@ -171,10 +186,9 @@
 
 .user-dropdown-content {
   left: auto;
-  right: 0; /* Despliega hacia la izquierda para que no se salga de la pantalla */
+  right: 0;
 }
 
-/* Clase que activa TypeScript */
 .dropdown-content.show {
   opacity: 1;
   visibility: visible;
@@ -182,95 +196,82 @@
 }
 
 .dropdown-header {
-  padding: 8px 16px;
-  font-size: 12px;
+  padding: 12px 16px 8px;
+  font-size: 0.75rem;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
   font-weight: 700;
 }
 
+.expert-header { color: #b07d00; } /* Tono dorado para diferenciar a los expertos */
+
 .dropdown-content a {
   display: block;
-  padding: 10px 16px;
+  padding: 12px 16px;
   color: var(--text-main);
   text-decoration: none;
-  font-size: 14px;
+  font-size: 0.95rem;
   font-weight: 500;
   transition: background-color 0.2s;
 }
 
-.dropdown-content a:hover {
-  background-color: var(--search-bg);
-}
+.dropdown-content a:hover { background-color: var(--search-bg); }
 
-.divider {
-  height: 1px;
-  background-color: var(--border-color);
-  margin: 8px 0;
-}
+.divider { height: 1px; background-color: var(--border-color); margin: 8px 0; }
+.logout-link { color: #d93025 !important; }
 
-.logout-link {
-  color: #d93025 !important; /* Rojo elegante para cerrar sesión */
-}
-
-/* --- BOTÓN DE LOGIN --- */
-.google-login-btn {
+/* --- BOTÓN DE LOGIN INICIAL --- */
+.btn-login {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0 24px;
-  height: 40px;
+  padding: 10px 24px;
   color: #fff;
   background-color: var(--primary-color);
   border: none;
-  border-radius: 20px; /* Estilo píldora moderno */
-  font-size: 14px;
-  font-weight: 600;
+  border-radius: 24px;
+  font-size: 0.95rem;
+  font-weight: 700;
   text-decoration: none;
   font-family: inherit;
-  transition: background-color 0.2s, box-shadow 0.2s, transform 0.1s;
+  transition: all 0.2s ease;
 }
 
-.google-login-btn:hover {
+.btn-login:hover {
   background-color: var(--primary-hover);
-  box-shadow: 0 1px 3px 1px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 6px rgba(13, 0, 99, 0.2);
+  transform: translateY(-1px);
 }
 
-.google-login-btn:active {
-  transform: scale(0.98);
-}
+.btn-login:active { transform: translateY(0); }
 
 /* --- PERFIL DE USUARIO --- */
 .profile-pic {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid transparent;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .profile-pic:hover {
   box-shadow: 0 0 0 4px var(--search-bg);
+  transform: scale(1.05);
 }
 
+/* Aro distintivo para cuentas de empleados/expertos */
 .expert-border {
-  border-color: #fbbc04; /* Borde dorado/amarillo estilo Google para cuentas premium/expertas */
+  border: 2px solid #fbbc04; /* Amarillo Google */
+  padding: 2px; /* Deja un pequeño hueco blanco entre la foto y el aro */
 }
 
 /* --- RESPONSIVO BÁSICO --- */
-@media (max-width: 768px) {
-  .brand-text, .dropbtn {
-    display: none; /* Oculta texto en móviles, deja solo iconos/logo */
-  }
-  
-  .main-header {
-    padding: 8px 12px;
-    gap: 12px;
-  }
-  
-  #search-bar {
-    padding: 0 12px;
-  }
+@media (max-width: 900px) {
+  .brand-text, .dropbtn { display: none; }
+  .main-header { padding: 8px 16px; gap: 16px; }
+  .header-left { gap: 12px; }
+  #search-bar { padding: 0 12px; }
 }

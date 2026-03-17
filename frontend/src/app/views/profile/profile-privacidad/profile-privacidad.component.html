@@ -1,42 +1,47 @@
-<h2>Privacidad</h2>
+<div class="settings-header">
+  <h2>Centro de Privacidad</h2>
+  <p>Controla quién ve tu información y cómo usamos tus datos.</p>
+</div>
 
 @if (cargando) {
-  <div>Cargando...</div>
-}
-@if (!cargando) {
-  <div>
-    <div class="toggle-container">
-      <label>Mostrar nombre de usuario como anónimo en las pujas</label>
-      <label class="switch">
-        <input
-          type="checkbox"
-          [(ngModel)]="privacidad.privacidadAnonimoPujas"
-          (change)="guardarPrivacidad()"
-          />
-          <span class="slider round"></span>
+  <div class="loading-state">Cargando preferencias...</div>
+} @else {
+  <section class="settings-card">
+    <div class="toggle-list">
+      
+      <div class="toggle-item">
+        <div class="toggle-info">
+          <h3>Modo Anónimo en Pujas</h3>
+          <p>Oculta tu nombre de usuario real al resto de usuarios cuando realizas una puja activa.</p>
+        </div>
+        <label class="modern-switch">
+          <input type="checkbox" [(ngModel)]="privacidad.privacidadAnonimoPujas" (change)="guardarPrivacidad()">
+          <span class="switch-slider"></span>
         </label>
       </div>
-      <div class="toggle-container">
-        <label>Usar tus datos en las estadísticas generales de la web</label>
-        <label class="switch">
-          <input
-            type="checkbox"
-            [(ngModel)]="privacidad.privacidadEstadisticas"
-            (change)="guardarPrivacidad()"
-            />
-            <span class="slider round"></span>
-          </label>
+
+      <div class="toggle-item">
+        <div class="toggle-info">
+          <h3>Compartir Estadísticas</h3>
+          <p>Permite el uso anónimo de tus datos de compra/venta para mejorar las tendencias generales de la web.</p>
         </div>
-        <div class="toggle-container">
-          <label>Permitir que otros usuarios vean mi perfil</label>
-          <label class="switch">
-            <input
-              type="checkbox"
-              [(ngModel)]="privacidad.privacidadPerfilVisible"
-              (change)="guardarPrivacidad()"
-              />
-              <span class="slider round"></span>
-            </label>
-          </div>
+        <label class="modern-switch">
+          <input type="checkbox" [(ngModel)]="privacidad.privacidadEstadisticas" (change)="guardarPrivacidad()">
+          <span class="switch-slider"></span>
+        </label>
+      </div>
+
+      <div class="toggle-item">
+        <div class="toggle-info">
+          <h3>Perfil Público Visible</h3>
+          <p>Permite que otros usuarios puedan hacer clic en tu nombre y ver tu perfil e historial público.</p>
         </div>
-      }
+        <label class="modern-switch">
+          <input type="checkbox" [(ngModel)]="privacidad.privacidadPerfilVisible" (change)="guardarPrivacidad()">
+          <span class="switch-slider"></span>
+        </label>
+      </div>
+
+    </div>
+  </section>
+}

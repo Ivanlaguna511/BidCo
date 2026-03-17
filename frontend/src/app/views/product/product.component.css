@@ -1,175 +1,364 @@
-#cuerpo {
-    display: flex;
-    flex-direction: row;
-    margin-left: 15%;
-    margin-top: 2%;
+/* --- ESTRUCTURA PRINCIPAL --- */
+.product-page-background {
+  background-color: #f8f9fa; /* Fondo premium para que resalten las tarjetas */
+  min-height: 85vh;
+  padding: 40px 24px;
+  font-family: 'Montserrat', sans-serif;
+  color: #202124;
 }
 
-app-product-details {
-    max-width: 60%;
+.product-container {
+  max-width: 1200px; /* Ancho máximo para pantallas enormes */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 64px; /* Separación grande entre el producto y los comentarios */
 }
 
-#puja-form {
-    margin-top: 30%;
-    margin-left: 40%;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    padding: 10%;
-    background-color: #ffffff;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    width: 150%;
+/* --- SECCIÓN SUPERIOR: GRID DE DETALLES Y ACCIÓN --- */
+.product-hero-layout {
+  display: grid;
+  grid-template-columns: 1fr 400px; /* Columna Izquierda: Flexible | Derecha: Fija 400px */
+  gap: 40px;
+  align-items: start; /* Importante para que el sticky funcione bien */
 }
 
-#puja-form h2{
-    margin-top: 5%;
-    margin-bottom: 5%;
+/* --- TARJETA DE ACCIÓN (PUJA) --- */
+.action-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e8eaed;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+  padding: 32px;
 }
 
-#puja-form h3{
-    margin-top: 5%;
-    margin-bottom: 5%;
+/* Magia del Sticky: La tarjeta te persigue al hacer scroll */
+.sticky-card {
+  position: sticky;
+  top: 100px; /* Deja un margen desde arriba de la pantalla */
 }
 
-#puja-form h4{
-    margin-top: 5%;
-    margin-bottom: 5%;
+.card-header {
+  margin-bottom: 24px;
+  border-bottom: 2px solid #f8f9fa;
+  padding-bottom: 20px;
 }
 
-#puja-form input {
-    width: 130%;
-    padding: 8px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 5%;
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  background-color: #e6f4ea;
+  color: #137333; /* Verde activo */
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 12px;
 }
 
-#puja-form input::placeholder {
-    color: #888; /* Color del placeholder */
+.status-badge.ended {
+  background-color: #fce8e6;
+  color: #c5221f; /* Rojo finalizada */
 }
 
-#puja-submit {
-    align-self: center;
+.action-title {
+  font-size: 1.1rem;
+  color: #5f6368;
+  font-weight: 600;
+  margin: 0 0 8px 0;
 }
 
-#puja-submit button{
-    background-color: #0d0063;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: large;
+.main-price {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #0d0063;
+  line-height: 1;
+  letter-spacing: -1px;
 }
 
-#puja-submit button:hover {
-    background-color: #09004b;
+/* Filas de información (Tiempo, Ganador, etc.) */
+.auction-status {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  color: #3c4043;
+}
+
+.info-label {
+  font-weight: 600;
+  color: #5f6368;
+}
+
+.info-value {
+  font-weight: 700;
+  color: #202124;
+}
+
+.time-row {
+  justify-content: flex-start;
+  gap: 8px;
+  padding: 12px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  color: #0d0063;
+}
+
+.time-row.time-up {
+  color: #c5221f;
+  background-color: #fce8e6;
+}
+
+.time-value {
+  margin-left: auto;
+}
+
+.highlight-row { padding: 12px; background-color: #e8f0fe; border-radius: 8px; }
+.winner-row { padding: 12px; background-color: #e6f4ea; border-radius: 8px; border: 1px solid #ceead6;}
+
+/* Formulario e Inputs de Puja */
+.bid-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 16px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #202124;
+  text-align: center;
+  border: 2px solid #dadce0;
+  border-radius: 12px;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.input-wrapper input:focus {
+  border-color: #0d0063;
+  box-shadow: 0 0 0 3px rgba(13, 0, 99, 0.1);
+  outline: none;
+}
+
+/* Botones */
+.btn-primary {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0d0063;
+  color: #ffffff;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 24px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(13, 0, 99, 0.15);
+}
+
+.btn-large {
+  padding: 16px;
+  font-size: 1.1rem;
+  border-radius: 12px; /* Botón cuadrado redondeado para pujas */
+  width: 100%;
+}
+
+.btn-primary:hover {
+  background-color: #15009e;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(13, 0, 99, 0.25);
+}
+
+.btn-primary:active { transform: translateY(0); }
+
+.login-prompt {
+  text-align: center;
+  padding-top: 16px;
+}
+
+.login-prompt p {
+  font-size: 0.9rem;
+  color: #5f6368;
+  margin-bottom: 16px;
+  line-height: 1.5;
 }
 
 
-#expertos {
-    display: flex;
-    flex-direction: column;
-    margin-left: 15%;
-    margin-top: 10%;
+/* --- SECCIÓN INFERIOR: COMENTARIOS DE EXPERTOS --- */
+.expert-reviews-section {
+  max-width: 800px; /* No queremos que las valoraciones crucen de lado a lado */
+  margin: 0;
 }
 
-#login-btn {
-    align-self: center;
+.reviews-header {
+  margin-bottom: 32px;
+  border-bottom: 2px solid #e8eaed;
+  padding-bottom: 24px;
 }
 
-#login-btn a {
-    display: inline-flex;
-    align-items: center;
-    padding: 10px 20px;
-    margin: 10px;
-    color: #fff;
-    background-color: #0d0063;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    text-decoration: none;
-    font-family: Arial, sans-serif;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-    transition: background-color 0.3s ease;
-    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+.reviews-header h2 {
+  font-size: 1.8rem;
+  color: #0d0063;
+  margin: 0 0 8px 0;
+}
+
+.reviews-subtitle {
+  color: #5f6368;
+  margin: 0 0 24px 0;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: #0d0063;
+  border: 2px solid #0d0063;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover { background-color: #0d0063; color: #fff; }
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+
+/* --- MODAL DEL EXPERTO (EL POP-UP PREMIUM) --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(32, 33, 36, 0.6); /* Gris oscuro transparente */
+  backdrop-filter: blur(4px); /* Efecto cristal desenfocado de iOS/Google */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 500px;
+  border-radius: 16px;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-form {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  font-size: 1.2rem;
+  color: #202124;
+  margin: 0;
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #9aa0a6;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.btn-close:hover { color: #202124; }
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #5f6368;
+}
+
+.form-group textarea,
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: all 0.2s;
+}
+
+.form-group textarea { min-height: 120px; resize: vertical; }
+.form-group textarea:focus, .form-group input:focus {
+  border-color: #0d0063;
+  box-shadow: 0 0 0 2px rgba(13, 0, 99, 0.15);
+  outline: none;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.btn-ghost {
+  background: none;
+  border: none;
+  color: #5f6368;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 10px 16px;
+  border-radius: 8px;
+}
+
+.btn-ghost:hover { background-color: #f1f3f4; color: #202124; }
+
+/* --- RESPONSIVO --- */
+@media (max-width: 900px) {
+  .product-hero-layout {
+    grid-template-columns: 1fr; /* Apila el producto arriba y la puja abajo en móviles */
   }
   
-#login-btn a:hover {
-    background-color: #0d0063;
-}
-
-#login-btn a:active {
-    background-color: #0d0063;
-}
-
-#login-btn a:focus {
-    outline: none;
-    box-shadow: 0 0 3pt 2pt #c6dafc;
-}
-
-#expertos button{
-    background-color: #0d0063;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: large;
-    margin-top: 0.5%;
-    margin-bottom: 1%;
-    max-width: 20%;
-}
-
-#expertos button:hover {
-    background-color: #09004b;
-}
-
-#expertos hr {
-    max-width: 30%;
-    margin-bottom: 1%;
-}
-
-#expertForm {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#expertForm form {
-    display: flex;
-    flex-direction: column;
-    background: white;
-    padding: 1.5%;
-    border-radius: 8px;
-    width: 30%;
-    height: 40%;
-}
-
-#expertForm form h2 {
-    text-align: center;
-    margin-bottom: 2%;
-}
-
-#expertForm form label {
-    font-size: large;
-}
-
-#expertForm form textarea {
-    height: 200%;
-    margin-bottom: 2%;
-}
-
-#expertForm form div {
-    margin-top: 3%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  .sticky-card {
+    position: static; /* Quita el sticky en móviles para no comerse la pantalla */
+  }
 }

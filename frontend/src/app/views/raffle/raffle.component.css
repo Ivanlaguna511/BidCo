@@ -1,34 +1,117 @@
-#sorteos {
-    margin-left: 20%;
-    padding-top: 2%;
+/* --- ESTRUCTURA PRINCIPAL --- */
+.page-layout {
+  display: flex;
+  min-height: 85vh;
+  background-color: #f8f9fa; /* Fondo gris súper claro */
 }
 
-#top-items {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+/* Dejamos el hueco exacto del 18% para el filtro de la izquierda */
+.main-content {
+  margin-left: 18%; 
+  width: 82%; 
+  padding: 40px;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
 }
 
-#top-items h2 {
-    margin-right: 5%;
+/* --- CABECERA --- */
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end; /* Alinea por la base */
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid #e8eaed;
 }
 
-#items {
-    margin-top: 3%;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    flex-shrink: 0;
-    
+.header-titles h1 {
+  font-size: clamp(2rem, 3vw, 2.5rem);
+  color: #0d0063;
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: -0.5px;
 }
 
-#item {
-    max-width: 15%;
-    margin-right: 5%;
-    margin-bottom: 2%;
+/* --- ACCIONES DEL USUARIO (PUNTOS) --- */
+.user-actions {
+  display: flex;
+  align-items: center;
 }
 
-#item a {
-    text-decoration: none;
-    color: inherit;
+/* Insignia de los puntos */
+.balance-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  background: #ffffff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid #dadce0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+/* Le damos un toque distintivo a la caja de puntos vs la de dinero */
+.badge-points {
+  border-left: 4px solid #fbbc04; /* Borde izquierdo amarillo Google para identificar sorteos */
+}
+
+.balance-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #5f6368;
+  letter-spacing: 0.5px;
+}
+
+.balance-value {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #0d0063;
+  line-height: 1.1;
+}
+
+.balance-value small {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #5f6368;
+  margin-left: 2px;
+}
+
+/* --- CUADRÍCULA DE PRODUCTOS --- */
+.products-grid {
+  display: grid;
+  /* Ancho mínimo de 280px para que las tarjetas sean consistentes con el resto de la web */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 32px; 
+}
+
+.product-wrapper {
+  display: block;
+}
+
+.product-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%; 
+}
+
+/* --- RESPONSIVE (MÓVILES Y TABLETS) --- */
+@media (max-width: 1024px) {
+  .main-content {
+    margin-left: 0; 
+    width: 100%;
+    padding: 24px;
+  }
+  
+  .content-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+  
+  .user-actions {
+    width: 100%;
+    justify-content: flex-end; /* En móvil empujamos la caja a la derecha */
+  }
 }

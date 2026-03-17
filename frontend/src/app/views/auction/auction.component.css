@@ -1,46 +1,131 @@
-#subastas {
-    margin-left: 20%;
-    padding-top: 2%;
+/* --- ESTRUCTURA PRINCIPAL --- */
+.page-layout {
+  display: flex;
+  min-height: 85vh;
+  /* Un fondo casi blanco (gris muuuy claro) hace que las tarjetas blancas resalten mucho más */
+  background-color: #f8f9fa; 
 }
 
-#top-items {
-    display: flex;
-    align-items: center;
+/* El contenedor deja hueco al filtro fijo de la izquierda */
+.main-content {
+  margin-left: 18%; /* El espacio exacto que ocupa tu app-filter */
+  width: 82%; 
+  padding: 40px;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* --- CABECERA (TÍTULO Y PANEL DE USUARIO) --- */
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid #e8eaed;
+}
+
+.header-titles h1 {
+  font-size: clamp(2rem, 3vw, 2.5rem);
+  color: #0d0063;
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+/* --- ACCIONES DEL USUARIO --- */
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* Tarjeta del saldo */
+.balance-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  background: #ffffff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid #dadce0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.balance-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #5f6368;
+  letter-spacing: 0.5px;
+}
+
+.balance-value {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #0d0063;
+  line-height: 1.1;
+}
+
+/* Botón Crear Subasta */
+.btn-primary {
+  background-color: #0d0063;
+  color: #ffffff;
+  padding: 12px 24px;
+  border-radius: 24px; /* Botón píldora moderno */
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(13, 0, 99, 0.15);
+}
+
+.btn-primary:hover {
+  background-color: #15009e;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(13, 0, 99, 0.25);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* --- CUADRÍCULA DE PRODUCTOS (GRID MÁGICO) --- */
+.products-grid {
+  display: grid;
+  /* Esto crea las columnas automáticamente. Nunca serán más pequeñas de 280px */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 32px; /* Espacio generoso entre productos */
+}
+
+/* Quitamos todos los márgenes y flotados viejos. Grid hace el trabajo. */
+.product-wrapper {
+  display: block;
+}
+
+.product-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%; /* Obliga a que todas las tarjetas midan lo mismo */
+}
+
+/* --- RESPONSIVE (MÓVILES Y TABLETS) --- */
+@media (max-width: 1024px) {
+  .main-content {
+    margin-left: 0; /* En móvil el filtro pasará arriba o se esconderá */
+    width: 100%;
+    padding: 24px;
+  }
+  
+  .content-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+  
+  .user-actions {
+    width: 100%;
     justify-content: space-between;
-}
-
-#top-items div{
-    display: flex;
-    min-width: 30%;
-    justify-content: right;
-}
-
-#crear-subasta {
-    margin-left: 5%;
-    margin-right: 5%;
-    text-decoration: none;
-    padding: 10px 15px;
-    background-color: #0d0063;
-    color: white;
-    border-radius: 5px;
-}
-
-#items {
-    margin-top: 3%;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    flex-shrink: 0;
-    
-}
-
-#item {
-    max-width: 15%;
-    margin-right: 5%;
-    margin-bottom: 2%;
-}
-
-#item a {
-    text-decoration: none;
-    color: inherit;
+  }
 }

@@ -1,24 +1,36 @@
-<app-header/>
-<div>
-  <div>
-    <app-filter (filterChanged)="handleFilterApplied($event)"></app-filter>
-  </div>
-  <div id="sorteos">
-    <div id="top-items">
-      <h1>Sorteos Actuales</h1>
+<app-header></app-header>
+
+<div class="page-layout">
+  <app-filter (filterChanged)="handleFilterApplied($event)"></app-filter>
+
+  <main class="main-content">
+    
+    <header class="content-header">
+      <div class="header-titles">
+        <h1>Sorteos Actuales</h1>
+      </div>
+
       @if (isLoggedIn && !isExpert) {
-        <h2>Puntos actuales: {{ userPoints }}</h2>
-      }
-    </div>
-    <div id="items">
-      @for (product of products; track product) {
-        <div id="item">
-          <a [routerLink]="['/raffle/product', product.sorteoID]">
-            <app-product-item [product]="product"></app-product-item>
-          </a>
+        <div class="user-actions">
+          <div class="balance-badge badge-points">
+            <span class="balance-label">Mis Puntos Acumulados</span>
+            <span class="balance-value">{{ userPoints }} <small>pts</small></span>
+          </div>
         </div>
       }
-    </div>
-  </div>
+    </header>
+
+    <section class="products-grid">
+      @for (product of products; track product.sorteoID) {
+        <article class="product-wrapper">
+          <a [routerLink]="['/raffle/product', product.sorteoID]" class="product-link">
+            <app-product-item [product]="product"></app-product-item>
+          </a>
+        </article>
+      }
+    </section>
+
+  </main>
 </div>
-<app-footer/>
+
+<app-footer></app-footer>
