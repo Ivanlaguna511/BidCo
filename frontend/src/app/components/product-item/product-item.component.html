@@ -19,12 +19,19 @@
       @if (isBlindAuction) {
         <span class="price-label">Precio Base</span>
         <span class="price-value">{{ product.precioInicial }}€</span>
+        
       } @else if (isRaffle) {
         <span class="price-label">Ticket</span>
         <span class="price-value">{{ product.puntosNecesarios }} <small>pts</small></span>
+        
       } @else {
-        <span class="price-label">Puja Actual</span>
-        <span class="price-value">{{ product.precioFinal }}€</span>
+        @if (product.precioFinal > 0) {
+          <span class="price-label">Puja Actual</span>
+          <span class="price-value">{{ product.precioFinal }}€</span>
+        } @else {
+          <span class="price-label">Precio Base</span>
+          <span class="price-value">{{ product.precioInicial }}€</span>
+        }
       }
     </div>
 
