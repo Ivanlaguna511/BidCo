@@ -125,3 +125,7 @@ ng serve
 ```
 
 Abre tu navegador y entra en `http://localhost:4200`. ¡La aplicación ya está funcionando en local conectada a tu backend!
+
+**Original Authors**
+
+-Iván Moro Cienfuegos and Gonzalo Sánchez Maroto
