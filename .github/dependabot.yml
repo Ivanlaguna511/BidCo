@@ -1,0 +1,18 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+updates:
+  # 1. Para el backend en Spring Boot
+  - package-ecosystem: "maven" # Cambia a "gradle" si usas build.gradle en vez de pom.xml
+    directory: "/backend" # Ojo: Si tu backend está en una subcarpeta, pon "/backend" o el nombre que tenga
+    schedule:
+      interval: "weekly"
+
+  # 2. Para el frontend en Angular
+  - package-ecosystem: "npm"
+    directory: "/frontend" # Ojo: Si tu frontend está en una subcarpeta, pon "/frontend" o el nombre que tenga
+    schedule:
+      interval: "weekly"
