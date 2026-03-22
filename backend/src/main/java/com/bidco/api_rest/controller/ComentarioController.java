@@ -37,7 +37,7 @@ public class ComentarioController {
             ComentarioResponseDTO comentarioResponseDTO = comentarioService.buscarComentarioPorId(id);
             return new ResponseEntity<>(comentarioResponseDTO, HttpStatus.OK);
         } catch (EntityNotFoundException e) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
