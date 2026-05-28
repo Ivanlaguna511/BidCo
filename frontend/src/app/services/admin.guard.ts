@@ -10,7 +10,6 @@ export class AdminGuard implements CanActivate {
   ) {}
 
   canActivate(): boolean {
-    const role = this.auth.userRole$.pipe ? null : null;
     // Leemos el rol directamente del BehaviorSubject expuesto como observable
     // Para acceso síncrono usamos el valor actual del subject
     const currentRole = this.auth.getCurrentRole();
