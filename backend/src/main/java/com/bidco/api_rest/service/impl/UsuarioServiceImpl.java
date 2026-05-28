@@ -17,7 +17,7 @@ import com.bidco.api_rest.service.contract.UsuarioService;
 import com.bidco.api_rest.config.JwtUtil;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -26,6 +26,8 @@ import java.util.Optional;
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
 
+    private static final BigDecimal MAX_RECARGA = new BigDecimal("10000");
+
     private final UsuarioRepository usuarioRepository;
     private final PujaRepository pujaRepository;
     private final SubastaRepository subastaRepository;
@@ -33,6 +35,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioMapper usuarioMapper;
     private final SorteoRepository sorteoRepository;
     private final JwtUtil jwtUtil = new JwtUtil();
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
     public UsuarioServiceImpl(
@@ -56,6 +59,8 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new IllegalArgumentException("El usuario no puede ser nulo");
         }
         Usuario usuario = usuarioMapper.usuarioCreateDTOToUsuario(usuarioCreateDTO);
+        // Hashear contraseña antes de guardar
+        usuario.setContrasena(passwordEncoder.encode(usuarioCreateDTO.getContraseña()));
         usuario.setPuntos(10);
         usuarioRepository.save(usuario);
         return usuarioMapper.usuarioToUsuarioResponseDTO(usuario);
@@ -65,7 +70,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     public UsuarioResponseDTO actualizarUsuario(Long id, UsuarioUpdateDTO usuarioUpdateDTO) {
         Usuario usuario = usuarioRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
-        
+
         usuario.setNombreUsuario(usuarioUpdateDTO.getNombreUsuario());
         usuario.setCorreoElectronico(usuarioUpdateDTO.getCorreoElectronico());
         usuario.setCiudad(usuarioUpdateDTO.getCiudad());
@@ -73,7 +78,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario.setCalle(usuarioUpdateDTO.getCalle());
         usuario.setNumeroPiso(usuarioUpdateDTO.getNumeroPiso());
         usuario.setLetraPiso(usuarioUpdateDTO.getLetraPiso());
-        
+
         usuarioRepository.save(usuario);
         return usuarioMapper.usuarioToUsuarioResponseDTO(usuario);
     }
@@ -103,36 +108,27 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
         Usuario usuario = usuarioOpt.get();
 
-        // --- CÓDIGO CHIVATO DE DEBUGGING ---
-        System.out.println("====== DEBUG LOGIN ======");
-        System.out.println("Identificador en JSON: [" + loginDTO.getIdentificador() + "]");
-        System.out.println("Contraseña en JSON: [" + loginDTO.getContrasena() + "]");
-        System.out.println("Contraseña en Base de Datos: [" + usuario.getContrasena() + "]");
-        System.out.println("=========================");
-        // -----------------------------------
-
-        if (!usuario.getContrasena().equals(loginDTO.getContrasena())) {
+        // Comparación segura con BCrypt
+        if (!passwordEncoder.matches(loginDTO.getContrasena(), usuario.getContrasena())) {
             throw new IllegalArgumentException("Credenciales incorrectas");
         }
-        
+
         return jwtUtil.generateToken(usuario.getUsuarioID().toString());
     }
 
     public void updatePassword(Long id, String currentPassword, String newPassword) {
         Usuario usuario = usuarioRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
-        
-        // Verificar contraseña actual (si usas hashing, aplica aquí)
-        if (!usuario.getContrasena().equals(currentPassword)) {
+
+        if (!passwordEncoder.matches(currentPassword, usuario.getContrasena())) {
             throw new IllegalArgumentException("Contraseña actual incorrecta");
         }
-        
-        // Validar nueva contraseña
+
         if (newPassword == null || newPassword.length() < 6) {
             throw new IllegalArgumentException("La nueva contraseña debe tener al menos 6 caracteres");
         }
-        
-        usuario.setContrasena(newPassword);
+
+        usuario.setContrasena(passwordEncoder.encode(newPassword));
         usuarioRepository.save(usuario);
     }
 
@@ -146,15 +142,15 @@ public class UsuarioServiceImpl implements UsuarioService {
         dto.setPrivacidadPerfilVisible(usuario.getPrivacidadPerfilVisible());
         return dto;
     }
-    
+
     public UsuarioResponseDTO actualizarPrivacidad(Long id, PrivacidadDTO privacidadUpdateDTO) {
         Usuario usuario = usuarioRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
-        
+
         usuario.setPrivacidadAnonimoPujas(privacidadUpdateDTO.getPrivacidadAnonimoPujas());
         usuario.setPrivacidadEstadisticas(privacidadUpdateDTO.getPrivacidadEstadisticas());
         usuario.setPrivacidadPerfilVisible(privacidadUpdateDTO.getPrivacidadPerfilVisible());
-        
+
         usuarioRepository.save(usuario);
         return usuarioMapper.usuarioToUsuarioResponseDTO(usuario);
     }
@@ -166,12 +162,18 @@ public class UsuarioServiceImpl implements UsuarioService {
             subastaRepository.countCreatedBidsByUsuarioId(usuarioId),
             pujaSorteoRepository.countParticipatedDrawsByUsuarioId(usuarioId),
             sorteoRepository.countWonDrawsByUsuarioId(usuarioId),
-            0  // createdDraws (solo para trabajadores)
+            0
         );
     }
 
     @Override
     public BigDecimal recargarSaldo(Long usuarioId, BigDecimal cantidad) {
+        if (cantidad == null || cantidad.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("La cantidad debe ser mayor que cero");
+        }
+        if (cantidad.compareTo(MAX_RECARGA) > 0) {
+            throw new IllegalArgumentException("La cantidad máxima por recarga es 10.000€");
+        }
         Usuario usuario = usuarioRepository.findById(usuarioId)
             .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
         usuario.setSaldo(usuario.getSaldo().add(cantidad));

@@ -1,0 +1,22 @@
+name: Keep backend vivo
+
+on:
+  schedule:
+    # Cada 10 minutos durante horas de mayor tráfico (8:00 - 23:00 Madrid, zona horaria UTC+2)
+    # Render duerme tras 15 min de inactividad en el plan gratuito
+    - cron: '*/10 6-21 * * *'
+  workflow_dispatch: # Permite lanzarlo manualmente desde GitHub
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping al backend
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://bidco-backend.onrender.com/api/ping)
+          echo "Respuesta del backend: $STATUS"
+          if [ "$STATUS" != "200" ]; then
+            echo "El backend respondió con estado $STATUS"
+            exit 1
+          fi
+          echo "Backend activo"

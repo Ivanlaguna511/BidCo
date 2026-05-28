@@ -11,6 +11,7 @@ import com.bidco.api_rest.service.contract.CloudinaryService;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,9 +20,9 @@ public class AdminServiceImpl implements AdminService {
 
     private final TrabajadorRepository trabajadorRepo;
     private final SorteoRepository sorteoRepo;
-    private final CloudinaryService cloudinaryService; // Nueva dependencia
+    private final CloudinaryService cloudinaryService;
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    // Actualizamos el constructor para inyectar CloudinaryService
     public AdminServiceImpl(
         TrabajadorRepository trabajadorRepo,
         SorteoRepository sorteoRepo,
@@ -41,9 +42,12 @@ public class AdminServiceImpl implements AdminService {
         if (admin.isExperto() != dto.getRol()) {
             throw new IllegalArgumentException("Acceso denegado: no es administrador");
         }
-        if (!admin.getContraseña().equals(dto.getPassword())) {
+
+        // Comparación segura con BCrypt
+        if (!passwordEncoder.matches(dto.getPassword(), admin.getContraseña())) {
             throw new IllegalArgumentException("Contraseña incorrecta");
         }
+
         session.setAttribute("adminId", admin.getTrabajadorID());
     }
 
@@ -74,7 +78,6 @@ public class AdminServiceImpl implements AdminService {
         MultipartFile img = dto.getImagen();
         if (img != null && !img.isEmpty()) {
             try {
-                // Subimos a la nube y guardamos la URL de retorno
                 String urlImagen = cloudinaryService.uploadFile(img);
                 sorteo.setImagen(urlImagen);
             } catch (Exception e) {

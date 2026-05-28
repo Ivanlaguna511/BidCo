@@ -1,4 +1,3 @@
-// src/app/admin/admin.guard.ts
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
@@ -11,8 +10,11 @@ export class AdminGuard implements CanActivate {
   ) {}
 
   canActivate(): boolean {
-    const role = (this.auth as any).userRole.getValue?.() || '';
-    if (role === 'admin') {
+    const role = this.auth.userRole$.pipe ? null : null;
+    // Leemos el rol directamente del BehaviorSubject expuesto como observable
+    // Para acceso síncrono usamos el valor actual del subject
+    const currentRole = this.auth.getCurrentRole();
+    if (currentRole === 'admin') {
       return true;
     }
     this.router.navigateByUrl('/admin/login');

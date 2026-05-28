@@ -1,6 +1,5 @@
 package com.bidco.api_rest.controller;
 
-import com.bidco.api_rest.dto.puja.PujaResponseDTO;
 import com.bidco.api_rest.dto.subasta.SubastaCreateDTO;
 import com.bidco.api_rest.dto.subasta.SubastaResponseDTO;
 import com.bidco.api_rest.dto.FiltroDTO;
@@ -10,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.MediaType;
+
 import java.util.List;
 
 @RestController
@@ -23,15 +23,13 @@ public class SubastaController {
         this.subastaService = subastaService;
     }
 
-    // Crear subasta
-    @PostMapping (consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public SubastaResponseDTO crearSubasta(
                 @RequestPart("subasta") @Valid SubastaCreateDTO subastaCreateDTO,
                 @RequestPart("imagen") MultipartFile imagen) {
         return subastaService.crearSubasta(subastaCreateDTO, imagen);
     }
 
-    // Buscar subasta por ID
     @GetMapping("/{id}")
     public SubastaResponseDTO buscarSubastaPorId(@PathVariable Long id) {
         return subastaService.buscarSubastaPorId(id);
@@ -74,7 +72,6 @@ public class SubastaController {
 
     @GetMapping("/filtro-nombre")
     public List<SubastaResponseDTO> buscarPorFiltroYNombre(FiltroDTO filtro, String searchTerm) {
-        System.out.println("Filtro: " + filtro.toString() + "|| searchTerm: " + searchTerm);
         return subastaService.buscarPorFiltroYNombre(filtro, searchTerm);
     }
 }

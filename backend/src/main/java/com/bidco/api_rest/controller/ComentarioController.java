@@ -2,8 +2,6 @@ package com.bidco.api_rest.controller;
 
 import com.bidco.api_rest.dto.cometario.ComentarioCreateDTO;
 import com.bidco.api_rest.dto.cometario.ComentarioResponseDTO;
-import com.bidco.api_rest.dto.sorteo.SorteoCreateDTO;
-import com.bidco.api_rest.dto.sorteo.SorteoResponseDTO;
 import com.bidco.api_rest.service.contract.ComentarioService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -23,14 +21,12 @@ public class ComentarioController {
         this.comentarioService = comentarioService;
     }
 
-    // Endpoint para añadir un comentario
     @PostMapping("/nuevo")
     @ResponseStatus(HttpStatus.CREATED)
     public ComentarioResponseDTO añadirComentario(@Valid @RequestBody ComentarioCreateDTO comentarioCreateDTO) {
         return comentarioService.añadirComentario(comentarioCreateDTO);
     }
 
-    // Endpoint para buscar un comentario por ID
     @GetMapping("/{id}")
     public ResponseEntity<ComentarioResponseDTO> buscarComentarioPorId(@PathVariable Long id) {
         try {
@@ -41,10 +37,8 @@ public class ComentarioController {
         }
     }
 
-    // Método para obtener los comentarios por subastaId
     @GetMapping("/subasta/{subastaId}")
     public ResponseEntity<List<ComentarioResponseDTO>> buscarComentariosPorSubastaId(@PathVariable Long subastaId) {
-        System.out.println("uno");
         List<ComentarioResponseDTO> comentarios = comentarioService.buscarComentariosPorSubastaId(subastaId);
         return ResponseEntity.ok(comentarios);
     }

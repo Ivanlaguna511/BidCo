@@ -1,14 +1,13 @@
-import { provideZoneChangeDetection } from "@angular/core";
 import { bootstrapApplication } from '@angular/platform-browser';
-import { provideHttpClient } from '@angular/common/http';
-import { AppComponent } from './app/app.component';
 import { appConfig } from './app/app.config';
+import { AppComponent } from './app/app.component';
+import { environment } from './environments/environment';
 
-bootstrapApplication(AppComponent, {
-  ...appConfig,
-  providers: [
-    provideZoneChangeDetection(),...(appConfig.providers || []),
-    provideHttpClient()
-  ]
-})
+// Deshabilitar console.log en producción para no exponer datos en la consola del navegador
+if (environment.production) {
+  console.log = () => {};
+  console.debug = () => {};
+}
+
+bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error(err));

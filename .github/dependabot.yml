@@ -1,24 +1,23 @@
 version: 2
 updates:
-  # Automatizar Frontend (Angular/npm)
   - package-ecosystem: "npm"
     directory: "/frontend"
     schedule:
       interval: "weekly"
       day: "monday"
     groups:
-      # Esto agrupa todo lo de Angular en una sola PR para que Vercel no explote
       angular-core:
         patterns:
           - "@angular/*"
-      # Esto agrupa el resto de dependencias en otra PR
+          - "@angular-devkit/*"
       resto-frontend:
         patterns:
           - "*"
+    open-pull-requests-limit: 5
 
-  # Automatizar Backend (Spring/Maven)
   - package-ecosystem: "maven"
     directory: "/backend"
     schedule:
       interval: "weekly"
       day: "monday"
+    open-pull-requests-limit: 3
