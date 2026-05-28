@@ -1,36 +1,36 @@
-name: Dependabot auto-merge
-
-on: pull_request
-
+# .github/workflows/auto-merge-dependabot.yml
+# Fusiona automáticamente los PRs de Dependabot si el CI pasa.
+# Solo actúa en PRs de Dependabot — los tuyos siguen requiriendo revisión manual.
+ 
+name: Auto-merge Dependabot
+ 
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review]
+ 
 permissions:
   contents: write
   pull-requests: write
-
+ 
 jobs:
   auto-merge:
+    name: Merge si es Dependabot y CI verde
     runs-on: ubuntu-latest
     if: github.actor == 'dependabot[bot]'
-
+ 
     steps:
-      - name: Obtener metadatos de Dependabot
-        id: metadata
+      - name: Obtener metadatos del PR de Dependabot
+        id: meta
         uses: dependabot/fetch-metadata@v2
         with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-
-      - name: Auto-aprobar actualizaciones patch y minor
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+ 
+      # Fusiona automáticamente actualizaciones patch y minor
+      # Las major requieren revisión manual (son breaking changes)
+      - name: Auto-merge para patch y minor
         if: |
-          steps.metadata.outputs.update-type == 'version-update:semver-patch' ||
-          steps.metadata.outputs.update-type == 'version-update:semver-minor'
-        run: gh pr review --approve "$PR_URL"
-        env:
-          PR_URL: ${{ github.event.pull_request.html_url }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Auto-merge actualizaciones patch y minor
-        if: |
-          steps.metadata.outputs.update-type == 'version-update:semver-patch' ||
-          steps.metadata.outputs.update-type == 'version-update:semver-minor'
+          steps.meta.outputs.update-type == 'version-update:semver-patch' ||
+          steps.meta.outputs.update-type == 'version-update:semver-minor'
         run: gh pr merge --auto --squash "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
