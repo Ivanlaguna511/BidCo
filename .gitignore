@@ -1,49 +1,65 @@
+# ========================
 # Java / Spring Boot
+# ========================
 target/
-*.log
 *.class
 *.jar
 *.war
 *.iml
-/.idea/
-/.mvn/
+*.log
+ 
+# Maven wrapper jar (el .properties sí se sube, el .jar no)
 .mvn/wrapper/maven-wrapper.jar
+ 
+# Nunca ignorar los application.properties de producción
 !src/main/**/application*.yml
 !src/main/**/application*.properties
-
-# Gradle
-.gradle/
-build/
-out/
-
-# VS Code
-.vscode/
-
-# OS files
-.DS_Store
-Thumbs.db
-
+ 
+# ========================
+# Frontend (Angular / Node)
+# ========================
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/coverage/
+ 
+# ========================
+# Variables de entorno
+# ========================
+.env
+.env.*
+*.env
+ 
+# ========================
+# IDEs
+# ========================
+ 
 # IntelliJ IDEA
 .idea/
 *.iws
 *.ipr
-*.iml
-
-# Frontend (Angular)
-frontend/node_modules/
-frontend/dist/
-frontend/.angular/cache/
-frontend/.angular/
-
-# Env files (si los usás)
-*.env
-.env.*
-
-# Git files (si hiciste lío con submódulos)
-**/.git/
-**/.gitmodules
-**/.gitignore~
-
-# Optional: ignore test reports, coverage, etc.
+ 
+# VS Code
+.vscode/
+ 
+# Eclipse
+.project
+.classpath
+.settings/
+ 
+# ========================
+# Sistema operativo
+# ========================
+.DS_Store
+.DS_Store?
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+ 
+# ========================
+# Otros
+# ========================
 coverage/
 test-output/
+*.tmp
+*.swp
