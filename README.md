@@ -72,7 +72,7 @@ Sigue estos pasos en orden para asegurar la correcta conexión entre el cliente 
 Abre tu terminal y ejecuta:
 
 ```bash
-git clone [https://github.com/Ivanlaguna511/BidCo.git](https://github.com/Ivanlaguna511/BidCo.git)
+git clone [https://github.com/imoroc/BidCo.git](https://github.com/imoroc/BidCo.git)
 cd BidCo
 ```
 
@@ -128,4 +128,4 @@ Abre tu navegador y entra en `http://localhost:4200`. ¡La aplicación ya está 
 
 **Original Authors**
 
--Iván Moro Cienfuegos and Gonzalo Sánchez Maroto
+-Iván Moro Cienfuegos y Gonzalo Sánchez Maroto
