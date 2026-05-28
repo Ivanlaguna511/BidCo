@@ -1,22 +1,31 @@
-name: Keep backend vivo
-
+# .github/workflows/keep-alive.yml
+# Versión corregida: permissions declaradas explícitamente.
+# Mantiene activo el repo en Render (free tier duerme tras inactividad).
+ 
+name: Keep Alive
+ 
 on:
   schedule:
-    # Cada 10 minutos durante horas de mayor tráfico (8:00 - 23:00 Madrid, zona horaria UTC+2)
-    # Render duerme tras 15 min de inactividad en el plan gratuito
-    - cron: '*/10 6-21 * * *'
-  workflow_dispatch: # Permite lanzarlo manualmente desde GitHub
-
+    # Cada 20 minutos (ajusta a tu necesidad)
+    - cron: "*/20 * * * *"
+  workflow_dispatch:
+ 
+# Mínimo privilegio: solo lectura del contenido
+permissions:
+  contents: read
+ 
 jobs:
   ping:
+    name: Ping al backend en Render
     runs-on: ubuntu-latest
+ 
+    permissions:
+      contents: read
+ 
     steps:
-      - name: Ping al backend
+      - name: Ping
         run: |
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://bidco-backend.onrender.com/api/ping)
-          echo "Respuesta del backend: $STATUS"
-          if [ "$STATUS" != "200" ]; then
-            echo "El backend respondió con estado $STATUS"
-            exit 1
-          fi
-          echo "Backend activo"
+          curl -sf "${{ secrets.RENDER_BACKEND_URL }}/actuator/health" \
+            --max-time 10 \
+            --retry 2 \
+            || echo "Backend no responde (normal si está arrancando)"

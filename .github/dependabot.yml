@@ -1,23 +1,93 @@
 version: 2
 updates:
-  - package-ecosystem: "npm"
-    directory: "/frontend"
+  # ── Frontend (npm) ──────────────────────────────────────────
+  - package-ecosystem: npm
+    directory: /frontend
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: weekly
+      day: monday
+      time: "09:00"
+    open-pull-requests-limit: 5
     groups:
       angular-core:
         patterns:
           - "@angular/*"
           - "@angular-devkit/*"
-      resto-frontend:
+        update-types:
+          - minor
+          - patch
+      angular-material:
         patterns:
-          - "*"
-    open-pull-requests-limit: 5
-
-  - package-ecosystem: "maven"
-    directory: "/backend"
+          - "@angular/material"
+          - "@angular/cdk"
+      hono:
+        patterns:
+          - "hono"
+          - "@hono/*"
+      vite-and-build:
+        patterns:
+          - "vite"
+          - "@vitejs/*"
+          - "webpack*"
+          - "postcss*"
+          - "rollup*"
+      babel:
+        patterns:
+          - "@babel/*"
+          - "babel-*"
+      testing:
+        patterns:
+          - "jest*"
+          - "@jest/*"
+          - "jasmine*"
+          - "@types/*"
+        update-types:
+          - minor
+          - patch
+      miscellaneous:
+        update-types:
+          - patch
+    ignore:
+      - dependency-name: "lodash"
+        update-types: ["version-update:semver-major"]
+    labels:
+      - "dependencies"
+      - "javascript"
+ 
+  # ── Backend (Maven / Java) ───────────────────────────────────
+  - package-ecosystem: maven
+    directory: /backend
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: weekly
+      day: monday
+      time: "09:00"
+    open-pull-requests-limit: 5
+    groups:
+      spring-boot:
+        patterns:
+          - "org.springframework.boot:*"
+          - "org.springframework:*"
+      jwt:
+        patterns:
+          - "io.jsonwebtoken:*"
+      cloudinary:
+        patterns:
+          - "com.cloudinary:*"
+      misc-java:
+        update-types:
+          - patch
+    labels:
+      - "dependencies"
+      - "java"
+ 
+  # ── GitHub Actions ────────────────────────────────────────────
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
     open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "github-actions"
