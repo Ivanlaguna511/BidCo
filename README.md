@@ -49,6 +49,15 @@ Este proyecto fue creado para la asignatura Servicios y Sistemas Web, asignatura
 - **Base de Datos:** MySQL
 - **Gestión de Archivos:** Integración con **Cloudinary** para almacenamiento persistente en la nube.
 
+### Documentación de la API (Swagger)
+
+La API REST está completamente auto-documentada utilizando **OpenAPI 3.0**. 
+Puedes interactuar con los endpoints, ver los esquemas de datos requeridos y realizar peticiones de prueba directamente desde la interfaz gráfica alojada en producción:
+
+👉 **[Ver Documentación de la API en vivo](https://bidco-backend.onrender.com/swagger-ui.html)**
+
+*(Nota: Para probar rutas protegidas, primero haz login en `/api/usuarios/login`, copia el token JWT devuelto, y pégalo en el botón superior **Authorize**).*
+
 ---
 
 ## Requisitos Previos
