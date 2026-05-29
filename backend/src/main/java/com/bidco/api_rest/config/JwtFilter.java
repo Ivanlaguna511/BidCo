@@ -29,7 +29,21 @@ public class JwtFilter extends OncePerRequestFilter {
             "GET:/api/subastas/filtro-ciega",
             "GET:/api/subastas/filtro-nombre",
             "GET:/api/sorteos",            // listado sorteos
-            "GET:/api/sorteos/filtro"
+            "GET:/api/sorteos/filtro",
+            
+            // --- AÑADIDO PARA DESBLOQUEAR SWAGGER EN RENDER ---
+            "*:/v3/api-docs",
+            "*:/v3/api-docs/swagger-config",
+            "*:/swagger-ui",
+            "*:/swagger-ui.html",
+            "GET:/swagger-ui/index.html",
+            "GET:/swagger-ui/swagger-ui.css",
+            "GET:/swagger-ui/index.css",
+            "GET:/swagger-ui/swagger-ui-bundle.js",
+            "GET:/swagger-ui/swagger-ui-standalone-preset.js",
+            "GET:/swagger-ui/swagger-initializer.js",
+            "GET:/swagger-ui/favicon-32x32.png",
+            "GET:/swagger-ui/favicon-16x16.png"
     );
 
     @Override
